@@ -62,14 +62,18 @@
     _p = [[WZVariousCollectionSectionsBaseProvider alloc] init];
     UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iiiiii)];
     
-    _p.headerData = @"1";
+
     _c = [[WZVariousCollectionReusableContent alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     _c.backgroundColor = [UIColor redColor];
     [_c addGestureRecognizer:tg];
     _p.headerContent = _c;
     
     _cv.sectionsProviders = [NSMutableArray arrayWithArray:@[_p,@"sadasd",[NSObject class]]];
-    _cv.sectionsDatas = mArr;}
+    _cv.sectionsDatas = mArr;
+
+
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

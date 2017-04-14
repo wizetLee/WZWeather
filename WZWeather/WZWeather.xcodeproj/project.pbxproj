@@ -241,6 +241,7 @@
 		846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DC1E63D2140048BBDC /* WZBaseViewController.m */; };
 		846920E01E63D6920048BBDC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DF1E63D6920048BBDC /* MainViewController.m */; };
 		84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */; };
+		84CAD8081EA0BD5D00BDF9AA /* WZVariousCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -738,6 +739,8 @@
 		846920E11E63F4430048BBDC /* WZ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZ.pch; sourceTree = "<group>"; };
 		84CAD8031EA07EEA00BDF9AA /* WZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZUserInfo.h; sourceTree = "<group>"; };
 		84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZUserInfo.m; sourceTree = "<group>"; };
+		84CAD8061EA0BD5D00BDF9AA /* WZVariousCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionController.h; sourceTree = "<group>"; };
+		84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionController.m; sourceTree = "<group>"; };
 		B89722B026D64E98689EF1AF /* Pods-WZWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -779,18 +782,20 @@
 		844A483E1E9F657B0002829A /* WZVariousCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				844A483F1E9F657B0002829A /* WZVariousCollectionBaseCell.h */,
-				844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */,
-				844A48411E9F657B0002829A /* WZVariousCollectionBaseMethodObject.h */,
-				844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */,
+				84CAD8061EA0BD5D00BDF9AA /* WZVariousCollectionController.h */,
+				84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */,
+				844A48471E9F657B0002829A /* WZVariousCollectionView.h */,
+				844A48481E9F657B0002829A /* WZVariousCollectionView.m */,
 				844A48431E9F657B0002829A /* WZVariousCollectionBaseObject.h */,
 				844A48441E9F657B0002829A /* WZVariousCollectionBaseObject.m */,
+				844A483F1E9F657B0002829A /* WZVariousCollectionBaseCell.h */,
+				844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */,
 				844A485D1E9F9A620002829A /* WZVariousCollectionReusableContent.h */,
 				844A485E1E9F9A620002829A /* WZVariousCollectionReusableContent.m */,
 				844A485A1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.h */,
 				844A485B1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m */,
-				844A48471E9F657B0002829A /* WZVariousCollectionView.h */,
-				844A48481E9F657B0002829A /* WZVariousCollectionView.m */,
+				844A48411E9F657B0002829A /* WZVariousCollectionBaseMethodObject.h */,
+				844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */,
 			);
 			path = WZVariousCollectionView;
 			sourceTree = "<group>";
@@ -2187,6 +2192,7 @@
 				844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */,
 				84514CF71E9DCE7A00F07EF8 /* NSString+JKBase64.m in Sources */,
 				84514D3B1E9DCE7A00F07EF8 /* UIFont+JKCustomLoader.m in Sources */,
+				84CAD8081EA0BD5D00BDF9AA /* WZVariousCollectionController.m in Sources */,
 				84514CD51E9DCE7A00F07EF8 /* NSDate+JKZeroDate.m in Sources */,
 				84514D061E9DCE7A00F07EF8 /* NSString+JKTrims.m in Sources */,
 				84514CE61E9DCE7A00F07EF8 /* NSDecimalNumber+JKExtensions.m in Sources */,

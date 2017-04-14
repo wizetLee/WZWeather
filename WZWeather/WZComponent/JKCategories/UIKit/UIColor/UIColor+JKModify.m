@@ -13,11 +13,16 @@
     NSArray *components = [self jk_componentArray];
     return [UIColor colorWithRed:1-[components[0] doubleValue] green:1-[components[1] doubleValue] blue:1-[components[2] doubleValue] alpha:[components[3] doubleValue]];
 }
+/**
+ *  半透明颜色
+ *
+ */
 - (UIColor *)jk_colorForTranslucency{
     CGFloat hue = 0, saturation = 0, brightness = 0, alpha = 0;
     [self getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
     return [UIColor colorWithHue:hue saturation:saturation*1.158 brightness:brightness*0.95 alpha:alpha];
 }
+
 - (UIColor *)jk_lightenColor:(CGFloat)lighten{
     CGFloat hue = 0, saturation = 0, brightness = 0, alpha = 0;
     [self getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
@@ -30,7 +35,8 @@
 }
 - (NSArray *)jk_componentArray{
     CGFloat red, green, blue, alpha;
-    const CGFloat *components = CGColorGetComponents([self CGColor]);
+    const CGFloat *components = CGColorGetComponents([self CGColor]);//浮点数组
+//    NSLog(@"%zu",CGColorGetNumberOfComponents([self CGColor]));
     if(CGColorGetNumberOfComponents([self CGColor]) == 2){
         red = components[0];
         green = components[0];

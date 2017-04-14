@@ -16,6 +16,8 @@ NSString * const UIDevicePasscodeKeychainAccount = @"UIDevice-PasscodeStatus_Key
 
 - (BOOL)jk_passcodeStatusSupported
 {
+    
+//检测是否为模拟器
 #if TARGET_IPHONE_SIMULATOR
     return NO;
 #endif

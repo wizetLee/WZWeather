@@ -45,7 +45,7 @@
 #import "UIFont+JKTTF.h"
 #import "UIImage+JKAlpha.h"
 #import "UIImage+JKAnimatedGIF.h"
-#import "UIImage+JKBetterFace.h"
+#import "UIImage+JKBetterFace.h"//返回人脸图
 #import "UIImage+JKBlur.h"
 #import "UIImage+JKCapture.h"
 #import "UIImage+JKColor.h"

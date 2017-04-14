@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UIColor (JKModify)
+
+//颜色翻转
 - (UIColor *)jk_invertedColor;
 - (UIColor *)jk_colorForTranslucency;
 - (UIColor *)jk_lightenColor:(CGFloat)lighten;

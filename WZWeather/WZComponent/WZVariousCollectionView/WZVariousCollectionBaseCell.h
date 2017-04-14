@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, WZVariousCollectionMethod) {
 @interface WZVariousCollectionBaseCell : UICollectionViewCell
 
 @property (nonatomic, weak) UIViewController *locatedController;
-@property (nonatomic, assign) id<WZVariousCollectionDelegate> variousViewDelegate;
+@property (nonatomic, weak) id<WZVariousCollectionDelegate> variousViewDelegate;
 @property (nonatomic, strong) WZVariousCollectionBaseObject *data;
 
 - (void)isLastElement:(BOOL)boolean;

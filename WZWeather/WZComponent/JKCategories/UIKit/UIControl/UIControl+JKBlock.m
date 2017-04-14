@@ -37,6 +37,12 @@
 // internal framework use
 // UIControlEventAllEvents           = 0xFFFFFFFF
 
+
+/*
+ 单井号(#)在宏定义中的作用就是  把传递过来的参数当成字符串进行替换
+ 
+ 双井号(##)又称连接符，它的作用就是 将参数和前面或后面的子串连接起来，成为一个新的子串
+ */
 #define JK_UICONTROL_EVENT(methodName, eventName)                                \
 -(void)methodName : (void (^)(void))eventBlock {                              \
     objc_setAssociatedObject(self, @selector(methodName:), eventBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);\

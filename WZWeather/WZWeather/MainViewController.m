@@ -28,7 +28,10 @@
     [super viewDidLoad];
     [self textDefine];
     
-    NSLog(@"%@",[UIDevice currentDevice].identifierForVendor);
+//    NSLog(@"%@",[UIDevice currentDevice].identifierForVendor);
+    [[UIColor jk_colorWithHex:0x000000] jk_invertedColor];
+    NSLog(@"%@",[UIDevice jk_macAddress]);
+    
 }
 
 - (void)textDefine {
@@ -38,7 +41,6 @@
     NSLog(@"%lf",NAVIGATIONBAR_HEIGHT);
     NSLog(@"%lf",ORIGION_Y_WITH_NAVIGATION);
     NSLog(@"%lf",ORIGION_Y_WITHOUT_NAVIGATION);
-
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
