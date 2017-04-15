@@ -69,11 +69,7 @@
     _p.headerContent = _c;
     
     _cv.sectionsProviders = [NSMutableArray arrayWithArray:@[_p,@"sadasd",[NSObject class]]];
-    _cv.sectionsDatas = mArr;}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    _cv.sectionsDatas = mArr;
 }
 
 
