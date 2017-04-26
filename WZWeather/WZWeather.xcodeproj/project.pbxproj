@@ -232,6 +232,10 @@
 		84514D8E1E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CB81E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m */; };
 		84514D8F1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CBB1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m */; };
 		84514D9F1E9E2C2B00F07EF8 /* WZBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514D9E1E9E2C2B00F07EF8 /* WZBaseNavigationController.m */; };
+		845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */; };
+		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
+		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
+		845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
 		846920B31E63BB550048BBDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846920B21E63BB550048BBDC /* Assets.xcassets */; };
@@ -719,6 +723,13 @@
 		84514CBB1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+JKHierarchy.m"; sourceTree = "<group>"; };
 		84514D9D1E9E2C2B00F07EF8 /* WZBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBaseNavigationController.h; sourceTree = "<group>"; };
 		84514D9E1E9E2C2B00F07EF8 /* WZBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBaseNavigationController.m; sourceTree = "<group>"; };
+		845BD8F11EB077F8004AC354 /* WZAFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		845BD8F71EB082EE004AC354 /* WZCTTelephonyNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZCTTelephonyNetworkInfo.h; sourceTree = "<group>"; };
+		845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZCTTelephonyNetworkInfo.m; sourceTree = "<group>"; };
+		845BD8FD1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTCarrier+WZCTCarrierInfo.h"; sourceTree = "<group>"; };
+		845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CTCarrier+WZCTCarrierInfo.m"; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846920A71E63BB550048BBDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		846920A91E63BB550048BBDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -749,6 +760,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */,
 				56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1797,6 +1809,27 @@
 			path = WZCategories;
 			sourceTree = "<group>";
 		};
+		845BD8F01EB0509A004AC354 /* WZNetworkMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				845BD8F61EB080AC004AC354 /* WZTelephoneNetworkInfo */,
+				845BD8F11EB077F8004AC354 /* WZAFNetworkReachabilityManager.h */,
+				845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */,
+			);
+			path = WZNetworkMonitor;
+			sourceTree = "<group>";
+		};
+		845BD8F61EB080AC004AC354 /* WZTelephoneNetworkInfo */ = {
+			isa = PBXGroup;
+			children = (
+				845BD8F71EB082EE004AC354 /* WZCTTelephonyNetworkInfo.h */,
+				845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */,
+				845BD8FD1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.h */,
+				845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */,
+			);
+			path = WZTelephoneNetworkInfo;
+			sourceTree = "<group>";
+		};
 		8469209A1E63BB550048BBDC = {
 			isa = PBXGroup;
 			children = (
@@ -1875,6 +1908,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
 				844A483E1E9F657B0002829A /* WZVariousCollectionView */,
 				84514D911E9DCF0A00F07EF8 /* WZCategories */,
 				84514AC71E9DCE7A00F07EF8 /* JKCategories */,
@@ -1899,6 +1933,7 @@
 		BDE51CC601D75414A3C2652E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */,
 				418487491B495564256C463C /* Pods_WZWeather.framework */,
 			);
 			name = Frameworks;
@@ -2204,9 +2239,11 @@
 				84514CCF1E9DCE7A00F07EF8 /* NSDate+JKCupertinoYankee.m in Sources */,
 				84514CD41E9DCE7A00F07EF8 /* NSDate+JKUtilities.m in Sources */,
 				84514CED1E9DCE7A00F07EF8 /* NSObject+JKAutoCoding.m in Sources */,
+				845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */,
 				84514D0D1E9DCE7A00F07EF8 /* NSURL+JKQueryDictionary.m in Sources */,
 				846920E01E63D6920048BBDC /* MainViewController.m in Sources */,
 				84514D031E9DCE7A00F07EF8 /* NSString+JKScore.m in Sources */,
+				845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */,
 				84514D811E9DCE7A00F07EF8 /* UIViewController+JKBackButtonTouched.m in Sources */,
 				84514D241E9DCE7A00F07EF8 /* UIBezierPath+JKLength.m in Sources */,
 				84514D561E9DCE7A00F07EF8 /* UILabel+JKAutoSize.m in Sources */,
@@ -2250,6 +2287,7 @@
 				84514CC41E9DCE7A00F07EF8 /* NSArray+JKBlock.m in Sources */,
 				84514CE51E9DCE7A00F07EF8 /* NSDecimalNumber+JKCalculatingByString.m in Sources */,
 				84514D7C1E9DCE7A00F07EF8 /* UIView+JKScreenshot.m in Sources */,
+				845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */,
 				84514D411E9DCE7A00F07EF8 /* UIImage+JKBlur.m in Sources */,
 				84514D071E9DCE7A00F07EF8 /* NSString+JKURLEncode.m in Sources */,
 				844A485F1E9F9A620002829A /* WZVariousCollectionReusableContent.m in Sources */,

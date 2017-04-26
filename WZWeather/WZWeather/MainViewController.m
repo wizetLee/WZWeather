@@ -26,22 +26,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self textDefine];
+//    [self textDefine];
     
 //    NSLog(@"%@",[UIDevice currentDevice].identifierForVendor);
-    [[UIColor jk_colorWithHex:0x000000] jk_invertedColor];
-    NSLog(@"%@",[UIDevice jk_macAddress]);
+//    [[UIColor jk_colorWithHex:0x000000] jk_invertedColor];
+//    NSLog(@"%@",[UIDevice jk_macAddress]);
+    CTCallCenter *center = [[CTCallCenter alloc] init];
+    NSLog(@"%@",[center description]);
+    
+    center.callEventHandler = ^(CTCall *call) {
+        NSLog(@"call:%@", [call description]);
+    };
     
 }
 
-- (void)textDefine {
-    NSLog(@"%lf",SCREEN_WIDTH);
-    NSLog(@"%lf",SCREEN_HEIGHT);
-    NSLog(@"%lf",STATUS_BAR_HEIGHT);
-    NSLog(@"%lf",NAVIGATIONBAR_HEIGHT);
-    NSLog(@"%lf",ORIGION_Y_WITH_NAVIGATION);
-    NSLog(@"%lf",ORIGION_Y_WITHOUT_NAVIGATION);
-}
+//- (void)textDefine {
+//    NSLog(@"%lf",SCREEN_WIDTH);
+//    NSLog(@"%lf",SCREEN_HEIGHT);
+//    NSLog(@"%lf",STATUS_BAR_HEIGHT);
+//    NSLog(@"%lf",NAVIGATIONBAR_HEIGHT);
+//    NSLog(@"%lf",ORIGION_Y_WITH_NAVIGATION);
+//    NSLog(@"%lf",ORIGION_Y_WITHOUT_NAVIGATION);
+//}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];

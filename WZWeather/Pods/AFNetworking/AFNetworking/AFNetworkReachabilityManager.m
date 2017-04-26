@@ -81,9 +81,11 @@ static AFNetworkReachabilityStatus AFNetworkReachabilityStatusForFlags(SCNetwork
 static void AFPostReachabilityStatusChange(SCNetworkReachabilityFlags flags, AFNetworkReachabilityStatusBlock block) {
     AFNetworkReachabilityStatus status = AFNetworkReachabilityStatusForFlags(flags);
     dispatch_async(dispatch_get_main_queue(), ^{
+        //主线程回调
         if (block) {
             block(status);
         }
+        //通知回调
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         NSDictionary *userInfo = @{ AFNetworkingReachabilityNotificationStatusItem: @(status) };
         [notificationCenter postNotificationName:AFNetworkingReachabilityDidChangeNotification object:nil userInfo:userInfo];
@@ -117,7 +119,17 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         struct sockaddr_in address;
-        bzero(&address, sizeof(address));
+            /*
+             struct sockaddr_in
+             {
+                __uint8_t sin_len成员表示地址结构的长度,它是一个无符号的八位整数
+                short sin_family;Address family一般来说AF_INET（地址族）PF_INET（协议族）
+                unsigned short sin_port;Port number(必须要采用网络数据格式,普通数字可以用htons()函数转换成网络数据格式的数字)
+                struct in_addr sin_addr;IP address in network byte order（Internet address）
+                unsigned char sin_zero[8];Same size as struct sockaddr没有实际意义,只是为了　跟SOCKADDR结构在内存中对齐
+            };
+             */
+        bzero(&address, sizeof(address));//置&address 前的sizeof（address）个字节为空
         address.sin_len = sizeof(address);
         address.sin_family = AF_INET;
 
@@ -139,6 +151,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
 #ifndef __clang_analyzer__
 + (instancetype)managerForAddress:(const void *)address {
+    //创建 “可用网络对象”
     SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)address);
     AFNetworkReachabilityManager *manager = [[self alloc] initWithReachability:reachability];
 
@@ -152,7 +165,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
         return nil;
     }
 
-    self.networkReachability = CFBridgingRelease(reachability);
+    self.networkReachability = CFBridgingRelease(reachability);/*SCNetworkReachabilityRef CF对象转为OC对象*/
     self.networkReachabilityStatus = AFNetworkReachabilityStatusUnknown;
 
     return self;
@@ -189,7 +202,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     if (!self.networkReachability) {
         return;
     }
-
+    //回调
     __weak __typeof(self)weakSelf = self;
     AFNetworkReachabilityStatusBlock callback = ^(AFNetworkReachabilityStatus status) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -202,10 +215,12 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     };
 
     id networkReachability = self.networkReachability;
+    //配置"可用网络对象回话"
     SCNetworkReachabilityContext context = {0, (__bridge void *)callback, AFNetworkReachabilityRetainCallback, AFNetworkReachabilityReleaseCallback, NULL};
     SCNetworkReachabilitySetCallback((__bridge SCNetworkReachabilityRef)networkReachability, AFNetworkReachabilityCallback, &context);
     SCNetworkReachabilityScheduleWithRunLoop((__bridge SCNetworkReachabilityRef)networkReachability, CFRunLoopGetMain(), kCFRunLoopCommonModes);
 
+    //开始在并行队列监听
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^{
         SCNetworkReachabilityFlags flags;
         if (SCNetworkReachabilityGetFlags((__bridge SCNetworkReachabilityRef)networkReachability, &flags)) {
