@@ -244,6 +244,9 @@
 		846920CC1E63BB550048BBDC /* WZWeatherUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920CB1E63BB550048BBDC /* WZWeatherUITests.m */; };
 		846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DC1E63D2140048BBDC /* WZBaseViewController.m */; };
 		846920E01E63D6920048BBDC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DF1E63D6920048BBDC /* MainViewController.m */; };
+		8497C42A1EB3465200EB9F60 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8497C4291EB3465200EB9F60 /* NotificationCenter.framework */; };
+		8497C42E1EB3465200EB9F60 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497C42D1EB3465200EB9F60 /* TodayViewController.m */; };
+		8497C4351EB3465200EB9F60 /* WZTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */; };
 		84CAD8081EA0BD5D00BDF9AA /* WZVariousCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */; };
 /* End PBXBuildFile section */
@@ -263,7 +266,28 @@
 			remoteGlobalIDString = 846920A21E63BB550048BBDC;
 			remoteInfo = WZWeather;
 		};
+		8497C4331EB3465200EB9F60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8469209B1E63BB550048BBDC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8497C4271EB3465200EB9F60;
+			remoteInfo = WZTodayExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8497C4391EB3465200EB9F60 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8497C4351EB3465200EB9F60 /* WZTodayExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
@@ -748,6 +772,11 @@
 		846920DE1E63D6920048BBDC /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		846920DF1E63D6920048BBDC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		846920E11E63F4430048BBDC /* WZ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZ.pch; sourceTree = "<group>"; };
+		8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WZTodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8497C4291EB3465200EB9F60 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		8497C42C1EB3465200EB9F60 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		8497C42D1EB3465200EB9F60 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		8497C4321EB3465200EB9F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84CAD8031EA07EEA00BDF9AA /* WZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZUserInfo.h; sourceTree = "<group>"; };
 		84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZUserInfo.m; sourceTree = "<group>"; };
 		84CAD8061EA0BD5D00BDF9AA /* WZVariousCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionController.h; sourceTree = "<group>"; };
@@ -776,6 +805,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8497C4251EB3465200EB9F60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8497C42A1EB3465200EB9F60 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1809,6 +1846,14 @@
 			path = WZCategories;
 			sourceTree = "<group>";
 		};
+		8457DE211EB2CDD500244DED /* WZApplicationExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				8497C4231EB3459300EB9F60 /* WZWidget */,
+			);
+			path = WZApplicationExtensions;
+			sourceTree = "<group>";
+		};
 		845BD8F01EB0509A004AC354 /* WZNetworkMonitor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1838,6 +1883,7 @@
 				846920A51E63BB550048BBDC /* WZWeather */,
 				846920BF1E63BB550048BBDC /* WZWeatherTests */,
 				846920CA1E63BB550048BBDC /* WZWeatherUITests */,
+				8497C42B1EB3465200EB9F60 /* WZTodayExtension */,
 				846920A41E63BB550048BBDC /* Products */,
 				3AC0C433C5CD63FA0EE1B67F /* Pods */,
 				BDE51CC601D75414A3C2652E /* Frameworks */,
@@ -1850,6 +1896,7 @@
 				846920A31E63BB550048BBDC /* WZWeather.app */,
 				846920BC1E63BB550048BBDC /* WZWeatherTests.xctest */,
 				846920C71E63BB550048BBDC /* WZWeatherUITests.xctest */,
+				8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1908,6 +1955,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+				8457DE211EB2CDD500244DED /* WZApplicationExtensions */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
 				844A483E1E9F657B0002829A /* WZVariousCollectionView */,
 				84514D911E9DCF0A00F07EF8 /* WZCategories */,
@@ -1930,11 +1978,29 @@
 			path = WZVC;
 			sourceTree = "<group>";
 		};
+		8497C4231EB3459300EB9F60 /* WZWidget */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WZWidget;
+			sourceTree = "<group>";
+		};
+		8497C42B1EB3465200EB9F60 /* WZTodayExtension */ = {
+			isa = PBXGroup;
+			children = (
+				8497C42C1EB3465200EB9F60 /* TodayViewController.h */,
+				8497C42D1EB3465200EB9F60 /* TodayViewController.m */,
+				8497C4321EB3465200EB9F60 /* Info.plist */,
+			);
+			path = WZTodayExtension;
+			sourceTree = "<group>";
+		};
 		BDE51CC601D75414A3C2652E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */,
 				418487491B495564256C463C /* Pods_WZWeather.framework */,
+				8497C4291EB3465200EB9F60 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1952,10 +2018,12 @@
 				846920A11E63BB550048BBDC /* Resources */,
 				5A535109932BD6EA81CDD4AD /* [CP] Embed Pods Frameworks */,
 				13CC24B28AF6195C05276CCF /* [CP] Copy Pods Resources */,
+				8497C4391EB3465200EB9F60 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8497C4341EB3465200EB9F60 /* PBXTargetDependency */,
 			);
 			name = WZWeather;
 			productName = WZWeather;
@@ -1998,6 +2066,23 @@
 			productReference = 846920C71E63BB550048BBDC /* WZWeatherUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		8497C4271EB3465200EB9F60 /* WZTodayExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8497C4361EB3465200EB9F60 /* Build configuration list for PBXNativeTarget "WZTodayExtension" */;
+			buildPhases = (
+				8497C4241EB3465200EB9F60 /* Sources */,
+				8497C4251EB3465200EB9F60 /* Frameworks */,
+				8497C4261EB3465200EB9F60 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WZTodayExtension;
+			productName = WZTodayExtension;
+			productReference = 8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2009,6 +2094,7 @@
 				TargetAttributes = {
 					846920A21E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7MUPB6659U;
 					};
 					846920BB1E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -2017,6 +2103,10 @@
 					846920C61E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
 						TestTargetID = 846920A21E63BB550048BBDC;
+					};
+					8497C4271EB3465200EB9F60 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7MUPB6659U;
 					};
 				};
 			};
@@ -2036,6 +2126,7 @@
 				846920A21E63BB550048BBDC /* WZWeather */,
 				846920BB1E63BB550048BBDC /* WZWeatherTests */,
 				846920C61E63BB550048BBDC /* WZWeatherUITests */,
+				8497C4271EB3465200EB9F60 /* WZTodayExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -2058,6 +2149,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		846920C51E63BB550048BBDC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8497C4261EB3465200EB9F60 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2371,6 +2469,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8497C4241EB3465200EB9F60 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8497C42E1EB3465200EB9F60 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2383,6 +2489,11 @@
 			isa = PBXTargetDependency;
 			target = 846920A21E63BB550048BBDC /* WZWeather */;
 			targetProxy = 846920C81E63BB550048BBDC /* PBXContainerItemProxy */;
+		};
+		8497C4341EB3465200EB9F60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8497C4271EB3465200EB9F60 /* WZTodayExtension */;
+			targetProxy = 8497C4331EB3465200EB9F60 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2485,12 +2596,15 @@
 			baseConfigurationReference = 11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
 				INFOPLIST_FILE = WZWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
@@ -2499,12 +2613,19 @@
 			baseConfigurationReference = B89722B026D64E98689EF1AF /* Pods-WZWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+				);
 				INFOPLIST_FILE = WZWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
@@ -2554,6 +2675,32 @@
 			};
 			name = Release;
 		};
+		8497C4371EB3465200EB9F60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = WZTodayExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather.WZTodayExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		8497C4381EB3465200EB9F60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = WZTodayExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather.WZTodayExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2592,6 +2739,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8497C4361EB3465200EB9F60 /* Build configuration list for PBXNativeTarget "WZTodayExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8497C4371EB3465200EB9F60 /* Debug */,
+				8497C4381EB3465200EB9F60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

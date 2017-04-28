@@ -7,8 +7,11 @@
 //
 
 #import <AFNetworking/AFNetworking.h>
+#import "WZCTTelephonyNetworkInfo.h"
 
 @interface WZAFNetworkReachabilityManager : AFNetworkReachabilityManager
+
+@property (nonatomic, strong) WZCTTelephonyNetworkInfo *networkInfo;
 
 + (void)beginMonitoring;
 

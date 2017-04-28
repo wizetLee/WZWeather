@@ -9,5 +9,7 @@
 #import "WZBaseViewController.h"
 
 @interface MainViewController : WZBaseViewController
-
+{
+    NSString *a;
+}
 @end

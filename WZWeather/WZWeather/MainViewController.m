@@ -15,6 +15,8 @@
 
 @interface MainViewController ()
 
+@property (nonatomic, strong)  CTCallCenter *center;
+
 @end
 
 @implementation MainViewController
@@ -31,23 +33,17 @@
 //    NSLog(@"%@",[UIDevice currentDevice].identifierForVendor);
 //    [[UIColor jk_colorWithHex:0x000000] jk_invertedColor];
 //    NSLog(@"%@",[UIDevice jk_macAddress]);
-    CTCallCenter *center = [[CTCallCenter alloc] init];
-    NSLog(@"%@",[center description]);
-    
-    center.callEventHandler = ^(CTCall *call) {
+    _center  = [[CTCallCenter alloc] init];
+//    NSLog(@"%@",[_center description]);
+    __weak typeof(self) weakSelf = self;
+    _center.callEventHandler = ^(CTCall *call) {
+        NSSet<CTCall*> *callSets = weakSelf.center.currentCalls;
+        NSLog(@"%@",callSets);
         NSLog(@"call:%@", [call description]);
     };
     
+//    MKAnnotationView
 }
-
-//- (void)textDefine {
-//    NSLog(@"%lf",SCREEN_WIDTH);
-//    NSLog(@"%lf",SCREEN_HEIGHT);
-//    NSLog(@"%lf",STATUS_BAR_HEIGHT);
-//    NSLog(@"%lf",NAVIGATIONBAR_HEIGHT);
-//    NSLog(@"%lf",ORIGION_Y_WITH_NAVIGATION);
-//    NSLog(@"%lf",ORIGION_Y_WITHOUT_NAVIGATION);
-//}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];

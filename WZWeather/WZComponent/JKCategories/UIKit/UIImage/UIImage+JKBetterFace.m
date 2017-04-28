@@ -101,6 +101,7 @@
     CIImage *ciImage = [CIImage imageWithCGImage:image.CGImage];
     NSString *accuraryStr = (accurary == JKAccuracyLow) ? CIDetectorAccuracyLow : CIDetectorAccuracyHigh;
     
+    //侦测器  侦测类型为人脸
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace
                                               context:nil
                                               options:@{CIDetectorAccuracy: accuraryStr}];

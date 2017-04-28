@@ -11,6 +11,13 @@
 
 #pragma mark file
 
+//消除弃用警告 http://www.jianshu.com/p/eb03e20f7b1c
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+////区间
+//#pragma clang diagnostic pop
+
+
 #import "WZUserInfo.h"
 
 //CoreTelephony

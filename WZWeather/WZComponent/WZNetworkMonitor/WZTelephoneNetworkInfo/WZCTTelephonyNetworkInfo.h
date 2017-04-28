@@ -8,9 +8,11 @@
 
 #import <CoreTelephony/CoreTelephonyDefines.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import "CTCarrier+WZCTCarrierInfo.h"
 
 @interface WZCTTelephonyNetworkInfo : CTTelephonyNetworkInfo
 
+//运营商变更通知
 
 //CTCarrier  运营商名字
 

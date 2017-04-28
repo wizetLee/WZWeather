@@ -41,12 +41,12 @@
     maxSize.height = MAXFLOAT; // infinite height
     
   }
-  
+
   // Now, calculate the size of the label constrained to maxSize
   CGSize tempSize = [[self text] sizeWithFont:[self font] 
                             constrainedToSize:maxSize 
                                 lineBreakMode:[self lineBreakMode]];
-  
+
   // If minSize is specified (not CGSizeZero) then 
   // check if the new calculated size is smaller than
   // the minimum size
