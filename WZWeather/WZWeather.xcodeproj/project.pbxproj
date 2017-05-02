@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; settings = {ASSET_TAGS = (); }; };
+		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; settings = {ASSET_TAGS = (); }; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
 		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */; };
@@ -291,6 +293,10 @@
 
 /* Begin PBXFileReference section */
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
+		40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundRenderLayer.h; sourceTree = "<group>"; };
+		40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRoundRenderLayer.m; sourceTree = "<group>"; };
+		40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundSelectorLogicView.h; sourceTree = "<group>"; };
+		40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRoundSelectorLogicView.m; sourceTree = "<group>"; };
 		418487491B495564256C463C /* Pods_WZWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8444C8AB1EA0594600DD6259 /* sViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sViewController.h; sourceTree = "<group>"; };
 		8444C8AC1EA0594600DD6259 /* sViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sViewController.m; sourceTree = "<group>"; };
@@ -826,6 +832,25 @@
 				B89722B026D64E98689EF1AF /* Pods-WZWeather.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		40DC2AFF1EA2611C000968DB /* WZView */ = {
+			isa = PBXGroup;
+			children = (
+				40DC2B001EA2611C000968DB /* WZBaseRoundSelector */,
+			);
+			path = WZView;
+			sourceTree = "<group>";
+		};
+		40DC2B001EA2611C000968DB /* WZBaseRoundSelector */ = {
+			isa = PBXGroup;
+			children = (
+				40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */,
+				40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */,
+				40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */,
+				40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */,
+			);
+			path = WZBaseRoundSelector;
 			sourceTree = "<group>";
 		};
 		844A483E1E9F657B0002829A /* WZVariousCollectionView */ = {
@@ -1955,8 +1980,12 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				8457DE211EB2CDD500244DED /* WZApplicationExtensions */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
+=======
+				40DC2AFF1EA2611C000968DB /* WZView */,
+>>>>>>> origin/master
 				844A483E1E9F657B0002829A /* WZVariousCollectionView */,
 				84514D911E9DCF0A00F07EF8 /* WZCategories */,
 				84514AC71E9DCE7A00F07EF8 /* JKCategories */,
@@ -2252,6 +2281,7 @@
 				84514D711E9DCE7A00F07EF8 /* UITextView+JKPlaceHolder.m in Sources */,
 				84514D361E9DCE7A00F07EF8 /* UIControl+JKActionBlocks.m in Sources */,
 				84514CFF1E9DCE7A00F07EF8 /* NSString+JKMIME.m in Sources */,
+				40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */,
 				84514D8B1E9DCE7A00F07EF8 /* UIWebView+JKMetaParser.m in Sources */,
 				84514D851E9DCE7A00F07EF8 /* UIViewController+JKVisible.m in Sources */,
 				84514CD71E9DCE7A00F07EF8 /* NSDictionary+JKBlock.m in Sources */,
@@ -2440,6 +2470,7 @@
 				84514D3E1E9DCE7A00F07EF8 /* UIImage+JKAlpha.m in Sources */,
 				84514CEE1E9DCE7A00F07EF8 /* NSObject+JKBlocks.m in Sources */,
 				846920A81E63BB550048BBDC /* main.m in Sources */,
+				40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */,
 				84514CE11E9DCE7A00F07EF8 /* NSIndexPath+JKOffset.m in Sources */,
 				84514CEF1E9DCE7A00F07EF8 /* NSObject+JKBlockTimer.m in Sources */,
 				84514D871E9DCE7A00F07EF8 /* UIWebView+JKCanvas.m in Sources */,

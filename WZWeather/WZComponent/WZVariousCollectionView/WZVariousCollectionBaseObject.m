@@ -12,7 +12,6 @@
 @implementation WZVariousCollectionBaseObject
 @synthesize cellType = _cellType;
 
-
 + (NSDictionary *)modelCustomPropertyMapper {
     return [NSDictionary dictionary];
 }
