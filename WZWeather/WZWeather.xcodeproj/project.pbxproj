@@ -1980,12 +1980,9 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				8457DE211EB2CDD500244DED /* WZApplicationExtensions */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
-=======
 				40DC2AFF1EA2611C000968DB /* WZView */,
->>>>>>> origin/master
 				844A483E1E9F657B0002829A /* WZVariousCollectionView */,
 				84514D911E9DCF0A00F07EF8 /* WZCategories */,
 				84514AC71E9DCE7A00F07EF8 /* JKCategories */,

@@ -70,8 +70,6 @@
     
     _cv.sectionsProviders = [NSMutableArray arrayWithArray:@[_p,@"sadasd",[NSObject class]]];
     _cv.sectionsDatas = mArr;
-<<<<<<< HEAD
-
 
 
 }
@@ -79,8 +77,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-=======
->>>>>>> origin/master
 }
 
 
