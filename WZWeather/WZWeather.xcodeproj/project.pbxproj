@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; settings = {ASSET_TAGS = (); }; };
-		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; settings = {ASSET_TAGS = (); }; };
+		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
+		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
 		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */; };
@@ -21,6 +21,7 @@
 		844A48591E9F699B0002829A /* B1.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48581E9F699B0002829A /* B1.m */; };
 		844A485C1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A485B1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m */; };
 		844A485F1E9F9A620002829A /* WZVariousCollectionReusableContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A485E1E9F9A620002829A /* WZVariousCollectionReusableContent.m */; };
+		844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */; };
 		84514CBC1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514ACB1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m */; };
 		84514CBD1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514ACE1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.m */; };
 		84514CBE1E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514AD01E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m */; };
@@ -320,6 +321,8 @@
 		844A485B1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionSectionsBaseProvider.m; sourceTree = "<group>"; };
 		844A485D1E9F9A620002829A /* WZVariousCollectionReusableContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionReusableContent.h; sourceTree = "<group>"; };
 		844A485E1E9F9A620002829A /* WZVariousCollectionReusableContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionReusableContent.m; sourceTree = "<group>"; };
+		844F3BDC1EB9E698005E6ACF /* WZTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZTimeSuperviser.h; sourceTree = "<group>"; };
+		844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZTimeSuperviser.m; sourceTree = "<group>"; };
 		84514ACA1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+JKExtensions.h"; sourceTree = "<group>"; };
 		84514ACB1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+JKExtensions.m"; sourceTree = "<group>"; };
 		84514ACD1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+JKDictionary.h"; sourceTree = "<group>"; };
@@ -872,6 +875,15 @@
 				844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */,
 			);
 			path = WZVariousCollectionView;
+			sourceTree = "<group>";
+		};
+		844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */ = {
+			isa = PBXGroup;
+			children = (
+				844F3BDC1EB9E698005E6ACF /* WZTimeSuperviser.h */,
+				844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */,
+			);
+			path = WZTimeSuperviser;
 			sourceTree = "<group>";
 		};
 		84514AC71E9DCE7A00F07EF8 /* JKCategories */ = {
@@ -1871,14 +1883,6 @@
 			path = WZCategories;
 			sourceTree = "<group>";
 		};
-		8457DE211EB2CDD500244DED /* WZApplicationExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				8497C4231EB3459300EB9F60 /* WZWidget */,
-			);
-			path = WZApplicationExtensions;
-			sourceTree = "<group>";
-		};
 		845BD8F01EB0509A004AC354 /* WZNetworkMonitor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1980,7 +1984,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
-				8457DE211EB2CDD500244DED /* WZApplicationExtensions */,
+				844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
 				40DC2AFF1EA2611C000968DB /* WZView */,
 				844A483E1E9F657B0002829A /* WZVariousCollectionView */,
@@ -2002,13 +2006,6 @@
 				84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */,
 			);
 			path = WZVC;
-			sourceTree = "<group>";
-		};
-		8497C4231EB3459300EB9F60 /* WZWidget */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WZWidget;
 			sourceTree = "<group>";
 		};
 		8497C42B1EB3465200EB9F60 /* WZTodayExtension */ = {
@@ -2360,6 +2357,7 @@
 				846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */,
 				84514D481E9DCE7A00F07EF8 /* UIImage+JKOrientation.m in Sources */,
 				84514CBE1E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m in Sources */,
+				844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */,
 				84514D0C1E9DCE7A00F07EF8 /* NSURL+JKParam.m in Sources */,
 				84514CCF1E9DCE7A00F07EF8 /* NSDate+JKCupertinoYankee.m in Sources */,
 				84514CD41E9DCE7A00F07EF8 /* NSDate+JKUtilities.m in Sources */,
@@ -2775,6 +2773,7 @@
 				8497C4381EB3465200EB9F60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

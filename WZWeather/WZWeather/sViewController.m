@@ -8,6 +8,7 @@
 
 #import "sViewController.h"
 #import "WZVariousCollectionView.h"
+#import "WZTimeSuperviser.h"
 
 #import "B1.h"
 #import "T1.h"
@@ -17,6 +18,9 @@
 @property (nonatomic, strong) WZVariousCollectionView *cv;
 @property (nonatomic, strong) WZVariousCollectionReusableContent *c;
 @property (nonatomic, strong) WZVariousCollectionSectionsBaseProvider *p;
+
+
+@property (nonatomic, strong)  WZTimeSuperviser *timeSuperviser;
 @end
 
 @implementation sViewController
@@ -24,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _cv = [WZVariousCollectionView staticInitWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
-    [self.view addSubview:_cv];
+//    [self.view addSubview:_cv];
     __weak WZVariousCollectionView * weakSelf = _cv;
     _cv.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
          [weakSelf.mj_header endRefreshing];
@@ -72,6 +76,25 @@
     _cv.sectionsDatas = mArr;
 
 
+    
+    _timeSuperviser = [[WZTimeSuperviser alloc] init];
+    _timeSuperviser.delegate = (id<WZTimeSuperviserDelegate>)self;
+    [_timeSuperviser timeSuperviserFire];
+    
+    
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (_timeSuperviser) {
+        [_timeSuperviser timeSuperviserFire];
+    }
+}
+
+- (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime {
+    NSLog(@"currentTime:%lf,interval:%lf", currentTime,[NSDate date].timeIntervalSince1970);
+    if (currentTime >= 10) {
+        [timeSuperviser timeSuperviserPause];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,6 +108,10 @@
    
 }
 
+
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
 /*
 #pragma mark - Navigation
 
