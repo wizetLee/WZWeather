@@ -33,9 +33,17 @@
 @property (nonatomic, assign, readonly) BOOL pause;
 
 /**
- *  持续时间
+ *  持续时间（回调抛出时间）
  */
 @property (nonatomic, assign, readonly) NSTimeInterval duration;
+
+/**
+ *  事件终止时间（
+ *  ps：由于interal的设定 使得 duration最终值与terminalTime有所差异  但总有duration >= terminalTime时，终止代理回调）
+ *  因此需要主观地设置interval可最终使得duration == terminalTime
+ *  terminalTime 默认为0时  计时器需要手动停止 
+ */
+@property (nonatomic, assign) NSTimeInterval terminalTime;
 
 /**
  *  回调代理
@@ -49,5 +57,8 @@
 
 - (void)timeSuperviserStop;
 
+- (void)fireEvent;
+
+- (void)timerEvent;
 
 @end

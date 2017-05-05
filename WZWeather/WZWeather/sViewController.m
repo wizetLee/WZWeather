@@ -8,7 +8,7 @@
 
 #import "sViewController.h"
 #import "WZVariousCollectionView.h"
-#import "WZTimeSuperviser.h"
+#import "WZDisplayLinkSuperviser.h"
 
 #import "B1.h"
 #import "T1.h"
@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _cv = [WZVariousCollectionView staticInitWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
-//    [self.view addSubview:_cv];
+    [self.view addSubview:_cv];
     __weak WZVariousCollectionView * weakSelf = _cv;
     _cv.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
          [weakSelf.mj_header endRefreshing];
@@ -77,11 +77,11 @@
 
 
     
-    _timeSuperviser = [[WZTimeSuperviser alloc] init];
+    _timeSuperviser = [[WZDisplayLinkSuperviser alloc] init];
     _timeSuperviser.delegate = (id<WZTimeSuperviserDelegate>)self;
     [_timeSuperviser timeSuperviserFire];
-    
-    
+    _timeSuperviser.terminalTime = 10;
+    _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, 0);
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -92,9 +92,14 @@
 
 - (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime {
     NSLog(@"currentTime:%lf,interval:%lf", currentTime,[NSDate date].timeIntervalSince1970);
-    if (currentTime >= 10) {
+    if (currentTime >= 100) {
         [timeSuperviser timeSuperviserPause];
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //需要回到主线程对处理UI
+        _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, currentTime);
+    });
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -50,7 +50,7 @@
     };
     
   
-    
+
     
 //    _timer  = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(time) userInfo:nil repeats:true];
 //    [_timer fire];

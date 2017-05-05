@@ -10,6 +10,7 @@
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
+		84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */; };
 		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */; };
 		844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */; };
@@ -299,6 +300,8 @@
 		40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundSelectorLogicView.h; sourceTree = "<group>"; };
 		40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRoundSelectorLogicView.m; sourceTree = "<group>"; };
 		418487491B495564256C463C /* Pods_WZWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDisplayLinkSuperviser.h; sourceTree = "<group>"; };
+		84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDisplayLinkSuperviser.m; sourceTree = "<group>"; };
 		8444C8AB1EA0594600DD6259 /* sViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sViewController.h; sourceTree = "<group>"; };
 		8444C8AC1EA0594600DD6259 /* sViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sViewController.m; sourceTree = "<group>"; };
 		844A483F1E9F657B0002829A /* WZVariousCollectionBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionBaseCell.h; sourceTree = "<group>"; };
@@ -882,6 +885,8 @@
 			children = (
 				844F3BDC1EB9E698005E6ACF /* WZTimeSuperviser.h */,
 				844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */,
+				84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */,
+				84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */,
 			);
 			path = WZTimeSuperviser;
 			sourceTree = "<group>";
@@ -2339,6 +2344,7 @@
 				84514D761E9DCE7A00F07EF8 /* UIView+JKCustomBorder.m in Sources */,
 				84514CFC1E9DCE7A00F07EF8 /* NSString+JKHash.m in Sources */,
 				84514CBC1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m in Sources */,
+				84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */,
 				84514D1F1E9DCE7A00F07EF8 /* UIApplication+JKNetworkActivityIndicator.m in Sources */,
 				84514CE71E9DCE7A00F07EF8 /* NSNumber+JKCGFloat.m in Sources */,
 				84514D3A1E9DCE7A00F07EF8 /* UIDevice+JKPasscodeStatus.m in Sources */,
