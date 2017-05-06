@@ -50,7 +50,13 @@
     };
     
   
-
+    NSTimeInterval aaaa = 0.1;
+    NSTimeInterval bbbb = 0.1;
+    if (aaaa > bbbb) {
+        NSLog(@"a > b");
+    } else if (bbbb > aaaa) {
+         NSLog(@"b > a");
+    }
     
 //    _timer  = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(time) userInfo:nil repeats:true];
 //    [_timer fire];

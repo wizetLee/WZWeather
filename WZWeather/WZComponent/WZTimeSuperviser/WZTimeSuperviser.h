@@ -51,14 +51,25 @@
 @property (nonatomic, weak) id<WZTimeSuperviserDelegate> delegate;
 
 
+/**
+ * 启动定时器（各项属性配置完之后再调用）
+ */
 - (void)timeSuperviserFire;
 
+/**
+ * 暂停定时器
+ */
 - (void)timeSuperviserPause;
 
+/**
+ * 停止定时器
+ */
 - (void)timeSuperviserStop;
 
+#pragma  mark  for subClass
 - (void)fireEvent;
 
+//不可在外调用 仅能在子类中调用
 - (void)timerEvent;
 
 @end

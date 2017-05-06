@@ -23,10 +23,20 @@
 - (void)configTimer {
     //设置速率等
 //    self.interval
+    
+    [self invalidate];
+    
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(dispalyLink:)];
     _displayLink.paused = true;
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    
+    _displayLink.frameInterval = 60.0 * _interval;
+}
+
+- (void)setInterval:(NSTimeInterval)interval {
+    _interval = interval;
+    if (_displayLink) {
+        _displayLink.frameInterval = 60.0 * _interval;
+    }
 }
 
 - (void)dispalyLink:(CADisplayLink *)displayLink {
@@ -38,8 +48,9 @@
     //开始事件
     if (_displayLink) {
         if (_pause) {
-            _pause = false;
+            //恢复启动
         } else {
+            _duration = 0.0;
         }
         _displayLink.paused = false;
     }

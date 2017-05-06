@@ -10,8 +10,9 @@
 
 @interface WZTimeSuperviser()
 
-@property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) NSTimeInterval duration;
+@property (nonatomic, strong) NSTimer *timer;
+
 
 @end
 
@@ -25,36 +26,47 @@
 }
 
 - (void)configTimer {
-    dispatch_queue_t gobleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, gobleQueue);
+    [self invalidate];
 
-    dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, self.interval * NSEC_PER_SEC,  0 * NSEC_PER_SEC);
+    _timer = [NSTimer scheduledTimerWithTimeInterval:_interval target:self selector:@selector(timer:) userInfo:nil repeats:true];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     
-    dispatch_source_set_event_handler(_timer, ^{
-        
-        [self timerEvent];
-        
-    });
+}
+
+- (void)timer:(NSTimer *)timer {
+    [self timerEvent];
 }
 
 /**
  *  定时器事件
  */
 - (void)timerEvent {
-    if ([self.delegate respondsToSelector:@selector(timeSuperviser:currentTime:)]) {
-        [self.delegate timeSuperviser:self currentTime:self.duration];
-    }
+    //执行代理
     
-    if (self.terminalTime) {
-        if (self.duration < self.terminalTime) {
-            //执行代理
-        } else {
-            //终止定时器
-            [self timeSuperviserStop];
+//    NSLog(@"\n self.terminalTime :%lf \n self.duration:%lf"
+//          , self.terminalTime, self.duration);
+    if (_pause) {
+        _pause = false;
+    } else {
+        if (self.duration != 0.0) {
+            if ([self.delegate respondsToSelector:@selector(timeSuperviser:currentTime:)]) {
+                [self.delegate timeSuperviser:self currentTime:self.duration];
+            }
+        }
+        
+        if (self.terminalTime) {
+            NSTimeInterval countDown = (self.terminalTime - self.duration);
+            if (countDown > 0.0) {
+                //持续时间增加
+                //            NSLog(@"\n self.terminalTime :%lf \n self.duration:%lf \n countDown:%lf"
+                //                  , self.terminalTime, self.duration, countDown);
+                self.duration = self.interval + self.duration;
+            } else {
+                //终止定时器
+                [self timeSuperviserStop];
+            }
         }
     }
-    
-    self.duration = self.interval + self.duration;
 }
 
 /**
@@ -73,11 +85,11 @@
     if (_timer) {
         if (_pause) {
             //恢复启动
-            _pause = false;
         } else {
             //首次启动
+            _duration = 0.0;
         }
-        dispatch_resume(_timer);
+        [_timer fire];
     }
 }
 
@@ -102,7 +114,7 @@
  */
 - (void)invalidate {
     if (_timer) {
-        dispatch_source_cancel(_timer);
+        [_timer invalidate];
         _timer = nil;
     }
 }
