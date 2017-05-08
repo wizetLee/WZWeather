@@ -36,7 +36,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self textDefine];
-    
 //    NSLog(@"%@",[UIDevice currentDevice].identifierForVendor);
 //    [[UIColor jk_colorWithHex:0x000000] jk_invertedColor];
 //    NSLog(@"%@",[UIDevice jk_macAddress]);
@@ -50,14 +49,14 @@
     };
     
   
-    NSTimeInterval aaaa = 0.1;
+    double aaaa = 0.1;
     NSTimeInterval bbbb = 0.1;
     if (aaaa > bbbb) {
         NSLog(@"a > b");
     } else if (bbbb > aaaa) {
          NSLog(@"b > a");
     }
-    
+//    
 //    _timer  = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(time) userInfo:nil repeats:true];
 //    [_timer fire];
 //    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];

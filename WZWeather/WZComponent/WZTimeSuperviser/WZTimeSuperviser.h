@@ -14,9 +14,9 @@
 
 - (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime;
 
-
 @end
 
+//存在问题：设置间隔为浮点型时不精确
 @interface WZTimeSuperviser : NSObject
 {
     NSTimeInterval _interval;
@@ -66,10 +66,11 @@
  */
 - (void)timeSuperviserStop;
 
+
 #pragma  mark  for subClass
 - (void)fireEvent;
 
-//不可在外调用 仅能在子类中调用
+//不期望在外部调用 在子类中调用
 - (void)timerEvent;
 
 @end

@@ -76,7 +76,7 @@
     _cv.sectionsProviders = [NSMutableArray arrayWithArray:@[_p,@"sadasd",[NSObject class]]];
     _cv.sectionsDatas = mArr;
 
-    _timeSuperviser = [[WZTimeSuperviser alloc] init];
+    _timeSuperviser = [[WZDisplayLinkSuperviser alloc] init];
     _timeSuperviser.delegate = (id<WZTimeSuperviserDelegate>)self;
     _timeSuperviser.terminalTime = 10.0;
     _timeSuperviser.interval = 1;
@@ -101,17 +101,17 @@
     }
 }
 
-//- (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime {
-//    NSLog(@"currentTime:%lf,interval:%lf", currentTime,[NSDate date].timeIntervalSince1970);
-//    if (currentTime == 5.0) {
-//        [timeSuperviser timeSuperviserPause];
-//    }
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        //需要回到主线程对处理UI
-//        _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, currentTime);
-//    });
-//    
-//}
+- (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime {
+    NSLog(@"currentTime:%lf,interval:%lf", currentTime,[NSDate date].timeIntervalSince1970);
+    if (fabs(currentTime - 5.0) < 0.00001) {
+        [timeSuperviser timeSuperviserPause];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //需要回到主线程对处理UI
+        _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, currentTime);
+    });
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

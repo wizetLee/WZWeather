@@ -55,8 +55,7 @@
         }
         
         if (self.terminalTime) {
-            NSTimeInterval countDown = (self.terminalTime - self.duration);
-            if (countDown > 0.0) {
+            if ((self.terminalTime - self.duration) > 0.00001 ) {
                 //持续时间增加
                 //            NSLog(@"\n self.terminalTime :%lf \n self.duration:%lf \n countDown:%lf"
                 //                  , self.terminalTime, self.duration, countDown);

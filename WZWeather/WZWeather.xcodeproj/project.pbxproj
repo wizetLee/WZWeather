@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; settings = {ASSET_TAGS = (); }; };
+		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
@@ -888,10 +888,10 @@
 			children = (
 				844F3BDC1EB9E698005E6ACF /* WZTimeSuperviser.h */,
 				844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */,
-				84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */,
-				84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */,
 				40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */,
 				40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */,
+				84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */,
+				84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */,
 			);
 			path = WZTimeSuperviser;
 			sourceTree = "<group>";
