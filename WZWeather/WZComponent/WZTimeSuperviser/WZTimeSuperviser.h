@@ -16,7 +16,7 @@
 
 @end
 
-//存在问题：设置间隔为浮点型时不精确
+//存在问题：设置间隔为浮点型时可能不精确
 @interface WZTimeSuperviser : NSObject
 {
     NSTimeInterval _interval;

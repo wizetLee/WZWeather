@@ -13,9 +13,7 @@
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, strong) NSTimer *timer;
 
-
 @end
-
 
 @implementation WZTimeSuperviser
 - (instancetype)init {

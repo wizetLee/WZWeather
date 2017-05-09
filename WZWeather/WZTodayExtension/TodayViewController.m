@@ -9,6 +9,7 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
+
 @interface TodayViewController () <NCWidgetProviding>
 
 @end
@@ -17,6 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setPreferredContentSize:CGSizeMake(1, 300)];
+    
     self.view.backgroundColor = [UIColor yellowColor];
     UIButton *btn = [[UIButton alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:btn];
@@ -50,7 +54,7 @@
 //    
 //}
 
-
+#pragma mark NCWidgetProviding
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
     // Perform any setup necessary in order to update the view.
     
