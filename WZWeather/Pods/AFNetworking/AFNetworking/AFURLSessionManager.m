@@ -24,6 +24,11 @@
 
 #if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090)
 
+/**
+ *  创建一标志为"com.alamofire.networking.session.manager.creation"的串行队列单例
+ *
+ *  @return 串行队列单例
+ */
 static dispatch_queue_t url_session_manager_creation_queue() {
     static dispatch_queue_t af_url_session_manager_creation_queue;
     static dispatch_once_t onceToken;
@@ -34,6 +39,11 @@ static dispatch_queue_t url_session_manager_creation_queue() {
     return af_url_session_manager_creation_queue;
 }
 
+/**
+ *  创建一标志为"com.alamofire.networking.session.manager.processing"的并发队列单例
+ *
+ *  @return @return 并发队列单例
+ */
 static dispatch_queue_t url_session_manager_processing_queue() {
     static dispatch_queue_t af_url_session_manager_processing_queue;
     static dispatch_once_t onceToken;
@@ -44,6 +54,11 @@ static dispatch_queue_t url_session_manager_processing_queue() {
     return af_url_session_manager_processing_queue;
 }
 
+/**
+ *  适用于并发队列中所有的任务都结束后执行某个invoke
+ *
+ *  @return group   //记得创建后需要释放dispath_release
+ */
 static dispatch_group_t url_session_manager_completion_group() {
     static dispatch_group_t af_url_session_manager_completion_group;
     static dispatch_once_t onceToken;
@@ -77,6 +92,7 @@ NSString * const AFNetworkingTaskDidFinishAssetPathKey = @"com.alamofire.network
 
 static NSString * const AFURLSessionManagerLockName = @"com.alamofire.networking.session.manager.lock";
 
+//background session uploadTask 的最大下载数量
 static NSUInteger const AFMaximumNumberOfAttemptsToRecreateBackgroundSessionUploadTask = 3;
 
 static void * AFTaskStateChangedContext = &AFTaskStateChangedContext;
@@ -104,12 +120,12 @@ typedef void (^AFURLSessionDownloadTaskDidResumeBlock)(NSURLSession *session, NS
 typedef void (^AFURLSessionTaskCompletionHandler)(NSURLResponse *response, id responseObject, NSError *error);
 
 #pragma mark -
-
+//实现了代理
 @interface AFURLSessionManagerTaskDelegate : NSObject <NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
-@property (nonatomic, weak) AFURLSessionManager *manager;
-@property (nonatomic, strong) NSMutableData *mutableData;
+@property (nonatomic, weak) AFURLSessionManager *manager;//弱引用着manager
+@property (nonatomic, strong) NSMutableData *mutableData;//可变数据
 @property (nonatomic, strong) NSProgress *progress;
-@property (nonatomic, copy) NSURL *downloadFileURL;
+@property (nonatomic, copy) NSURL *downloadFileURL;//URL
 @property (nonatomic, copy) AFURLSessionDownloadTaskDidFinishDownloadingBlock downloadTaskDidFinishDownloading;
 @property (nonatomic, copy) AFURLSessionTaskCompletionHandler completionHandler;
 @end
@@ -123,7 +139,7 @@ typedef void (^AFURLSessionTaskCompletionHandler)(NSURLResponse *response, id re
     }
 
     self.mutableData = [NSMutableData data];
-
+    //进度
     self.progress = [NSProgress progressWithTotalUnitCount:0];
 
     return self;
@@ -141,6 +157,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     self.progress.completedUnitCount = totalBytesSent;
 }
 
+//task 完成 invoke
 - (void)URLSession:(__unused NSURLSession *)session
               task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error
@@ -170,7 +187,7 @@ didCompleteWithError:(NSError *)error
 
     if (error) {
         userInfo[AFNetworkingTaskDidCompleteErrorKey] = error;
-
+        
         dispatch_group_async(manager.completionGroup ?: url_session_manager_completion_group(), manager.completionQueue ?: dispatch_get_main_queue(), ^{
             if (self.completionHandler) {
                 self.completionHandler(task.response, responseObject, error);
@@ -455,7 +472,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
     
     //Asynchronously calls a completion callback with all data, upload, and download tasks in a session.
     [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
-        
+        //任务完成回调
         for (NSURLSessionDataTask *task in dataTasks) {
             [self addDelegateForDataTask:task completionHandler:nil];
         }

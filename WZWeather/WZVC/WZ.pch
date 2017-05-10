@@ -45,5 +45,9 @@
 #define WZNAVIGATIONBAR_HEIGHT 44.0
 #define WZORIGION_Y_WITH_NAVIGATIONBAR (WZSTATUS_BAR_HEIGHT + WZNAVIGATIONBAR_HEIGHT)
 #define WZORIGION_Y_WITHOUT_NAVIGATIONBAR WZSTATUS_BAR_HEIGHT
+//颜色
+#define WZRGBColor(r, g, b)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define WZRandomColor Color(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
+//WZHexColor
 
 #endif /* WZ_pch */

@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import <WebKit/WebKit.h>
-
+#import "WZWeatherConditionModel.h"
 
 
 @protocol abc <NSObject>
@@ -68,6 +68,20 @@
 ////            NSLog(@"%d", i);
 //        }
 //    }
+    
+    /*
+     [WZWeatherConditionModel fetchWeatherConditionWithAreaCity:@"广州" weatherConditionCallBack:^(NSDictionary *callBack, NSError *error) {
+     if (error) {
+     NSLog(@"%@",error.debugDescription);
+     } else {
+     NSLog(@"%@",callBack);
+     }
+     }];
+     */
+    
+    
+    
+    
 }
 
 - (void)time  {
