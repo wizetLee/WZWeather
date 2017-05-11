@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, AFSSLPinningMode) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+//安全策略 SSL
 @interface AFSecurityPolicy : NSObject <NSSecureCoding, NSCopying>
 
 /**
@@ -46,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The certificates used to evaluate server trust according to the SSL pinning mode. By default, this property is set to any (`.cer`) certificates included in the app bundle. Note that if you create an array with duplicate certificates, the duplicate certificates will be removed. Note that if pinning is enabled, `evaluateServerTrust:forDomain:` will return true if any pinned certificate matches.
  */
-@property (nonatomic, strong, nullable) NSArray *pinnedCertificates;
+@property (nonatomic, strong, nullable) NSArray *pinnedCertificates;//证书
 
 /**
  Whether or not to trust servers with an invalid or expired SSL certificates. Defaults to `NO`.

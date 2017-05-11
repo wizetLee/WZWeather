@@ -8,7 +8,6 @@
 
 #import "MainViewController.h"
 #import <WebKit/WebKit.h>
-#import "WZWeatherConditionModel.h"
 
 
 @protocol abc <NSObject>
@@ -39,23 +38,16 @@
 //    NSLog(@"%@",[UIDevice currentDevice].identifierForVendor);
 //    [[UIColor jk_colorWithHex:0x000000] jk_invertedColor];
 //    NSLog(@"%@",[UIDevice jk_macAddress]);
-    _center  = [[CTCallCenter alloc] init];
-//    NSLog(@"%@",[_center description]);
-    __weak typeof(self) weakSelf = self;
-    _center.callEventHandler = ^(CTCall *call) {
-        NSSet<CTCall*> *callSets = weakSelf.center.currentCalls;
-        NSLog(@"%@",callSets);
-        NSLog(@"call:%@", [call description]);
-    };
+//    _center  = [[CTCallCenter alloc] init];
+////    NSLog(@"%@",[_center description]);
+//    __weak typeof(self) weakSelf = self;
+//    _center.callEventHandler = ^(CTCall *call) {
+//        NSSet<CTCall*> *callSets = weakSelf.center.currentCalls;
+//        NSLog(@"%@",callSets);
+//        NSLog(@"call:%@", [call description]);
+//    };
     
   
-    double aaaa = 0.1;
-    NSTimeInterval bbbb = 0.1;
-    if (aaaa > bbbb) {
-        NSLog(@"a > b");
-    } else if (bbbb > aaaa) {
-         NSLog(@"b > a");
-    }
 //    
 //    _timer  = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(time) userInfo:nil repeats:true];
 //    [_timer fire];
@@ -79,15 +71,15 @@
      }];
      */
     
-    
-    
-    
+  
+
 }
 
 - (void)time  {
     NSLog(@"_timer_timer_timer:%d",iii);
     iii += 1;
 }
+
 
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

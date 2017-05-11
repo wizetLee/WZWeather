@@ -28,6 +28,9 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTSubscriber.h>
 
+//网络请求
+#import "WZHttpRequest+WZWeather.h"
+
 //类目
 #import "JKCategories.h"
 

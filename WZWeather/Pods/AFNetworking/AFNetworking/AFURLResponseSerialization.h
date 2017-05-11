@@ -64,7 +64,7 @@ NS_SWIFT_NOTHROW
 /**
  The string encoding used to serialize data received from the server, when no string encoding is specified by the response. `NSUTF8StringEncoding` by default.
  */
-@property (nonatomic, assign) NSStringEncoding stringEncoding;
+@property (nonatomic, assign) NSStringEncoding stringEncoding;//NSUTF8StringEncoding` by default
 
 /**
  Creates and returns a serializer with default configuration.
@@ -80,12 +80,23 @@ NS_SWIFT_NOTHROW
 
  See http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
  */
-@property (nonatomic, copy, nullable) NSIndexSet *acceptableStatusCodes;
+
+//acceptable  adj. 可接受的；合意的；可忍受的        状态
+@property (nonatomic, copy, nullable) NSIndexSet *acceptableStatusCodes;//    索引集合  无符号整型索引  保证唯一性
 
 /**
  The acceptable MIME types for responses. When non-`nil`, responses with a `Content-Type` with MIME types that do not intersect with the set will result in an error during validation.
  */
-@property (nonatomic, copy, nullable) NSSet *acceptableContentTypes;
+
+
+//专门用于 适配  当前类中 可解析类型  的一个集合
+/*
+  self.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", nil];
+  self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/xml", @"text/xml", nil];
+ self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/x-plist", nil];
+ self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"image/tiff", @"image/jpeg", @"image/gif", @"image/png", @"image/ico", @"image/x-icon", @"image/bmp", @"image/x-bmp", @"image/x-xbitmap", @"image/x-win-bitmap", nil];
+ */
+@property (nonatomic, copy, nullable) NSSet *acceptableContentTypes;//  内容 类型  保证唯一行的集合
 
 /**
  Validates the specified response and data.
@@ -98,6 +109,8 @@ NS_SWIFT_NOTHROW
 
  @return `YES` if the response is valid, otherwise `NO`.
  */
+
+// 验证返回报文
 - (BOOL)validateResponse:(nullable NSHTTPURLResponse *)response
                     data:(nullable NSData *)data
                    error:(NSError * __nullable __autoreleasing *)error;
@@ -123,7 +136,7 @@ NS_SWIFT_NOTHROW
 /**
  Options for reading the response JSON data and creating the Foundation objects. For possible values, see the `NSJSONSerialization` documentation section "NSJSONReadingOptions". `0` by default.
  */
-@property (nonatomic, assign) NSJSONReadingOptions readingOptions;
+@property (nonatomic, assign) NSJSONReadingOptions readingOptions;//默认类型为 NSJSONReadingMutableContainers
 
 /**
  Whether to remove keys with `NSNull` values from response JSON. Defaults to `NO`.
@@ -135,6 +148,7 @@ NS_SWIFT_NOTHROW
 
  @param readingOptions The specified JSON reading options.
  */
+//设置解析JSON的配置选项
 + (instancetype)serializerWithReadingOptions:(NSJSONReadingOptions)readingOptions;
 
 @end

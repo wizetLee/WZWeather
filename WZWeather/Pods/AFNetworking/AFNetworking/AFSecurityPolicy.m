@@ -48,15 +48,17 @@ static BOOL AFSecKeyIsEqualToKey(SecKeyRef key1, SecKeyRef key2) {
 #endif
 }
 
+//从证书里取public key
 static id AFPublicKeyForCertificate(NSData *certificate) {
     id allowedPublicKey = nil;
     SecCertificateRef allowedCertificate;
-    SecCertificateRef allowedCertificates[1];
+    SecCertificateRef allowedCertificates[1];//证书数组
     CFArrayRef tempCertificates = nil;
     SecPolicyRef policy = nil;
     SecTrustRef allowedTrust = nil;
     SecTrustResultType result;
-
+    
+    //取证书SecCertificateRef -> 生成证书数组 -> 生成SecTrustRef -> 从SecTrustRef取PublicKey
     allowedCertificate = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)certificate);
     __Require_Quiet(allowedCertificate != NULL, _out);
 
@@ -94,6 +96,8 @@ static BOOL AFServerTrustIsValid(SecTrustRef serverTrust) {
     SecTrustResultType result;
     __Require_noErr_Quiet(SecTrustEvaluate(serverTrust, &result), _out);
 
+    //kSecTrustResultUnspecified:证书通过验证，但用户没有设置这些证书是否被信任
+    //kSecTrustResultProceed:证书通过验证，用户有操作设置了证书被信任，例如在弹出的是否信任的alert框中选择always trust
     isValid = (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
 
 _out:
@@ -155,6 +159,7 @@ static NSArray * AFPublicKeyTrustChainForServerTrust(SecTrustRef serverTrust) {
 
 @implementation AFSecurityPolicy
 
+//默认证书列表，遍历根目录下所有.cer文件
 + (NSArray *)defaultPinnedCertificates {
     static NSArray *_defaultPinnedCertificates = nil;
     static dispatch_once_t onceToken;
@@ -196,14 +201,16 @@ static NSArray * AFPublicKeyTrustChainForServerTrust(SecTrustRef serverTrust) {
         return nil;
     }
 
-    self.validatesDomainName = YES;
-
+    self.validatesDomainName = YES;//验证域名
+    
+    
     return self;
 }
 
+
 - (void)setPinnedCertificates:(NSArray *)pinnedCertificates {
     _pinnedCertificates = [[NSOrderedSet orderedSetWithArray:pinnedCertificates] array];
-
+    
     if (self.pinnedCertificates) {
         NSMutableArray *mutablePinnedPublicKeys = [NSMutableArray arrayWithCapacity:[self.pinnedCertificates count]];
         for (NSData *certificate in self.pinnedCertificates) {

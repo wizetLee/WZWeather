@@ -94,6 +94,24 @@
 //            }
 //        }
     
+//    [WZHttpRequest wz_requestWeatherConditionWithAreaCity:@"广州"  serializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+//        if (isDictionaty) {
+//            NSDictionary *dic = (NSDictionary *)JSONData;
+//            NSLog(@"%@", dic);
+//        } else {
+//            NSLog(@"返回类型不匹配");
+//        }
+//    }];
+
+    [WZHttpRequest wz_requestBiYingWallpaperserializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+        if (isDictionaty) {
+            NSDictionary *dic = (NSDictionary *)JSONData;
+            NSLog(@"%@", dic);
+        } else {
+            NSLog(@"返回类型不匹配");
+        }
+    }];
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
