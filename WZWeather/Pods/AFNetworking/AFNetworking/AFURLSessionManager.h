@@ -196,7 +196,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see https://github.com/AFNetworking/AFNetworking/issues/1675
  */
-@property (nonatomic, assign) BOOL attemptsToRecreateUploadTasksForBackgroundSessions;
+@property (nonatomic, assign) BOOL attemptsToRecreateUploadTasksForBackgroundSessions;//为在后台上的session的上传任务尝试重连接
 
 ///---------------------
 /// @name Initialization

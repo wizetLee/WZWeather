@@ -10,68 +10,35 @@
 
 @implementation WZHttpRequest
 
-
-+ (NSURLSessionTask *)wz_httpGETRequestWithURL:(NSURL *)url httpHeaderField:(NSDictionary<NSString *, NSString *> *)httpHeaderField result:(wz_httpRequestResult)result {
- 
-    NSAssert(url && [url isKindOfClass:[NSURL class]] , @"URL 错误");
++ (NSURLSessionTask * _Nullable)wz_taskResumeWithSession:(NSURLSession * _Nullable)session request:(NSURLRequest * _Nullable)request serializationResult:(wz_httpRequestJSONSerializationResult _Nullable)serializationResult {
+    NSParameterAssert(session);
+    NSParameterAssert(request);
+    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        wz_JSONSerializationResult(data, response, error, serializationResult);
+    }];
     
-    //会话  配置
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    //请求信息
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
-    //请求方式
-    [request setHTTPMethod:@"GET"];
-    //POST 方法 要  setHTTPBody:data   data 要转码(UTF8)
-    //首部信息
-    if ([httpHeaderField isKindOfClass:[NSDictionary class]]) {
-        request.allHTTPHeaderFields = httpHeaderField;
+    //执行task
+    if (task) {
+        [task resume];
     }
     
-    request.allHTTPHeaderFields = httpHeaderField;
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        //返回数据
-        NSError *callBackError = nil;
-        NSDictionary *callBackDic = nil;
-        if (error) {
-            callBackError = error;
-        } else {
-            NSError *JSONError;
-            NSDictionary *callBack = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&JSONError];
-            if (!error) {
-                callBackDic = callBack;
-            } else {
-                callBackError = JSONError;
-            }
-        }
-        
-        if (result) {
-            result(data, response, error);
-        }
-    }];
-    //执行task
-    [dataTask resume];
-    return dataTask;
+    return task;
 }
 
-+ (NSURLSessionTask *) wz_httpGETRequestWithURLString:(NSString *)URLString httpHeaderField:(NSDictionary<NSString *, NSString *> *)httpHeaderField result:(wz_httpRequestResult)result {
-    //非true 就会断言
-    NSAssert(URLString && [URLString isKindOfClass:[NSString class]] && ![URLString isEqualToString:@""], @"urlString 错误");
-    
-    URLString = [URLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:URLString];
-   return [[self class] wz_httpGETRequestWithURL:url httpHeaderField:httpHeaderField result:result];
-}
-
-
+//对于数据返回的中转
 void wz_JSONSerializationResult(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error, wz_httpRequestJSONSerializationResult serializationResult) {
     NSError *jsonError = error;
     BOOL isArray = false;
     BOOL isDictionary = false;
     BOOL mismatching = false;
-    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+    id result = nil;
+    
     if (jsonError) {
         
     } else {
+        
+        result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+        
         if ([result isKindOfClass:[NSDictionary class]]) {
             isDictionary = true;
         } else if ([result isKindOfClass:[NSArray class]]) {
@@ -82,9 +49,10 @@ void wz_JSONSerializationResult(NSData * _Nullable data, NSURLResponse * _Nullab
         }
     }
     
-    serializationResult(result, isDictionary, isArray, mismatching, jsonError);
+    if (serializationResult) {
+        serializationResult(result, isDictionary, isArray, mismatching, jsonError);
+    }
 }
-
 
 
 

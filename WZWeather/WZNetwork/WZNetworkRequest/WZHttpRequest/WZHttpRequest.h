@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^wz_httpRequestResult)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error);
-
+//统一的返回类型
 typedef void (^wz_httpRequestJSONSerializationResult)(id _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error);
+
+typedef void(^wz_httpRequestSessionRequest)(NSURLSession * _Nullable session, NSMutableURLRequest * _Nullable request);
 
 @interface WZHttpRequest : NSObject
 
@@ -18,14 +19,9 @@ typedef void (^wz_httpRequestJSONSerializationResult)(id _Nullable JSONData, BOO
 
 void wz_JSONSerializationResult(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error, wz_httpRequestJSONSerializationResult _Nullable serializationResult);
 
-//GET请求
-+ (NSURLSessionTask * _Nullable)wz_httpGETRequestWithURL:(NSURL * _Nullable)url httpHeaderField:(NSDictionary<NSString *, NSString *> * _Nullable)httpHeaderField result:(wz_httpRequestResult _Nullable)result;
+//自定义配置的请求  返回的是dataTask
++ (NSURLSessionTask * _Nullable)wz_taskResumeWithSession:(NSURLSession * _Nullable)session request:(NSURLRequest * _Nullable)request serializationResult:(wz_httpRequestJSONSerializationResult _Nullable)serializationResult;
 
-+ (NSURLSessionTask * _Nullable)wz_httpGETRequestWithURLString:(NSString * _Nullable)URLString httpHeaderField:(NSDictionary<NSString *, NSString *> * _Nullable)httpHeaderField result:(wz_httpRequestResult _Nullable)result;
-
-//POST请求
-+ (NSURLSessionTask * _Nullable)wz_httpPOSTRequestWithURL:(NSURL * _Nullable)url httpHeaderField:(NSDictionary<NSString *, NSString *> * _Nullable)  httpHeaderField:(NSDictionary<NSString *, NSString *> * _Nullable)
-httpHeaderField result:(wz_httpRequestResult _Nullable)result;
 
 
 @end

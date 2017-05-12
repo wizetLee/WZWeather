@@ -28,13 +28,67 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    [WZHttpRequest wz_requestBiYingWallpaperSerializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+//        if (isDictionaty) {
+//            NSDictionary *dic = (NSDictionary *)JSONData;
+//            NSLog(@"%@", dic);
+//        } else {
+//            NSLog(@"返回类型不匹配");
+//        }
+//    }];
+
+    [WZHttpRequest wz_requestBaiSiBuDeJieWithType:WZBaiSiBuDeJieType_audio title:@"" page:1 SerializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+        if (isDictionaty) {
+            NSDictionary *dic = (NSDictionary *)JSONData;
+            NSLog(@"%@", dic);
+        } else {
+            NSLog(@"返回类型不匹配");
+        }
+    }];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+   
+    [manager POST:@"" parameters:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+    
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (_timeSuperviser) {
+        [_timeSuperviser timeSuperviserFire];
+    }
+}
+
+- (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime {
+    NSLog(@"currentTime:%lf,interval:%lf", currentTime,[NSDate date].timeIntervalSince1970);
+    if (fabs(currentTime - 5.0) < 0.00001) {
+        [timeSuperviser timeSuperviserPause];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //需要回到主线程对处理UI
+        _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, currentTime);
+    });
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (void)sss {
     _cv = [WZVariousCollectionView staticInitWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
     [self.view addSubview:_cv];
     __weak WZVariousCollectionView * weakSelf = _cv;
     _cv.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
-         [weakSelf.mj_header endRefreshing];
+        [weakSelf.mj_header endRefreshing];
     }];
-//
+    //
     _cv.backgroundColor = [UIColor yellowColor];
     
     _cv.registerCellDic = [NSMutableDictionary dictionaryWithDictionary:
@@ -67,86 +121,21 @@
     _p = [[WZVariousCollectionSectionsBaseProvider alloc] init];
     UITapGestureRecognizer *tg = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iiiiii)];
     
-
+    
     _c = [[WZVariousCollectionReusableContent alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     _c.backgroundColor = [UIColor redColor];
     [_c addGestureRecognizer:tg];
     _p.headerContent = _c;
-    
     _cv.sectionsProviders = [NSMutableArray arrayWithArray:@[_p,@"sadasd",[NSObject class]]];
     _cv.sectionsDatas = mArr;
-
-    _timeSuperviser = [[WZDisplayLinkSuperviser alloc] init];
-    _timeSuperviser.delegate = (id<WZTimeSuperviserDelegate>)self;
-    _timeSuperviser.terminalTime = 10.0;
-    _timeSuperviser.interval = 1;
-    
-    [_timeSuperviser timeSuperviserFire];
     
     _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, 0);
-    
-    
-    //进行一个大任务
-//        for (int i = 0; i < 1000; i++) {
-//            @autoreleasepool {
-//                [[UIView alloc] init];
-//                NSLog(@"%d", i);
-//            }
-//        }
-    
-//    [WZHttpRequest wz_requestWeatherConditionWithAreaCity:@"广州"  serializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
-//        if (isDictionaty) {
-//            NSDictionary *dic = (NSDictionary *)JSONData;
-//            NSLog(@"%@", dic);
-//        } else {
-//            NSLog(@"返回类型不匹配");
-//        }
-//    }];
-
-    [WZHttpRequest wz_requestBiYingWallpaperserializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
-        if (isDictionaty) {
-            NSDictionary *dic = (NSDictionary *)JSONData;
-            NSLog(@"%@", dic);
-        } else {
-            NSLog(@"返回类型不匹配");
-        }
-    }];
-    
 }
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (_timeSuperviser) {
-        [_timeSuperviser timeSuperviserFire];
-    }
-}
-
-- (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime {
-    NSLog(@"currentTime:%lf,interval:%lf", currentTime,[NSDate date].timeIntervalSince1970);
-    if (fabs(currentTime - 5.0) < 0.00001) {
-        [timeSuperviser timeSuperviserPause];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //需要回到主线程对处理UI
-        _cv.frame = CGRectMake(_cv.frame.origin.x, _cv.frame.origin.y, _cv.frame.size.width, currentTime);
-    });
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 - (void)iiiiii {
-    _p.headerData = @"111";
-   
+     NSLog(@"111111111");
 }
 
-
-- (void)dealloc {
-    NSLog(@"%s", __func__);
-}
 /*
 #pragma mark - Navigation
 

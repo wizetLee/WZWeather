@@ -48,38 +48,7 @@
 //    };
     
   
-//    
-//    _timer  = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(time) userInfo:nil repeats:true];
-//    [_timer fire];
-//    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    
-//进行一个大任务
-//    for (int i = 0; i < 10000000; i++) {
-//        @autoreleasepool {
-//            [[UIView alloc] init];
-////            NSLog(@"%d", i);
-//        }
-//    }
-    
-    /*
-     [WZWeatherConditionModel fetchWeatherConditionWithAreaCity:@"广州" weatherConditionCallBack:^(NSDictionary *callBack, NSError *error) {
-     if (error) {
-     NSLog(@"%@",error.debugDescription);
-     } else {
-     NSLog(@"%@",callBack);
-     }
-     }];
-     */
-    
-  
-
 }
-
-- (void)time  {
-    NSLog(@"_timer_timer_timer:%d",iii);
-    iii += 1;
-}
-
 
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

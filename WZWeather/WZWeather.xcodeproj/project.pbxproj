@@ -15,6 +15,7 @@
 		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
 		844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */; };
+		84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */; };
 		844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */; };
 		844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */; };
 		844A484B1E9F657B0002829A /* WZVariousCollectionBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48441E9F657B0002829A /* WZVariousCollectionBaseObject.m */; };
@@ -313,6 +314,8 @@
 		8446650E1EC45DAE00E19241 /* WZHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHttpRequest.m; sourceTree = "<group>"; };
 		844665151EC4655800E19241 /* WZHttpRequest+WZWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WZHttpRequest+WZWeather.h"; sourceTree = "<group>"; };
 		844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WZHttpRequest+WZWeather.m"; sourceTree = "<group>"; };
+		84474A401EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHttpRequestDeriveAFNetworking.h; sourceTree = "<group>"; };
+		84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHttpRequestDeriveAFNetworking.m; sourceTree = "<group>"; };
 		844A483F1E9F657B0002829A /* WZVariousCollectionBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionBaseCell.h; sourceTree = "<group>"; };
 		844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionBaseCell.m; sourceTree = "<group>"; };
 		844A48411E9F657B0002829A /* WZVariousCollectionBaseMethodObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionBaseMethodObject.h; sourceTree = "<group>"; };
@@ -907,6 +910,8 @@
 		8446650C1EC45D8D00E19241 /* WZHttpRequestDeriveAFNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				84474A401EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.h */,
+				84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */,
 			);
 			path = WZHttpRequestDeriveAFNetworking;
 			sourceTree = "<group>";
@@ -2382,6 +2387,7 @@
 				84514D291E9DCE7A00F07EF8 /* UIButton+JKBadge.m in Sources */,
 				84514D671E9DCE7A00F07EF8 /* UITableView+JKiOS7Style.m in Sources */,
 				84514D631E9DCE7A00F07EF8 /* UIScrollView+JKAddition.m in Sources */,
+				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
 				844A48591E9F699B0002829A /* B1.m in Sources */,
 				84514CD61E9DCE7A00F07EF8 /* NSDateFormatter+JKMake.m in Sources */,

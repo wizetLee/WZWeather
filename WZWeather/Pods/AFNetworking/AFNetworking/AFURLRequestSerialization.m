@@ -66,7 +66,8 @@ static NSString * AFBase64EncodedStringFromString(NSString *string) {
  RFC 3986 states that the following characters are "reserved" characters.
     - General Delimiters: ":", "#", "[", "]", "@", "?", "/"
     - Sub-Delimiters: "!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "="
-
+    delimiters：分隔符
+ 
  In RFC 3986 - Section 3.4, it states that the "?" and "/" characters should not be escaped to allow
  query strings to include a URL. Therefore, all "reserved" characters with the exception of "?" and "/"
  should be percent-escaped in the query string.
@@ -77,7 +78,9 @@ static NSString * AFPercentEscapedStringFromString(NSString *string) {
     static NSString * const kAFCharactersGeneralDelimitersToEncode = @":#[]@"; // does not include "?" or "/" due to RFC 3986 - Section 3.4
     static NSString * const kAFCharactersSubDelimitersToEncode = @"!$&'()*+,;=";
 
+    //过滤字符集合
     NSMutableCharacterSet * allowedCharacterSet = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+    //过滤字符集合 移除特定的 过滤URL的某些特性
     [allowedCharacterSet removeCharactersInString:[kAFCharactersGeneralDelimitersToEncode stringByAppendingString:kAFCharactersSubDelimitersToEncode]];
 
 	// FIXME: https://github.com/AFNetworking/AFNetworking/pull/3028
@@ -91,19 +94,19 @@ static NSString * AFPercentEscapedStringFromString(NSString *string) {
     while (index < string.length) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wgnu"
-        NSUInteger length = MIN(string.length - index, batchSize);
+        NSUInteger length = MIN(string.length - index, batchSize);//取最短
 #pragma GCC diagnostic pop
         NSRange range = NSMakeRange(index, length);
 
         // To avoid breaking up character sequences such as 👴🏻👮🏽
-        range = [string rangeOfComposedCharacterSequencesForRange:range];
-
+        range = [string rangeOfComposedCharacterSequencesForRange:range];//获取真实的字符数目
+        
         NSString *substring = [string substringWithRange:range];
         NSString *encoded = [substring stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];
         [escaped appendString:encoded];
 
         index += range.length;
-    }
+    }   //循环拼接
 
 	return escaped;
 }
@@ -133,10 +136,13 @@ static NSString * AFPercentEscapedStringFromString(NSString *string) {
     return self;
 }
 
+//编码取值更改
 - (NSString *)URLEncodedStringValue {
+    
     if (!self.value || [self.value isEqual:[NSNull null]]) {
         return AFPercentEscapedStringFromString([self.field description]);
     } else {
+        NSLog(@"%@ \n %@",  [self.field description], [self.value description]);
         return [NSString stringWithFormat:@"%@=%@", AFPercentEscapedStringFromString([self.field description]), AFPercentEscapedStringFromString([self.value description])];
     }
 }
@@ -164,8 +170,10 @@ NSArray * AFQueryStringPairsFromDictionary(NSDictionary *dictionary) {
 NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     NSMutableArray *mutableQueryStringComponents = [NSMutableArray array];
 
+    //排序描述符
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"description" ascending:YES selector:@selector(compare:)];
 
+    //递归 对 parameter 分解 成数组
     if ([value isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dictionary = value;
         // Sort dictionary keys to ensure consistent ordering in query string, which is important when deserializing potentially ambiguous sequences, such as an array of dictionaries
@@ -186,6 +194,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
             [mutableQueryStringComponents addObjectsFromArray:AFQueryStringPairsFromKeyAndValue(key, obj)];
         }
     } else {
+        //全部分解 AFQueryStringPair 对象
         [mutableQueryStringComponents addObject:[[AFQueryStringPair alloc] initWithField:key value:value]];
     }
 
@@ -400,10 +409,12 @@ forHTTPHeaderField:(NSString *)field
 
     for (NSString *keyPath in AFHTTPRequestSerializerObservedKeyPaths()) {
         if ([self.mutableObservedChangedKeyPaths containsObject:keyPath]) {
+            //自定义的serialization中的属性匹配到requset中
             [mutableRequest setValue:[self valueForKeyPath:keyPath] forKey:keyPath];
         }
     }
 
+    //解请求头参数
     mutableRequest = [[self requestBySerializingRequest:mutableRequest withParameters:parameters error:error] mutableCopy];
 
 	return mutableRequest;
@@ -540,7 +551,7 @@ forHTTPHeaderField:(NSString *)field
         } else {
             switch (self.queryStringSerializationStyle) {
                 case AFHTTPRequestQueryStringDefaultStyle:
-                    query = AFQueryStringFromParameters(parameters);
+                    query = AFQueryStringFromParameters(parameters);//解析过程请求体
                     break;
             }
         }
@@ -555,6 +566,14 @@ forHTTPHeaderField:(NSString *)field
         if (!query) {
             query = @"";
         }
+        /*
+         http://blog.csdn.net/klarclm/article/details/7711021
+         在Form元素的语法中，EncType表明提交数据的格式 用 Enctype 属性指定将数据回发到服务器时浏览器使用的编码类型。 
+         下边是说明：
+         application/x-www-form-urlencoded： 窗体数据被编码为名称/值对。这是标准的编码格式。
+         multipart/form-data： 窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分。
+         text/plain： 窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符。
+         */
         if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
             [mutableRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         }

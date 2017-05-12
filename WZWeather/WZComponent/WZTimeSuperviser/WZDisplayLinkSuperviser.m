@@ -21,10 +21,6 @@
 @synthesize duration = _duration;
 
 - (void)configTimer {
-    //设置速率等
-//    self.interval
-    
-    [self invalidate];
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(dispalyLink:)];
     _displayLink.paused = true;

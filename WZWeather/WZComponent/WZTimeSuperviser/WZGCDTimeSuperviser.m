@@ -20,7 +20,6 @@
 @synthesize duration = _duration;
 
 - (void)configTimer {
-    [self invalidate];
     
     dispatch_queue_t gobleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, gobleQueue);

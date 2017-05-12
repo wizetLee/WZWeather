@@ -22,23 +22,51 @@
     //拼接URLString
     urlString = [NSString stringWithFormat:@"%@?%@&%@&%@&%@&%@",urlString,area,needMoreDay,needIndex,needAlarm,need3HourForcast];
     
-    return [self wz_httpGETRequestWithURLString:urlString httpHeaderField:WZ_YIYUANWEATHER_APPKEY_VALUE_DIC result:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        /*
-         NSJSONReadingOptions:
-         NSJSONReadingMutableContainers -> 返回可变类型
-         NSJSONReadingMutableLeaves -> 返回容器内叶子是可变类型
-         NSJSONReadingAllowFragments －>  只要是符合JSON格式的都可以返回
-         */
-        wz_JSONSerializationResult(data, response, error, serializationResult);
-      
-    }];
+    //会话 配置
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    //request 配置具有多样性
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"GET";
+    request.allHTTPHeaderFields = WZ_YIYUANWEATHER_APPKEY_VALUE_DIC;
+    
+    return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];
+   
 }
 
-+ (NSURLSessionTask *)wz_requestBiYingWallpaperserializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
-     NSString *urlString = [NSString stringWithFormat:@"%@%@", WZ_YIYUAN_BIYINGWALLPAPER_URLSTRING, WZ_YIYUAN_GETREQUEST_ID_SIGN];
-    return [self wz_httpGETRequestWithURLString:urlString httpHeaderField:nil result:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        wz_JSONSerializationResult(data, response, error, serializationResult);
-    }];
++ (NSURLSessionTask *)wz_requestBiYingWallpaperSerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", WZ_YIYUAN_BIYINGWALLPAPER_URLSTRING, WZ_YIYUAN_GETREQUEST_ID_SIGN];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"GET";
+    
+    return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];;
+}
+
++ (NSURLSessionTask *)wz_requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
+    
+    
+    
+    if (!title || ![title isKindOfClass:[NSString class]]) {
+        title = @"";
+    }
+    if (page == 0) {
+        page = 1;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@", WZ_YIYUAN_BAISIBUDEJIE_URLSTRING];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"POST";
+   
+    NSString *HTTPBodyString = [NSString stringWithFormat:@"showapi_appid=37942&showapi_sign=e0a142511eb44ab79cd30607a208b758&type=%ld&title=%@&page=%ld", type, title, page];
+    NSData *HTTPBody = [HTTPBodyString dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = HTTPBody;
+
+    
+    return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];;
 }
 
 

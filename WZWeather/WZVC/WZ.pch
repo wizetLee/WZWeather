@@ -48,9 +48,37 @@
 #define WZNAVIGATIONBAR_HEIGHT 44.0
 #define WZORIGION_Y_WITH_NAVIGATIONBAR (WZSTATUS_BAR_HEIGHT + WZNAVIGATIONBAR_HEIGHT)
 #define WZORIGION_Y_WITHOUT_NAVIGATIONBAR WZSTATUS_BAR_HEIGHT
+//设备信息
+#define WZIOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+#define WZCurrentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
+
+//替换NSLog内容
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(__stderrp,"Log %s %s:%d\t%s\t%s\n",__TIME__,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(...)
+#endif
+
 //颜色
 #define WZRGBColor(r, g, b)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define WZRandomColor Color(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
-//WZHexColor
+#define WZHexColor(hexValue) WZHexColorWithAlpha(hexValue, 1.0)
+#define WZHexColorWithAlpha(hexValue, alphe) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alphe]
+
+/** 获取沙盒 Document 路径*/
+#define WZDocumentPath       [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+/** 获取沙盒 temp 路径(注:iPhone 重启会清空)*/
+#define WZTempPath           NSTemporaryDirectory()
+/** 获取沙盒 Cache 路径*/
+#define WZCachePath          [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
+/** 获取程序包中程序路径*/
+#define WZBundleResource(resource, type)     [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
+
+
+//通知
+//applicaion处post
+#define WZ_ENTER_BACKGROUND_NOTIFICATION @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
+#define WZ_BACK_TO_APPLICATION_NOTIFICATION @"wz_back_to_application_notification"//回到应用的通知
+
 
 #endif /* WZ_pch */
