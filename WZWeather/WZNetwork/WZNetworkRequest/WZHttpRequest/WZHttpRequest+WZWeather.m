@@ -65,7 +65,6 @@
     NSData *HTTPBody = [HTTPBodyString dataUsingEncoding:NSUTF8StringEncoding];
     request.HTTPBody = HTTPBody;
 
-    
     return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];;
 }
 

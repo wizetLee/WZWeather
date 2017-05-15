@@ -62,7 +62,4 @@ typedef NS_ENUM(NSUInteger, WZBaiSiBuDeJieType) {
 + (NSURLSessionTask *)wz_requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult;
 
 
-
-
-
 @end

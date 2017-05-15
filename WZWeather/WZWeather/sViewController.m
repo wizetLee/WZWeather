@@ -10,6 +10,7 @@
 #import "WZVariousCollectionView.h"
 #import "WZDisplayLinkSuperviser.h"
 #import "WZGCDTimeSuperviser.h"
+#import "WZDownloadRequest.h"
 
 #import "B1.h"
 #import "T1.h"
@@ -21,10 +22,22 @@
 @property (nonatomic, strong) WZVariousCollectionSectionsBaseProvider *p;
 
 
-@property (nonatomic, strong)  WZTimeSuperviser *timeSuperviser;
+@property (nonatomic, strong) WZTimeSuperviser *timeSuperviser;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UIButton *btn;
+
+@property (nonatomic, strong) WZDownloadRequest * downloader;
+
+@property (nonatomic, strong)  NSProgress *progress;
+
 @end
 
 @implementation sViewController
+
+- (void)dealloc {
+    
+    NSLog(@"ssssssssssss");
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,23 +51,106 @@
 //        }
 //    }];
 
-    [WZHttpRequest wz_requestBaiSiBuDeJieWithType:WZBaiSiBuDeJieType_image title:@"" page:1 SerializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
-        if (isDictionaty) {
-            NSDictionary *dic = (NSDictionary *)JSONData;
-            NSLog(@"%@", dic);
-        } else {
-            NSLog(@"返回类型不匹配");
-        }
-    }];
+//    [WZHttpRequest wz_requestBaiSiBuDeJieWithType:WZBaiSiBuDeJieType_video title:@"" page:1 SerializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+//        if (isDictionaty) {
+//            NSDictionary *dic = (NSDictionary *)JSONData;
+//            NSLog(@"%@", dic);
+//        } else {
+//            NSLog(@"返回类型不匹配");
+//        }
+//    }];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-   
+    _progress = [NSProgress progressWithTotalUnitCount:1];
+    _progress = [manager downloadProgressForTask:nil];
+    
     [manager POST:@"" parameters:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
+    
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:(id<NSURLSessionDownloadDelegate>)self delegateQueue:[NSOperationQueue mainQueue]];
+//    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0512/5915658821e22_wpc.mp4"]];
+//    
+//    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request];
+//    [task resume];
+//    //当前的session 未完成的任务 等待完成再使得session无效  未开始的task 将不会execute
+//    [session finishTasksAndInvalidate];
+//
+//    /*
+//     http://wimg.spriteapp.cn/profile/large/2016/07/26/57974925b34a6_mini.jpg
+//     http://wimg.spriteapp.cn/profile/large/2016/12/26/586059118dd30_mini.jpg
+//     http://wimg.spriteapp.cn/profile/large/2017/04/26/5900b375744b2_mini.jpg
+//     http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4
+//     http://mvideo.spriteapp.cn/video/2017/0513/cf36e7a4-3793-11e7-a69d-1866daeb0df1_wpc.mp4
+//     http://mvideo.spriteapp.cn/video/2017/0512/5915658821e22_wpc.mp4
+    
+        http://www.eso.org/public/archives/images/publicationtiff40k/eso1242a.tif
+//     */
+//    
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 200, 100)];
+    [self.view addSubview:_timeLabel];
+    _btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_btn setFrame:CGRectMake(0, 100, 100, 100)];
+    _btn.backgroundColor = [UIColor orangeColor];
+    [_btn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+    //检查文件是否已经存在
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@""]) {
+        
+        //取出文件
+    } else {
+        
+        
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    _downloader = [WZDownloadRequest downloader];
+    [_downloader wz_downloadWithURL:[NSURL URLWithString:@"http://www.eso.org/public/archives/images/publicationtiff40k/eso1242a.tif"] finishWhenInvalidate:true completedWithError:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        if (error) {
+            
+        }
+         weakSelf.view.backgroundColor = [UIColor redColor];
+    } finishedDownload:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable location) {
+        NSLog(@"location: %@", location);   
+        
+        NSData *origion = [NSData dataWithContentsOfURL:location];
+        
+        //文件路径迁移
+        NSError * fileManagerError;
+        [[NSFileManager defaultManager] moveItemAtURL:location toURL:nil error:&fileManagerError];
+        
+        if (fileManagerError) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];
+            //文件迁移失败措施
+        }
+        
+    } downloadProcess:^(NSURLSessionDownloadTask * _Nullable downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+            NSLog(@" bytesWritten: %lf\
+                  \n totalBytesWritten :%lf \
+                  \n totalBytesExpectedToWrite:%lf"
+                  ,bytesWritten / 1000.0
+                  , totalBytesWritten  / 1000.0
+                  ,totalBytesExpectedToWrite / 1000.0 );
+        weakSelf.timeLabel.text = [NSString stringWithFormat:@"%lf", totalBytesWritten / 1000.0];
+       
+    }];
+    
+    
+}
+
+- (void)clickedBtn:(UIButton *)btn {
+    btn.selected = !btn.selected;
+    if (btn.selected) {
+        //停止
+        [_downloader suspendAllTask];
+    } else {
+        //开始
+        [_downloader resumeAllTask];
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

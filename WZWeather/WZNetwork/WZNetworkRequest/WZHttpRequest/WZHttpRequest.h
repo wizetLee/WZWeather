@@ -13,6 +13,9 @@ typedef void (^wz_httpRequestJSONSerializationResult)(id _Nullable result, BOOL 
 
 typedef void(^wz_httpRequestSessionRequest)(NSURLSession * _Nullable session, NSMutableURLRequest * _Nullable request);
 
+
+
+
 @interface WZHttpRequest : NSObject
 
 // GET  POST  DELETE  PUT  and so on.
