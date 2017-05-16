@@ -14,36 +14,84 @@
 @property (nonatomic, strong) wz_downloadTaskDidFinishDownload _Nullable finishedDownload;
 @property (nonatomic, strong) wz_downloadTaskDownloadProcess _Nullable downloadProcess;
 
+@property (nonatomic, assign) BOOL invalidate;
+
 @end
 
 @implementation WZDownloadRequest
+
+NSString * valueForDownloadTasksMDicWithURL(NSURL * url);
+void downloadActionWithURLArray(NSArray <NSURL *> * urlArray);
 
 + (instancetype)downloader {
     WZDownloadRequest *downloader = [[WZDownloadRequest alloc] init];
     return downloader;
 }
 
-//是否加上一个已下载block
-- (void)wz_downloadWithURL:(NSURL * _Nullable)url
-      finishWhenInvalidate:(BOOL)boolean
-        completedWithError:(wz_downloadTaskDidCompleteWithError _Nullable)completedWithError
-          finishedDownload:(wz_downloadTaskDidFinishDownload _Nullable)finishedDownload
-           downloadProcess:(wz_downloadTaskDownloadProcess _Nullable)downloadProcess {
+- (void)wz_downloadWithURLArray:(NSArray <NSURL *>*)urlArray
+                     invalidate:(BOOL)boolean
+             completedWithError:(wz_downloadTaskDidCompleteWithError _Nullable)completedWithError
+               finishedDownload:(wz_downloadTaskDidFinishDownload _Nullable)finishedDownload
+                downloadProcess:(wz_downloadTaskDownloadProcess _Nullable)downloadProcess {
     _completedWithError = completedWithError;
     _finishedDownload = finishedDownload;
     _downloadProcess = downloadProcess;
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.timeoutInterval = 15.0;
-    NSURLSessionDownloadTask *downloadTask = [self.session downloadTaskWithRequest:request];
-    
-    //添加标识
-    [self.downloadTasksMDic setValue:downloadTask forKey:[url path]];
-    
-    [downloadTask resume];
+    _invalidate = boolean;
+    downloadActionWith(urlArray, self.downloadTasksMDic, self.session);
+   
     if (boolean) {
         [self.session finishTasksAndInvalidate];
     }
+}
+
+- (void)insertDownloadTasksWithURLArray:(NSArray <NSURL *>*)urlArray {
+    downloadActionWith(urlArray, self.downloadTasksMDic, self.session);
+}
+
+- (void)finishTasksAndInvalidate {
+    [self.session finishTasksAndInvalidate];
+}
+
+//已经被下载的文件不会重复下载
+void downloadActionWith(NSArray <NSURL *> * urlArray, NSDictionary * downloadTasksMDic, NSURLSession *session) {
+   
+    //检查文件是否已经被下载
+    NSMutableArray <NSURL *>* tmpUrlArray = [NSMutableArray arrayWithArray:urlArray];
+    for (NSURL * url in urlArray) {
+        if (wz_fileExistsAtPath(wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent))) {
+            [tmpUrlArray removeObject:url];
+        }
+    }
+    
+    for (NSURL *url in tmpUrlArray) {
+        
+        if (downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)]) {
+            continue;
+        }
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        request.timeoutInterval = 15.0;
+        NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request];
+        
+        //添加标识
+        [downloadTasksMDic setValue:downloadTask forKey:valueForDownloadTasksMDicWithURL(url)];
+        [downloadTask resume];
+    }
+}
+
+//rule for the downloadTaskMDic
+NSString * valueForDownloadTasksMDicWithURL(NSURL * url) {
+    return [url path];
+}
+
+- (NSURLSessionDownloadTask *)downloadTaskWithURl:(NSURL *)url {
+    NSURLSessionDownloadTask *downloadTask = nil;
+   
+    if (self.downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)]) {
+        downloadTask = self.downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)];
+    }
+    
+    return downloadTask;
 }
 
 
@@ -53,17 +101,17 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didCompleteWithError:(nullable NSError *)error {
     if (_completedWithError) {
-        _completedWithError(task, error);
+        _completedWithError(task, task.currentRequest.URL, error);
     }
     //移除标识
-    [self.downloadTasksMDic removeObjectForKey:task.currentRequest.URL.path];
+    [self.downloadTasksMDic removeObjectForKey:valueForDownloadTasksMDicWithURL(task.currentRequest.URL)];
 }
 
 //获取NSURL中的文件从临时路径，移动到自己保存的一个路径
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location {
     if (_finishedDownload) {
-        _finishedDownload(downloadTask, location);
+        _finishedDownload(downloadTask, downloadTask.currentRequest.URL, location);
     }
 }
 
@@ -71,19 +119,8 @@ didFinishDownloadingToURL:(NSURL *)location {
       didWriteData:(int64_t)bytesWritten
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
-//    NSLog(@" bytesWritten: %lf\
-//          \n totalBytesWritten :%lf \
-//          \n totalBytesExpectedToWrite:%lf"
-//          ,bytesWritten / 1000.0
-//          , totalBytesWritten  / 1000.0
-//          ,totalBytesExpectedToWrite / 1000.0 );
-    
-    //本次下载的字节数
-    //当前task已下载的字节数
-    //本次任务下载的字节数
-    
     if (_downloadProcess) {
-        _downloadProcess(downloadTask ,bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+        _downloadProcess(downloadTask, downloadTask.currentRequest.URL, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     }
 }
 
@@ -99,7 +136,9 @@ double bytesTransitionMB(int64_t bytes) {
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
  didResumeAtOffset:(int64_t)fileOffset
 expectedTotalBytes:(int64_t)expectedTotalBytes {
-    NSLog(@"fileOffset: %lld \n expectedTotalBytes :%lld",fileOffset, expectedTotalBytes);
+    NSLog(@"12345678901234567890-1234567890-1234567890-1234567890 \
+          fileOffset: %lld \n expectedTotalBytes :%lld"
+          ,fileOffset, expectedTotalBytes);
 }
 
 - (void)suspendAllTask {
@@ -112,8 +151,8 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 }
 
 - (void)suspendTaskWithURL:(NSURL *_Nullable)url {
-    if ([self.downloadTasksMDic[[url path]] isKindOfClass:[NSURLSessionDownloadTask class]]) {
-        NSURLSessionDownloadTask *downloadTask = self.downloadTasksMDic[[url path]];
+    if ([self.downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)] isKindOfClass:[NSURLSessionDownloadTask class]]) {
+        NSURLSessionDownloadTask *downloadTask = self.downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)];
         [downloadTask suspend];
     }
 }
@@ -136,8 +175,8 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 }
 
 - (void)resumeTaskWithURL:(NSURL *_Nullable)url {
-    if ([self.downloadTasksMDic[[url path]] isKindOfClass:[NSURLSessionDownloadTask class]]) {
-        NSURLSessionDownloadTask *downloadTask = self.downloadTasksMDic[[url path]];
+    if ([self.downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)] isKindOfClass:[NSURLSessionDownloadTask class]]) {
+        NSURLSessionDownloadTask *downloadTask = self.downloadTasksMDic[valueForDownloadTasksMDicWithURL(url)];
         [downloadTask resume];
     }
 }

@@ -21,14 +21,16 @@
 @property (nonatomic, strong) WZVariousCollectionReusableContent *c;
 @property (nonatomic, strong) WZVariousCollectionSectionsBaseProvider *p;
 
-
 @property (nonatomic, strong) WZTimeSuperviser *timeSuperviser;
-@property (nonatomic, strong) UILabel *timeLabel;
+
 @property (nonatomic, strong) UIButton *btn;
 
 @property (nonatomic, strong) WZDownloadRequest * downloader;
 
 @property (nonatomic, strong)  NSProgress *progress;
+
+@property (nonatomic, strong) UILabel *timeLabel;
+
 
 @end
 
@@ -51,6 +53,8 @@
 //        }
 //    }];
 
+    
+    
 //    [WZHttpRequest wz_requestBaiSiBuDeJieWithType:WZBaiSiBuDeJieType_video title:@"" page:1 SerializationResult:^(id  _Nullable JSONData, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
 //        if (isDictionaty) {
 //            NSDictionary *dic = (NSDictionary *)JSONData;
@@ -60,15 +64,17 @@
 //        }
 //    }];
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    _progress = [NSProgress progressWithTotalUnitCount:1];
-    _progress = [manager downloadProgressForTask:nil];
     
-    [manager POST:@"" parameters:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    _progress = [NSProgress progressWithTotalUnitCount:1];
+//    _progress = [manager downloadProgressForTask:nil];
+    
+//    [manager POST:@"" parameters:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+//        
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//    }];
     
     
 //    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:(id<NSURLSessionDownloadDelegate>)self delegateQueue:[NSOperationQueue mainQueue]];
@@ -99,48 +105,69 @@
     [_btn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn];
     //检查文件是否已经存在
-    if ([[NSFileManager defaultManager] fileExistsAtPath:@""]) {
-        
-        //取出文件
-    } else {
-        
-        
+   
+    
+    NSMutableArray <NSURL *>* tmpUrlArray = [NSMutableArray arrayWithArray:
+  @[[NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0512/5915658821e22_wpc.mp4"]
+    , [NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4"]
+    , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/07/26/57974925b34a6_mini.jpg"]
+    , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/12/26/586059118dd30_mini.jpg"]
+    , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2017/04/26/5900b375744b2_mini.jpg"]]];
+    
+    NSMutableArray <NSURL *>* urlArray = [NSMutableArray arrayWithArray:tmpUrlArray];
+    
+    for (NSURL * url in tmpUrlArray) {
+        if (wz_fileExistsAtPath(wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent))) {
+            [urlArray removeObject:url];
+        }
     }
     
     __weak typeof(self) weakSelf = self;
     _downloader = [WZDownloadRequest downloader];
-    [_downloader wz_downloadWithURL:[NSURL URLWithString:@"http://www.eso.org/public/archives/images/publicationtiff40k/eso1242a.tif"] finishWhenInvalidate:true completedWithError:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+    [_downloader wz_downloadWithURLArray:urlArray invalidate:true completedWithError:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSError * _Nullable error) {
         if (error) {
-            
+            NSLog(@"error: %@", error.debugDescription);
         }
-         weakSelf.view.backgroundColor = [UIColor redColor];
-    } finishedDownload:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable location) {
-        NSLog(@"location: %@", location);   
+    } finishedDownload:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSURL * _Nullable location) {
+
+        //文件拷贝到制定的文件夹
+//        if ( wz_createFile(WZSearchPathDirectoryTemporary, url.lastPathComponent, false)) {
+//            [location.dataRepresentation writeToFile:wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent) atomically:true];
+//        }
         
-        NSData *origion = [NSData dataWithContentsOfURL:location];
-        
-        //文件路径迁移
+        //文件路径迁移 并且重命名文件
         NSError * fileManagerError;
-        [[NSFileManager defaultManager] moveItemAtURL:location toURL:nil error:&fileManagerError];
-        
+        if ([[NSFileManager defaultManager] moveItemAtPath:location.path toPath:wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent) error:&fileManagerError]) {
+        } else {
+            NSLog(@"fileManagerError:%@", fileManagerError);
+        }
         if (fileManagerError) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];
             //文件迁移失败措施
         }
         
-    } downloadProcess:^(NSURLSessionDownloadTask * _Nullable downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
-            NSLog(@" bytesWritten: %lf\
-                  \n totalBytesWritten :%lf \
-                  \n totalBytesExpectedToWrite:%lf"
-                  ,bytesWritten / 1000.0
-                  , totalBytesWritten  / 1000.0
-                  ,totalBytesExpectedToWrite / 1000.0 );
-        weakSelf.timeLabel.text = [NSString stringWithFormat:@"%lf", totalBytesWritten / 1000.0];
-       
+    } downloadProcess:^(NSURLSessionDownloadTask * _Nullable downloadTask, NSURL * _Nullable url, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+        
+        if ([url.path isEqualToString:[urlArray[0] path]]) {
+            weakSelf.timeLabel.text = [NSString stringWithFormat:@"%lf", totalBytesWritten / 1000.0];
+
+            NSLog(@"11111111111");
+        } else if ([downloadTask.currentRequest.URL.path isEqualToString:[urlArray[1] path]]) {
+            NSLog(@"22222222222");
+        } else if ([downloadTask.currentRequest.URL.path isEqualToString:[urlArray[2] path]]) {
+            NSLog(@"33333333333");
+        } else {
+            NSLog(@"else");
+        }
     }];
-    
-    
 }
+
+//            NSLog(@" bytesWritten: %lf\
+//                  \n totalBytesWritten :%lf \
+//                  \n totalBytesExpectedToWrite:%lf"
+//                  ,bytesWritten / 1000.0
+//                  , totalBytesWritten  / 1000.0
+//                  ,totalBytesExpectedToWrite / 1000.0);
 
 - (void)clickedBtn:(UIButton *)btn {
     btn.selected = !btn.selected;

@@ -48,9 +48,11 @@
 //        NSLog(@"call:%@", [call description]);
 //    };
     
-    NSString *str =  [[self class] sup_md5FileNameConvertedByFileName:@"哈"];
-    NSLog(@"%@", str);
-   
+//    NSString *str =  [[self class] sup_md5FileNameConvertedByFileName:@"哈"];
+//    NSLog(@"%@", str);
+    
+    wz_createFile(WZSearchPathDirectoryTemporary ,@"wizet.txt", true);
+    NSLog(@"%@",NSHomeDirectory());
 }
 
 + (NSString *)sup_md5FileNameConvertedByFileName:(NSString *)name {

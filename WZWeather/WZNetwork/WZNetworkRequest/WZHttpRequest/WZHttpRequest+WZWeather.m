@@ -10,7 +10,6 @@
 
 @implementation WZHttpRequest (WZWeather)
 
-
 //请求天气详情 
 + (NSURLSessionTask *)wz_requestWeatherConditionWithAreaCity:(NSString *)areaCity serializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
     NSString *urlString = WZ_YIYUANWEATHER_URLSTRING;
