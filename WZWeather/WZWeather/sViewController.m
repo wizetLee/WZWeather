@@ -66,9 +66,8 @@
     
     
     
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    _progress = [NSProgress progressWithTotalUnitCount:1];
-//    _progress = [manager downloadProgressForTask:nil];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
     
 //    [manager POST:@"" parameters:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
 //        
@@ -106,7 +105,6 @@
     [self.view addSubview:_btn];
     //检查文件是否已经存在
    
-    
     NSMutableArray <NSURL *>* tmpUrlArray = [NSMutableArray arrayWithArray:
   @[[NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0512/5915658821e22_wpc.mp4"]
     , [NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4"]
@@ -114,69 +112,68 @@
     , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/12/26/586059118dd30_mini.jpg"]
     , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2017/04/26/5900b375744b2_mini.jpg"]]];
     
-    NSMutableArray <NSURL *>* urlArray = [NSMutableArray arrayWithArray:tmpUrlArray];
+    NSMutableArray <NSURL *>* urlArray = [NSMutableArray arrayWithArray:@[[NSURL URLWithString:@"http://www.eso.org/public/archives/images/publicationtiff40k/eso1242a.tif"]]];
     
-    for (NSURL * url in tmpUrlArray) {
-        if (wz_fileExistsAtPath(wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent))) {
-            [urlArray removeObject:url];
-        }
-    }
+//    for (NSURL * url in tmpUrlArray) {
+//        if (wz_fileExistsAtPath(wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent))) {
+//            [urlArray removeObject:url];
+//        }
+//    }
     
     __weak typeof(self) weakSelf = self;
     _downloader = [WZDownloadRequest downloader];
-    [_downloader wz_downloadWithURLArray:urlArray invalidate:true completedWithError:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSError * _Nullable error) {
+    [_downloader downloadWithURLArray:urlArray completedWithError:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSError * _Nullable error) {
         if (error) {
             NSLog(@"error: %@", error.debugDescription);
         }
     } finishedDownload:^(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSURL * _Nullable location) {
 
-        //文件拷贝到制定的文件夹
-//        if ( wz_createFile(WZSearchPathDirectoryTemporary, url.lastPathComponent, false)) {
-//            [location.dataRepresentation writeToFile:wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent) atomically:true];
-//        }
-        
-        //文件路径迁移 并且重命名文件
-        NSError * fileManagerError;
-        if ([[NSFileManager defaultManager] moveItemAtPath:location.path toPath:wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent) error:&fileManagerError]) {
-        } else {
-            NSLog(@"fileManagerError:%@", fileManagerError);
-        }
-        if (fileManagerError) {
-            //[[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];
-            //文件迁移失败措施
-        }
-        
+      /*
+       //文件路径迁移 并且重命名文件
+       NSError * fileManagerError;
+       if ([[NSFileManager defaultManager] moveItemAtPath:location.path toPath:wz_filePath(WZSearchPathDirectoryTemporary, url.lastPathComponent) error:&fileManagerError]) {
+       } else {
+       NSLog(@"fileManagerError:%@", fileManagerError);
+       }
+       if (fileManagerError) {
+       //[[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];
+       //文件迁移失败措施
+       }
+       */
     } downloadProcess:^(NSURLSessionDownloadTask * _Nullable downloadTask, NSURL * _Nullable url, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
         
-        if ([url.path isEqualToString:[urlArray[0] path]]) {
-            weakSelf.timeLabel.text = [NSString stringWithFormat:@"%lf", totalBytesWritten / 1000.0];
-
-            NSLog(@"11111111111");
-        } else if ([downloadTask.currentRequest.URL.path isEqualToString:[urlArray[1] path]]) {
-            NSLog(@"22222222222");
-        } else if ([downloadTask.currentRequest.URL.path isEqualToString:[urlArray[2] path]]) {
-            NSLog(@"33333333333");
-        } else {
-            NSLog(@"else");
-        }
+//        if ([url.path isEqualToString:[urlArray[0] path]]) {
+//            weakSelf.timeLabel.text = [NSString stringWithFormat:@"%lf", totalBytesWritten / 1000.0];
+//
+//            NSLog(@"11111111111");
+//        } else if ([downloadTask.currentRequest.URL.path isEqualToString:[urlArray[1] path]]) {
+//            NSLog(@"22222222222");
+//        } else if ([downloadTask.currentRequest.URL.path isEqualToString:[urlArray[2] path]]) {
+//            NSLog(@"33333333333");
+//        } else {
+//            NSLog(@"else");
+//        }
+        
+    NSLog(@" bytesWritten: %lf\
+                          \n totalBytesWritten :%lf \
+                          \n totalBytesExpectedToWrite:%lf"
+                          ,bytesWritten / 1000.0
+                          , totalBytesWritten  / 1000.0
+                          ,totalBytesExpectedToWrite / 1000.0);
+        weakSelf.timeLabel.text = [NSString stringWithFormat:@"%lf", totalBytesWritten / 1000.0];
     }];
 }
 
-//            NSLog(@" bytesWritten: %lf\
-//                  \n totalBytesWritten :%lf \
-//                  \n totalBytesExpectedToWrite:%lf"
-//                  ,bytesWritten / 1000.0
-//                  , totalBytesWritten  / 1000.0
-//                  ,totalBytesExpectedToWrite / 1000.0);
+
 
 - (void)clickedBtn:(UIButton *)btn {
     btn.selected = !btn.selected;
     if (btn.selected) {
         //停止
-        [_downloader suspendAllTask];
+        [_downloader suspendAllTasks];
     } else {
         //开始
-        [_downloader resumeAllTask];
+        [_downloader resumeAllTasks];
     }
 }
 
@@ -197,12 +194,6 @@
     });
     
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 - (void)sss {
     _cv = [WZVariousCollectionView staticInitWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];

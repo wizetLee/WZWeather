@@ -53,13 +53,13 @@ typedef NS_ENUM(NSUInteger, WZBaiSiBuDeJieType) {
 @interface WZHttpRequest (WZWeather)
 
 //天气
-+ (NSURLSessionTask *)wz_requestWeatherConditionWithAreaCity:(NSString *)areaCity serializationResult:(wz_httpRequestJSONSerializationResult)serializationResult;
++ (NSURLSessionTask *)requestWeatherConditionWithAreaCity:(NSString *)areaCity serializationResult:(HttpRequestJSONSerializationResult)serializationResult;
 
 //必应每日壁纸
-+ (NSURLSessionTask *)wz_requestBiYingWallpaperSerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult;
++ (NSURLSessionTask *)requestBiYingWallpaperSerializationResult:(HttpRequestJSONSerializationResult)serializationResult;
 
 //百思不得姐
-+ (NSURLSessionTask *)wz_requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult;
++ (NSURLSessionTask *)requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(HttpRequestJSONSerializationResult)serializationResult;
 
 
 @end

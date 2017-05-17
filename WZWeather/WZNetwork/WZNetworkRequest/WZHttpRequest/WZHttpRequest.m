@@ -10,11 +10,11 @@
 
 @implementation WZHttpRequest
 
-+ (NSURLSessionDataTask * _Nullable)wz_taskResumeWithSession:(NSURLSession * _Nullable)session request:(NSURLRequest * _Nullable)request serializationResult:(wz_httpRequestJSONSerializationResult _Nullable)serializationResult {
++ (NSURLSessionDataTask * _Nullable)taskResumeWithSession:(NSURLSession * _Nullable)session request:(NSURLRequest * _Nullable)request serializationResult:(HttpRequestJSONSerializationResult _Nullable)serializationResult {
     NSParameterAssert(session);
     NSParameterAssert(request);
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        wz_JSONSerializationResult(data, response, error, serializationResult);
+        JSONSerializationResult(data, response, error, serializationResult);
     }];
     
     //执行task
@@ -25,7 +25,7 @@
     return task;
 }
 
-+ (NSURLSessionDownloadTask * _Nullable)wz_downloadResumeWithSession:(NSURLSession * _Nullable)session request:(NSURLRequest * _Nullable)request {
++ (NSURLSessionDownloadTask * _Nullable)downloadResumeWithSession:(NSURLSession * _Nullable)session request:(NSURLRequest * _Nullable)request {
     NSParameterAssert(session);
     NSParameterAssert(request);
     NSURLSessionDownloadTask *downLoadTask = [session downloadTaskWithRequest:request];
@@ -61,7 +61,7 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
  */
 
 //对于数据返回的中转
-void wz_JSONSerializationResult(NSData * _Nullable origionData, NSURLResponse * _Nullable response, NSError * _Nullable error, wz_httpRequestJSONSerializationResult serializationResult) {
+void JSONSerializationResult(NSData * _Nullable origionData, NSURLResponse * _Nullable response, NSError * _Nullable error, HttpRequestJSONSerializationResult serializationResult) {
     NSError *jsonError = error;
     BOOL isArray = false;
     BOOL isDictionary = false;

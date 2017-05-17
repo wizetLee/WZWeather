@@ -11,7 +11,7 @@
 @implementation WZHttpRequest (WZWeather)
 
 //请求天气详情 
-+ (NSURLSessionTask *)wz_requestWeatherConditionWithAreaCity:(NSString *)areaCity serializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
++ (NSURLSessionTask *)requestWeatherConditionWithAreaCity:(NSString *)areaCity serializationResult:(HttpRequestJSONSerializationResult)serializationResult {
     NSString *urlString = WZ_YIYUANWEATHER_URLSTRING;
     NSString *area = [NSString stringWithFormat:@"area=%@",areaCity];//@"area=广州市"
     NSString *needMoreDay = @"needMoreDay=1";
@@ -28,11 +28,10 @@
     request.HTTPMethod = @"GET";
     request.allHTTPHeaderFields = WZ_YIYUANWEATHER_APPKEY_VALUE_DIC;
     
-    return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];
-   
+    return [self taskResumeWithSession:session request:request serializationResult:serializationResult];
 }
 
-+ (NSURLSessionTask *)wz_requestBiYingWallpaperSerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
++ (NSURLSessionTask *)requestBiYingWallpaperSerializationResult:(HttpRequestJSONSerializationResult)serializationResult {
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@", WZ_YIYUAN_BIYINGWALLPAPER_URLSTRING, WZ_YIYUAN_GETREQUEST_ID_SIGN];
     
@@ -40,10 +39,10 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"GET";
     
-    return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];;
+    return [self taskResumeWithSession:session request:request serializationResult:serializationResult];;
 }
 
-+ (NSURLSessionTask *)wz_requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(wz_httpRequestJSONSerializationResult)serializationResult {
++ (NSURLSessionTask *)requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(HttpRequestJSONSerializationResult)serializationResult {
     
     
     
@@ -64,7 +63,7 @@
     NSData *HTTPBody = [HTTPBodyString dataUsingEncoding:NSUTF8StringEncoding];
     request.HTTPBody = HTTPBody;
 
-    return [self wz_taskResumeWithSession:session request:request serializationResult:serializationResult];;
+    return [self taskResumeWithSession:session request:request serializationResult:serializationResult];;
 }
 
 

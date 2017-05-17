@@ -11,6 +11,11 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
+#ifdef __IPHONE_8_0
+#import <Photos/Photos.h>
+#endif
+#import <AssetsLibrary/AssetsLibrary.h>
+
 @protocol abc <NSObject>
 
 @end
@@ -51,9 +56,90 @@
 //    NSString *str =  [[self class] sup_md5FileNameConvertedByFileName:@"哈"];
 //    NSLog(@"%@", str);
     
-    wz_createFile(WZSearchPathDirectoryTemporary ,@"wizet.txt", true);
-    NSLog(@"%@",NSHomeDirectory());
+//    wz_createFile(WZSearchPathDirectoryTemporary ,@"wizet.txt", true);
+//    NSLog(@"%@",NSHomeDirectory());
+    /*
+     ALAuthorizationStatusNotDetermined
+     ALAuthorizationStatusRestricted
+     ALAuthorizationStatusDenied
+     ALAuthorizationStatusAuthorized
+
+     */
+
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    switch ([ALAssetsLibrary authorizationStatus]) {
+        case ALAuthorizationStatusAuthorized:
+        {
+            //已授权
+            [self cation:true];
+        }
+            break;
+            
+        default:
+        {
+            [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                //已授权
+                [self cation:true];
+            } failureBlock:^(NSError *error) {
+                //无权限
+            }];
+        }
+            break;
+    }
+    
+    
+//#ifdef __IPHONE_8_0
+//    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+//        if (status == PHAuthorizationStatusAuthorized) {
+//            //已授权
+//        } else {
+//            //无权限
+//        }
+//    }];
+//    
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
+//        
+//    } else {
+//        
+//    }
+//#else
+//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//    switch ([ALAssetsLibrary authorizationStatus]) {
+//        case ALAuthorizationStatusAuthorized:
+//        {
+//            //已授权
+//        }
+//            break;
+//            
+//        default:
+//        {
+//            [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+//               //已授权
+//            } failureBlock:^(NSError *error) {
+//               //无权限
+//            }];
+//        }
+//            break;
+//    }
+//#endif
+    
+    
+    
+//    
 }
+
+- (void)cation:(BOOL)boolean {
+    if (boolean) {
+        UIImagePickerController * imageVC = [[UIImagePickerController alloc] init];
+        [self presentViewController:imageVC animated:true completion:^{
+            
+        }];
+    } else {
+        
+    }
+    
+}
+
 
 + (NSString *)sup_md5FileNameConvertedByFileName:(NSString *)name {
     const char *str = [name UTF8String];
