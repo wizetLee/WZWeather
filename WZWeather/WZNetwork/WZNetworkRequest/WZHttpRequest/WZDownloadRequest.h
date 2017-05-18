@@ -17,7 +17,7 @@
 
 //文件存在是否要重新下载
 
-//多任务下载q
+//多任务下载
 
 //断点下载
 
@@ -33,28 +33,24 @@
 //下载失败  发出通知
 //插入下载  发出通知
 
+//控制并发数量
+
 //单例？
 
-/**
- *  某个task 无论失败还是成功的最终的回调
- *  多任务通过taskIdentifier判定
- *  @param error
- */
-typedef void (^DownloadTaskDidCompleteWithError)(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSError * _Nullable error);
+typedef void (^DownloadTaskDidCompleteWithError)(NSMutableArray <WZDownloadTarget *>* _Nullable targets, NSError * _Nullable error);
 
 //下载完成后 将源数据从临时路径转移到自定义路径中
-typedef void (^DownloadTaskDidFinishDownload)(NSURLSessionTask * _Nullable task, NSURL * _Nullable url, NSURL * _Nullable location);
+typedef void (^DownloadTaskDidFinishDownload)(NSMutableArray <WZDownloadTarget *>* _Nullable targets, NSURL * _Nullable location);
 
 //下载的进程
-typedef void (^DownloadTaskDownloadProcess)(NSURLSessionDownloadTask * _Nullable downloadTask,
-                                               NSURL * _Nullable url,
-                                               int64_t bytesWritten,
-                                               int64_t totalBytesWritten,
-                                               int64_t totalBytesExpectedToWrite);
+typedef void (^DownloadTaskDownloadProcess)(NSMutableArray <WZDownloadTarget *>* _Nullable targets);
+
+typedef void (^WZDownloadTaskBlock) (WZDownloadTarget * _Nullable target, NSError * _Nullable error);
 
 @interface WZDownloadRequest : NSObject
 
-
+@property (nonatomic, strong, readonly) NSMutableArray <WZDownloadTarget *> * _Nullable downloadTargets;
+@property (nonatomic, strong, readonly) NSURLSession * _Nullable session;
 
 + (instancetype _Nullable)downloader;
 
@@ -63,14 +59,17 @@ typedef void (^DownloadTaskDownloadProcess)(NSURLSessionDownloadTask * _Nullable
                finishedDownload:(DownloadTaskDidFinishDownload _Nullable)finishedDownload
                 downloadProcess:(DownloadTaskDownloadProcess _Nullable)downloadProcess;
 
-// downloadTasksMDic 获取 value 的统一规则
-NSString * _Nullable valueForDownloadTasksMDicWithURL(NSURL * _Nullable url);
-
 - (void)suspendAllTasks;
 - (void)suspendTaskWithURL:(NSURL *_Nullable)url;
 - (void)cancelAllTasks;
 - (void)cancelTaskWithURL:(NSURL *_Nullable)url;
 - (void)resumeAllTasks;
 - (void)resumeTaskWithURL:(NSURL *_Nullable)url;
+
+double bytesTransitionKB(int64_t bytes);
+double bytesTransitionMB(int64_t bytes);
+
+
+
 
 @end

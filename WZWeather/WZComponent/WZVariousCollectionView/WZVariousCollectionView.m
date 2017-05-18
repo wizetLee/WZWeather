@@ -18,7 +18,7 @@
 @synthesize sectionsDatas = _sectionsDatas;
 @synthesize sectionsProviders = _sectionsProviders;
 
-+ (instancetype)staticInitWithFrame:(CGRect)frame {
++ (instancetype)createWithFrame:(CGRect)frame {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     WZVariousCollectionView *collection = [[WZVariousCollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
     return collection;
@@ -183,7 +183,7 @@
 }
 
 - (WZVariousCollectionSectionsBaseProvider *)getProviderForSection:(NSInteger)section {
-    if (self.sectionsProviders && self.sectionsProviders.count <= section + 1 && [self.sectionsProviders[section] isKindOfClass:[WZVariousCollectionSectionsBaseProvider class]]) {
+    if (self.sectionsProviders && self.sectionsProviders.count > 0 && [self.sectionsProviders[section] isKindOfClass:[WZVariousCollectionSectionsBaseProvider class]]) {
         return self.sectionsProviders[section];
     }
     return [[WZVariousCollectionSectionsBaseProvider alloc] init];

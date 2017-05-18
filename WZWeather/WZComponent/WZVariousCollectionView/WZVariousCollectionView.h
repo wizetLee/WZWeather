@@ -19,8 +19,10 @@
 @property (nonatomic, weak) id<WZVariousCollectionDelegate> variousCollectionDelegate;
 @property (nonatomic, weak) UIViewController *locatedController;
 //数据源
-
+/**
+ *  section data Source
+ */
 @property (nonatomic, strong) NSMutableArray <NSMutableArray <WZVariousCollectionBaseObject *>*>*sectionsDatas;
-+ (instancetype)staticInitWithFrame:(CGRect)frame;
++ (instancetype)createWithFrame:(CGRect)frame;
 
 @end

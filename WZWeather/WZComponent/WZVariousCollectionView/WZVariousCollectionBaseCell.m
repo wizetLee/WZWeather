@@ -24,7 +24,7 @@
 }
 
 - (void)singleClicked {
-    NSLog(@"被单击了:%s", __FUNCTION__);
+//    NSLog(@"被单击了:%s", __FUNCTION__);
 }
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPress {
@@ -34,7 +34,7 @@
 }
 
 - (void)longPressed  {
-    NSLog(@"被长按了:%s", __FUNCTION__);
+//    NSLog(@"被长按了:%s", __FUNCTION__);
 }
 
 + (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath model:(WZVariousCollectionBaseObject *)model {

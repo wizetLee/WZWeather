@@ -41,4 +41,23 @@
     }];
     
 }
+
++ (void)requestPhotoLibraryAuthorization:(void(^)(BOOL success))handler {
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    switch ([ALAssetsLibrary authorizationStatus]) {
+        case ALAuthorizationStatusAuthorized: {
+           handler?:handler(true); //已授权
+        } break;
+            
+        default: {
+            [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                handler?:handler(true);//已授权
+            } failureBlock:^(NSError *error) {
+                handler?:handler(false);//无权限
+            }];
+        } break;
+    }
+}
+
+
 @end

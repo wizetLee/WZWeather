@@ -35,6 +35,5 @@ typedef NS_ENUM(NSUInteger, WZVariousCollectionMethod) {
 
 + (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath model:(WZVariousCollectionBaseObject *)model;
 
-//- (void)updateWithModel:(id)model indexPath:(NSIndexPath *)indexPath param:(NSDictionary *)param;
 
 @end

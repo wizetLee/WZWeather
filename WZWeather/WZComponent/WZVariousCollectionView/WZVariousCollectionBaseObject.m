@@ -8,6 +8,7 @@
 
 
 #import "WZVariousCollectionBaseObject.h"
+#import "WZVariousCollectionBaseCell.h"
 
 @implementation WZVariousCollectionBaseObject
 @synthesize cellType = _cellType;

@@ -11,6 +11,13 @@
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
+		8402EB101ECD34B00030CCE1 /* WZDownloadProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB0F1ECD34B00030CCE1 /* WZDownloadProgressCell.m */; };
+		8402EB251ECD64A40030CCE1 /* WZVariousBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB1A1ECD64A40030CCE1 /* WZVariousBaseCell.m */; };
+		8402EB261ECD64A40030CCE1 /* WZVariousBaseMethodObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB1C1ECD64A40030CCE1 /* WZVariousBaseMethodObject.m */; };
+		8402EB271ECD64A40030CCE1 /* WZVariousBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB1E1ECD64A40030CCE1 /* WZVariousBaseObject.m */; };
+		8402EB281ECD64A40030CCE1 /* WZVariousSectionsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */; };
+		8402EB291ECD64A40030CCE1 /* WZVariousTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB221ECD64A40030CCE1 /* WZVariousTable.m */; };
+		8402EB2C1ECD6C520030CCE1 /* WZDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB2B1ECD6C520030CCE1 /* WZDownloadController.m */; };
 		84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */; };
 		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
@@ -310,6 +317,20 @@
 		40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundSelectorLogicView.h; sourceTree = "<group>"; };
 		40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRoundSelectorLogicView.m; sourceTree = "<group>"; };
 		418487491B495564256C463C /* Pods_WZWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8402EB0E1ECD34B00030CCE1 /* WZDownloadProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadProgressCell.h; sourceTree = "<group>"; };
+		8402EB0F1ECD34B00030CCE1 /* WZDownloadProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadProgressCell.m; sourceTree = "<group>"; };
+		8402EB191ECD64A40030CCE1 /* WZVariousBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousBaseCell.h; sourceTree = "<group>"; };
+		8402EB1A1ECD64A40030CCE1 /* WZVariousBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousBaseCell.m; sourceTree = "<group>"; };
+		8402EB1B1ECD64A40030CCE1 /* WZVariousBaseMethodObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousBaseMethodObject.h; sourceTree = "<group>"; };
+		8402EB1C1ECD64A40030CCE1 /* WZVariousBaseMethodObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousBaseMethodObject.m; sourceTree = "<group>"; };
+		8402EB1D1ECD64A40030CCE1 /* WZVariousBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousBaseObject.h; sourceTree = "<group>"; };
+		8402EB1E1ECD64A40030CCE1 /* WZVariousBaseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousBaseObject.m; sourceTree = "<group>"; };
+		8402EB1F1ECD64A40030CCE1 /* WZVariousSectionsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousSectionsTable.h; sourceTree = "<group>"; };
+		8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousSectionsTable.m; sourceTree = "<group>"; };
+		8402EB211ECD64A40030CCE1 /* WZVariousTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousTable.h; sourceTree = "<group>"; };
+		8402EB221ECD64A40030CCE1 /* WZVariousTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousTable.m; sourceTree = "<group>"; };
+		8402EB2A1ECD6C520030CCE1 /* WZDownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadController.h; sourceTree = "<group>"; };
+		8402EB2B1ECD6C520030CCE1 /* WZDownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadController.m; sourceTree = "<group>"; };
 		84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDisplayLinkSuperviser.h; sourceTree = "<group>"; };
 		84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDisplayLinkSuperviser.m; sourceTree = "<group>"; };
 		8444C8AB1EA0594600DD6259 /* sViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sViewController.h; sourceTree = "<group>"; };
@@ -883,6 +904,23 @@
 			path = WZBaseRoundSelector;
 			sourceTree = "<group>";
 		};
+		8402EB141ECD64A40030CCE1 /* WZVariousTable */ = {
+			isa = PBXGroup;
+			children = (
+				8402EB191ECD64A40030CCE1 /* WZVariousBaseCell.h */,
+				8402EB1A1ECD64A40030CCE1 /* WZVariousBaseCell.m */,
+				8402EB1B1ECD64A40030CCE1 /* WZVariousBaseMethodObject.h */,
+				8402EB1C1ECD64A40030CCE1 /* WZVariousBaseMethodObject.m */,
+				8402EB1D1ECD64A40030CCE1 /* WZVariousBaseObject.h */,
+				8402EB1E1ECD64A40030CCE1 /* WZVariousBaseObject.m */,
+				8402EB1F1ECD64A40030CCE1 /* WZVariousSectionsTable.h */,
+				8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */,
+				8402EB211ECD64A40030CCE1 /* WZVariousTable.h */,
+				8402EB221ECD64A40030CCE1 /* WZVariousTable.m */,
+			);
+			path = WZVariousTable;
+			sourceTree = "<group>";
+		};
 		8440FE641EC2A454002A893E /* WZNetwork */ = {
 			isa = PBXGroup;
 			children = (
@@ -919,6 +957,10 @@
 				846F1DF31EC95D730013F078 /* WZDownloadRequest.m */,
 				848979851ECC3A97008B07D2 /* WZDownloadTarget.h */,
 				848979861ECC3A97008B07D2 /* WZDownloadTarget.m */,
+				8402EB0E1ECD34B00030CCE1 /* WZDownloadProgressCell.h */,
+				8402EB0F1ECD34B00030CCE1 /* WZDownloadProgressCell.m */,
+				8402EB2A1ECD6C520030CCE1 /* WZDownloadController.h */,
+				8402EB2B1ECD6C520030CCE1 /* WZDownloadController.m */,
 			);
 			path = WZHttpRequest;
 			sourceTree = "<group>";
@@ -2075,6 +2117,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+				8402EB141ECD64A40030CCE1 /* WZVariousTable */,
 				844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
 				40DC2AFF1EA2611C000968DB /* WZView */,
@@ -2339,7 +2382,9 @@
 				84514D501E9DCE7A00F07EF8 /* UIImageView+JKFaceAwareFill.m in Sources */,
 				84514CE31E9DCE7A00F07EF8 /* NSInvocation+JKBlock.m in Sources */,
 				84514D051E9DCE7A00F07EF8 /* NSString+JKStringPages.m in Sources */,
+				8402EB2C1ECD6C520030CCE1 /* WZDownloadController.m in Sources */,
 				84514D691E9DCE7A00F07EF8 /* UITableViewCell+JKNIB.m in Sources */,
+				8402EB281ECD64A40030CCE1 /* WZVariousSectionsTable.m in Sources */,
 				84514D1B1E9DCE7A00F07EF8 /* CATransaction+JKAnimateWithDuration.m in Sources */,
 				84514CF91E9DCE7A00F07EF8 /* NSString+JKDictionaryValue.m in Sources */,
 				84514D581E9DCE7A00F07EF8 /* UINavigationBar+JKAwesome.m in Sources */,
@@ -2403,6 +2448,7 @@
 				84514D191E9DCE7A00F07EF8 /* CAMediaTimingFunction+JKAdditionalEquations.m in Sources */,
 				84514CCB1E9DCE7A00F07EF8 /* NSData+JKGzip.m in Sources */,
 				844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */,
+				8402EB291ECD64A40030CCE1 /* WZVariousTable.m in Sources */,
 				84514D161E9DCE7A00F07EF8 /* MKMapView+JKZoomLevel.m in Sources */,
 				84514D351E9DCE7A00F07EF8 /* UIColor+JKWeb.m in Sources */,
 				84514D001E9DCE7A00F07EF8 /* NSString+JKNormalRegex.m in Sources */,
@@ -2442,6 +2488,7 @@
 				84514D3A1E9DCE7A00F07EF8 /* UIDevice+JKPasscodeStatus.m in Sources */,
 				84514D6E1E9DCE7A00F07EF8 /* UITextField+JKShake.m in Sources */,
 				84514D7D1E9DCE7A00F07EF8 /* UIView+JKShake.m in Sources */,
+				8402EB261ECD64A40030CCE1 /* WZVariousBaseMethodObject.m in Sources */,
 				84514D861E9DCE7A00F07EF8 /* UIWebView+JKBlocks.m in Sources */,
 				84514D841E9DCE7A00F07EF8 /* UIViewController+JKStoreKit.m in Sources */,
 				844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */,
@@ -2465,6 +2512,7 @@
 				846920E01E63D6920048BBDC /* MainViewController.m in Sources */,
 				84593D1E1ECAE61D000508C7 /* NSString+file.m in Sources */,
 				84514D031E9DCE7A00F07EF8 /* NSString+JKScore.m in Sources */,
+				8402EB251ECD64A40030CCE1 /* WZVariousBaseCell.m in Sources */,
 				845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */,
 				84514D811E9DCE7A00F07EF8 /* UIViewController+JKBackButtonTouched.m in Sources */,
 				84514D241E9DCE7A00F07EF8 /* UIBezierPath+JKLength.m in Sources */,
@@ -2518,6 +2566,7 @@
 				84514D111E9DCE7A00F07EF8 /* NSURLSession+JKSynchronousTask.m in Sources */,
 				84514D421E9DCE7A00F07EF8 /* UIImage+JKCapture.m in Sources */,
 				84514CF11E9DCE7A00F07EF8 /* NSObject+JKGCD.m in Sources */,
+				8402EB101ECD34B00030CCE1 /* WZDownloadProgressCell.m in Sources */,
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
@@ -2563,6 +2612,7 @@
 				84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
 				84514D011E9DCE7A00F07EF8 /* NSString+JKPinyin.m in Sources */,
+				8402EB271ECD64A40030CCE1 /* WZVariousBaseObject.m in Sources */,
 				84514CF21E9DCE7A00F07EF8 /* NSObject+JKKVOBlocks.m in Sources */,
 				84514D3E1E9DCE7A00F07EF8 /* UIImage+JKAlpha.m in Sources */,
 				84514CEE1E9DCE7A00F07EF8 /* NSObject+JKBlocks.m in Sources */,

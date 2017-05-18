@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WZVariousCollectionBaseCell.h"
+@class WZVariousCollectionBaseCell;
 /**
  *  数据object
  */

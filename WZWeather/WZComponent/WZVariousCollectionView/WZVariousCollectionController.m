@@ -16,17 +16,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _collection = [WZVariousCollectionView staticInitWithFrame:[self vitalizetableFrame]];
+    _collection = [WZVariousCollectionView createWithFrame:[self vitalizetableFrame]];
     [self.view addSubview:_collection];
     _collection.registerCellDic = [self vitalizeRegisterCellDic];
     _collection.locatedController = self;
     _collection.variousCollectionDelegate = (id<WZVariousCollectionDelegate>)self;
-    
+    _collection.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark WZVariousCollectionDelegate
 - (void)variousView:(UIView *)view param:(NSMutableDictionary *)param {
+    
 }
+
+
 
 #pragma mark prepare for sub class
 
