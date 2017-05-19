@@ -2,7 +2,7 @@
 //  WZRoundRenderLayer.h
 //  WZBaseRoundSelector
 //
-//  Created by admin on 17/3/28.
+//  Created by wizet on 17/3/28.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

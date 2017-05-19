@@ -2,7 +2,7 @@
 //  WZRoundSelectorLogicView.m
 //  WZBaseRoundSelector
 //
-//  Created by admin on 17/3/28.
+//  Created by wizet on 17/3/28.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -144,7 +144,7 @@
 
 - (WZRoundRenderLayer *)renderLayer {
     if (!_renderLayer) {
-        CGFloat radius = self.bounds.size.width > self.bounds.size.height  ? self.bounds.size.height / 2.0: self.bounds.size.width / 2.0 ;
+        CGFloat radius = self.bounds.size.width > self.bounds.size.height ? self.bounds.size.height / 2.0: self.bounds.size.width / 2.0 ;
         _renderLayer = [[WZRoundRenderLayer alloc] initWithCircleRadius:radius layerLineWidth:15.0];
         _renderLayer.position = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
         _renderLayer.renderLayerDelegate = (id<WZRoundRenderLayerDelegate>)self;

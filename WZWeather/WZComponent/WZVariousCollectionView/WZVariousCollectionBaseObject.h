@@ -1,9 +1,9 @@
 //
 //  WZVariousCollectionBaseObject.h
-//  SUPEPRO
+//  WZWeather
 //
-//  Created by admin on 17/3/8.
-//  Copyright © 2017年 jerry. All rights reserved.
+//  Created by wizet on 17/3/8.
+//  Copyright © 2017年 wizet. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

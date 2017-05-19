@@ -1,8 +1,8 @@
 //
 //  WZVariousCollectionBaseCell.h
-//  text1
+//  WZWeather
 //
-//  Created by admin on 17/3/7.
+//  Created by wizet on 17/3/7.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

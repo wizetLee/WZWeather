@@ -2,7 +2,7 @@
 //  WZDownloadRequest.h
 //  WZWeather
 //
-//  Created by admin on 17/5/15.
+//  Created by wizet on 17/5/15.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -23,7 +23,9 @@
 
 //后台下载
 
-//多个任务是同一个URL的 只完成一个任务与另外的任务共享一份缓存
+//多个任务是同一个URL的
+//目前: 显示多个任务 只完成一个任务与另外的任务共享一份缓存
+//或有需求: 只显示单个任务, 
 
 //插入任务
 
@@ -44,8 +46,6 @@ typedef void (^DownloadTaskDidFinishDownload)(NSMutableArray <WZDownloadTarget *
 
 //下载的进程
 typedef void (^DownloadTaskDownloadProcess)(NSMutableArray <WZDownloadTarget *>* _Nullable targets);
-
-typedef void (^WZDownloadTaskBlock) (WZDownloadTarget * _Nullable target, NSError * _Nullable error);
 
 @interface WZDownloadRequest : NSObject
 

@@ -1,9 +1,9 @@
 //
 //  WZVariousSectionsTable.h
-//  SUPEPRO
+//  WZWeather
 //
-//  Created by admin on 17/4/5.
-//  Copyright © 2017年 jerry. All rights reserved.
+//  Created by wizet on 17/4/5.
+//  Copyright © 2017年 wizet. All rights reserved.
 //
 
 #import "WZVariousTable.h"

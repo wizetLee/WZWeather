@@ -2,7 +2,7 @@
 //  WZDownloadProgressCell.m
 //  WZWeather
 //
-//  Created by admin on 17/5/18.
+//  Created by wizet on 17/5/18.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -23,25 +23,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        //抛出一个进度接口
-        _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, WZSCREEN_WIDTH, WZDownloadProgressCellHeight/ 2.0)];
-        _titleLable.text = @"title";
-        [self.contentView addSubview:_titleLable];
-        
-        _progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight / 2.0, WZSCREEN_WIDTH, WZDownloadProgressCellHeight / 2.0)];
-        [self.contentView addSubview:_progressLabel];
-        _progressLabel.text = @"0.000000";
-        
-        CGFloat edge = 10;
-        _actionBtn = [[UIButton alloc] initWithFrame:CGRectMake(WZSCREEN_WIDTH - WZDownloadProgressCellHeight, edge, WZDownloadProgressCellHeight - edge, WZDownloadProgressCellHeight - edge)];
-        [self.contentView addSubview:_actionBtn];
-        _actionBtn.backgroundColor = [UIColor greenColor];
-        [_actionBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
-        self.contentView.backgroundColor = [UIColor yellowColor];
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight - 10, WZSCREEN_WIDTH, 10)];
-        line.backgroundColor = [UIColor blackColor];
-        [self.contentView addSubview:line];
-        
+        [self addSubviews];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
@@ -56,6 +38,28 @@
     }
 }
 
+#pragma mark CreateSubviews
+- (void)addSubviews {
+    _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, WZSCREEN_WIDTH, WZDownloadProgressCellHeight/ 2.0)];
+    _titleLable.text = @"title";
+    [self.contentView addSubview:_titleLable];
+    
+    _progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight / 2.0, WZSCREEN_WIDTH, WZDownloadProgressCellHeight / 2.0)];
+    [self.contentView addSubview:_progressLabel];
+    _progressLabel.text = @"0.000000";
+    
+    CGFloat edge = 10;
+    _actionBtn = [[UIButton alloc] initWithFrame:CGRectMake(WZSCREEN_WIDTH - WZDownloadProgressCellHeight, edge, WZDownloadProgressCellHeight - edge, WZDownloadProgressCellHeight - edge)];
+    [self.contentView addSubview:_actionBtn];
+    _actionBtn.backgroundColor = [UIColor greenColor];
+    [_actionBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.contentView.backgroundColor = [UIColor yellowColor];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight - 10, WZSCREEN_WIDTH, 10)];
+    line.backgroundColor = [UIColor blackColor];
+    [self.contentView addSubview:line];
+}
+
+#pragma mark Button Action
 - (void)clickedBtn:(UIButton *)sender {
     if ([self.variousViewDelegate respondsToSelector:@selector(variousView:param:)]) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];

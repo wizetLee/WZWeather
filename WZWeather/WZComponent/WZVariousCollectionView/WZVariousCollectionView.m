@@ -1,8 +1,8 @@
 //
 //  WZVariousCollectionView.m
-//  text1
+//  WZWeather
 //
-//  Created by admin on 17/3/7.
+//  Created by wizet on 17/3/7.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -10,7 +10,10 @@
 #define WZCOLLECTION_DEFAULTCELLID NSStringFromClass([WZVariousCollectionBaseCell class])
 #define WZCOLLECTION_DEFAULTREUSABLEVIEWID NSStringFromClass([UICollectionReusableView class])
 
-@interface WZVariousCollectionView()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface WZVariousCollectionView()
+<UICollectionViewDelegate
+, UICollectionViewDataSource
+, UICollectionViewDelegateFlowLayout>
 @end
 
 @implementation WZVariousCollectionView

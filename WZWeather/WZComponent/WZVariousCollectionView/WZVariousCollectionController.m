@@ -2,7 +2,7 @@
 //  WZVariousCollectionController.m
 //  WZWeather
 //
-//  Created by admin on 17/4/14.
+//  Created by wizet on 17/4/14.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -16,6 +16,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createSubviews];
+}
+
+#pragma mark CreateSubviews 
+- (void)createSubviews {
     _collection = [WZVariousCollectionView createWithFrame:[self vitalizetableFrame]];
     [self.view addSubview:_collection];
     _collection.registerCellDic = [self vitalizeRegisterCellDic];
@@ -29,9 +34,7 @@
     
 }
 
-
-
-#pragma mark prepare for sub class
+#pragma mark Prepare for sub class
 
 - (CGRect)vitalizetableFrame {
     if (self.navigationController) {

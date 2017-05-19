@@ -2,7 +2,7 @@
 //  CTCarrier+WZCTCarrierInfo.h
 //  WZWeather
 //
-//  Created by admin on 17/4/26.
+//  Created by wizet on 17/4/26.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

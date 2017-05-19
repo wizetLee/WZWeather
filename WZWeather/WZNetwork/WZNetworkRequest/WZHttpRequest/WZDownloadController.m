@@ -2,7 +2,7 @@
 //  WZDownloadController.m
 //  WZWeather
 //
-//  Created by admin on 17/5/18.
+//  Created by wizet on 17/5/18.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -19,13 +19,54 @@
 
 @implementation WZDownloadController
 
-- (void)dealloc {
-    NSLog(@"ssssssssssssssssssssssssssssssssssss");
+#pragma mark - ViewController Lifecycle
+
+- (instancetype)init {
+    if (self = [super init]) {}
+    return self;
+}
+
+- (void)loadView {
+    [super loadView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createDataSource];
+    [self addSubViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc {
     
+}
+
+#pragma mark Create dataSource
+
+- (void)createDataSource {
     NSMutableArray <NSURL *>* tmpUrlArray = [NSMutableArray arrayWithArray:
                                              @[[NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0512/5915658821e22_wpc.mp4"]
                                                , [NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4"],
@@ -35,11 +76,6 @@
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/07/26/57974925b34a6_mini.jpg"]
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/12/26/586059118dd30_mini.jpg"]
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2017/04/26/5900b375744b2_mini.jpg"]]];
-    
-//    NSMutableArray <NSURL *>* urlArray = [NSMutableArray arrayWithArray:@[[NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/12/26/586059118dd30_mini.jpg"]]];
-//    
-//    __weak typeof(self) weakSelf = self;
-    
     __weak typeof(self) weakSelf = self;
     _downloader = [WZDownloadRequest downloader];
     [_downloader downloadWithURLArray:tmpUrlArray completedWithError:^(NSMutableArray<WZDownloadTarget *> *targets, NSError * _Nullable error) {
@@ -55,27 +91,30 @@
             }
         } else {
             //修改数据源  更新数据源
+            NSString *urlPath = nil;
             for (WZDownloadTarget *target in targets) {
+                if (!urlPath) {
+                    urlPath = target.url.path;
+                }
                 [weakSelf.downloader.downloadTargets removeObject:target];
             }
             weakSelf.table.datas = weakSelf.downloader.downloadTargets;
             [weakSelf.table reloadData];
-            
             
             UILocalNotification *localNote = [[UILocalNotification alloc] init];
             // 2.设置本地通知的内容
             // 2.1.设置通知发出的时间
             localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:3.0];
             // 2.2.设置通知的内容
-            localNote.alertBody = @"在干吗你有一条新通知你有一条新通知你有一条新通知你有一条新通知?";
+            localNote.alertBody = [NSString stringWithFormat: @"任务%@已完成",urlPath] ;
             // 2.3.设置滑块的文字（锁屏状态下：滑动来“解锁”）
-            localNote.alertAction = @"解锁你有一条新通知你有一条新通知你有一条新通知你有一条新通知";
+            localNote.alertAction = @"解锁";
             // 2.4.决定alertAction是否生效
             localNote.hasAction = NO;
             // 2.5.设置点击通知的启动图片
             localNote.alertLaunchImage = @"123Abc";
             // 2.6.设置alertTitle
-            localNote.alertTitle = @"你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知你有一条新通知";
+            localNote.alertTitle =  @"你有一条新通知";
             // 2.7.设置有通知时的音效
             localNote.soundName = @"buyao.wav";
             // 2.8.设置应用程序图标右上角的数字
@@ -88,18 +127,16 @@
             [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
             
             
-            
-            
-            
-            
         }
     } finishedDownload:^(NSMutableArray<WZDownloadTarget *> *targets, NSURL * _Nullable location) {
-      
+        
     } downloadProcess:^(NSMutableArray<WZDownloadTarget *> *targets) {
         
     }];
-    [self addSubViews];
 }
+
+
+#pragma mark Create subViews
 
 - (void)addSubViews {
     _table = [[WZVariousTable alloc] initWithFrame:CGRectMake(0.0, 64.0, WZSCREEN_WIDTH, WZSCREEN_HEIGHT - 64.0) style:UITableViewStylePlain];
@@ -119,6 +156,8 @@
         [_table reloadData];
     }
 }
+
+#pragma mark WZVariousViewDelegate
 
 - (void)variousView:(UIView *)view param:(NSDictionary *)param {
     if ([param[@"data"] isKindOfClass:[WZDownloadTarget class]]) {

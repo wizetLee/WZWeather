@@ -2,7 +2,7 @@
 //  WZVariousBaseCell.m
 //  WZVariousTable
 //
-//  Created by admin on 17/3/3.
+//  Created by wizet on 17/3/3.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

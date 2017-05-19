@@ -2,7 +2,7 @@
 //  WZDownloadRequest.m
 //  WZWeather
 //
-//  Created by admin on 17/5/15.
+//  Created by wizet on 17/5/15.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) NSURLSession * _Nullable session;
 
+@property (nonatomic, assign) NSUInteger maxDownloadNumber;//最大并发数目
+@property (nonatomic, assign) NSUInteger currentDownloadNumer;//当前并发数目
 @property (nonatomic, strong) DownloadTaskDidCompleteWithError _Nullable completedWithError;
 @property (nonatomic, strong) DownloadTaskDidFinishDownload _Nullable finishedDownload;
 @property (nonatomic, strong) DownloadTaskDownloadProcess _Nullable downloadProcess;
@@ -33,6 +35,8 @@ double bytesTransitionMB(int64_t bytes) {
 {
     self = [super init];
     if (self) {
+        _maxDownloadNumber = 5;
+        _currentDownloadNumer = 0;
         _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:(id<NSURLSessionDownloadDelegate>)self delegateQueue:[NSOperationQueue mainQueue]];
         _downloadTargets = [NSMutableArray array];
     }
