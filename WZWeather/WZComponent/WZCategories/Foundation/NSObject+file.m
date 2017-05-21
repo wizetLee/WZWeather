@@ -1,12 +1,14 @@
 //
-//  NSString+file.m
-//  WZWeather
+//  NSObject+file.m
+//  
 //
-//  Created by wizet on 17/5/16.
-//  Copyright © 2017年 WZ. All rights reserved.
+//  Created by wizet on 2017/5/21.
+//
 //
 
-#import "NSString+file.h"
+#import "NSObject+file.h"
+
+@implementation NSObject (file)
 
 /*
  Documents：苹果建议将程序中建立的或在程序中浏览到的文件数据保存在该目录下，iTunes备份和恢复的时候会包括此目录
@@ -15,14 +17,14 @@
  tmp：提供一个即时创建临时文件的地方。
  */
 
-BOOL wz_fileExistsAtPath(NSString * path) {
++ (BOOL)wz_fileExistsAtPath:(NSString *)path {
     return [[NSFileManager defaultManager] fileExistsAtPath:path];
 }
 
-BOOL wz_createFolderAtPath(NSString * path) {
++ (BOOL)wz_createFolderAtPath:(NSString *)path {
     NSFileManager *manager = [NSFileManager defaultManager];
     BOOL boolean = false;
-    if (wz_fileExistsAtPath(path)) {
+    if ([self wz_fileExistsAtPath:path]) {
         boolean = true;
     } else {
         NSError *error = nil;
@@ -34,22 +36,24 @@ BOOL wz_createFolderAtPath(NSString * path) {
     return boolean;
 }
 
-BOOL wz_createFileAtPath(NSString * path, BOOL cover) {
-    if (wz_fileExistsAtPath(path) && !cover) {
++ (BOOL)wz_createFileAtPath:(NSString *)path cover:(BOOL)cover {
+    if ([self wz_fileExistsAtPath:path] && !cover) {
         return true;
     }
     return [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
 }
 
-BOOL wz_createFile(WZSearchPathDirectory direction, NSString * fileName, BOOL cover) {
-    return wz_createFileAtPath(wz_filePath(direction, fileName), cover);
++ (BOOL)wz_createFile:(WZSearchPathDirectory )direction fileName:(NSString *)fileName cover:(BOOL)cover {
+
+    return  [self wz_createFileAtPath:[self wz_filePath:direction fileName:fileName] cover:cover];
 }
 
-BOOL wz_createFolder(WZSearchPathDirectory direction, NSString * folderName) {
-    return wz_createFolderAtPath(wz_filePath(direction, folderName));
+
++ (BOOL)wz_createFolder:(WZSearchPathDirectory)direction folderName:(NSString *)folderName {
+    return [self wz_createFolderAtPath:[self wz_filePath:direction fileName:folderName]];
 }
 
-NSString * wz_filePath(WZSearchPathDirectory direction, NSString * fileName) {
++ (NSString *)wz_filePath:(WZSearchPathDirectory)direction fileName:(NSString *)fileName {
     if (![fileName isKindOfClass:[NSString class]]) {
         return false;
     }
@@ -79,11 +83,9 @@ NSString * wz_filePath(WZSearchPathDirectory direction, NSString * fileName) {
     
     //拼接文件路径
     NSString *filePath = [path stringByAppendingPathComponent:fileName];
-
+    
     return filePath;
 }
 
-
-@implementation NSString (file)
 
 @end

@@ -1,9 +1,9 @@
 //
-//  NSString+file.h
-//  WZWeather
+//  NSObject+file.h
+//  
 //
-//  Created by wizet on 17/5/16.
-//  Copyright © 2017年 WZ. All rights reserved.
+//  Created by wizet on 2017/5/21.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -15,19 +15,20 @@ typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
     WZSearchPathDirectoryTemporary = 3,
 };
 
+@interface NSObject (file)
+
 
 /**
  *  检查文件
  *  @param path 文件路径
  */
-BOOL wz_fileExistsAtPath(NSString * path);
++ (BOOL)wz_fileExistsAtPath:(NSString *)path;
 
 /**
  *  创建文件夹
  *  @param path 文件路径
  */
-BOOL wz_createFolderAtPath(NSString * path);
-
++ (BOOL)wz_createFolderAtPath:(NSString *)path;
 /**
  *  检查文件
  *  @param direction 文件路径
@@ -35,14 +36,18 @@ BOOL wz_createFolderAtPath(NSString * path);
  *  @param cover 文件存时是否要覆盖
  *  @return 文件存在或创建成功返回true 创建失败返回false
  */
-BOOL wz_createFile(WZSearchPathDirectory direction, NSString * fileName, BOOL cover);
++ (BOOL)wz_createFileAtPath:(NSString *)path cover:(BOOL)cover;
+
+
++ (BOOL)wz_createFolder:(WZSearchPathDirectory)direction folderName:(NSString *)folderName ;
 
 /**
  *  检查文件
  *  @param direction 文件路径
  *  @param folderName 文件名字
  */
-BOOL wz_createFolder(WZSearchPathDirectory direction, NSString * folderName);
+
++ (BOOL)wz_createFile:(WZSearchPathDirectory )direction fileName:(NSString *)fileName cover:(BOOL)cover;
 
 /**
  *  合成文件路径
@@ -50,10 +55,6 @@ BOOL wz_createFolder(WZSearchPathDirectory direction, NSString * folderName);
  *  @param fileName  文件名字
  *  @return 文件路径
  */
-NSString * wz_filePath(WZSearchPathDirectory direction, NSString * fileName);
-
-@interface NSString (file)
-
-
++ (NSString *)wz_filePath:(WZSearchPathDirectory)direction fileName:(NSString *)fileName;
 
 @end
