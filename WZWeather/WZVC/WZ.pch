@@ -69,7 +69,7 @@
 
 //颜色
 #define WZRGBColor(r, g, b)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
-#define WZRandomColor Color(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
+#define WZRandomColor WZRGBColor(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
 #define WZHexColor(hexValue) WZHexColorWithAlpha(hexValue, 1.0)
 #define WZHexColorWithAlpha(hexValue, alphe) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alphe]
 
