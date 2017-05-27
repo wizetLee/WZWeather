@@ -83,6 +83,7 @@
 #define WZBundleResource(resource, type)     [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
 
 
+
 #pragma mark 通知
 //applicaion处post
 #define WZ_ENTER_BACKGROUND_NOTIFICATION @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
