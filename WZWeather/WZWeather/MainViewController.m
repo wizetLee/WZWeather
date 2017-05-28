@@ -14,6 +14,7 @@
 @end
 
 @implementation MainViewController
+
 + (void)methodSwizzlingWithOriginalSelector:(SEL)originalSelector bySwizzledSelector:(SEL)swizzledSelector{
     Class class = [self class];
     //原有方法
@@ -32,6 +33,7 @@
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
 }
+
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

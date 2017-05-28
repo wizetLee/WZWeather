@@ -37,7 +37,7 @@
 #import "NSObject+file.h"
 
 //第三方
-#import <AFNetworking/AFNetworking.h>
+#import "AFNetworking/AFNetworking.h"
 #import "MJRefresh.h"
 
 //第三方的派生
@@ -47,18 +47,18 @@
 //控件
 #import "WZVariousSectionsTable.h"
 
+
 #pragma mark 常量
-#define WZSCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width  //屏宽
-#define WZSCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height  //屏高
-#define WZSTATUS_BAR_HEIGHT   (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度
-#define WZNAVIGATIONBAR_HEIGHT 44.0
-#define WZORIGION_Y_WITH_NAVIGATIONBAR (WZSTATUS_BAR_HEIGHT + WZNAVIGATIONBAR_HEIGHT)
-#define WZORIGION_Y_WITHOUT_NAVIGATIONBAR WZSTATUS_BAR_HEIGHT
+#define MACRO_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width  //屏宽
+#define MACRO_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height  //屏高
+#define MACRO_statusBar_height (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度
+#define MACRO_navigationBar_height  44.0
+#define MACRO_statusBar_and_navigationBar_height (MACRO_statusBar_height + MACRO_navigationBar_height)
 //设备信息
 
 #pragma mark Device information
-#define WZIOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
-#define WZCurrentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
+#define MACRO_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+#define MACRO_currentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
 
 ////替换NSLog内容
 //#ifdef DEBUG
@@ -68,26 +68,27 @@
 //#endif
 
 //颜色
-#define WZRGBColor(r, g, b)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
-#define WZRandomColor WZRGBColor(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
-#define WZHexColor(hexValue) WZHexColorWithAlpha(hexValue, 1.0)
-#define WZHexColorWithAlpha(hexValue, alphe) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alphe]
+
+#define MACRO_color_RGBA(r, g, b, a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
+#define MACRO_color_RGB(r, g, b)  MACRO_color_RGBA(r, g, b, 1.0)
+#define MACRO_color_random MACRO_color_RGB(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
+#define MACRO_color_hex_alpha(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
+#define MACRO_color_hex(hexValue) MACRO_color_hex_alpha(hexValue, 1.0)
 
 /** 获取沙盒 Document 路径*/
-#define WZDocumentPath       [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+#define MACRO_path_document [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 /** 获取沙盒 temp 路径(注:iPhone 重启会清空)*/
-#define WZTempPath           NSTemporaryDirectory()
+#define MACRO_path_temp NSTemporaryDirectory()
 /** 获取沙盒 Cache 路径*/
-#define WZCachePath          [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
+#define MACRO_path_cache    [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
 /** 获取程序包中程序路径*/
-#define WZBundleResource(resource, type)     [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
-
+#define MACRO_path_bundleResource(resource, type)     [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
 
 
 #pragma mark 通知
 //applicaion处post
-#define WZ_ENTER_BACKGROUND_NOTIFICATION @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
-#define WZ_BACK_TO_APPLICATION_NOTIFICATION @"wz_back_to_application_notification"//回到应用的通知
+#define MACRO_notification_enterBackgroung @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
+#define MACRO_notification_backToApplication @"wz_back_to_application_notification"//回到应用的通知
 
 
 #endif /* WZ_pch */

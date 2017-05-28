@@ -18,7 +18,7 @@
 }
 
 + (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath model:(WZVariousCollectionBaseObject *)model {
-    return CGSizeMake(WZSCREEN_WIDTH, 100);
+    return CGSizeMake(MACRO_SCREEN_WIDTH, 100);
 }
 
 + (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section model:(WZVariousCollectionBaseObject *)model {
