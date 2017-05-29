@@ -139,7 +139,7 @@
 #pragma mark Create subViews
 
 - (void)addSubViews {
-    _table = [[WZVariousTable alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_SCREEN_WIDTH, MACRO_SCREEN_HEIGHT - 64.0) style:UITableViewStylePlain];
+    _table = [[WZVariousTable alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, MACRO_FLOAT_SCREEN_HEIGHT - 64.0) style:UITableViewStylePlain];
     [self.view addSubview:_table];
     _table.backgroundColor = [UIColor clearColor];
     _table.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;

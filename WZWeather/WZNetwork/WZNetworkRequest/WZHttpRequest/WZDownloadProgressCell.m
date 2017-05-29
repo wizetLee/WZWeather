@@ -40,21 +40,21 @@
 
 #pragma mark CreateSubviews
 - (void)addSubviews {
-    _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_SCREEN_WIDTH, WZDownloadProgressCellHeight/ 2.0)];
+    _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, WZDownloadProgressCellHeight/ 2.0)];
     _titleLable.text = @"title";
     [self.contentView addSubview:_titleLable];
     
-    _progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight / 2.0, MACRO_SCREEN_WIDTH, WZDownloadProgressCellHeight / 2.0)];
+    _progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight / 2.0, MACRO_FLOAT_SCREEN_WIDTH, WZDownloadProgressCellHeight / 2.0)];
     [self.contentView addSubview:_progressLabel];
     _progressLabel.text = @"0.000000";
     
     CGFloat edge = 10;
-    _actionBtn = [[UIButton alloc] initWithFrame:CGRectMake(MACRO_SCREEN_WIDTH - WZDownloadProgressCellHeight, edge, WZDownloadProgressCellHeight - edge, WZDownloadProgressCellHeight - edge)];
+    _actionBtn = [[UIButton alloc] initWithFrame:CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - WZDownloadProgressCellHeight, edge, WZDownloadProgressCellHeight - edge, WZDownloadProgressCellHeight - edge)];
     [self.contentView addSubview:_actionBtn];
     _actionBtn.backgroundColor = [UIColor greenColor];
     [_actionBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.contentView.backgroundColor = [UIColor yellowColor];
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight - 10, MACRO_SCREEN_WIDTH, 10)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight - 10, MACRO_FLOAT_SCREEN_WIDTH, 10)];
     line.backgroundColor = [UIColor blackColor];
     [self.contentView addSubview:line];
 }

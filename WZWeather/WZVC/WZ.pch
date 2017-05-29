@@ -49,16 +49,16 @@
 
 
 #pragma mark 常量
-#define MACRO_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width  //屏宽
-#define MACRO_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height  //屏高
-#define MACRO_statusBar_height (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度
-#define MACRO_navigationBar_height  44.0
-#define MACRO_statusBar_and_navigationBar_height (MACRO_statusBar_height + MACRO_navigationBar_height)
+#define MACRO_FLOAT_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width  //屏宽
+#define MACRO_FLOAT_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height  //屏高
+#define MACRO_FLOAT_STSTUSBAR_HEIGHT (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度
+#define MACRO_FLOAT_NAVIGATIONBAR_HEIGHT  44.0
+#define MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT (MACRO_FLOAT_STSTUSBAR_HEIGHT + MACRO_ FLOAT_NAVIGATIONBAR_HEIGHT)
 //设备信息
 
 #pragma mark Device information
-#define MACRO_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
-#define MACRO_currentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
+#define MACRO_SYSTEM_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+#define MACRO_SYSTEM_CURRENTLANGUAGE ([[NSLocale preferredLanguages] objectAtIndex:0])
 
 ////替换NSLog内容
 //#ifdef DEBUG
@@ -69,26 +69,23 @@
 
 //颜色
 
-#define MACRO_color_RGBA(r, g, b, a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
-#define MACRO_color_RGB(r, g, b)  MACRO_color_RGBA(r, g, b, 1.0)
-#define MACRO_color_random MACRO_color_RGB(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
-#define MACRO_color_hex_alpha(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
-#define MACRO_color_hex(hexValue) MACRO_color_hex_alpha(hexValue, 1.0)
+#define MACRO_COLOR_RGBA(r, g, b, a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
+#define MACRO_COLOR_RGB(r, g, b)  MACRO_COLOR_RGBA(r, g, b, 1.0)
+#define MACRO_COLOR_RANDOM MACRO_COLOR_RGB(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
+#define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
+#define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
 
-/** 获取沙盒 Document 路径*/
-#define MACRO_path_document [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-/** 获取沙盒 temp 路径(注:iPhone 重启会清空)*/
-#define MACRO_path_temp NSTemporaryDirectory()
-/** 获取沙盒 Cache 路径*/
-#define MACRO_path_cache    [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
-/** 获取程序包中程序路径*/
-#define MACRO_path_bundleResource(resource, type)     [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
+
+#define MACRO_PATH_DOCUMENT [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+#define MACRO_PATH_TEMP NSTemporaryDirectory()
+#define MACRO_PATH_CACHE [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
+#define MACRO_PATH_BUNDLE_RESOURCE(resource, type) [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
 
 
 #pragma mark 通知
 //applicaion处post
-#define MACRO_notification_enterBackgroung @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
-#define MACRO_notification_backToApplication @"wz_back_to_application_notification"//回到应用的通知
+#define MACRO_NOTIFICATION_ENTER_BACKGROUND @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
+#define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
 
 
 #endif /* WZ_pch */
