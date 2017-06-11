@@ -1,14 +1,14 @@
 //
-//  NSObject+file.m
-//  
+//  NSObject+WZFile.m
+//  WZWeather
 //
-//  Created by wizet on 2017/5/21.
-//
+//  Created by admin on 17/6/7.
+//  Copyright © 2017年 WZ. All rights reserved.
 //
 
-#import "NSObject+file.h"
+#import "NSObject+WZFile.h"
 
-@implementation NSObject (file)
+@implementation NSObject (WZFile)
 
 /*
  Documents：苹果建议将程序中建立的或在程序中浏览到的文件数据保存在该目录下，iTunes备份和恢复的时候会包括此目录
@@ -44,7 +44,7 @@
 }
 
 + (BOOL)wz_createFile:(WZSearchPathDirectory )direction fileName:(NSString *)fileName cover:(BOOL)cover {
-
+    
     return  [self wz_createFileAtPath:[self wz_filePath:direction fileName:fileName] cover:cover];
 }
 
@@ -86,6 +86,4 @@
     
     return filePath;
 }
-
-
 @end

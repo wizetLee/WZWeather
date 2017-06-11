@@ -34,7 +34,7 @@
 
 //类目
 #import "JKCategories.h"
-#import "NSObject+file.h"
+#import "NSObject+WZFile.h"
 
 //第三方
 #import "AFNetworking/AFNetworking.h"

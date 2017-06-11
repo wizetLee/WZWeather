@@ -1,12 +1,14 @@
 //
-//  NSObject+file.h
-//  
+//  NSObject+WZFile.h
+//  WZWeather
 //
-//  Created by wizet on 2017/5/21.
-//
+//  Created by admin on 17/6/7.
+//  Copyright © 2017年 WZ. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
+
 
 typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
     WZSearchPathDirectoryDocument = 0,
@@ -15,9 +17,7 @@ typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
     WZSearchPathDirectoryTemporary = 3,
 };
 
-@interface NSObject (file)
-
-
+@interface NSObject (WZFile)
 /**
  *  检查文件
  *  @param path 文件路径
