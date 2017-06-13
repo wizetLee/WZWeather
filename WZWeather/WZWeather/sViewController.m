@@ -12,10 +12,7 @@
 #import "WZGCDTimeSuperviser.h"
 #import "WZDownloadRequest.h"
 #import "WZDownloadProgressCell.h"
-#import "B1.h"
-#import "T1.h"
-#import "T2.h"
-#import "T3.h"
+
 @interface sViewController ()
 @property (nonatomic, strong) WZVariousCollectionView *cv;
 @property (nonatomic, strong) WZVariousCollectionReusableContent *c;

@@ -27,10 +27,6 @@
 		844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */; };
 		844A484B1E9F657B0002829A /* WZVariousCollectionBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48441E9F657B0002829A /* WZVariousCollectionBaseObject.m */; };
 		844A484D1E9F657B0002829A /* WZVariousCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48481E9F657B0002829A /* WZVariousCollectionView.m */; };
-		844A48501E9F69740002829A /* T1.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A484F1E9F69740002829A /* T1.m */; };
-		844A48531E9F697B0002829A /* T2.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48521E9F697B0002829A /* T2.m */; };
-		844A48561E9F69830002829A /* T3.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48551E9F69830002829A /* T3.m */; };
-		844A48591E9F699B0002829A /* B1.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48581E9F699B0002829A /* B1.m */; };
 		844A485C1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A485B1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m */; };
 		844A485F1E9F9A620002829A /* WZVariousCollectionReusableContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A485E1E9F9A620002829A /* WZVariousCollectionReusableContent.m */; };
 		844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */; };
@@ -349,14 +345,6 @@
 		844A48441E9F657B0002829A /* WZVariousCollectionBaseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionBaseObject.m; sourceTree = "<group>"; };
 		844A48471E9F657B0002829A /* WZVariousCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionView.h; sourceTree = "<group>"; };
 		844A48481E9F657B0002829A /* WZVariousCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionView.m; sourceTree = "<group>"; };
-		844A484E1E9F69740002829A /* T1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T1.h; sourceTree = "<group>"; };
-		844A484F1E9F69740002829A /* T1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T1.m; sourceTree = "<group>"; };
-		844A48511E9F697B0002829A /* T2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T2.h; sourceTree = "<group>"; };
-		844A48521E9F697B0002829A /* T2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T2.m; sourceTree = "<group>"; };
-		844A48541E9F69830002829A /* T3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T3.h; sourceTree = "<group>"; };
-		844A48551E9F69830002829A /* T3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T3.m; sourceTree = "<group>"; };
-		844A48571E9F699B0002829A /* B1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B1.h; sourceTree = "<group>"; };
-		844A48581E9F699B0002829A /* B1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B1.m; sourceTree = "<group>"; };
 		844A485A1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionSectionsBaseProvider.h; sourceTree = "<group>"; };
 		844A485B1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionSectionsBaseProvider.m; sourceTree = "<group>"; };
 		844A485D1E9F9A620002829A /* WZVariousCollectionReusableContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionReusableContent.h; sourceTree = "<group>"; };
@@ -2072,14 +2060,6 @@
 				846920DF1E63D6920048BBDC /* MainViewController.m */,
 				8444C8AB1EA0594600DD6259 /* sViewController.h */,
 				8444C8AC1EA0594600DD6259 /* sViewController.m */,
-				844A48571E9F699B0002829A /* B1.h */,
-				844A48581E9F699B0002829A /* B1.m */,
-				844A484E1E9F69740002829A /* T1.h */,
-				844A484F1E9F69740002829A /* T1.m */,
-				844A48511E9F697B0002829A /* T2.h */,
-				844A48521E9F697B0002829A /* T2.m */,
-				844A48541E9F69830002829A /* T3.h */,
-				844A48551E9F69830002829A /* T3.m */,
 				846920B21E63BB550048BBDC /* Assets.xcassets */,
 				846920B41E63BB550048BBDC /* LaunchScreen.storyboard */,
 				846920B71E63BB550048BBDC /* Info.plist */,
@@ -2464,7 +2444,6 @@
 				84514D631E9DCE7A00F07EF8 /* UIScrollView+JKAddition.m in Sources */,
 				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
-				844A48591E9F699B0002829A /* B1.m in Sources */,
 				84514CD61E9DCE7A00F07EF8 /* NSDateFormatter+JKMake.m in Sources */,
 				84514CDF1E9DCE7A00F07EF8 /* NSFileManager+JKPaths.m in Sources */,
 				84514D141E9DCE7A00F07EF8 /* MKMapView+JKBetterMaps.m in Sources */,
@@ -2525,7 +2504,6 @@
 				84514D4F1E9DCE7A00F07EF8 /* UIImageView+JKBetterFace.m in Sources */,
 				84514D5B1E9DCE7A00F07EF8 /* UINavigationController+JKTransitions.m in Sources */,
 				84514D0A1E9DCE7A00F07EF8 /* NSTimer+JKAddition.m in Sources */,
-				844A48501E9F69740002829A /* T1.m in Sources */,
 				84514CFD1E9DCE7A00F07EF8 /* NSString+JKHTML.m in Sources */,
 				84514CF61E9DCE7A00F07EF8 /* NSSet+JKBlock.m in Sources */,
 				84514D211E9DCE7A00F07EF8 /* UIBarButtonItem+JKAction.m in Sources */,
@@ -2585,7 +2563,6 @@
 				84514D391E9DCE7A00F07EF8 /* UIDevice+JKHardware.m in Sources */,
 				84514D701E9DCE7A00F07EF8 /* UITextView+JKPinchZoom.m in Sources */,
 				84514D131E9DCE7A00F07EF8 /* NSUserDefaults+JKSafeAccess.m in Sources */,
-				844A48561E9F69830002829A /* T3.m in Sources */,
 				84514D091E9DCE7A00F07EF8 /* NSString+JKXMLDictionary.m in Sources */,
 				84514D9F1E9E2C2B00F07EF8 /* WZBaseNavigationController.m in Sources */,
 				84514D1A1E9DCE7A00F07EF8 /* CAShapeLayer+JKUIBezierPath.m in Sources */,
@@ -2595,7 +2572,6 @@
 				844A485C1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m in Sources */,
 				84514D341E9DCE7A00F07EF8 /* UIColor+JKRandom.m in Sources */,
 				84514CCD1E9DCE7A00F07EF8 /* NSData+JKPCM.m in Sources */,
-				844A48531E9F697B0002829A /* T2.m in Sources */,
 				84514CD31E9DCE7A00F07EF8 /* NSDate+JKReporting.m in Sources */,
 				84514D401E9DCE7A00F07EF8 /* UIImage+JKBetterFace.m in Sources */,
 				84514CFE1E9DCE7A00F07EF8 /* NSString+JKMatcher.m in Sources */,

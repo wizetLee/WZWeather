@@ -9,8 +9,8 @@
 //#import "WZVariousCollectionBaseObject.h"
 
 #import "WZVariousBaseObject.h"
-
 @class WZDownloadRequest;
+
 @protocol WZDownloadtargetDelegate <NSObject>
 
 - (void)progressCallBack:(NSDictionary *)callBack;

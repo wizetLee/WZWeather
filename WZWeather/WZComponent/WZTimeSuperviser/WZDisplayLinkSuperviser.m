@@ -21,7 +21,6 @@
 @synthesize duration = _duration;
 
 - (void)configTimer {
-    
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(dispalyLink:)];
     _displayLink.paused = true;
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];

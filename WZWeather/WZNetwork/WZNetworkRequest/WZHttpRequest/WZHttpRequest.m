@@ -56,10 +56,6 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
     
 }
 
-/*
- 
- */
-
 //对于数据返回的中转
 void JSONSerializationResult(NSData * _Nullable origionData, NSURLResponse * _Nullable response, NSError * _Nullable error, HttpRequestJSONSerializationResult serializationResult) {
     NSError *jsonError = error;

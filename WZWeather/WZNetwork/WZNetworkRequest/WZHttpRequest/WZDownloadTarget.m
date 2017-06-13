@@ -22,7 +22,8 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"totalBytesWritten"]) {
-        if ([self.delegate conformsToProtocol:@protocol(WZDownloadtargetDelegate)] && [self.delegate respondsToSelector:@selector(progressCallBack:)]) {
+        if ([self.delegate conformsToProtocol:@protocol(WZDownloadtargetDelegate)]
+            && [self.delegate respondsToSelector:@selector(progressCallBack:)]) {
             [self.delegate progressCallBack:change];
         }
     }
