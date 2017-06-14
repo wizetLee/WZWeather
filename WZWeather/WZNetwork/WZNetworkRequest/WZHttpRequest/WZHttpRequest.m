@@ -68,7 +68,9 @@ void JSONSerializationResult(NSData * _Nullable origionData, NSURLResponse * _Nu
         
     } else {
         
-        result = [NSJSONSerialization JSONObjectWithData:origionData options:NSJSONReadingAllowFragments error:&jsonError];
+        result = [NSJSONSerialization JSONObjectWithData:origionData
+                                                 options:NSJSONReadingAllowFragments
+                                                   error:&jsonError];
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             isDictionary = true;

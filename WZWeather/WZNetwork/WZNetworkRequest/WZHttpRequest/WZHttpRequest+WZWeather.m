@@ -20,7 +20,6 @@
     NSString *need3HourForcast = @"need3HourForcast=1";
     //拼接URLString
     urlString = [NSString stringWithFormat:@"%@?%@&%@&%@&%@&%@",urlString,area,needMoreDay,needIndex,needAlarm,need3HourForcast];
-    
     //会话 配置
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     //request 配置具有多样性
@@ -43,8 +42,6 @@
 }
 
 + (NSURLSessionTask *)requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(HttpRequestJSONSerializationResult)serializationResult {
-    
-    
     
     if (!title || ![title isKindOfClass:[NSString class]]) {
         title = @"";

@@ -44,7 +44,6 @@
 }
 
 + (BOOL)wz_createFile:(WZSearchPathDirectory )direction fileName:(NSString *)fileName cover:(BOOL)cover {
-    
     return  [self wz_createFileAtPath:[self wz_filePath:direction fileName:fileName] cover:cover];
 }
 
