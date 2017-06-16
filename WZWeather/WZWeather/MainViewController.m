@@ -8,8 +8,11 @@
 
 #import "MainViewController.h"
 #import "WZDownloadController.h"
+#import "WZPageViewController.h"
 
 @interface MainViewController ()
+
+
 
 @end
 
@@ -93,7 +96,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 //    Class c = NSClassFromString(@"WZDownloadController");
-    Class c = NSClassFromString(@"sViewController");
+//    Class c = NSClassFromString(@"sViewController");
+    Class c = NSClassFromString(@"WZPageViewController");
     id v = [[c alloc] init];
     [self.navigationController pushViewController:v animated:true];
 }

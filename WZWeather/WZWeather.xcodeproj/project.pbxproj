@@ -23,6 +23,8 @@
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
 		844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */; };
 		84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */; };
+		844997C21EF3DAAC003B3952 /* WZPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844997C11EF3DAAC003B3952 /* WZPageViewController.m */; };
+		844997C51EF3E178003B3952 /* WZPageViewAssistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844997C41EF3E178003B3952 /* WZPageViewAssistController.m */; };
 		844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */; };
 		844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */; };
 		844A484B1E9F657B0002829A /* WZVariousCollectionBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48441E9F657B0002829A /* WZVariousCollectionBaseObject.m */; };
@@ -337,6 +339,10 @@
 		844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WZHttpRequest+WZWeather.m"; sourceTree = "<group>"; };
 		84474A401EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHttpRequestDeriveAFNetworking.h; sourceTree = "<group>"; };
 		84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHttpRequestDeriveAFNetworking.m; sourceTree = "<group>"; };
+		844997C01EF3DAAC003B3952 /* WZPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZPageViewController.h; sourceTree = "<group>"; };
+		844997C11EF3DAAC003B3952 /* WZPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZPageViewController.m; sourceTree = "<group>"; };
+		844997C31EF3E178003B3952 /* WZPageViewAssistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZPageViewAssistController.h; sourceTree = "<group>"; };
+		844997C41EF3E178003B3952 /* WZPageViewAssistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZPageViewAssistController.m; sourceTree = "<group>"; };
 		844A483F1E9F657B0002829A /* WZVariousCollectionBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionBaseCell.h; sourceTree = "<group>"; };
 		844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionBaseCell.m; sourceTree = "<group>"; };
 		844A48411E9F657B0002829A /* WZVariousCollectionBaseMethodObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionBaseMethodObject.h; sourceTree = "<group>"; };
@@ -960,6 +966,17 @@
 				84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */,
 			);
 			path = WZHttpRequestDeriveAFNetworking;
+			sourceTree = "<group>";
+		};
+		844997BF1EF3DA9E003B3952 /* WZPageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				844997C01EF3DAAC003B3952 /* WZPageViewController.h */,
+				844997C11EF3DAAC003B3952 /* WZPageViewController.m */,
+				844997C31EF3E178003B3952 /* WZPageViewAssistController.h */,
+				844997C41EF3E178003B3952 /* WZPageViewAssistController.m */,
+			);
+			path = WZPageViewController;
 			sourceTree = "<group>";
 		};
 		844A483E1E9F657B0002829A /* WZVariousCollectionView */ = {
@@ -2097,6 +2114,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+				844997BF1EF3DA9E003B3952 /* WZPageViewController */,
 				8402EB141ECD64A40030CCE1 /* WZVariousTable */,
 				844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
@@ -2513,6 +2531,7 @@
 				84514D551E9DCE7A00F07EF8 /* UILabel+JKAutomaticWriting.m in Sources */,
 				84514CCC1E9DCE7A00F07EF8 /* NSData+JKHash.m in Sources */,
 				84514D081E9DCE7A00F07EF8 /* NSString+JKUUID.m in Sources */,
+				844997C21EF3DAAC003B3952 /* WZPageViewController.m in Sources */,
 				84514D6D1E9DCE7A00F07EF8 /* UITextField+JKSelect.m in Sources */,
 				846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */,
 				84514D3F1E9DCE7A00F07EF8 /* UIImage+JKAnimatedGIF.m in Sources */,
@@ -2536,6 +2555,7 @@
 				84514CC41E9DCE7A00F07EF8 /* NSArray+JKBlock.m in Sources */,
 				84514CE51E9DCE7A00F07EF8 /* NSDecimalNumber+JKCalculatingByString.m in Sources */,
 				84514D7C1E9DCE7A00F07EF8 /* UIView+JKScreenshot.m in Sources */,
+				844997C51EF3E178003B3952 /* WZPageViewAssistController.m in Sources */,
 				845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */,
 				84514D411E9DCE7A00F07EF8 /* UIImage+JKBlur.m in Sources */,
 				84514D071E9DCE7A00F07EF8 /* NSString+JKURLEncode.m in Sources */,
