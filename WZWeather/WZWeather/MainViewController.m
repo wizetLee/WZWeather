@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "WZDownloadController.h"
 #import "WZPageViewController.h"
-
+#import "WZPageViewAssistController.h"
 @interface MainViewController ()
 
 
@@ -63,7 +63,6 @@
     [super viewDidLoad];
     //
     //
-    //
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,10 +98,30 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 //    Class c = NSClassFromString(@"WZDownloadController");
-//    Class c = NSClassFromString(@"sViewController");
-    Class c = NSClassFromString(@"WZPageViewController");
+    Class c = NSClassFromString(@"sViewController");
+    
+//    Class c = NSClassFromString(@"WZPageViewController");
     id v = [[c alloc] init];
-    [self.navigationController pushViewController:v animated:true];
+    ((UIViewController *)v).view.backgroundColor = [UIColor yellowColor];
+    [self presentViewController:v animated:true completion:^{
+        NSLog(@"finished!");
+    }];
+//    WZPageViewAssistController *V0 = [WZPageViewAssistController new];
+//    WZPageViewAssistController *V1 = [WZPageViewAssistController new];
+//    WZPageViewAssistController *V2 = [WZPageViewAssistController new];
+//    V0.view.backgroundColor = [UIColor yellowColor];
+//    V2.view.backgroundColor = [UIColor magentaColor];
+//    V1.view.backgroundColor = [UIColor orangeColor];
+//    
+//    ((WZPageViewController *)v).reusableVCArray = @[V0, V1, V2];
+//    ((WZPageViewController *)v).delegate_pageViewController = (id<WZProtocol_PageViewController>)self;
+//    [self.navigationController pushViewController:v animated:true];
+}
+
+//控制器角标传出
+- (void)pageViewController:(UIPageViewController *)pageViewController showVC:(WZPageViewAssistController *)VC inIndex:(NSInteger)index {
+    NSLog(@"vc-%@=======index-%ld", VC, index);
+    
 }
 
 @end

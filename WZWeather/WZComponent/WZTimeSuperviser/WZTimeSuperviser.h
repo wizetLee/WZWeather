@@ -12,6 +12,10 @@
 
 @protocol  WZTimeSuperviserDelegate <NSObject>
 
+/**
+ * 跳出APP时（锁屏时），计时器时间的计算  --跳出获取时间戳，进入app获取时间戳，得到时间差，直接跳到时间差
+ */
+
 - (void)timeSuperviser:(WZTimeSuperviser *)timeSuperviser currentTime:(NSTimeInterval)currentTime;
 
 @end
@@ -38,7 +42,7 @@
 @property (nonatomic, assign, readonly) NSTimeInterval duration;
 
 /**
- *  事件终止时间（
+ *  事件终止时间
  *  ps：由于interal的设定 使得 duration最终值与terminalTime有所差异  但总有duration >= terminalTime时，终止代理回调）
  *  因此需要主观地设置interval可最终使得duration == terminalTime
  *  terminalTime 默认为0时  计时器需要手动停止 

@@ -10,4 +10,8 @@
 
 @interface WZBaseViewController : UIViewController
 
+@property (nonatomic, strong) NSObject <UIViewControllerAnimatedTransitioning> *modalAnimator;
+
+- (BOOL)customTransitions;
+
 @end

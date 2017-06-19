@@ -11,5 +11,6 @@
 @interface WZPageViewAssistController : UIViewController
 
 @property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) NSMutableDictionary *param;
 
 @end

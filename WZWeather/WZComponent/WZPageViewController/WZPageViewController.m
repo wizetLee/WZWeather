@@ -40,17 +40,6 @@ UIPageViewControllerDelegate>
         //自定义跳转代理
         //        self.transitioningDelegate = self;
    
-        //        _numberOfIndexs = 9;
-        ////        _datas
-        //        NSMutableArray *array = [NSMutableArray array];
-        //        for (int i = 0; i< 10; i++) {
-        //            WZMediaAsset *asset = [[WZMediaAsset alloc] init];
-        //            asset.name = [NSString stringWithFormat:@"我是%d号",i];
-        //            [array addObject:asset];
-        //        }
-        //        _datas = [NSArray arrayWithArray:array];
-        WZPageViewAssistController *VC = [self matchViewControllerWithIndex:0];
-        [self setViewControllers:@[VC] direction:UIPageViewControllerNavigationDirectionForward animated:true completion:^(BOOL finished) {}];
     }
     return self;
 }
@@ -62,11 +51,29 @@ UIPageViewControllerDelegate>
     self.automaticallyAdjustsScrollViewInsets = false;
     self.dataSource = self;
     self.delegate = self;
+    
+    [self showVCWithIndex:0 animated:false];
     [self createViews];
 }
 
 - (void)createViews {
-    
+  
+}
+
+#pragma mark Show VC with index
+- (void)showVCWithIndex:(NSInteger)index animated:(BOOL)animated {
+    if (index <= 0) {index = 0;}
+    if (index > _numberOfIndexs) {index = _numberOfIndexs;}
+    _currentIndex = index;
+    WZPageViewAssistController *VC = [self matchViewControllerWithIndex:index];
+    _currentVC = VC;
+    __weak typeof(self) weakSelf = self;
+    [self setViewControllers:@[VC] direction:UIPageViewControllerNavigationDirectionForward animated:animated completion:^(BOOL finished) {
+        //执行代理
+        if ([weakSelf.delegate_pageViewController respondsToSelector:@selector(pageViewController:showVC:inIndex:)] ) {
+            [weakSelf.delegate_pageViewController pageViewController:weakSelf showVC:VC inIndex:index];
+        }
+    }];
 }
 
 #pragma mark Match VC with Index
@@ -77,6 +84,7 @@ UIPageViewControllerDelegate>
         || index > _numberOfIndexs) {
         return nil;
     }
+   
     WZPageViewAssistController *VC =  self.reusableVCArray[index % self.reusableVCArray.count];
     VC.index = index;
     
@@ -93,8 +101,13 @@ UIPageViewControllerDelegate>
 //切换控制器完成
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed {
     WZPageViewAssistController *VC = pageViewController.viewControllers.firstObject;
-    if (VC && [_delegate_pageViewController respondsToSelector:@selector(pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:)]) {
-        [_delegate_pageViewController pageViewController:pageViewController didFinishAnimating:finished previousViewControllers:previousViewControllers transitionCompleted:completed];
+   
+    if (VC && VC != _currentVC) {
+        _currentIndex = VC.index;
+        if ([_delegate_pageViewController respondsToSelector:@selector(pageViewController:showVC:inIndex:)] ) {
+            [_delegate_pageViewController pageViewController:self showVC:VC inIndex:_currentIndex];
+        }
+        _currentVC = VC;
     }
 }
 
@@ -114,15 +127,17 @@ UIPageViewControllerDelegate>
     return [self matchViewControllerWithIndex:viewController.index + 1];
 }
 
-//数目
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(6_0) {
-    return self.reusableVCArray.count;
-}
 
-//起始角标
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(6_0) {
-    return 0;
-}
+//设置了以下代理会触发底部pageControl
+////数目
+//- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(6_0) {
+//    return self.reusableVCArray.count;
+//}
+//
+////起始角标
+//- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(6_0) {
+//    return 0;
+//}
 
 
 #pragma mark Accessor
@@ -139,10 +154,11 @@ UIPageViewControllerDelegate>
 }
 
 - (void)setReusableVCArray:(NSArray<WZPageViewAssistController *> *)reusableVCArray {
-    NSMutableArray *tmpMArray = [NSMutableArray array];
-    
+  
     //过滤操作 且 必须含有数据
     if ([reusableVCArray isKindOfClass:[NSArray class]] && reusableVCArray.count) {
+        NSMutableArray *tmpMArray = [NSMutableArray array];
+        
         for (id VC in reusableVCArray) {
             if([VC isKindOfClass:[WZPageViewAssistController class]]) {
                 [tmpMArray addObject:VC];

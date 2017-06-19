@@ -26,7 +26,6 @@
 - (void)configTimer {
     _timer = [NSTimer scheduledTimerWithTimeInterval:_interval target:self selector:@selector(timer:) userInfo:nil repeats:true];
     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    
 }
 
 - (void)timer:(NSTimer *)timer {

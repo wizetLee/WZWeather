@@ -7,6 +7,7 @@
 //
 
 #import "WZBaseViewController.h"
+#import "WZAnimatedTransitionsBase.h"
 
 @interface WZBaseViewController ()
 
@@ -25,6 +26,9 @@
     [super loadView];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
+    if ([self customTransitions]) {
+        self.transitioningDelegate = (id<UIViewControllerTransitioningDelegate>)self;
+    };
 }
 
 - (void)viewDidLoad {
@@ -59,15 +63,30 @@
 }
 
 #pragma mark
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)customTransitions {
+    return true;
 }
-*/
+
+#pragma mark UIViewControllerTransitioningDelegate 模态动画
+- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return [WZAnimatedTransitionsBase new];
+}
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    return [WZAnimatedTransitionsBase new];
+}
+
+//交互动画
+- (nullable id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator {
+    return nil;
+}
+
+- (nullable id <UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id <UIViewControllerAnimatedTransitioning>)animator {
+    return nil;
+}
+
+- (nullable UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source NS_AVAILABLE_IOS(8_0) {
+    return nil;
+}
 
 @end

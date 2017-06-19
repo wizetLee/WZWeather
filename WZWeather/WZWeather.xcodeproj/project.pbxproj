@@ -250,6 +250,7 @@
 		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
 		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
 		845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */; };
+		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
 		846920B31E63BB550048BBDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846920B21E63BB550048BBDC /* Assets.xcassets */; };
@@ -799,6 +800,8 @@
 		845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZCTTelephonyNetworkInfo.m; sourceTree = "<group>"; };
 		845BD8FD1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTCarrier+WZCTCarrierInfo.h"; sourceTree = "<group>"; };
 		845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CTCarrier+WZCTCarrierInfo.m"; sourceTree = "<group>"; };
+		84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAnimatedTransitionsBase.h; sourceTree = "<group>"; };
+		84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAnimatedTransitionsBase.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846920A71E63BB550048BBDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		846920A91E63BB550048BBDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -2041,6 +2044,15 @@
 			path = WZTelephoneNetworkInfo;
 			sourceTree = "<group>";
 		};
+		84648A771EF7B67000B9DF41 /* WZAnimatedTransitions */ = {
+			isa = PBXGroup;
+			children = (
+				84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */,
+				84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */,
+			);
+			path = WZAnimatedTransitions;
+			sourceTree = "<group>";
+		};
 		8469209A1E63BB550048BBDC = {
 			isa = PBXGroup;
 			children = (
@@ -2114,6 +2126,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+				84648A771EF7B67000B9DF41 /* WZAnimatedTransitions */,
 				844997BF1EF3DA9E003B3952 /* WZPageViewController */,
 				8402EB141ECD64A40030CCE1 /* WZVariousTable */,
 				844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */,
@@ -2403,6 +2416,7 @@
 				84514D771E9DCE7A00F07EF8 /* UIView+JKDraggable.m in Sources */,
 				84514D7B1E9DCE7A00F07EF8 /* UIView+JKRecursion.m in Sources */,
 				84514D2C1E9DCE7A00F07EF8 /* UIButton+JKImagePosition.m in Sources */,
+				84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */,
 				84514D5A1E9DCE7A00F07EF8 /* UINavigationController+JKStackManager.m in Sources */,
 				84514D831E9DCE7A00F07EF8 /* UIViewController+JKRecursiveDescription.m in Sources */,
 				84514CC11E9DCE7A00F07EF8 /* NSManagedObjectContext+JKFetchRequestsConstructors.m in Sources */,

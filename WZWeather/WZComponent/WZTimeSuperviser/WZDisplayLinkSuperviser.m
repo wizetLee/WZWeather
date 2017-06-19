@@ -40,11 +40,11 @@
 }
 
 - (void)fireEvent {
-    //开始事件
     if (_displayLink) {
         if (_pause) {
             //恢复启动
         } else {
+            //首次启动
             _duration = 0.0;
         }
         _displayLink.paused = false;

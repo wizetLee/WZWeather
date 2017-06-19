@@ -18,15 +18,19 @@
     if (self = [super init]) {
         self.view.backgroundColor = [UIColor whiteColor];
         self.automaticallyAdjustsScrollViewInsets = false;
-        
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
-
+#pragma mark Accessor
+- (NSMutableDictionary *)param {
+    if (!_param) {
+        _param = [NSMutableDictionary dictionary];
+    }
+    return _param;
+}
 @end
