@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class WZAnimatedTransitionsBase;
+@class WZInteractiveTransitionsBase;
 
 @interface WZBaseViewController : UIViewController
 
-@property (nonatomic, strong) NSObject <UIViewControllerAnimatedTransitioning> *modalAnimator;
+@property (nonatomic, strong) WZAnimatedTransitionsBase *modalAnimator;
+//@property (nonatomic, strong) WZInteractiveTransitionsBase *modalInteractor;
 
 - (BOOL)customTransitions;
 

@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^WZAnimatedTransitionsContextBlock)(UIView * __nonnull containerView, UIView * __nonnull fromView, UIView * __nonnull toView);
+typedef void(^WZCustomAnimatedHandler)(float transitionDuration, UIView * containerView, UIView * fromView, UIView * toView, void (^completeTransition)());
 
-@interface WZAnimatedTransitionsBase : NSObject<UIViewControllerAnimatedTransitioning>
+@interface WZAnimatedTransitionsBase : NSObject
+<UIViewControllerAnimatedTransitioning>
 
-@property (nonatomic, strong) WZAnimatedTransitionsContextBlock begin;
+@property (nonatomic, strong) WZCustomAnimatedHandler customPrensentAnimations;
+@property (nonatomic, strong) WZCustomAnimatedHandler customDismissAnimations;
+
+- (WZAnimatedTransitionsBase *)configDismiss;
+- (WZAnimatedTransitionsBase *)configPresent;
 
 @end

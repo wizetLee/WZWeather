@@ -23,6 +23,7 @@
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
 		844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */; };
 		84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */; };
+		8447B36B1EF8CA65009D1496 /* WZInteractiveTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8447B36A1EF8CA65009D1496 /* WZInteractiveTransitionsBase.m */; };
 		844997C21EF3DAAC003B3952 /* WZPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844997C11EF3DAAC003B3952 /* WZPageViewController.m */; };
 		844997C51EF3E178003B3952 /* WZPageViewAssistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844997C41EF3E178003B3952 /* WZPageViewAssistController.m */; };
 		844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A48401E9F657B0002829A /* WZVariousCollectionBaseCell.m */; };
@@ -340,6 +341,8 @@
 		844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WZHttpRequest+WZWeather.m"; sourceTree = "<group>"; };
 		84474A401EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHttpRequestDeriveAFNetworking.h; sourceTree = "<group>"; };
 		84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHttpRequestDeriveAFNetworking.m; sourceTree = "<group>"; };
+		8447B3691EF8CA65009D1496 /* WZInteractiveTransitionsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZInteractiveTransitionsBase.h; sourceTree = "<group>"; };
+		8447B36A1EF8CA65009D1496 /* WZInteractiveTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZInteractiveTransitionsBase.m; sourceTree = "<group>"; };
 		844997C01EF3DAAC003B3952 /* WZPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZPageViewController.h; sourceTree = "<group>"; };
 		844997C11EF3DAAC003B3952 /* WZPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZPageViewController.m; sourceTree = "<group>"; };
 		844997C31EF3E178003B3952 /* WZPageViewAssistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZPageViewAssistController.h; sourceTree = "<group>"; };
@@ -2049,6 +2052,8 @@
 			children = (
 				84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */,
 				84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */,
+				8447B3691EF8CA65009D1496 /* WZInteractiveTransitionsBase.h */,
+				8447B36A1EF8CA65009D1496 /* WZInteractiveTransitionsBase.m */,
 			);
 			path = WZAnimatedTransitions;
 			sourceTree = "<group>";
@@ -2596,6 +2601,7 @@
 				84514D171E9DCE7A00F07EF8 /* CAAnimation+JKEasingEquations.m in Sources */,
 				84514D391E9DCE7A00F07EF8 /* UIDevice+JKHardware.m in Sources */,
 				84514D701E9DCE7A00F07EF8 /* UITextView+JKPinchZoom.m in Sources */,
+				8447B36B1EF8CA65009D1496 /* WZInteractiveTransitionsBase.m in Sources */,
 				84514D131E9DCE7A00F07EF8 /* NSUserDefaults+JKSafeAccess.m in Sources */,
 				84514D091E9DCE7A00F07EF8 /* NSString+JKXMLDictionary.m in Sources */,
 				84514D9F1E9E2C2B00F07EF8 /* WZBaseNavigationController.m in Sources */,

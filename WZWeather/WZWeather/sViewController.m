@@ -73,4 +73,10 @@
     
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self dismissViewControllerAnimated:false completion:^(){
+        NSLog(@"ddddddddddddddddddddddddd");
+    }];;
+}
+
 @end

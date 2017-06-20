@@ -127,7 +127,6 @@ UIPageViewControllerDelegate>
     return [self matchViewControllerWithIndex:viewController.index + 1];
 }
 
-
 //设置了以下代理会触发底部pageControl
 ////数目
 //- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(6_0) {
