@@ -33,6 +33,7 @@
 
 - (void)gestureRecognizeDidUpdate:(UIScreenEdgePanGestureRecognizer *)gestureRecognizer
 {
+    NSLog(@"%s---%@", __func__, self.transitionContext);
     switch (gestureRecognizer.state)
     {
         case UIGestureRecognizerStateBegan:
@@ -95,7 +96,7 @@
     if ([self respondsToSelector:@selector(gestureRecognizeDidUpdate:)]) {
         [self.gesture removeTarget:self action:@selector(gestureRecognizeDidUpdate:)];
         NSLog(@"%@", self.gesture);
-        NSLog(@"%s", __func__);
+        NSLog(@"--------------------------------------------------------------------------%s", __func__);
     }
     
 }

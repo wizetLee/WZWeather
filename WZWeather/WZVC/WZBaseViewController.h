@@ -13,7 +13,7 @@
 @interface WZBaseViewController : UIViewController
 
 @property (nonatomic, strong) WZAnimatedTransitionsBase *modalAnimator;
-//@property (nonatomic, strong) WZInteractiveTransitionsBase *modalInteractor;
+@property (nonatomic, strong) WZInteractiveTransitionsBase *modalInteractor;
 
 - (BOOL)customTransitions;
 

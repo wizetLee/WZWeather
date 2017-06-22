@@ -28,14 +28,15 @@
     [super loadView];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
-    if ([self customTransitions]) {
-        self.transitioningDelegate = (id<UIViewControllerTransitioningDelegate>)self;
-    };
+//    if ([self customTransitions]) {
+//        self.transitioningDelegate = (id<UIViewControllerTransitioningDelegate>)self;
+//        self.modalInteractor.gesture = [self addScreenEdgePanGestureRecognizer:self.view edges:UIRectEdgeLeft];
+//    };
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-       
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,12 +67,35 @@
     NSLog(@"%@", self);
 }
 
-#pragma mark
+#pragma marks
 - (BOOL)customTransitions {
-    return true;
+    return false;
 }
 
 #pragma mark UIViewControllerTransitioningDelegate 模态动画
+
+// 添加手势的方法
+- (UIScreenEdgePanGestureRecognizer *)addScreenEdgePanGestureRecognizer:(UIView *)view edges:(UIRectEdge)edges{
+    UIScreenEdgePanGestureRecognizer * edgePan =// [[UIScreenEdgePanGestureRecognizer alloc] init];
+    [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(edgePanGesture:)]; // viewController和SecondViewController的手势都由self管理
+    edgePan.edges = edges;
+    [view addGestureRecognizer:edgePan];
+    return edgePan;
+}
+
+- (void)edgePanGesture:(UIScreenEdgePanGestureRecognizer *)edge {
+    if (edge.state == UIGestureRecognizerStateBegan) {
+        WZBaseViewController *vc = [[WZBaseViewController alloc] init];
+        vc.view.backgroundColor = [UIColor greenColor];
+        [self presentViewController:vc animated:true completion:^{
+            NSLog(@"presenet completion");
+        }];
+    } else  if (edge.state == UIGestureRecognizerStateEnded) {
+    } else {
+        
+    }
+}
+
 - (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
     NSLog(@"%s", __func__);
     return [self.modalAnimator configPresent];
@@ -82,7 +106,7 @@
     return [self.modalAnimator configDismiss];
 }
 
-////交互动画
+//交互动画
 //- (nullable id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator {
 //    NSLog(@"%s", __func__);
 //    return self.modalInteractor;
@@ -107,12 +131,12 @@
     return _modalAnimator;
 }
 
-//- (WZInteractiveTransitionsBase *)modalInteractor {
-//    if (!_modalInteractor) {
-//        _modalInteractor = [[WZInteractiveTransitionsBase alloc] init];
-//    }
-//    return _modalInteractor;
-//}
+- (WZInteractiveTransitionsBase *)modalInteractor {
+    if (!_modalInteractor) {
+        _modalInteractor = [[WZInteractiveTransitionsBase alloc] init];
+    }
+    return _modalInteractor;
+}
 
 #pragma mark 配置自定义模态动画
 - (WZCustomAnimatedHandler)presentAnimations {

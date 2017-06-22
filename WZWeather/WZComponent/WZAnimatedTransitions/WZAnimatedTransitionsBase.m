@@ -56,6 +56,7 @@
 
     //call completeTransition when the transition animations complete
     __weak typeof(transitionContext) weakContext = transitionContext;
+    __weak typeof(containerView) weakContainer = containerView;
     void (^completeTransition)() = ^(){
         [weakContext completeTransition:![weakContext transitionWasCancelled]];
     };
