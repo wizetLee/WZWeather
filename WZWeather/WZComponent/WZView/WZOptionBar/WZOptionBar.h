@@ -10,4 +10,6 @@
 
 @interface WZOptionBar : UIView
 
+@property (nonatomic, strong) NSMutableArray <NSString *>* titleArray;
+
 @end

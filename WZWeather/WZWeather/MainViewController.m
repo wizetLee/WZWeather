@@ -10,6 +10,7 @@
 #import "WZDownloadController.h"
 #import "WZPageViewController.h"
 #import "WZPageViewAssistController.h"
+
 @interface MainViewController ()
 
 
@@ -61,8 +62,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //
-    //
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

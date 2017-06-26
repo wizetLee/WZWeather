@@ -10,11 +10,42 @@
 
 @interface WZOptionBar()
 
-@property (nonatomic, strong) UIScrollView *container;
+@property (nonatomic, strong) UIScrollView *content;
 
 @end
 
 @implementation WZOptionBar
 
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [self createViews];
+    }
+    return self;
+}
+
+- (void)createViews {
+    [self addSubview:self.content];
+}
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    self.content.frame = self.bounds;
+}
+
+#pragma mark Accessor
+- (UIScrollView *)content {
+    if (!_content) {
+        _content = [[UIScrollView alloc] initWithFrame:self.bounds];
+    }
+    return _content;
+}
+
+- (NSMutableArray <NSString *>*)titleArray {
+    if (!_titleArray) {
+        _titleArray = [NSMutableArray array];
+    }
+    return _titleArray;
+}
 
 @end

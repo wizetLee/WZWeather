@@ -253,6 +253,7 @@
 		845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */; };
 		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
 		846904601EFCAD41007AD117 /* WZOptionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8469045F1EFCAD41007AD117 /* WZOptionBar.m */; };
+		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
 		846920B31E63BB550048BBDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846920B21E63BB550048BBDC /* Assets.xcassets */; };
@@ -808,6 +809,8 @@
 		84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAnimatedTransitionsBase.m; sourceTree = "<group>"; };
 		8469045E1EFCAD41007AD117 /* WZOptionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZOptionBar.h; sourceTree = "<group>"; };
 		8469045F1EFCAD41007AD117 /* WZOptionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZOptionBar.m; sourceTree = "<group>"; };
+		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
+		846904DF1EFD284F007AD117 /* WZLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZLoopView.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846920A71E63BB550048BBDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		846920A91E63BB550048BBDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -891,6 +894,7 @@
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
+				846904DD1EFD284F007AD117 /* WZLoopView */,
 				8469045D1EFCAD29007AD117 /* WZOptionBar */,
 				40DC2B001EA2611C000968DB /* WZBaseRoundSelector */,
 			);
@@ -2071,6 +2075,15 @@
 			path = WZOptionBar;
 			sourceTree = "<group>";
 		};
+		846904DD1EFD284F007AD117 /* WZLoopView */ = {
+			isa = PBXGroup;
+			children = (
+				846904DE1EFD284F007AD117 /* WZLoopView.h */,
+				846904DF1EFD284F007AD117 /* WZLoopView.m */,
+			);
+			path = WZLoopView;
+			sourceTree = "<group>";
+		};
 		8469209A1E63BB550048BBDC = {
 			isa = PBXGroup;
 			children = (
@@ -2658,6 +2671,7 @@
 				84514CC01E9DCE7A00F07EF8 /* NSManagedObjectContext+JKFetching.m in Sources */,
 				84514D3C1E9DCE7A00F07EF8 /* UIFont+JKDynamicFontControl.m in Sources */,
 				84514D7F1E9DCE7A00F07EF8 /* UIView+JKVisuals.m in Sources */,
+				846904E01EFD284F007AD117 /* WZLoopView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
