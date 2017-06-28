@@ -10,7 +10,7 @@
 #import "WZDownloadController.h"
 #import "WZPageViewController.h"
 #import "WZPageViewAssistController.h"
-
+#import "WZLoopView.h"
 @interface MainViewController ()
 
 
@@ -62,7 +62,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    for (int i = 0; i <  20; i++) {
+        [tmpArr addObject:[NSString stringWithFormat:@"%d", i]];
+    }
+    WZLoopView *loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, 100) images:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", ] loop:true delay:2];
+    [self.view addSubview:loop];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,7 +93,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     WZDownloadController *vc = [[WZDownloadController alloc] init];

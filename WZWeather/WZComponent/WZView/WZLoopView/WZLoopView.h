@@ -17,10 +17,12 @@
 @interface WZLoopView : UIView
 
 @property (nonatomic, weak) id<WZProtocol_loopView> delegate;
-@property (nonatomic, assign) BOOL autoLoop;
+@property (nonatomic, assign) BOOL loop;
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 @property (nonatomic, strong) NSArray *images;
 
-- (instancetype)initWithFrame:(CGRect)frame images:(NSArray *)images autoLoop:(BOOL)isAuto delay:(NSTimeInterval)timeInterval;
+- (instancetype)initWithFrame:(CGRect)frame images:(NSArray *)images loop:(BOOL)loop delay:(NSTimeInterval)timeInterval;
+
+
 
 @end

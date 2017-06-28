@@ -8,7 +8,6 @@
 
 #import "WZLoopView.h"
 
-#define kIdentifier @"WMLoopViewCellIdentifier"
 #define kPageH 20
 
 @interface WZLoopView()<UIScrollViewDelegate>
@@ -21,23 +20,60 @@
 
 @implementation WZLoopView
 
-- (instancetype)initWithFrame:(CGRect)frame images:(NSArray *)images autoLoop:(BOOL)isAuto delay:(NSTimeInterval)timeInterval {
+- (instancetype)initWithFrame:(CGRect)frame images:(NSArray *)images loop:(BOOL)loop delay:(NSTimeInterval)timeInterval {
     if (self = [super initWithFrame:frame]) {
-        _autoLoop = isAuto;
+        _loop = loop;
         _timeInterval = timeInterval;
         _images = images;
         _currentPage = 0;
         
-        [self addScrollView];
-        [self addPageControl];
-        if (self.autoLoop == true) {
-            [self toPlay];
+        [self createViews];
+        
+        if (_timeInterval <= 0) {
+            _timeInterval = 2.0;
+        }
+        
+        if (_loop) {
+            [self performSelector:@selector(nextPage) withObject:nil afterDelay:_timeInterval];
         }
     }
     return self;
 }
 
-#pragma mark - Public Methods
+#pragma mark Public Methods
+
+- (void)createViews {
+    [self addScrollView];
+    [self addPageControl];
+}
+
+- (void)addScrollView {
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    
+    //创建重用轮播imageView
+    for (int i = 0; i < 3; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * width, 0, width, height)];
+        imageView.image = [UIImage imageNamed:self.currentImages[i]];
+        [scrollView addSubview:imageView];
+    }
+    
+    scrollView.contentSize = CGSizeMake(3.0 * width, height);   //大小为3个窗口
+    scrollView.contentOffset = CGPointMake(width, 0);           //滑动至中间位置
+    scrollView.scrollsToTop = false;
+    scrollView.pagingEnabled = true;
+    scrollView.showsHorizontalScrollIndicator = false;
+    scrollView.showsVerticalScrollIndicator = false;
+    scrollView.delegate = self;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [scrollView addGestureRecognizer:tap];
+    
+    [self addSubview:scrollView];
+    _scrollView = scrollView;
+}
+
 - (void)addPageControl {
     CGFloat height = self.frame.size.height;
     CGFloat width = self.frame.size.width;
@@ -52,87 +88,96 @@
     [self addSubview:bgView];
 }
 
-#pragma mark - Private Methods
-- (void)toPlay {
-    [self performSelector:@selector(autoPlayToNextPage) withObject:nil afterDelay:_timeInterval];
-}
-
-- (void)autoPlayToNextPage {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autoPlayToNextPage) object:nil];
-    [self.scrollView setContentOffset:CGPointMake(self.frame.size.width * 2, 0) animated:YES];
-    [self performSelector:@selector(autoPlayToNextPage) withObject:nil afterDelay:_timeInterval];
-    
+#pragma mark Private Methods
+- (void)nextPage {
+    if (_loop) {
+        if ([NSRunLoop currentRunLoop] == [NSRunLoop mainRunLoop]) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
+            [self.scrollView setContentOffset:CGPointMake(self.frame.size.width * 2, 0) animated:YES];
+        }
+    }
 }
 
 - (NSMutableArray *)currentImages {
-    if (_currentImages == nil) {
+    if (!_currentImages) {
         _currentImages = [[NSMutableArray alloc] init];
     }
     [_currentImages removeAllObjects];
+    
+    //获取当前位置以及相邻视图显示的图片
     NSInteger count = self.images.count;
     int i = (int)(_currentPage + count - 1)%count;
     [_currentImages addObject:self.images[i]];
     [_currentImages addObject:self.images[_currentPage]];
     i = (int)(_currentPage + 1)%count;
     [_currentImages addObject:self.images[i]];
+    
     return _currentImages;
 }
 
-- (void)addScrollView {
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-    CGFloat width = self.frame.size.width;
-    CGFloat height = self.frame.size.height;
-    for (int i = 0; i < 3; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * width, 0, width, height)];
-        imageView.image = [UIImage imageNamed:self.currentImages[i]];
-        [scrollView addSubview:imageView];
-    }
-    scrollView.scrollsToTop = NO;
-    scrollView.contentSize = CGSizeMake(3*width, height);
-    scrollView.contentOffset = CGPointMake(width, 0);
-    scrollView.pagingEnabled = YES;
-    scrollView.showsHorizontalScrollIndicator = NO;
-    scrollView.showsVerticalScrollIndicator = NO;
-    scrollView.delegate = self;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapped:)];
-    [scrollView addGestureRecognizer:tap];
-    
-    [self addSubview:scrollView];
-    _scrollView = scrollView;
-}
-
 - (void)refreshImages {
-    NSArray *subViews = self.scrollView.subviews;
-    for (int i = 0; i < subViews.count; i++) {
-        UIImageView *imageView = (UIImageView *)subViews[i];
-        imageView.image = [UIImage imageNamed:self.currentImages[i]];
+    if (self.scrollView) {
+        NSArray *subViews = self.scrollView.subviews;
+        for (int i = 0; i < subViews.count; i++) {
+            UIImageView *imageView = (UIImageView *)subViews[i];
+            if ([imageView isKindOfClass:[UIImageView class]]) {
+                imageView.image = [UIImage imageNamed:self.currentImages[i]];
+            }
+        }
+        //返回self.frame.size.width 的位置
+        [self.scrollView setContentOffset:CGPointMake(self.frame.size.width, 0)];
     }
-    
-    [self.scrollView setContentOffset:CGPointMake(self.frame.size.width, 0)];
 }
 
-#pragma mark - delegate
-- (void)singleTapped:(UITapGestureRecognizer *)recognizer {
+//单击事件回调数据、角标
+- (void)tap:(UITapGestureRecognizer *)recognizer {
     if ([self.delegate respondsToSelector:@selector(loopViewDidSelectedImage:index:)]) {
         [self.delegate loopViewDidSelectedImage:self index:_currentPage];
     }
 }
 
+#pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat x = scrollView.contentOffset.x;
+    
+    
+    CGFloat OffsetX = scrollView.contentOffset.x;
     CGFloat width = self.frame.size.width;
-    if (x >= 2 * width) {
-        _currentPage = (++_currentPage) % self.images.count;
-        self.pageControl.currentPage = _currentPage;
-        [self refreshImages];
-    }
-    if (x <= 0) {
-        _currentPage = (int)(_currentPage + self.images.count - 1)%self.images.count;
-        self.pageControl.currentPage = _currentPage;
-        [self refreshImages];
+    
+    if ((OffsetX - self.frame.size.width) < 0.001) {
+        [self performSelector:@selector(nextPage) withObject:nil afterDelay:_timeInterval];
     }
     
+    if (OffsetX >= 2 * width) {
+        _currentPage = (++_currentPage) % self.images.count;
+        [self updateStatus];
+    }
+    
+    if (OffsetX <= 0) {
+        _currentPage = (int)(_currentPage + self.images.count - 1)%self.images.count;
+        [self updateStatus];
+    }
 }
 
+//手动滑动的时候取消延迟事件
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
+}
+
+- (void)updateStatus {
+    self.pageControl.currentPage = _currentPage;
+    [self refreshImages];
+    if (_loop) {
+        [self performSelector:@selector(nextPage) withObject:nil afterDelay:_timeInterval];
+    }
+}
+
+#pragma mark Accessor
+- (void)setLoop:(BOOL)loop {
+    _loop = loop;
+    if (_loop) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
+        [self performSelector:@selector(nextPage) withObject:nil afterDelay:_timeInterval];
+    }
+}
 
 @end
