@@ -67,19 +67,7 @@
         [tmpArr addObject:[NSString stringWithFormat:@"%d", i]];
     }
     WZLoopView *loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, 100) images:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", ] loop:true delay:2];
-//    [self.view addSubview:loop];
-    
-    UITextField *f1 = [[UITextField  alloc] initWithFrame:CGRectMake(0, 100, 200, 50)];
-    UITextField *f2 = [[UITextField  alloc] initWithFrame:CGRectMake(0, 150, 200, 50)];
-    f1.backgroundColor = [UIColor yellowColor];
-    f2.backgroundColor = [UIColor redColor];
-    [self.view addSubview:f1];
-    [self.view addSubview:f2];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aaa:) name:UIKeyboardDidShowNotification object:nil];
-}
-
-- (void)aaa:(NSNotification *)n {
-    NSLog(@"%@",n.userInfo);
+    [self.view addSubview:loop];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,9 +95,8 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    WZDownloadController *vc = [[WZDownloadController alloc] init];
-//    [self.navigationController pushViewController:vc animated:true];
-    [self.view endEditing:true];
+    WZDownloadController *vc = [[WZDownloadController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 #pragma mark WZProtocol_PageViewController
