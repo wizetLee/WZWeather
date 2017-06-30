@@ -10,11 +10,18 @@
 
 #define kPageH 20
 
+@implementation WZLoopViewItem
+
+
+
+@end
+
+
 @interface WZLoopView()<UIScrollViewDelegate>
-@property (nonatomic, strong) NSMutableArray *currentImages;
-@property (nonatomic, assign) int currentPage;
-@property (nonatomic, strong) UIPageControl *pageControl;
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableArray *currentImages;//当前显示的图片 位置-1  以及位置+1   共承载3张图片
+@property (nonatomic, assign) int currentPage;//当前页数
+@property (nonatomic, strong) UIPageControl *pageControl;//页数标记
+@property (nonatomic, strong) UIScrollView *scrollView;//负责轮播功能
 
 @end
 
@@ -40,8 +47,7 @@
     return self;
 }
 
-#pragma mark Public Methods
-
+#pragma mark
 - (void)createViews {
     [self addScrollView];
     [self addPageControl];
@@ -55,6 +61,7 @@
     //创建重用轮播imageView
     for (int i = 0; i < 3; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * width, 0, width, height)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.image = [UIImage imageNamed:self.currentImages[i]];
         [scrollView addSubview:imageView];
     }
@@ -92,6 +99,7 @@
 - (void)nextPage {
     if (_loop) {
         if ([NSRunLoop currentRunLoop] == [NSRunLoop mainRunLoop]) {
+            NSLog(@"%s", __func__);
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
             [self.scrollView setContentOffset:CGPointMake(self.frame.size.width * 2, 0) animated:YES];
         }
@@ -120,6 +128,7 @@
         NSArray *subViews = self.scrollView.subviews;
         for (int i = 0; i < subViews.count; i++) {
             UIImageView *imageView = (UIImageView *)subViews[i];
+            imageView.clipsToBounds = true;
             if ([imageView isKindOfClass:[UIImageView class]]) {
                 imageView.image = [UIImage imageNamed:self.currentImages[i]];
             }
@@ -143,7 +152,7 @@
     CGFloat OffsetX = scrollView.contentOffset.x;
     CGFloat width = self.frame.size.width;
     
-    if ((OffsetX - self.frame.size.width) < 0.001) {
+    if ((OffsetX - self.frame.size.width) < 0.0001) {
         [self performSelector:@selector(nextPage) withObject:nil afterDelay:_timeInterval];
     }
     
@@ -158,7 +167,7 @@
     }
 }
 
-//手动滑动的时候取消延迟事件
+//手势滑动的时候取消切换下一页事件
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
 }

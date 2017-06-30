@@ -14,6 +14,14 @@
 - (void)loopViewDidSelectedImage:(WZLoopView *)loopView index:(int)index;
 
 @end
+
+@interface WZLoopViewItem : NSObject
+
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSArray <NSArray *>*imagesArray;
+
+@end
+
 @interface WZLoopView : UIView
 
 @property (nonatomic, weak) id<WZProtocol_loopView> delegate;

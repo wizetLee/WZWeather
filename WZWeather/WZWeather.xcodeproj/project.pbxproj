@@ -2154,17 +2154,17 @@
 		8469209A1E63BB550048BBDC = {
 			isa = PBXGroup;
 			children = (
+				BDE51CC601D75414A3C2652E /* Frameworks */,
+				3AC0C433C5CD63FA0EE1B67F /* Pods */,
+				846920A41E63BB550048BBDC /* Products */,
 				844B83F71F03B501006A6237 /* testImages */,
-				8440FE641EC2A454002A893E /* WZNetwork */,
-				846920DA1E63D1E00048BBDC /* WZVC */,
 				846920D91E63BBB30048BBDC /* WZComponent */,
+				8440FE641EC2A454002A893E /* WZNetwork */,
+				8497C42B1EB3465200EB9F60 /* WZTodayExtension */,
+				846920DA1E63D1E00048BBDC /* WZVC */,
 				846920A51E63BB550048BBDC /* WZWeather */,
 				846920BF1E63BB550048BBDC /* WZWeatherTests */,
 				846920CA1E63BB550048BBDC /* WZWeatherUITests */,
-				8497C42B1EB3465200EB9F60 /* WZTodayExtension */,
-				846920A41E63BB550048BBDC /* Products */,
-				3AC0C433C5CD63FA0EE1B67F /* Pods */,
-				BDE51CC601D75414A3C2652E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2268,8 +2268,8 @@
 			isa = PBXGroup;
 			children = (
 				845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */,
-				418487491B495564256C463C /* Pods_WZWeather.framework */,
 				8497C4291EB3465200EB9F60 /* NotificationCenter.framework */,
+				418487491B495564256C463C /* Pods_WZWeather.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
