@@ -8,7 +8,7 @@
 
 #import "WZLoopView.h"
 
-#define kPageH 20
+#define FLOAT_PAGE_HEIGHT 20
 
 @implementation WZLoopViewItem
 
@@ -19,9 +19,9 @@
 
 @interface WZLoopView()<UIScrollViewDelegate>
 @property (nonatomic, strong) NSMutableArray *currentImages;//当前显示的图片 位置-1  以及位置+1   共承载3张图片
-@property (nonatomic, assign) int currentPage;//当前页数
-@property (nonatomic, strong) UIPageControl *pageControl;//页数标记
-@property (nonatomic, strong) UIScrollView *scrollView;//负责轮播功能
+@property (nonatomic, assign) int currentPage;              //当前页数
+@property (nonatomic, strong) UIPageControl *pageControl;   //页数标记
+@property (nonatomic, strong) UIScrollView *scrollView;     //负责轮播功能
 
 @end
 
@@ -84,24 +84,23 @@
 - (void)addPageControl {
     CGFloat height = self.frame.size.height;
     CGFloat width = self.frame.size.width;
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, height-kPageH, width, kPageH)];
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, height-FLOAT_PAGE_HEIGHT, width, FLOAT_PAGE_HEIGHT)];
     bgView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.2];
-    UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, width, kPageH)];
+    UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, width, FLOAT_PAGE_HEIGHT)];
     pageControl.numberOfPages = self.images.count;
     pageControl.currentPage = 0;
-    pageControl.userInteractionEnabled = NO;
+    pageControl.userInteractionEnabled = false;
     _pageControl = pageControl;
     [bgView addSubview:self.pageControl];
     [self addSubview:bgView];
 }
 
-#pragma mark Private Methods
+
 - (void)nextPage {
     if (_loop) {
         if ([NSRunLoop currentRunLoop] == [NSRunLoop mainRunLoop]) {
-            NSLog(@"%s", __func__);
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
-            [self.scrollView setContentOffset:CGPointMake(self.frame.size.width * 2, 0) animated:YES];
+            [self.scrollView setContentOffset:CGPointMake(self.frame.size.width * 2, 0) animated:true];
         }
     }
 }
@@ -148,11 +147,10 @@
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    
     CGFloat OffsetX = scrollView.contentOffset.x;
     CGFloat width = self.frame.size.width;
-    
-    if ((OffsetX - self.frame.size.width) < 0.0001) {
+  
+    if (_loop && (OffsetX - self.frame.size.width) < 0.0001) {
         [self performSelector:@selector(nextPage) withObject:nil afterDelay:_timeInterval];
     }
     

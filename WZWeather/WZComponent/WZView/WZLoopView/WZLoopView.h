@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class WZLoopView;
+
 @protocol WZProtocol_loopView <NSObject>
 @optional
 

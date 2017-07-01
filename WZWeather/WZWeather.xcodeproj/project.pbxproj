@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
@@ -272,7 +273,6 @@
 		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
 		845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */; };
 		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
-		846904601EFCAD41007AD117 /* WZOptionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8469045F1EFCAD41007AD117 /* WZOptionBar.m */; };
 		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
@@ -332,6 +332,8 @@
 
 /* Begin PBXFileReference section */
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
+		402AB1901F0732EE00136DB4 /* WZScrollOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZScrollOptions.h; sourceTree = "<group>"; };
+		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundRenderLayer.h; sourceTree = "<group>"; };
@@ -847,8 +849,6 @@
 		845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CTCarrier+WZCTCarrierInfo.m"; sourceTree = "<group>"; };
 		84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAnimatedTransitionsBase.h; sourceTree = "<group>"; };
 		84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAnimatedTransitionsBase.m; sourceTree = "<group>"; };
-		8469045E1EFCAD41007AD117 /* WZOptionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZOptionBar.h; sourceTree = "<group>"; };
-		8469045F1EFCAD41007AD117 /* WZOptionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZOptionBar.m; sourceTree = "<group>"; };
 		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
 		846904DF1EFD284F007AD117 /* WZLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZLoopView.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -931,11 +931,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		402AB18F1F0732D600136DB4 /* WZScrollOptions */ = {
+			isa = PBXGroup;
+			children = (
+				402AB1901F0732EE00136DB4 /* WZScrollOptions.h */,
+				402AB1911F0732EE00136DB4 /* WZScrollOptions.m */,
+			);
+			path = WZScrollOptions;
+			sourceTree = "<group>";
+		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
+				402AB18F1F0732D600136DB4 /* WZScrollOptions */,
 				846904DD1EFD284F007AD117 /* WZLoopView */,
-				8469045D1EFCAD29007AD117 /* WZOptionBar */,
 				40DC2B001EA2611C000968DB /* WZBaseRoundSelector */,
 			);
 			path = WZView;
@@ -2133,15 +2142,6 @@
 			path = WZAnimatedTransitions;
 			sourceTree = "<group>";
 		};
-		8469045D1EFCAD29007AD117 /* WZOptionBar */ = {
-			isa = PBXGroup;
-			children = (
-				8469045E1EFCAD41007AD117 /* WZOptionBar.h */,
-				8469045F1EFCAD41007AD117 /* WZOptionBar.m */,
-			);
-			path = WZOptionBar;
-			sourceTree = "<group>";
-		};
 		846904DD1EFD284F007AD117 /* WZLoopView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2697,7 +2697,6 @@
 				84514D111E9DCE7A00F07EF8 /* NSURLSession+JKSynchronousTask.m in Sources */,
 				84514D421E9DCE7A00F07EF8 /* UIImage+JKCapture.m in Sources */,
 				84514CF11E9DCE7A00F07EF8 /* NSObject+JKGCD.m in Sources */,
-				846904601EFCAD41007AD117 /* WZOptionBar.m in Sources */,
 				8402EB101ECD34B00030CCE1 /* WZDownloadProgressCell.m in Sources */,
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
@@ -2737,6 +2736,7 @@
 				84514D441E9DCE7A00F07EF8 /* UIImage+JKFileName.m in Sources */,
 				84514D641E9DCE7A00F07EF8 /* UIScrollView+JKPages.m in Sources */,
 				84514D8A1E9DCE7A00F07EF8 /* UIWebView+JKLoadInfo.m in Sources */,
+				402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */,
 				84514D781E9DCE7A00F07EF8 /* UIView+JKFind.m in Sources */,
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
 				848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */,
