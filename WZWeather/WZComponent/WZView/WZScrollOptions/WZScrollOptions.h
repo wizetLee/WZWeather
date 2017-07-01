@@ -8,29 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WZScrollOptionsItem : NSObject
-
-@end
-
-@interface WZScrollOptionsCell : UICollectionViewCell
-
-@end
-
 @class WZScrollOptions;
+
 @protocol WZProtocol_scrollOptions <NSObject>
 
-/**
- 菜单按钮点击时回调
- 
- @param scrollMenuView 带单view
- @param index 所点按钮的index
- */
 - (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index;
 
 @end
 
-@interface WZScrollOptions : UIView
+@interface WZScrollOptions : UIScrollView
 
-@property (nonatomic, strong) NSArray <WZScrollOptionsItem *> *itemArray;
+@property (nonatomic, weak) id <WZProtocol_scrollOptions> scrollOptionsDelegate;//代理
+@property (nonatomic, strong) NSArray *titleArray;//title
+@property (nonatomic, assign, readonly) NSInteger currentIndex;//当前选择的角标
+@property (nonatomic, assign) CGFloat animationTime;//移动动画的事件
+@property (nonatomic, strong) UIColor *selectedTextColor;//选中颜色
+@property (nonatomic, strong) UIColor *normalTextColor;//normal颜色
+@property (nonatomic, strong) UIFont *textFont;//title的字体
+@property (nonatomic, strong) UIColor *traceLineColor;//底部线条的颜色
+
+//选择的角标
+- (void)selectedIndex:(NSInteger)index;
 
 @end

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
+		40C3F8961F0750100073E900 /* UIView+WZFrameAssistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F8951F0750100073E900 /* UIView+WZFrameAssistance.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
@@ -334,6 +335,8 @@
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		402AB1901F0732EE00136DB4 /* WZScrollOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZScrollOptions.h; sourceTree = "<group>"; };
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
+		40C3F8941F0750100073E900 /* UIView+WZFrameAssistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZFrameAssistance.h"; sourceTree = "<group>"; };
+		40C3F8951F0750100073E900 /* UIView+WZFrameAssistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZFrameAssistance.m"; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundRenderLayer.h; sourceTree = "<group>"; };
@@ -2106,6 +2109,8 @@
 			children = (
 				8451BC051EE7A6320076693F /* NSObject+WZFile.h */,
 				8451BC061EE7A6320076693F /* NSObject+WZFile.m */,
+				40C3F8941F0750100073E900 /* UIView+WZFrameAssistance.h */,
+				40C3F8951F0750100073E900 /* UIView+WZFrameAssistance.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -2701,6 +2706,7 @@
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
+				40C3F8961F0750100073E900 /* UIView+WZFrameAssistance.m in Sources */,
 				84514D5C1E9DCE7A00F07EF8 /* UINavigationItem+JKLoading.m in Sources */,
 				84514D661E9DCE7A00F07EF8 /* UISplitViewController+JKQuickAccess.m in Sources */,
 				84514D651E9DCE7A00F07EF8 /* UISearchBar+JKBlocks.m in Sources */,

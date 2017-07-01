@@ -11,9 +11,10 @@
 #import "WZPageViewController.h"
 #import "WZPageViewAssistController.h"
 #import "WZLoopView.h"
+#import "WZScrollOptions.h"
 @interface MainViewController ()
 
-
+@property (nonatomic,strong) WZScrollOptions *menuView;
 
 @end
 
@@ -67,10 +68,21 @@
         [tmpArr addObject:[NSString stringWithFormat:@"%d", i]];
     }
     WZLoopView *loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, 100) images:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", ] loop:false delay:2];
-    [self.view addSubview:loop];
+//    [self.view addSubview:loop];
     
     
+    // 创建滚动菜单栏
+    self.menuView = [[WZScrollOptions alloc]initWithFrame:CGRectMake(0, 64.0, self.view.width, 30)];
+    [self.view addSubview:self.menuView];
+    self.menuView.scrollOptionsDelegate = (id<WZProtocol_scrollOptions>)self;
+    self.menuView.titleArray = @[@"button0",@"button加长加长版",@"button2",@"button0",@"button加长加长版",@"button2",@"button0",@"button加长加长版",@"button2",@"button0",@"button加长加长版",@"button2",];
+    [self.menuView selectedIndex:200];
+    self.menuView.textFont = [UIFont systemFontOfSize:20];
     
+}
+
+- (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index {
+    NSLog(@"%ld", index);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

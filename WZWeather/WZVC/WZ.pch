@@ -34,7 +34,8 @@
 
 //类目
 #import "JKCategories.h"
-#import "NSObject+WZFile.h"
+#import "NSObject+WZFile.h" //文件 创建 删除等扩展
+#import "UIView+WZFrameAssistance.h"  //frame 扩展
 
 //第三方
 #import "AFNetworking/AFNetworking.h"
