@@ -48,7 +48,8 @@
 
 - (void)selectedIndex:(NSInteger)index {
     
-    if (_titleArray.count && index > _titleArray.count - 1) {
+    if (_titleArray.count
+        && index > _titleArray.count - 1) {
         index = _titleArray.count - 1;
     }
     _currentIndex = index;

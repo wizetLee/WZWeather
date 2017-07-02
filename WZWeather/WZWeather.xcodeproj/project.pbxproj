@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40287B1F1F09170E00D9383B /* A.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B1E1F09170E00D9383B /* A.m */; };
+		40287B221F09172600D9383B /* A+A.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B211F09172600D9383B /* A+A.m */; };
+		40287B2A1F09210800D9383B /* NSObject+WZFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B251F09210800D9383B /* NSObject+WZFile.m */; };
+		40287B2B1F09210800D9383B /* UIView+WZFrameAssistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B291F09210800D9383B /* UIView+WZFrameAssistance.m */; };
+		40287B2E1F09216C00D9383B /* UIButton+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */; };
+		40287B351F09269900D9383B /* UIView+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B341F09269900D9383B /* UIView+WZMinistrant.m */; };
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
-		40C3F8961F0750100073E900 /* UIView+WZFrameAssistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F8951F0750100073E900 /* UIView+WZFrameAssistance.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
@@ -268,7 +273,6 @@
 		84514D8E1E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CB81E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m */; };
 		84514D8F1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CBB1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m */; };
 		84514D9F1E9E2C2B00F07EF8 /* WZBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514D9E1E9E2C2B00F07EF8 /* WZBaseNavigationController.m */; };
-		8451BC071EE7A6320076693F /* NSObject+WZFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8451BC061EE7A6320076693F /* NSObject+WZFile.m */; };
 		845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */; };
 		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
 		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
@@ -333,10 +337,20 @@
 
 /* Begin PBXFileReference section */
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
+		40287B1D1F09170E00D9383B /* A.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A.h; sourceTree = "<group>"; };
+		40287B1E1F09170E00D9383B /* A.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A.m; sourceTree = "<group>"; };
+		40287B201F09172600D9383B /* A+A.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "A+A.h"; sourceTree = "<group>"; };
+		40287B211F09172600D9383B /* A+A.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "A+A.m"; sourceTree = "<group>"; };
+		40287B241F09210800D9383B /* NSObject+WZFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZFile.h"; sourceTree = "<group>"; };
+		40287B251F09210800D9383B /* NSObject+WZFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZFile.m"; sourceTree = "<group>"; };
+		40287B281F09210800D9383B /* UIView+WZFrameAssistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZFrameAssistance.h"; sourceTree = "<group>"; };
+		40287B291F09210800D9383B /* UIView+WZFrameAssistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZFrameAssistance.m"; sourceTree = "<group>"; };
+		40287B2C1F09216C00D9383B /* UIButton+WZMinistrant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WZMinistrant.h"; sourceTree = "<group>"; };
+		40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WZMinistrant.m"; sourceTree = "<group>"; };
+		40287B331F09269900D9383B /* UIView+WZMinistrant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZMinistrant.h"; sourceTree = "<group>"; };
+		40287B341F09269900D9383B /* UIView+WZMinistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZMinistrant.m"; sourceTree = "<group>"; };
 		402AB1901F0732EE00136DB4 /* WZScrollOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZScrollOptions.h; sourceTree = "<group>"; };
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
-		40C3F8941F0750100073E900 /* UIView+WZFrameAssistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZFrameAssistance.h"; sourceTree = "<group>"; };
-		40C3F8951F0750100073E900 /* UIView+WZFrameAssistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZFrameAssistance.m"; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundRenderLayer.h; sourceTree = "<group>"; };
@@ -841,8 +855,6 @@
 		84514CBB1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+JKHierarchy.m"; sourceTree = "<group>"; };
 		84514D9D1E9E2C2B00F07EF8 /* WZBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBaseNavigationController.h; sourceTree = "<group>"; };
 		84514D9E1E9E2C2B00F07EF8 /* WZBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBaseNavigationController.m; sourceTree = "<group>"; };
-		8451BC051EE7A6320076693F /* NSObject+WZFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZFile.h"; sourceTree = "<group>"; };
-		8451BC061EE7A6320076693F /* NSObject+WZFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZFile.m"; sourceTree = "<group>"; };
 		845BD8F11EB077F8004AC354 /* WZAFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -932,6 +944,42 @@
 				B89722B026D64E98689EF1AF /* Pods-WZWeather.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		40287B231F09210800D9383B /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				40287B241F09210800D9383B /* NSObject+WZFile.h */,
+				40287B251F09210800D9383B /* NSObject+WZFile.m */,
+			);
+			path = NSObject;
+			sourceTree = "<group>";
+		};
+		40287B261F09210800D9383B /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				40287B2C1F09216C00D9383B /* UIButton+WZMinistrant.h */,
+				40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
+		40287B271F09210800D9383B /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				40287B281F09210800D9383B /* UIView+WZFrameAssistance.h */,
+				40287B291F09210800D9383B /* UIView+WZFrameAssistance.m */,
+				40287B331F09269900D9383B /* UIView+WZMinistrant.h */,
+				40287B341F09269900D9383B /* UIView+WZMinistrant.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		40287B2F1F09266200D9383B /* UIImageView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIImageView;
 			sourceTree = "<group>";
 		};
 		402AB18F1F0732D600136DB4 /* WZScrollOptions */ = {
@@ -2107,10 +2155,10 @@
 		84593D1B1ECAE602000508C7 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				8451BC051EE7A6320076693F /* NSObject+WZFile.h */,
-				8451BC061EE7A6320076693F /* NSObject+WZFile.m */,
-				40C3F8941F0750100073E900 /* UIView+WZFrameAssistance.h */,
-				40C3F8951F0750100073E900 /* UIView+WZFrameAssistance.m */,
+				40287B2F1F09266200D9383B /* UIImageView */,
+				40287B231F09210800D9383B /* NSObject */,
+				40287B261F09210800D9383B /* UIButton */,
+				40287B271F09210800D9383B /* UIView */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -2193,6 +2241,10 @@
 				846920DF1E63D6920048BBDC /* MainViewController.m */,
 				8444C8AB1EA0594600DD6259 /* sViewController.h */,
 				8444C8AC1EA0594600DD6259 /* sViewController.m */,
+				40287B1D1F09170E00D9383B /* A.h */,
+				40287B1E1F09170E00D9383B /* A.m */,
+				40287B201F09172600D9383B /* A+A.h */,
+				40287B211F09172600D9383B /* A+A.m */,
 				846920B21E63BB550048BBDC /* Assets.xcassets */,
 				846920B41E63BB550048BBDC /* LaunchScreen.storyboard */,
 				846920B71E63BB550048BBDC /* Info.plist */,
@@ -2511,6 +2563,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40287B2A1F09210800D9383B /* NSObject+WZFile.m in Sources */,
 				84514CDC1E9DCE7A00F07EF8 /* NSDictionary+JKXML.m in Sources */,
 				844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */,
 				84514D6B1E9DCE7A00F07EF8 /* UITextField+JKHistory.m in Sources */,
@@ -2589,7 +2642,6 @@
 				84514D351E9DCE7A00F07EF8 /* UIColor+JKWeb.m in Sources */,
 				84514D001E9DCE7A00F07EF8 /* NSString+JKNormalRegex.m in Sources */,
 				84514D5D1E9DCE7A00F07EF8 /* UINavigationItem+JKLock.m in Sources */,
-				8451BC071EE7A6320076693F /* NSObject+WZFile.m in Sources */,
 				84514D101E9DCE7A00F07EF8 /* NSURLRequest+JKParamsFromDictionary.m in Sources */,
 				84514D4B1E9DCE7A00F07EF8 /* UIImage+JKRoundedCorner.m in Sources */,
 				84514D591E9DCE7A00F07EF8 /* UINavigationController+JKKeyboardFix.m in Sources */,
@@ -2634,6 +2686,7 @@
 				84514CD51E9DCE7A00F07EF8 /* NSDate+JKZeroDate.m in Sources */,
 				84514D061E9DCE7A00F07EF8 /* NSString+JKTrims.m in Sources */,
 				84514CE61E9DCE7A00F07EF8 /* NSDecimalNumber+JKExtensions.m in Sources */,
+				40287B2E1F09216C00D9383B /* UIButton+WZMinistrant.m in Sources */,
 				84514CD11E9DCE7A00F07EF8 /* NSDate+JKFormatter.m in Sources */,
 				846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */,
 				84514D481E9DCE7A00F07EF8 /* UIImage+JKOrientation.m in Sources */,
@@ -2645,6 +2698,7 @@
 				84514CED1E9DCE7A00F07EF8 /* NSObject+JKAutoCoding.m in Sources */,
 				845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */,
 				84514D0D1E9DCE7A00F07EF8 /* NSURL+JKQueryDictionary.m in Sources */,
+				40287B351F09269900D9383B /* UIView+WZMinistrant.m in Sources */,
 				846920E01E63D6920048BBDC /* MainViewController.m in Sources */,
 				84514D031E9DCE7A00F07EF8 /* NSString+JKScore.m in Sources */,
 				8402EB251ECD64A40030CCE1 /* WZVariousBaseCell.m in Sources */,
@@ -2706,7 +2760,6 @@
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
-				40C3F8961F0750100073E900 /* UIView+WZFrameAssistance.m in Sources */,
 				84514D5C1E9DCE7A00F07EF8 /* UINavigationItem+JKLoading.m in Sources */,
 				84514D661E9DCE7A00F07EF8 /* UISplitViewController+JKQuickAccess.m in Sources */,
 				84514D651E9DCE7A00F07EF8 /* UISearchBar+JKBlocks.m in Sources */,
@@ -2726,6 +2779,7 @@
 				84514D091E9DCE7A00F07EF8 /* NSString+JKXMLDictionary.m in Sources */,
 				84514D9F1E9E2C2B00F07EF8 /* WZBaseNavigationController.m in Sources */,
 				84514D1A1E9DCE7A00F07EF8 /* CAShapeLayer+JKUIBezierPath.m in Sources */,
+				40287B1F1F09170E00D9383B /* A.m in Sources */,
 				84514D041E9DCE7A00F07EF8 /* NSString+JKSize.m in Sources */,
 				84514CC91E9DCE7A00F07EF8 /* NSData+JKDataCache.m in Sources */,
 				84514D5F1E9DCE7A00F07EF8 /* UIPopoverController+iPhone.m in Sources */,
@@ -2753,6 +2807,7 @@
 				84514CF21E9DCE7A00F07EF8 /* NSObject+JKKVOBlocks.m in Sources */,
 				84514D3E1E9DCE7A00F07EF8 /* UIImage+JKAlpha.m in Sources */,
 				84514CEE1E9DCE7A00F07EF8 /* NSObject+JKBlocks.m in Sources */,
+				40287B2B1F09210800D9383B /* UIView+WZFrameAssistance.m in Sources */,
 				846920A81E63BB550048BBDC /* main.m in Sources */,
 				40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */,
 				84514CE11E9DCE7A00F07EF8 /* NSIndexPath+JKOffset.m in Sources */,
@@ -2766,6 +2821,7 @@
 				84514D3C1E9DCE7A00F07EF8 /* UIFont+JKDynamicFontControl.m in Sources */,
 				84514D7F1E9DCE7A00F07EF8 /* UIView+JKVisuals.m in Sources */,
 				846904E01EFD284F007AD117 /* WZLoopView.m in Sources */,
+				40287B221F09172600D9383B /* A+A.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
