@@ -92,7 +92,6 @@
         }];
     } else  if (edge.state == UIGestureRecognizerStateEnded) {
     } else {
-        
     }
 }
 
