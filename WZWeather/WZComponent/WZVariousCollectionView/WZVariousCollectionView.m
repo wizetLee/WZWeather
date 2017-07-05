@@ -41,7 +41,7 @@
     return self;
 }
 
-#pragma mark UICollectionViewDataSource
+#pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return self.sectionsDatas.count;
 }
@@ -121,19 +121,19 @@
     }
 }
 
-#pragma mark WZVariousCollectionDelegate
+#pragma mark - WZVariousCollectionDelegate
 - (void)variousView:(UIView *)view param:(NSMutableDictionary *)param {
     if ([self.variousCollectionDelegate respondsToSelector:@selector(variousView:param:)]) {
         [self.variousCollectionDelegate variousView:view param:param];
     }
 }
 
-#pragma mark WZVariousCollectionSectionsBaseProviderDelegate
+#pragma mark - WZVariousCollectionSectionsBaseProviderDelegate
 - (void)updateProviderWithData:(id)data {
     [self reloadData];
 }
 
-#pragma mark UICollectionViewDelegate
+#pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     WZVariousCollectionBaseCell *cell = (WZVariousCollectionBaseCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -143,7 +143,7 @@
     }
 }
 
-#pragma mark UICollectionViewDelegateFlowLayout
+#pragma mark - UICollectionViewDelegateFlowLayout
 
 //每个Item的情况
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -192,7 +192,7 @@
     return [[WZVariousCollectionSectionsBaseProvider alloc] init];
 }
 
-#pragma mark setter & getter 
+#pragma mark - Accessor 
 
 - (NSMutableArray *)sectionsDatas {
     if (!_sectionsDatas) {

@@ -67,12 +67,12 @@
     NSLog(@"%@", self);
 }
 
-#pragma marks
+#pragma marks -
 - (BOOL)customTransitions {
     return false;
 }
 
-#pragma mark UIViewControllerTransitioningDelegate 模态动画
+#pragma mark - UIViewControllerTransitioningDelegate 模态动画
 
 // 添加手势的方法
 - (UIScreenEdgePanGestureRecognizer *)addScreenEdgePanGestureRecognizer:(UIView *)view edges:(UIRectEdge)edges{
@@ -120,7 +120,7 @@
 //    return nil;
 //}
 
-#pragma mark Accessor
+#pragma mark - Accessor
 - (WZAnimatedTransitionsBase *)modalAnimator {
     if (!_modalAnimator) {
         _modalAnimator = [[WZAnimatedTransitionsBase alloc] init];
@@ -137,7 +137,7 @@
     return _modalInteractor;
 }
 
-#pragma mark 配置自定义模态动画
+#pragma mark - 配置自定义模态动画
 - (WZCustomAnimatedHandler)presentAnimations {
     WZCustomAnimatedHandler animations =  ^(float transitionDuration, UIView * containerView, UIView * fromView, UIView * toView, void (^completeTransition)()) {
         fromView.alpha = 1;

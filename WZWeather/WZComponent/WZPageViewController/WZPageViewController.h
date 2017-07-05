@@ -11,7 +11,7 @@
 @class WZPageViewAssistController;
 @class WZPageViewController;
 
-@protocol WZProtocol_PageViewController <UIPageViewControllerDelegate>
+@protocol WZProtocolPageViewController <UIPageViewControllerDelegate>
 
 //控制器角标传出
 - (void)pageViewController:(UIPageViewController *)pageViewController showVC:(WZPageViewAssistController *)VC inIndex:(NSInteger)index;
@@ -20,7 +20,7 @@
 
 @interface WZPageViewController : UIPageViewController
 
-@property (nonatomic, weak) id<WZProtocol_PageViewController> delegate_pageViewController;
+@property (nonatomic, weak) id<WZProtocolPageViewController> pageViewControllerDelegate;
 @property (nonatomic, strong) NSArray <WZPageViewAssistController *> *reusableVCArray;
 @property (nonatomic, strong) WZPageViewAssistController *currentVC;
 

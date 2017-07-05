@@ -25,7 +25,7 @@
     return self;
 }
 
-#pragma mark delegate
+#pragma mark - delegate
 
 
 //配置过渡动画时间

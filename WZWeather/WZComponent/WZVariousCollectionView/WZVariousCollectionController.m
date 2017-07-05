@@ -19,7 +19,7 @@
     [self createSubviews];
 }
 
-#pragma mark CreateSubviews 
+#pragma mark - CreateSubviews 
 - (void)createSubviews {
     _collection = [WZVariousCollectionView createWithFrame:[self vitalizetableFrame]];
     [self.view addSubview:_collection];
@@ -29,12 +29,12 @@
     _collection.backgroundColor = [UIColor whiteColor];
 }
 
-#pragma mark WZVariousCollectionDelegate
+#pragma mark - WZVariousCollectionDelegate
 - (void)variousView:(UIView *)view param:(NSMutableDictionary *)param {
     
 }
 
-#pragma mark Prepare for sub class
+#pragma mark - Prepare for sub class
 
 - (CGRect)vitalizetableFrame {
     if (self.navigationController) {

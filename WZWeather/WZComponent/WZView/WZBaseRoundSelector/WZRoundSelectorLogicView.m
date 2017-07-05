@@ -135,12 +135,12 @@
     return acpectAspectRatio;
 }
 
-#pragma mark WZRoundRenderLayerDelegate
+#pragma mark - WZRoundRenderLayerDelegate
 - (void)renderPathCurrentPoint:(CGPoint)currentPoint {
     
 }
 
-#pragma mark setter & getter
+#pragma mark - Accessor
 
 - (WZRoundRenderLayer *)renderLayer {
     if (!_renderLayer) {

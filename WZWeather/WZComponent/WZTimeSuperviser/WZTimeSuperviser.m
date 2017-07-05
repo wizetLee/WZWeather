@@ -114,7 +114,7 @@
 }
 
 
-#pragma mark setter / getter
+#pragma mark - setter / getter
 
 - (NSTimeInterval)interval {
     if (_interval == 0.0) {

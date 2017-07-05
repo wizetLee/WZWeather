@@ -58,7 +58,7 @@
     // Configure the view for the selected state
 }
 
-#pragma mark setter & getter 
+#pragma mark - Accessor 
 - (void)setLocatedController:(UIViewController *)locatedController {
     if ([locatedController isKindOfClass:[UIViewController class]]) {
         _locatedController = locatedController;

@@ -66,7 +66,7 @@
 }
 
 
-#pragma mark UITableViewDataSource
+#pragma mark - UITableViewDataSource
 //数据个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.sectionsDatas.count > 0) {
@@ -79,7 +79,7 @@
     return self.sectionsDatas.count;
 }
 
-#pragma mark setter & getter
+#pragma mark - Accessor
 - (NSMutableArray *)sectionsDatas {
     if (!_sectionsDatas) {
         _sectionsDatas = [NSMutableArray array];

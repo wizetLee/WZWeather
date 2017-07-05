@@ -38,7 +38,7 @@
     }
 }
 
-#pragma mark CreateSubviews
+#pragma mark - CreateSubviews
 - (void)addSubviews {
     _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, WZDownloadProgressCellHeight/ 2.0)];
     _titleLable.text = @"title";
@@ -59,7 +59,7 @@
     [self.contentView addSubview:line];
 }
 
-#pragma mark Button Action
+#pragma mark - Button Action
 - (void)clickedBtn:(UIButton *)sender {
     if ([self.variousViewDelegate respondsToSelector:@selector(variousView:param:)]) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -75,7 +75,7 @@
     }
 }
 
-#pragma mark WZDownloadtargetDelegate
+#pragma mark - WZDownloadtargetDelegate
 - (void)progressCallBack:(NSDictionary *)callBack {
     if ([self.data isKindOfClass:[WZDownloadTarget class]]) {
         WZDownloadTarget *data = (WZDownloadTarget *)self.data;

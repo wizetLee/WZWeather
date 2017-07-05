@@ -83,6 +83,8 @@
     [button setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal] ;
     [button setImage:[UIImage imageNamed:@"5"] forState:UIControlStateHighlighted];
     NSLog(@"%lf", button.cornerRadius);
+    
+//    NSFetchedResultsController
 }
 
 
@@ -120,7 +122,7 @@
 
 }
 
-#pragma mark WZProtocol_PageViewController
+#pragma mark - WZProtocolPageViewController
 //控制器角标传出
 - (void)pageViewController:(UIPageViewController *)pageViewController showVC:(WZPageViewAssistController *)VC inIndex:(NSInteger)index {
     NSLog(@"vc-%@=======index-%ld", VC, index);

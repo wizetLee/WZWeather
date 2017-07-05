@@ -117,7 +117,7 @@ double bytesTransitionMB(int64_t bytes) {
     }
 }
 
-#pragma mark NSURLSessionDownloadDelegate
+#pragma mark - NSURLSessionDownloadDelegate
 
 //获取NSURL中的文件从临时路径，移动到自己保存的一个路径
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
@@ -170,7 +170,7 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
     
 }
 
-#pragma mark NSURLSessionTaskDelegate
+#pragma mark - NSURLSessionTaskDelegate
 
 //一个task的最终回调
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
@@ -190,7 +190,7 @@ didCompleteWithError:(nullable NSError *)error {
     }
 }
 
-#pragma mark 任务的暂停 取消
+#pragma mark - 任务的暂停 取消
 
 - (void)suspendAllTasks {
     WZDownloadTarget *tmpTarget = nil;
@@ -292,6 +292,6 @@ didCompleteWithError:(nullable NSError *)error {
     }
 }
 
-#pragma mark getter & setter
+#pragma mark - getter & setter
 
 @end

@@ -144,7 +144,7 @@
     }
 }
 
-#pragma mark UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat OffsetX = scrollView.contentOffset.x;
@@ -178,7 +178,7 @@
     }
 }
 
-#pragma mark Accessor
+#pragma mark - Accessor
 - (void)setLoop:(BOOL)loop {
     _loop = loop;
     if (_loop) {

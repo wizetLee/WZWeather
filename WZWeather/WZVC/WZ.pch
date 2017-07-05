@@ -9,7 +9,7 @@
 #ifndef WZ_pch
 #define WZ_pch
 
-#pragma mark file
+#pragma mark - file
 
 //消除弃用警告 http://www.jianshu.com/p/eb03e20f7b1c
 //#pragma clang diagnostic push
@@ -49,7 +49,8 @@
 #import "WZVariousSectionsTable.h"
 
 
-#pragma mark 常量
+#pragma mark - 常量
+
 #define MACRO_FLOAT_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width  //屏宽
 #define MACRO_FLOAT_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height  //屏高
 #define MACRO_FLOAT_STSTUSBAR_HEIGHT (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度（区分iPhone iPad）
@@ -57,7 +58,7 @@
 #define MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT (MACRO_FLOAT_STSTUSBAR_HEIGHT + MACRO_ FLOAT_NAVIGATIONBAR_HEIGHT)
 //设备信息
 
-#pragma mark Device information
+#pragma mark - Device information
 #define MACRO_SYSTEM_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define MACRO_SYSTEM_CURRENTLANGUAGE ([[NSLocale preferredLanguages] objectAtIndex:0])
 
@@ -69,21 +70,21 @@
 //#endif
 
 //颜色
-#pragma mark 颜色
+#pragma mark - 颜色
 #define MACRO_COLOR_RGBA(r, g, b, a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
 #define MACRO_COLOR_RGB(r, g, b)  MACRO_COLOR_RGBA(r, g, b, 1.0)
 #define MACRO_COLOR_RANDOM MACRO_COLOR_RGB(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
 #define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
 #define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
 
-#pragma mark 文件路径
+#pragma mark - 文件路径
 #define MACRO_PATH_DOCUMENT [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 #define MACRO_PATH_TEMP NSTemporaryDirectory()
 #define MACRO_PATH_CACHE [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
 #define MACRO_PATH_BUNDLE_RESOURCE(resource, type) [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
 
 
-#pragma mark 通知
+#pragma mark - 通知
 //applicaion处post
 #define MACRO_NOTIFICATION_ENTER_BACKGROUND @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
 #define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知

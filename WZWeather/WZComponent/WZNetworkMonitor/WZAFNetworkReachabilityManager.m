@@ -72,7 +72,7 @@
     }];
 }
 
-//setter & getter
+//Accessor
 - (WZCTTelephonyNetworkInfo *)networkInfo {
     if (!_networkInfo) {
         _networkInfo = [[WZCTTelephonyNetworkInfo alloc] init];

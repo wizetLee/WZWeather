@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface WZAuthorization : NSObject
-
+/**
+ *  权限管理者 (目前囊括:相册权限、    )
+ */
 @end

@@ -44,7 +44,7 @@ UIPageViewControllerDelegate>
     return self;
 }
 
-#pragma mark Lifecycle
+#pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -60,7 +60,7 @@ UIPageViewControllerDelegate>
   
 }
 
-#pragma mark Show VC with index
+#pragma mark - Show VC with index
 - (void)showVCWithIndex:(NSInteger)index animated:(BOOL)animated {
     if (index <= 0) {index = 0;}
     if (index > _numberOfIndexs) {index = _numberOfIndexs;}
@@ -70,13 +70,13 @@ UIPageViewControllerDelegate>
     __weak typeof(self) weakSelf = self;
     [self setViewControllers:@[VC] direction:UIPageViewControllerNavigationDirectionForward animated:animated completion:^(BOOL finished) {
         //执行代理
-        if ([weakSelf.delegate_pageViewController respondsToSelector:@selector(pageViewController:showVC:inIndex:)] ) {
-            [weakSelf.delegate_pageViewController pageViewController:weakSelf showVC:VC inIndex:index];
+        if ([weakSelf.pageViewControllerDelegate respondsToSelector:@selector(pageViewController:showVC:inIndex:)] ) {
+            [weakSelf.pageViewControllerDelegate pageViewController:weakSelf showVC:VC inIndex:index];
         }
     }];
 }
 
-#pragma mark Match VC with Index
+#pragma mark - Match VC with Index
 //匹配控制器
 - (WZPageViewAssistController *)matchViewControllerWithIndex:(NSInteger)index {
   
@@ -92,7 +92,7 @@ UIPageViewControllerDelegate>
 }
 
 
-#pragma mark UIPageViewControllerDelegate
+#pragma mark - UIPageViewControllerDelegate
 //将要切换控制器
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers NS_AVAILABLE_IOS(6_0) {
     WZPageViewAssistController *VC = pageViewController.viewControllers.firstObject;
@@ -104,8 +104,8 @@ UIPageViewControllerDelegate>
    
     if (VC && VC != _currentVC) {
         _currentIndex = VC.index;
-        if ([_delegate_pageViewController respondsToSelector:@selector(pageViewController:showVC:inIndex:)] ) {
-            [_delegate_pageViewController pageViewController:self showVC:VC inIndex:_currentIndex];
+        if ([_pageViewControllerDelegate respondsToSelector:@selector(pageViewController:showVC:inIndex:)] ) {
+            [_pageViewControllerDelegate pageViewController:self showVC:VC inIndex:_currentIndex];
         }
         _currentVC = VC;
     }
@@ -116,7 +116,7 @@ UIPageViewControllerDelegate>
 //- (UIInterfaceOrientationMask)pageViewControllerSupportedInterfaceOrientations:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(7_0) __TVOS_PROHIBITED;
 //- (UIInterfaceOrientation)pageViewControllerPreferredInterfaceOrientationForPresentation:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(7_0) __TVOS_PROHIBITED;
 
-#pragma mark UIPageViewControllerDataSource
+#pragma mark - UIPageViewControllerDataSource
 //上一个控制器
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(WZPageViewAssistController *)viewController {
     return [self matchViewControllerWithIndex:viewController.index - 1];
@@ -139,7 +139,7 @@ UIPageViewControllerDelegate>
 //}
 
 
-#pragma mark Accessor
+#pragma mark - Accessor
 //默认为一个VC
 - (NSArray <WZPageViewAssistController *>*)reusableVCArray {
     if (!_reusableVCArray) {

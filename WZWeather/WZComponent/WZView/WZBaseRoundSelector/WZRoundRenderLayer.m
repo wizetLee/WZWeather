@@ -53,7 +53,7 @@
     [super setFrame:CGRectMake(frame.origin.x, frame.origin.y, _circleRadius * 2.0, _circleRadius * 2.0)];
 }
 
-#pragma mark setter & getter 
+#pragma mark - Accessor
 
 - (CAShapeLayer *)surfaceLayer {
     if (!_surfaceLayer) {

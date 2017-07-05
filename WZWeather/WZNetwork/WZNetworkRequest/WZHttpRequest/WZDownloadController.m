@@ -64,7 +64,7 @@
     
 }
 
-#pragma mark Create dataSource
+#pragma mark - Create dataSource
 
 - (void)createDataSource {
     NSMutableArray <NSURL *>* tmpUrlArray = [NSMutableArray arrayWithArray:
@@ -136,7 +136,7 @@
 }
 
 
-#pragma mark Create subViews
+#pragma mark - Create subViews
 
 - (void)addSubViews {
     _table = [[WZVariousTable alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, MACRO_FLOAT_SCREEN_HEIGHT - 64.0) style:UITableViewStylePlain];
@@ -157,7 +157,7 @@
     }
 }
 
-#pragma mark WZVariousViewDelegate
+#pragma mark - WZVariousViewDelegate
 
 - (void)variousView:(UIView *)view param:(NSDictionary *)param {
     if ([param[@"data"] isKindOfClass:[WZDownloadTarget class]]) {

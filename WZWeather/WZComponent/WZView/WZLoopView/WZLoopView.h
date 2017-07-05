@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class WZLoopView;
 
-@protocol WZProtocol_loopView <NSObject>
+@protocol WZProtocolLoopView <NSObject>
 @optional
 
 - (void)loopViewDidSelectedImage:(WZLoopView *)loopView index:(int)index;
@@ -25,7 +25,7 @@
 
 @interface WZLoopView : UIView
 
-@property (nonatomic, weak) id<WZProtocol_loopView> delegate;
+@property (nonatomic, weak) id<WZProtocolLoopView> delegate;
 @property (nonatomic, assign) BOOL loop;
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 @property (nonatomic, strong) NSArray *images;

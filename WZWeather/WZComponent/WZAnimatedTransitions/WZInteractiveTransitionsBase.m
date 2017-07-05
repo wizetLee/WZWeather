@@ -17,14 +17,14 @@
 @implementation WZInteractiveTransitionsBase
 
 
-#pragma mark 
+#pragma mark - 
 - (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     self.transitionContext = transitionContext;
     [super startInteractiveTransition:transitionContext];
 }
 
-#pragma mark Accessor
+#pragma mark - Accessor
 - (void)setGesture:(UIScreenEdgePanGestureRecognizer *)gesture {
     _gesture = gesture;
     //配置交互手势

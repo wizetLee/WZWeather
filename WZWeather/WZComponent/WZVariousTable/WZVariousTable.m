@@ -52,7 +52,7 @@
     [self registerClass:[WZVariousBaseCell class] forCellReuseIdentifier:WZTABLE_DEFAULTCELLID];//内部注册
 }
 
-#pragma mark UITableViewDelegate
+#pragma mark - UITableViewDelegate
 
 //cell高度配置
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,7 +101,7 @@
     }
 }
 
-#pragma mark UITableViewDataSource
+#pragma mark - UITableViewDataSource
 //数据个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.datas.count;
@@ -138,7 +138,7 @@
     return cell;
 }
 
-#pragma mark variousViewDelegate
+#pragma mark - variousViewDelegate
 - (void)variousView:(UIView *)view param:(NSDictionary *)param{
     if ([self.variousViewDelegate respondsToSelector:@selector(variousView:param:)]) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:param];
@@ -146,7 +146,7 @@
     }
 }
 
-#pragma mark setter & getter
+#pragma mark - Accessor
 - (NSMutableDictionary *)registerCellDic {
     if (!_registerCellDic) {
         _registerCellDic = [NSMutableDictionary dictionary];

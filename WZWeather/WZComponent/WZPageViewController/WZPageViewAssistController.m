@@ -26,7 +26,7 @@
     [super viewDidLoad];
 }
 
-#pragma mark Accessor
+#pragma mark - Accessor
 - (NSMutableDictionary *)param {
     if (!_param) {
         _param = [NSMutableDictionary dictionary];
