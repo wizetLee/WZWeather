@@ -85,8 +85,18 @@
     NSLog(@"%lf", button.cornerRadius);
     
 //    NSFetchedResultsController
+    NSObject *obj = [NSObject new];
+    NSLog(@"%p", obj);
+    NSLog(@"－－－－－%p", &obj);
+    [self chang:obj];
+    NSLog(@"%p", obj);
 }
 
+- (void)chang:(NSObject *)obj {
+    obj =  [NSObject new];
+    NSLog(@"```%p", obj);
+    NSLog(@"－－－－－%p", &obj);
+}
 
 - (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index {
     NSLog(@"%ld", index);
