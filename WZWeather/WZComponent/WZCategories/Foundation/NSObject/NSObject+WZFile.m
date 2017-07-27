@@ -31,6 +31,9 @@
         if ([manager createDirectoryAtPath:path withIntermediateDirectories:true attributes:nil error:&error]) {
             //createIntermediates:如果创建的路径的自路径不存在时，是否连同自路径一起创建
             boolean = true;
+            if (error) {
+                 boolean = false;
+            }
         }
     }
     return boolean;
