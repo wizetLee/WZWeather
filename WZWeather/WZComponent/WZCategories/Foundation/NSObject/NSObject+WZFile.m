@@ -57,7 +57,7 @@
 
 + (NSString *)wz_filePath:(WZSearchPathDirectory)direction fileName:(NSString *)fileName {
     if (![fileName isKindOfClass:[NSString class]]) {
-        return false;
+        return nil;
     }
     
     NSString *path = NSTemporaryDirectory();

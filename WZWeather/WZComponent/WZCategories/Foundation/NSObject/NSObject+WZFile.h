@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
-    WZSearchPathDirectoryDocument = 0,
-    WZSearchPathDirectoryLibrary = 1,
-    WZSearchPathDirectoryCaches = 2,
-    WZSearchPathDirectoryTemporary = 3,
+    WZSearchPathDirectoryDocument           = 0,
+    WZSearchPathDirectoryLibrary            = 1,
+    WZSearchPathDirectoryCaches             = 2,
+    WZSearchPathDirectoryTemporary          = 3,
 };
 
 @interface NSObject (WZFile)
@@ -38,7 +36,7 @@ typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
  */
 + (BOOL)wz_createFileAtPath:(NSString *)path cover:(BOOL)cover;
 
-
+///默认覆盖文件
 + (BOOL)wz_createFolder:(WZSearchPathDirectory)direction folderName:(NSString *)folderName ;
 
 /**
@@ -46,7 +44,6 @@ typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
  *  @param direction 文件路径
  *  @param folderName 文件名字
  */
-
 + (BOOL)wz_createFile:(WZSearchPathDirectory )direction fileName:(NSString *)fileName cover:(BOOL)cover;
 
 /**
