@@ -90,4 +90,7 @@
 #define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
 
 
+
+
+
 #endif /* WZ_pch */

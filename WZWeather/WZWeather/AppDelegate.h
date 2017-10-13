@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
-#import "WZBaseNavigationController.h"
+#import "WZNavigationController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

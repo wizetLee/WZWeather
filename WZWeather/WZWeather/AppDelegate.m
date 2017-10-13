@@ -12,7 +12,7 @@
 @interface AppDelegate ()
 
 @property (nonatomic, strong) UIWindow *WZW;
-@property (nonatomic, strong) WZBaseNavigationController *navigationController;
+@property (nonatomic, strong) WZNavigationController *navigationController;
 @end
 
 @implementation AppDelegate
@@ -24,7 +24,7 @@
     MainViewController *WZVC = [[MainViewController alloc] init];
     
     //必须被引用
-    _navigationController = [[WZBaseNavigationController alloc] initWithRootViewController:WZVC];
+    _navigationController = [[WZNavigationController alloc] initWithRootViewController:WZVC];
     _WZW = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _WZW.backgroundColor = [UIColor whiteColor];
     _WZW.rootViewController = _navigationController;

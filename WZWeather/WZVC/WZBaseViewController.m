@@ -49,6 +49,12 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    ///可以在此处控制系统侧滑白名单
+    if ([self.navigationController systemSideslipBlacklistCheckIn:NSStringFromClass([self class])]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = false;
+    } else {
+        self.navigationController.interactivePopGestureRecognizer.enabled = true;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -121,6 +127,14 @@
 //}
 
 #pragma mark - Accessor
+- (WZNavigationController *)navigationController
+{
+    if (super.navigationController) {
+        NSAssert([super.navigationController isKindOfClass:[WZNavigationController class]], @"NavigationController 类型错误");
+    }
+    return (WZNavigationController *)super.navigationController;
+}
+
 - (WZAnimatedTransitionsBase *)modalAnimator {
     if (!_modalAnimator) {
         _modalAnimator = [[WZAnimatedTransitionsBase alloc] init];
@@ -136,6 +150,8 @@
     }
     return _modalInteractor;
 }
+
+
 
 #pragma mark - 配置自定义模态动画
 - (WZCustomAnimatedHandler)presentAnimations {
@@ -165,6 +181,8 @@
     };
     return animations;
 }
+
+
 
 
 @end

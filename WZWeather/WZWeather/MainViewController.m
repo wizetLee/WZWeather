@@ -14,6 +14,8 @@
 #import "WZScrollOptions.h"
 #import "UIButton+WZMinistrant.h"
 
+#import "WZSystemDetails.h"
+
 @interface MainViewController ()
 
 @property (nonatomic,strong) WZScrollOptions *menuView;
@@ -84,19 +86,14 @@
     [button setImage:[UIImage imageNamed:@"5"] forState:UIControlStateHighlighted];
     NSLog(@"%lf", button.cornerRadius);
     
-//    NSFetchedResultsController
-    NSObject *obj = [NSObject new];
-    NSLog(@"%p", obj);
-    NSLog(@"－－－－－%p", &obj);
-    [self chang:obj];
-    NSLog(@"%p", obj);
+    appBuild();
+    appVersion();
+    appBundleID();
+    
 }
 
-- (void)chang:(NSObject *)obj {
-    obj =  [NSObject new];
-    NSLog(@"```%p", obj);
-    NSLog(@"－－－－－%p", &obj);
-}
+
+
 
 - (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index {
     NSLog(@"%ld", index);
@@ -127,8 +124,9 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    WZDownloadController *vc = [[WZDownloadController alloc] init];
-//    [self.navigationController pushViewController:vc animated:true];
+    [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
+    WZDownloadController *vc = [[WZDownloadController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 
 }
 
