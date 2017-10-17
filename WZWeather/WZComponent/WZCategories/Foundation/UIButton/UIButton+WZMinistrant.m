@@ -23,7 +23,6 @@
     objc_setAssociatedObject(self, @selector(setCornerRadius:), @(cornerRadius), OBJC_ASSOCIATION_ASSIGN);
     self.imageView.layer.cornerRadius = cornerRadius;
     self.layer.cornerRadius = cornerRadius;
-    
 }
 
 

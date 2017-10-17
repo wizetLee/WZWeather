@@ -2,7 +2,7 @@
 //  WZPageViewAssistController.m
 //  WZWeather
 //
-//  Created by admin on 17/6/16.
+//  Created by wizet on 17/6/16.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

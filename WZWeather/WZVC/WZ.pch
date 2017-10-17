@@ -39,7 +39,7 @@
 
 //第三方
 #import "AFNetworking/AFNetworking.h"
-#import "MJRefresh.h"
+#import "MJRefresh.h"///iOS 11 上应该是有BUG的
 
 //第三方的派生
 #import "WZAFNetworkReachabilityManager.h"
@@ -58,7 +58,7 @@
 #define MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT (MACRO_FLOAT_STSTUSBAR_HEIGHT + MACRO_ FLOAT_NAVIGATIONBAR_HEIGHT)
 //设备信息
 
-#pragma mark - Device information
+#pragma mark - 设备硬件 软件信息
 #define MACRO_SYSTEM_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define MACRO_SYSTEM_CURRENTLANGUAGE ([[NSLocale preferredLanguages] objectAtIndex:0])
 
@@ -74,7 +74,9 @@
 #define MACRO_COLOR_RGBA(r, g, b, a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
 #define MACRO_COLOR_RGB(r, g, b)  MACRO_COLOR_RGBA(r, g, b, 1.0)
 #define MACRO_COLOR_RANDOM MACRO_COLOR_RGB(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
-#define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
+#define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 \
+                                                green:((float)((hexValue & 0xFF00) >> 8))/255.0 \
+                                                blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
 #define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
 
 #pragma mark - 文件路径

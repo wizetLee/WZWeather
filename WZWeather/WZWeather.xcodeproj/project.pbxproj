@@ -267,6 +267,9 @@
 		846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DC1E63D2140048BBDC /* WZBaseViewController.m */; };
 		846920E01E63D6920048BBDC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DF1E63D6920048BBDC /* MainViewController.m */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
+		8486332E1F95CACA0086C96E /* WZGPUImageStillCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486332D1F95CACA0086C96E /* WZGPUImageStillCamera.m */; };
+		848633311F95CCD20086C96E /* WZMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633301F95CCD20086C96E /* WZMediaController.m */; };
+		848633471F95EBA60086C96E /* WZAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633461F95EBA60086C96E /* WZAppManager.m */; };
 		848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 848979861ECC3A97008B07D2 /* WZDownloadTarget.m */; };
 		8489798A1ECC61DD008B07D2 /* WZAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 848979891ECC61DD008B07D2 /* WZAuthorization.m */; };
 		8497C42A1EB3465200EB9F60 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8497C4291EB3465200EB9F60 /* NotificationCenter.framework */; };
@@ -843,6 +846,12 @@
 		846920E11E63F4430048BBDC /* WZ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZ.pch; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
+		8486332C1F95CACA0086C96E /* WZGPUImageStillCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImageStillCamera.h; sourceTree = "<group>"; };
+		8486332D1F95CACA0086C96E /* WZGPUImageStillCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImageStillCamera.m; sourceTree = "<group>"; };
+		8486332F1F95CCD20086C96E /* WZMediaController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaController.h; sourceTree = "<group>"; };
+		848633301F95CCD20086C96E /* WZMediaController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaController.m; sourceTree = "<group>"; };
+		848633451F95EBA60086C96E /* WZAppManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAppManager.h; sourceTree = "<group>"; };
+		848633461F95EBA60086C96E /* WZAppManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAppManager.m; sourceTree = "<group>"; };
 		848979851ECC3A97008B07D2 /* WZDownloadTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadTarget.h; sourceTree = "<group>"; };
 		848979861ECC3A97008B07D2 /* WZDownloadTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadTarget.m; sourceTree = "<group>"; };
 		848979881ECC61DD008B07D2 /* WZAuthorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAuthorization.h; sourceTree = "<group>"; };
@@ -2207,6 +2216,7 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
+				8486332B1F95CA030086C96E /* WZGPUImage */,
 				84648A771EF7B67000B9DF41 /* WZAnimatedTransitions */,
 				844997BF1EF3DA9E003B3952 /* WZPageViewController */,
 				8402EB141ECD64A40030CCE1 /* WZVariousTable */,
@@ -2234,8 +2244,21 @@
 				848979891ECC61DD008B07D2 /* WZAuthorization.m */,
 				84CAD8031EA07EEA00BDF9AA /* WZUserInfo.h */,
 				84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */,
+				848633451F95EBA60086C96E /* WZAppManager.h */,
+				848633461F95EBA60086C96E /* WZAppManager.m */,
 			);
 			path = WZVC;
+			sourceTree = "<group>";
+		};
+		8486332B1F95CA030086C96E /* WZGPUImage */ = {
+			isa = PBXGroup;
+			children = (
+				8486332C1F95CACA0086C96E /* WZGPUImageStillCamera.h */,
+				8486332D1F95CACA0086C96E /* WZGPUImageStillCamera.m */,
+				8486332F1F95CCD20086C96E /* WZMediaController.h */,
+				848633301F95CCD20086C96E /* WZMediaController.m */,
+			);
+			path = WZGPUImage;
 			sourceTree = "<group>";
 		};
 		8497C42B1EB3465200EB9F60 /* WZTodayExtension */ = {
@@ -2460,7 +2483,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2522,6 +2545,7 @@
 				84514D431E9DCE7A00F07EF8 /* UIImage+JKColor.m in Sources */,
 				8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */,
 				84514D1C1E9DCE7A00F07EF8 /* UIAlertView+JKBlock.m in Sources */,
+				848633471F95EBA60086C96E /* WZAppManager.m in Sources */,
 				84514D311E9DCE7A00F07EF8 /* UIColor+JKGradient.m in Sources */,
 				84514D8F1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m in Sources */,
 				84514D541E9DCE7A00F07EF8 /* UILabel+JKAdjustableLabel.m in Sources */,
@@ -2545,6 +2569,7 @@
 				84514CCB1E9DCE7A00F07EF8 /* NSData+JKGzip.m in Sources */,
 				844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */,
 				8402EB291ECD64A40030CCE1 /* WZVariousTable.m in Sources */,
+				8486332E1F95CACA0086C96E /* WZGPUImageStillCamera.m in Sources */,
 				84514D161E9DCE7A00F07EF8 /* MKMapView+JKZoomLevel.m in Sources */,
 				84514D351E9DCE7A00F07EF8 /* UIColor+JKWeb.m in Sources */,
 				84514D001E9DCE7A00F07EF8 /* NSString+JKNormalRegex.m in Sources */,
@@ -2708,6 +2733,7 @@
 				848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */,
 				84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
+				848633311F95CCD20086C96E /* WZMediaController.m in Sources */,
 				84514D011E9DCE7A00F07EF8 /* NSString+JKPinyin.m in Sources */,
 				8402EB271ECD64A40030CCE1 /* WZVariousBaseObject.m in Sources */,
 				844A0C651F7E3961001DF1CA /* WZSystemDetails.m in Sources */,

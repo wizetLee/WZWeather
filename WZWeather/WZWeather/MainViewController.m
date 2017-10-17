@@ -13,7 +13,6 @@
 #import "WZLoopView.h"
 #import "WZScrollOptions.h"
 #import "UIButton+WZMinistrant.h"
-
 #import "WZSystemDetails.h"
 
 @interface MainViewController ()
@@ -24,6 +23,7 @@
 
 @implementation MainViewController
 
+///方法交换
 //+ (void)methodSwizzlingWithOriginalSelector:(SEL)originalSelector bySwizzledSelector:(SEL)swizzledSelector{
 //    Class class = [self class];
 //    //原有方法
@@ -61,10 +61,6 @@
     return self;    
 }
 
-- (void)loadView {
-    [super loadView];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSMutableArray *tmpArr = [NSMutableArray array];
@@ -84,14 +80,21 @@
     [self.view addSubview:button];
     [button setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal] ;
     [button setImage:[UIImage imageNamed:@"5"] forState:UIControlStateHighlighted];
-    NSLog(@"%lf", button.cornerRadius);
+//    NSLog(@"%lf", button.cornerRadius);
     
     appBuild();
     appVersion();
     appBundleID();
     
+    
+//    ///必应墙纸
+//    [WZHttpRequest requestBiYingWallpaperSerializationResult:^(id  _Nullable result, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+//        if (!error && isDictionaty) {
+//            NSLog(@"%@", (NSDictionary *)result);
+//        }
+//    }];
+    
 }
-
 
 
 
@@ -124,6 +127,8 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    ///下载页面
     [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
     WZDownloadController *vc = [[WZDownloadController alloc] init];
     [self.navigationController pushViewController:vc animated:true];

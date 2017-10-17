@@ -20,19 +20,22 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - IQKeyboardManager (4.0.8)
-  - MJRefresh (3.1.12)
+  - GPUImage (0.1.7)
+  - IQKeyboardManager (4.0.13)
+  - MJRefresh (3.1.14)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6)
+  - GPUImage (~> 0.1.7)
   - IQKeyboardManager (~> 4.0.8)
   - MJRefresh (~> 3.1.12)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
-  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
+  MJRefresh: 6642e35b3227a5447b9fd5e17c552c90196c9859
 
-PODFILE CHECKSUM: 0428fe48df068c36f600cc438857b25e298e4d2b
+PODFILE CHECKSUM: 73a5c7440f96c8a0e3dc32a1def3c1d196a3431c
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1

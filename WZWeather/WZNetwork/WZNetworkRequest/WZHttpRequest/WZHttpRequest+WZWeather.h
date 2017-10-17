@@ -11,7 +11,7 @@
 #define WZ_YIYUANWEATHER_APPKEY_VALUE_DIC @{@"apikey": @"9254d5a3e7cbd8027be0e56f4f03fe2f"}
 #define WZ_YIYUANWEATHER_URLSTRING @"http://apis.baidu.com/showapi_open_bus/weather_showapi/address"
 
-//yiyuan应用的appid 和 密匙
+//yiyuan应用的appid 和 密钥
 #define WZ_YIYUAN_APPKEY_VALUE_DIC @{@"showapi_appid":@"37942", @"showapi_sign":@"e0a142511eb44ab79cd30607a208b758"}
 #define WZ_YIYUAN_GETREQUEST_ID_SIGN @"?showapi_appid=37942&showapi_sign=e0a142511eb44ab79cd30607a208b758"
 //必应每日壁纸

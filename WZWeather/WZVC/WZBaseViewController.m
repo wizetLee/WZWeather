@@ -28,6 +28,10 @@
     [super loadView];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
+    if (@available (iOS 11.0, *)) {
+        //iOS 对于automaticallyAdjustsScrollViewInsets废弃操作的更改
+    }
+    
 //    if ([self customTransitions]) {
 //        self.transitioningDelegate = (id<UIViewControllerTransitioningDelegate>)self;
 //        self.modalInteractor.gesture = [self addScreenEdgePanGestureRecognizer:self.view edges:UIRectEdgeLeft];

@@ -2,7 +2,7 @@
 //  WZAnimatedTransitionsBase.m
 //  WZWeather
 //
-//  Created by admin on 17/6/19.
+//  Created by wizet on 17/6/19.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

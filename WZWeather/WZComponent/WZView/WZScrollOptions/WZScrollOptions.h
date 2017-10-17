@@ -16,6 +16,7 @@
 
 @end
 
+///标题 选取 控件
 @interface WZScrollOptions : UIScrollView
 
 @property (nonatomic, weak) id <WZProtocolScrollOptions> scrollOptionsDelegate;//代理

@@ -10,6 +10,8 @@
 
 @interface UIView (WZFrameAssistance)
 
+///均为计算属性
+
 - (CGFloat)x;
 - (void)setX:(CGFloat)x;
 

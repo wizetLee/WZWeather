@@ -2,7 +2,7 @@
 //  NSObject+WZFile.m
 //  WZWeather
 //
-//  Created by admin on 17/6/7.
+//  Created by wizet on 17/6/7.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -88,4 +88,21 @@
     
     return filePath;
 }
+
+///配置不被系统回收，也不保存到iClound的文件属性
++ (BOOL)addBackupAttributeToItemAtURL:(NSURL *)URL {
+//    [NSURL fileURLWithPath:@""]
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[URL path]]) {
+        NSError *error = nil;
+        BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                      forKey: NSURLIsExcludedFromBackupKey error: &error];
+        if(!success){
+            NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+        }
+        return success;
+    } else {
+        return false;
+    }
+}
+
 @end
