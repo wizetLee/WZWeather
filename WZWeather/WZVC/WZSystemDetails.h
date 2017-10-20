@@ -34,105 +34,106 @@ WZAppInstallType appInstallType();
 
 
 @interface WZSystemDetails : NSObject
-// 系统版本等于
+/// 系统版本等于
 + (BOOL)systemVersionEqualTo:(NSString *)version;
 
-// 系统版本大于
+/// 系统版本大于
 + (BOOL)systemVersionGreaterThan:(NSString *)version;
 
-// 系统版本大于或等于
+/// 系统版本大于或等于
 + (BOOL)systemVersionGreaterThanOrEqualTo:(NSString *)version;
 
-// 系统版本小于
+/// 系统版本小于
 + (BOOL)systemVersionLessThan:(NSString *)version;
 
-// 系统版本等于
+/// 系统版本等于
 + (BOOL)systemVersionLessThanOrEqualTo:(NSString *)version;
 
-// 设备（最基本的）
+/// 设备（最基本的）
 + (NSString *)platform;
 
-// 设备 （具体的）
+/// 设备 （具体的）
 + (NSString *)platformString;
 
-// 大于或等于iphone platform 的版本
+
+/// 大于或等于iphone platform 的版本
 + (BOOL)largerOrEqualToIPhonePlatformWithIndex0:(NSInteger)index0 index1:(NSInteger)index1;
 
-// 大于或等于iPad platform 的版本
+/// 大于或等于iPad platform 的版本
 + (BOOL)largerOrEqualToIPadPlatformWithIndex0:(NSInteger)index0 index1:(NSInteger)index1;
 
-// 大于或等于iphone
+/// 大于或等于iphone
 + (BOOL)largerOrEqualToIPhone7;
 
 //+ (BOOL)largerOrEqualToIPad;
 
-// 是否ipad
+/// 是否ipad
 + (BOOL)isiPad;
 
-// 是否iphone
+/// 是否iphone
 + (BOOL)isiPhone;
 
-// 是否ipod
+/// 是否ipod
 + (BOOL)isiPod;
 
-// 是否appleTV
+/// 是否appleTV
 + (BOOL)isAppleTV;
 
-// 是否appleWatch
+/// 是否appleWatch
 + (BOOL)isAppleWatch;
 
-// 是否模拟器
+/// 是否模拟器
 + (BOOL)isSimulator;
 
-// ios版本
+/// ios版本
 + (NSString *)systemVersion;
 
-// 系统名称
+/// 系统名称
 + (NSString *)systemName;
 
-// 获取系统信息
+/// 获取系统信息
 + (NSUInteger)getSysInfo:(uint)typeSpecifier;
 
-// cup频率
+/// cup频率
 + (NSUInteger)cpuFrequency;
 
-// 总线频率
+/// 总线频率
 + (NSUInteger)busFrequency;
 
-// ram的大小
+/// ram的大小
 + (NSUInteger)ramSize;
 
-// cpu核数
+/// cpu核数
 + (NSUInteger)cpuNumber;
 
-// 内存总的大小(单位：B）
+/// 内存总的大小(单位：B）
 + (NSUInteger)totalMemory;
 
-// 用户的内存大小(单位：B）
+/// 用户的内存大小(单位：B）
 + (NSUInteger)userMemory;
 
-// 获取当前设备可用内存(单位：B）
+/// 获取当前设备可用内存(单位：B）
 + (NSUInteger)availableMemory;
 
-// 获取当前任务所占用的内存（单位：B）
+/// 获取当前任务所占用的内存（单位：B）
 + (NSUInteger)taskMemory;
 
-// 磁盘的总空间
+/// 磁盘的总空间
 + (NSNumber *)totalDiskSpace;
 
-// 磁盘的可用空间
+/// 磁盘的可用空间
 + (NSNumber *)freeDiskSpace;
 
-// 生成一个唯一码
+/// 生成一个唯一码
 + (NSString *)generateUUID;
 
-// 是否retina屏
+/// 是否retina屏
 + (BOOL)isRetina;
 
-// 是否retinaHD屏
+/// 是否retinaHD屏
 + (BOOL)isRetinaHD;
 
-// 固定屏幕size
+/// 固定屏幕size
 + (CGSize)fixedScreenSize;
 
 

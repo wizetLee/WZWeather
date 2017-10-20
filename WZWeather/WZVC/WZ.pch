@@ -33,6 +33,7 @@
 #import "WZDownloadRequest.h"
 
 //类目
+#import "WZSystemDetails.h"
 #import "JKCategories.h"
 #import "NSObject+WZFile.h" //文件 创建 删除等扩展
 #import "UIView+WZFrameAssistance.h"  //frame 扩展
@@ -55,10 +56,27 @@
 #define MACRO_FLOAT_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height  //屏高
 #define MACRO_FLOAT_STSTUSBAR_HEIGHT (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度（区分iPhone iPad）
 #define MACRO_FLOAT_NAVIGATIONBAR_HEIGHT  44.0
-#define MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT (MACRO_FLOAT_STSTUSBAR_HEIGHT + MACRO_ FLOAT_NAVIGATIONBAR_HEIGHT)
+
+
+///最新的在ViewController使用到位置的宏
+#define MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT (MACRO_FLOAT_STSTUSBAR_HEIGHT + MACRO_FLOAT_NAVIGATIONBAR_HEIGHT)
+
+#define MACRO_VC_CHECK_NAVIGATION (self.navigationController && (self.navigationController.navigationBarHidden == false))
+#define MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK ((@available(iOS 11.0, *))?self.view.safeAreaInsets.top : -1)
+#define MACRO_VC_FLOAT_SAFEAREA_BOTTOM_BRICK ((@available(iOS 11.0, *))?self.view.safeAreaInsets.bottom : -1)
+
+////安全域顶部
+//    //默认不隐藏导航栏和状态栏
+//#define MACRO_VC_FLOAT_SAFEAREA_TOP ((!(MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK < 0)) ? MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK : [UIApplication sharedApplication].statusBarFrame.size.height + (MACRO_VC_CHECK_NAVIGATION?self.navigationController.navigationBar.frame.size.height:0.0))
+//    //加上是否隐藏导航栏的条件
+//#define MACRO_VC_FLOAT_SAFEAREA_TOP_HIDE_NAV(boolean) ((!(MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK < 0)) ? MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK : [UIApplication sharedApplication].statusBarFrame.size.height + ((MACRO_VC_CHECK_NAVIGATION && !boolean)?self.navigationController.navigationBar.frame.size.height:0.0))
+////安全域底部
+//#define MACRO_VC_FLOAT_SAFEAREA_BOTTOM ((!(MACRO_VC_FLOAT_SAFEAREA_BOTTOM_BRICK < 0))?MACRO_VC_FLOAT_SAFEAREA_BOTTOM_BRICK:0.0)
+
 //设备信息
 
 #pragma mark - 设备硬件 软件信息
+#define MACRO_SYSTEM_IS_IPHONE_X [[WZSystemDetails platformString] isEqualToString:@"iPhone_X"]
 #define MACRO_SYSTEM_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define MACRO_SYSTEM_CURRENTLANGUAGE ([[NSLocale preferredLanguages] objectAtIndex:0])
 

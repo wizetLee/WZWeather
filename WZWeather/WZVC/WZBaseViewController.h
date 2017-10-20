@@ -21,5 +21,4 @@
 
 - (BOOL)customTransitions;
 
-
 @end

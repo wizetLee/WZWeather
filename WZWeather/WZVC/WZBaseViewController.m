@@ -77,6 +77,8 @@
     NSLog(@"%@", self);
 }
 
+#pragma mark - Public Method
+
 #pragma marks -
 - (BOOL)customTransitions {
     return false;

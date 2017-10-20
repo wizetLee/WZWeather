@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) UIWindow *WZW;
 @property (nonatomic, strong) WZNavigationController *navigationController;
+
 @end
 
 @implementation AppDelegate
@@ -22,7 +23,6 @@
     // Override point for customization after application launch.
     
     MainViewController *WZVC = [[MainViewController alloc] init];
-    
     //必须被引用
     _navigationController = [[WZNavigationController alloc] initWithRootViewController:WZVC];
     _WZW = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

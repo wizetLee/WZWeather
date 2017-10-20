@@ -129,7 +129,6 @@ WZAppInstallType appInstallType() {
     if ([platform isEqualToString:@"iPhone10,5"])   return @"iPhone_8_Plus";
     if ([platform isEqualToString:@"iPhone10,3"])   return @"iPhone_X";
     if ([platform isEqualToString:@"iPhone10,6"])   return @"iPhone_X";
-    
     // iPod
     if ([platform isEqualToString:@"iPod1,1"])      return @"iPod Touch 1G";
     if ([platform isEqualToString:@"iPod2,1"])      return @"iPod Touch 2G";

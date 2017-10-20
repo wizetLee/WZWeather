@@ -14,6 +14,7 @@
 #import "WZScrollOptions.h"
 #import "UIButton+WZMinistrant.h"
 #import "WZSystemDetails.h"
+#import "WZMediaController.h"
 
 @interface MainViewController ()
 
@@ -63,11 +64,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"导航栏";
     NSMutableArray *tmpArr = [NSMutableArray array];
     for (int i = 0; i <  20; i++) {
         [tmpArr addObject:[NSString stringWithFormat:@"%d", i]];
     }
-    WZLoopView *loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, 100) images:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", ] loop:true delay:2];
+    WZLoopView *loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT, MACRO_FLOAT_SCREEN_WIDTH, 100) images:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", ] loop:true delay:2];
     [self.view addSubview:loop];
     UIButton *button                = [[UIButton alloc] init];
     button.frame                    = CGRectMake(0.0, 300, 100, 50);
@@ -96,6 +98,10 @@
     
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+     NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
+}
 
 
 - (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index {
@@ -130,9 +136,11 @@
     
     ///下载页面
     [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
-    WZDownloadController *vc = [[WZDownloadController alloc] init];
-    [self.navigationController pushViewController:vc animated:true];
+//    WZDownloadController *vc = [[WZDownloadController alloc] init];
+    WZMediaController *vc = [WZMediaController new];
 
+    [self.navigationController pushViewController:vc animated:true];
+    
 }
 
 #pragma mark - WZProtocolPageViewController
