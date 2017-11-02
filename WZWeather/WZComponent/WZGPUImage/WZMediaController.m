@@ -163,7 +163,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
     
     _filter = [[GPUImageSepiaFilter alloc] init];//褐色滤镜;
     
- 
+    GPUImageContrastFilter *f = [[GPUImageContrastFilter alloc] init];
     
     
     ///
@@ -183,7 +183,10 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 //
 //    //开始录像
     
-    [_camera addTarget:_presentView];//成链
+//    [_camera addTarget:_presentView];//成链
+    [_camera addTarget:_filter];//成链
+    [_filter addTarget:f];
+    [f addTarget:_presentView];
     [_camera startCameraCapture];
     
     ///延迟0.5s

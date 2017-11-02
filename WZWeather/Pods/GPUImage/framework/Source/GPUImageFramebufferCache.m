@@ -72,6 +72,7 @@
     __block GPUImageFramebuffer *framebufferFromCache = nil;
 //    dispatch_sync(framebufferCacheQueue, ^{
     runSynchronouslyOnVideoProcessingQueue(^{
+        ///以frambufferSize 以及 纹理环绕等配置作为缓存的键
         NSString *lookupHash = [self hashForSize:framebufferSize textureOptions:textureOptions onlyTexture:onlyTexture];
         NSNumber *numberOfMatchingTexturesInCache = [framebufferTypeCounts objectForKey:lookupHash];
         NSInteger numberOfMatchingTextures = [numberOfMatchingTexturesInCache integerValue];
@@ -84,6 +85,7 @@
         else
         {
             // Something found, pull the old framebuffer and decrement the count
+            //哈希值为value
             NSInteger currentTextureID = (numberOfMatchingTextures - 1);
             while ((framebufferFromCache == nil) && (currentTextureID >= 0))
             {

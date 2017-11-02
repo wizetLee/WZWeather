@@ -299,7 +299,9 @@ NSString *const kGPUImagePassthroughFragmentShaderString = SHADER_STRING
     
     [GPUImageContext setActiveShaderProgram:filterProgram];
 
+                                ///// 找出缓存中的framebuffer
     outputFramebuffer = [[GPUImageContext sharedFramebufferCache] fetchFramebufferForSize:[self sizeOfFBO] textureOptions:self.outputTextureOptions onlyTexture:NO];
+    //不断生成输出的buffer
     [outputFramebuffer activateFramebuffer];
     if (usingNextFrameForImageCapture)
     {
