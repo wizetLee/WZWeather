@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */ = {isa = PBXBuildFile; fileRef = 4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */; };
 		40287B2A1F09210800D9383B /* NSObject+WZFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B251F09210800D9383B /* NSObject+WZFile.m */; };
 		40287B2B1F09210800D9383B /* UIView+WZFrameAssistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B291F09210800D9383B /* UIView+WZFrameAssistance.m */; };
 		40287B2E1F09216C00D9383B /* UIButton+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */; };
 		40287B351F09269900D9383B /* UIView+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B341F09269900D9383B /* UIView+WZMinistrant.m */; };
+		402898111FAD6FA000F36DA3 /* WZMediaOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */; };
+		402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */; };
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
@@ -267,7 +270,6 @@
 		846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DC1E63D2140048BBDC /* WZBaseViewController.m */; };
 		846920E01E63D6920048BBDC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920DF1E63D6920048BBDC /* MainViewController.m */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
-		8486332E1F95CACA0086C96E /* WZGPUImageStillCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486332D1F95CACA0086C96E /* WZGPUImageStillCamera.m */; };
 		848633311F95CCD20086C96E /* WZMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633301F95CCD20086C96E /* WZMediaController.m */; };
 		848633471F95EBA60086C96E /* WZAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633461F95EBA60086C96E /* WZAppManager.m */; };
 		848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 848979861ECC3A97008B07D2 /* WZDownloadTarget.m */; };
@@ -319,6 +321,8 @@
 
 /* Begin PBXFileReference section */
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
+		4000982D1FADCD9F00D2A248 /* WZGPUImagePreinstall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImagePreinstall.h; sourceTree = "<group>"; };
+		4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImagePreinstall.m; sourceTree = "<group>"; };
 		40287B241F09210800D9383B /* NSObject+WZFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZFile.h"; sourceTree = "<group>"; };
 		40287B251F09210800D9383B /* NSObject+WZFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZFile.m"; sourceTree = "<group>"; };
 		40287B281F09210800D9383B /* UIView+WZFrameAssistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZFrameAssistance.h"; sourceTree = "<group>"; };
@@ -327,6 +331,10 @@
 		40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WZMinistrant.m"; sourceTree = "<group>"; };
 		40287B331F09269900D9383B /* UIView+WZMinistrant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZMinistrant.h"; sourceTree = "<group>"; };
 		40287B341F09269900D9383B /* UIView+WZMinistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZMinistrant.m"; sourceTree = "<group>"; };
+		4028980F1FAD6FA000F36DA3 /* WZMediaOperationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaOperationView.h; sourceTree = "<group>"; };
+		402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaOperationView.m; sourceTree = "<group>"; };
+		402898121FAD6FB700F36DA3 /* WZMediaPreviewView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaPreviewView.h; sourceTree = "<group>"; };
+		402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaPreviewView.m; sourceTree = "<group>"; };
 		402AB1901F0732EE00136DB4 /* WZScrollOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZScrollOptions.h; sourceTree = "<group>"; };
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
@@ -846,8 +854,6 @@
 		846920E11E63F4430048BBDC /* WZ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZ.pch; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
-		8486332C1F95CACA0086C96E /* WZGPUImageStillCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImageStillCamera.h; sourceTree = "<group>"; };
-		8486332D1F95CACA0086C96E /* WZGPUImageStillCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImageStillCamera.m; sourceTree = "<group>"; };
 		8486332F1F95CCD20086C96E /* WZMediaController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaController.h; sourceTree = "<group>"; };
 		848633301F95CCD20086C96E /* WZMediaController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaController.m; sourceTree = "<group>"; };
 		848633451F95EBA60086C96E /* WZAppManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAppManager.h; sourceTree = "<group>"; };
@@ -2253,10 +2259,14 @@
 		8486332B1F95CA030086C96E /* WZGPUImage */ = {
 			isa = PBXGroup;
 			children = (
-				8486332C1F95CACA0086C96E /* WZGPUImageStillCamera.h */,
-				8486332D1F95CACA0086C96E /* WZGPUImageStillCamera.m */,
 				8486332F1F95CCD20086C96E /* WZMediaController.h */,
 				848633301F95CCD20086C96E /* WZMediaController.m */,
+				402898121FAD6FB700F36DA3 /* WZMediaPreviewView.h */,
+				402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */,
+				4028980F1FAD6FA000F36DA3 /* WZMediaOperationView.h */,
+				402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */,
+				4000982D1FADCD9F00D2A248 /* WZGPUImagePreinstall.h */,
+				4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */,
 			);
 			path = WZGPUImage;
 			sourceTree = "<group>";
@@ -2569,7 +2579,6 @@
 				84514CCB1E9DCE7A00F07EF8 /* NSData+JKGzip.m in Sources */,
 				844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */,
 				8402EB291ECD64A40030CCE1 /* WZVariousTable.m in Sources */,
-				8486332E1F95CACA0086C96E /* WZGPUImageStillCamera.m in Sources */,
 				84514D161E9DCE7A00F07EF8 /* MKMapView+JKZoomLevel.m in Sources */,
 				84514D351E9DCE7A00F07EF8 /* UIColor+JKWeb.m in Sources */,
 				84514D001E9DCE7A00F07EF8 /* NSString+JKNormalRegex.m in Sources */,
@@ -2581,6 +2590,7 @@
 				844A484D1E9F657B0002829A /* WZVariousCollectionView.m in Sources */,
 				84514D291E9DCE7A00F07EF8 /* UIButton+JKBadge.m in Sources */,
 				84514D671E9DCE7A00F07EF8 /* UITableView+JKiOS7Style.m in Sources */,
+				402898111FAD6FA000F36DA3 /* WZMediaOperationView.m in Sources */,
 				84514D631E9DCE7A00F07EF8 /* UIScrollView+JKAddition.m in Sources */,
 				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
@@ -2667,9 +2677,11 @@
 				84514D381E9DCE7A00F07EF8 /* UIControl+JKSound.m in Sources */,
 				84514D791E9DCE7A00F07EF8 /* UIView+JKFrame.m in Sources */,
 				84514D321E9DCE7A00F07EF8 /* UIColor+JKHEX.m in Sources */,
+				4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */,
 				84514D1E1E9DCE7A00F07EF8 /* UIApplication+JKKeyboardFrame.m in Sources */,
 				84514D6C1E9DCE7A00F07EF8 /* UITextField+JKInputLimit.m in Sources */,
 				84514D021E9DCE7A00F07EF8 /* NSString+JKRemoveEmoji.m in Sources */,
+				402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */,
 				84514D331E9DCE7A00F07EF8 /* UIColor+JKModify.m in Sources */,
 				84514D751E9DCE7A00F07EF8 /* UIView+JKConstraints.m in Sources */,
 				84514CCA1E9DCE7A00F07EF8 /* NSData+JKEncrypt.m in Sources */,

@@ -7,13 +7,11 @@
 //
 
 #import "WZMediaController.h"
-#import "WZGPUImageStillCamera.h"///静态图 动态录像
+#import "WZMediaPreviewView.h"
+
 #import <AssetsLibrary/AssetsLibrary.h>
 
-typedef NS_ENUM(NSUInteger, WZMediaType) {
-    WZMediaTypeStillImage,
-    WZMediaTypeVideo,
-};
+
 
 
 @interface WZMediaController ()
@@ -22,8 +20,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 }
 
 @property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
-
-@property (nonatomic, strong) WZGPUImageStillCamera *camera;//静态图 以及录像
+@property (nonatomic, strong) GPUImageStillCamera *camera;//静态图 以及录像
 @property (nonatomic, assign) WZMediaType mediaType;
 
 @property (nonatomic, strong) GPUImageOutput<GPUImageInput> *filter;
@@ -152,7 +149,11 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
     //首次 高画质 背面配置
     AVCaptureSessionPreset preset = AVCaptureSessionPresetHigh;
     AVCaptureDevicePosition position = AVCaptureDevicePositionBack;
-    _camera = [[WZGPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
+    if (_mediaType == WZMediaTypeStillImage) {
+        
+    }
+    
+    _camera = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
 //    [_camera startCameraCapture];
 //    [_camera stopCameraCapture];
     
