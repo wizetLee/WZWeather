@@ -10,6 +10,7 @@
 
 #import <GPUImage/GPUImage.h>
 #import "WZGPUImagePreinstall.h"
+#import "GPUImageVideoCamera+assist.h"
 
 @class WZMediaPreviewView;
 
@@ -23,16 +24,21 @@
 
 @interface WZMediaPreviewView : UIView
 
+@property (nonatomic, weak) id<WZMediaPreviewViewProtocol> delegate;
 
 @property (nonatomic, strong) GPUImageVideoCamera *cameraCurrent;//当前的镜头
 @property (nonatomic, assign) WZMediaType mediaType;
 @property (nonatomic, strong) GPUImageView *presentView;
 
 - (void)pickMediaType:(WZMediaType)mediaType;
+- (void)setFlashType:(GPUImageCameraFlashType)type;
 
 - (void)launchCamera;
 - (void)pauseCamera;
 - (void)stopCamera;
+
+- (void)setCropValue:(CGFloat)value;
+- (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler;
 
 
 

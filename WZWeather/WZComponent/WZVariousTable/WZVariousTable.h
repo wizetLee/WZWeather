@@ -13,7 +13,7 @@
 @class WZVariousTable;
 
 /**
- *  section == 1 的情况   多sections在其子类
+ *  section == 1 的情况   多sections情况在其子类
  */
 @interface WZVariousTable : UITableView
 

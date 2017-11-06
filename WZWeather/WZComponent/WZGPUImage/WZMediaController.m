@@ -8,29 +8,23 @@
 
 #import "WZMediaController.h"
 #import "WZMediaPreviewView.h"
+#import "WZMediaOperationView.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
 
 
 
-@interface WZMediaController ()
+@interface WZMediaController ()<WZMediaPreviewViewProtocol, WZMediaOperationViewProtocol>
 {
     BOOL sysetmNavigationBarHiddenState;
 }
 
-@property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
-@property (nonatomic, strong) GPUImageStillCamera *camera;//静态图 以及录像
-@property (nonatomic, assign) WZMediaType mediaType;
 
-@property (nonatomic, strong) GPUImageOutput<GPUImageInput> *filter;
-
-@property (nonatomic, strong) GPUImageView *presentView;
-
-
+@property (nonatomic, strong) WZMediaPreviewView *mediaPreviewView;
+@property (nonatomic, strong) WZMediaOperationView *mediaOperationView;
 ///------------------随便搭的UI
-@property (nonatomic, strong) UIButton *closeBtn;
-@property (nonatomic, strong) UIButton *pickBtn;
+
 
 @end
 
@@ -94,155 +88,91 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)dealloc {
+    NSLog(@"%s",__func__);
 }
 
+#pragma mark - WZMediaPreviewViewProtocol
 
+
+#pragma mark - WZMediaOperationViewProtocol
+- (void)operationView:(WZMediaOperationView*)view closeBtnAction:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:true];
+    //清空数据
+    [_mediaPreviewView stopCamera];
+    
+}
+
+- (void)operationView:(WZMediaOperationView*)view pickBtnAction:(UIButton *)sender {
+    [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
+        if (image) {
+            NSLog(@"%@", NSStringFromCGSize(image.size));
+        }
+    }];
+}
+
+///配置类型时间
+- (void)operationView:(WZMediaOperationView*)view configType:(WZMediaConfigType)type {
+    /*
+     WZMediaConfigType_none                  = 0,
+     
+     WZMediaConfigType_canvas_1_multiply_1   = 11,//W multiply H
+     WZMediaConfigType_canvas_3_multiply_4   = 12,
+     WZMediaConfigType_canvas_9_multiply_16  = 13,
+     
+     WZMediaConfigType_flash_auto            = 21,
+     WZMediaConfigType_flash_off             = 22,
+     WZMediaConfigType_flash_on              = 23,
+     
+     WZMediaConfigType_countDown_10          = 31,//倒计时
+     WZMediaConfigType_countDown_3           = 32,
+     WZMediaConfigType_countDown_off         = 33,
+     */
+    switch (type) {
+        case WZMediaConfigType_canvas_1_multiply_1: {
+            //                切换到选中效果
+            [_mediaPreviewView setCropValue:0.5];
+        } break;
+        case WZMediaConfigType_canvas_3_multiply_4: {
+            [_mediaPreviewView setCropValue:0.75];
+        } break;
+        case WZMediaConfigType_canvas_9_multiply_16: {
+            [_mediaPreviewView setCropValue:1];
+        } break;
+        case WZMediaConfigType_flash_auto: {
+            [_mediaPreviewView setFlashType:GPUImageCameraFlashType_auto];
+        } break;
+        case WZMediaConfigType_flash_off: {
+            [_mediaPreviewView setFlashType:GPUImageCameraFlashType_off];
+        } break;
+        case WZMediaConfigType_flash_on: {
+            [_mediaPreviewView setFlashType:GPUImageCameraFlashType_on];
+        } break;
+        case WZMediaConfigType_countDown_10: {
+            
+        } break;
+        case WZMediaConfigType_countDown_3: {
+            
+        } break;
+        case WZMediaConfigType_countDown_off: {
+            
+        } break;
+            
+        default:
+            break;
+    }
+}
 #pragma mark - Public Method
 - (void)createViews {
     //适配iOS 11
+    _mediaPreviewView = [[WZMediaPreviewView alloc] initWithFrame:self.view.bounds];
+    _mediaPreviewView.delegate = self;
+    [self.view addSubview:_mediaPreviewView];
+//    [_mediaPreviewView launchCamera];//启动
     
-    CGFloat topH = 0.0, bottomH = 0.0;
-    if (@available(iOS 11.0, *)) {
-        if (MACRO_SYSTEM_IS_IPHONE_X) {
-            topH = 24.0;
-            bottomH = 34.0;
-        }
-    }
-    _presentView = [[GPUImageView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:_presentView];
-    [self assembleStillImage];
-    
-    _closeBtn = [[UIButton alloc] init];
-    _closeBtn.frame = CGRectMake(0.0, topH, 44.0 * 2, 44.0);
-    [_closeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
-    _closeBtn.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview:_closeBtn];
-    [_closeBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    _pickBtn = [[UIButton alloc] init];
-    _pickBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - bottomH - 44.0, 44.0 * 2, 44.0);
-    _pickBtn.center = CGPointMake(MACRO_FLOAT_SCREEN_WIDTH / 2.0, _pickBtn.center.y);
-    [_pickBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_pickBtn setTitle:@"拍照" forState:UIControlStateNormal];
-    _pickBtn.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview:_pickBtn];
-    [_pickBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-}
-
-- (void)clickedBtn:(UIButton *)sender {
-    if (sender == _closeBtn) {
-        [_camera stopCameraCapture];
-        [self.navigationController popViewControllerAnimated:true];
-    } else if (sender == _pickBtn) {
-      
-    }
-}
-
-#pragma mark -
-///切换为相机
-- (void)assembleStillImage {
-    _mediaType = WZMediaTypeStillImage;
-    //首次 高画质 背面配置
-    AVCaptureSessionPreset preset = AVCaptureSessionPresetHigh;
-    AVCaptureDevicePosition position = AVCaptureDevicePositionBack;
-    if (_mediaType == WZMediaTypeStillImage) {
-        
-    }
-    
-    _camera = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
-//    [_camera startCameraCapture];
-//    [_camera stopCameraCapture];
-    
-    _camera.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
-    ///前后摄像头镜像配置
-    _camera.horizontallyMirrorFrontFacingCamera = false;
-    _camera.horizontallyMirrorRearFacingCamera = false;
-    
-    _filter = [[GPUImageSepiaFilter alloc] init];//褐色滤镜;
-    
-    GPUImageContrastFilter *f = [[GPUImageContrastFilter alloc] init];
-    
-    
-    ///
-//    NSString *pathToMovie = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Movie.m4v"];
-//    unlink([pathToMovie UTF8String]); // If a file already exists, AVAssetWriter won't let you record new frames, so delete the old movie
-//    NSURL *movieURL = [NSURL fileURLWithPath:pathToMovie];
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:movieURL.path]) {
-//        [[NSFileManager defaultManager] removeItemAtURL:movieURL error: nil];
-//    }
-//    CGSize outputSize = CGSizeMake(480.0, 640.0);
-//    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:outputSize];
-//    _movieWriter.encodingLiveVideo = true;
-//
-//    [_camera addTarget:_filter];//成链
-//    [_filter addTarget:_movieWriter];
-//    [_filter addTarget:_presentView];
-//
-//    //开始录像
-    
-//    [_camera addTarget:_presentView];//成链
-    [_camera addTarget:_filter];//成链
-    [_filter addTarget:f];
-    [f addTarget:_presentView];
-    [_camera startCameraCapture];
-    
-    ///延迟0.5s
-//    double delayToStartRecording = 0.5;
-//    dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, delayToStartRecording * NSEC_PER_SEC);
-//    dispatch_after(startTime, dispatch_get_main_queue(), ^(void){
-//        NSLog(@"Start recording");
-//
-//        _camera.audioEncodingTarget = _movieWriter;
-//        [_movieWriter startRecording];
-//
-//        //        NSError *error = nil;
-//        //        if (![videoCamera.inputCamera lockForConfiguration:&error])
-//        //        {
-//        //            NSLog(@"Error locking for configuration: %@", error);
-//        //        }
-//        //        [videoCamera.inputCamera setTorchMode:AVCaptureTorchModeOn];
-//        //        [videoCamera.inputCamera unlockForConfiguration];
-//
-//        double delayInSeconds = 10.0;
-//        dispatch_time_t stopTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//        dispatch_after(stopTime, dispatch_get_main_queue(), ^(void){
-//
-//            [_filter removeTarget:_movieWriter];
-//            _camera.audioEncodingTarget = nil;
-//            [_movieWriter finishRecording];
-//            NSLog(@"Movie completed");
-//
-//            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-//            if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:movieURL])
-//            {
-//                [library writeVideoAtPathToSavedPhotosAlbum:movieURL completionBlock:^(NSURL *assetURL, NSError *error)
-//                 {
-//                     dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                         if (error) {
-//                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Video Saving Failed"
-//                                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                             [alert show];
-//                         } else {
-//                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
-//                                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                             [alert show];
-//                         }
-//                     });
-//                 }];
-//            }
-//        });
-//    });
-}
-                       
-//切换为视频模式
-- (void)assembleVideo {
-    _mediaType = WZMediaTypeVideo;
-    
+    _mediaOperationView = [[WZMediaOperationView alloc] initWithFrame:_mediaPreviewView.bounds];
+    _mediaOperationView.delegate = self;
+    [self.view addSubview:_mediaOperationView];
 }
 
 

@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, WZMediaType) {
-    WZMediaTypeStillImage,
-    WZMediaTypeVideo,
+    WZMediaTypeStillImage          = 0,
+    WZMediaTypeVideo               = 1,
 };
 
 @interface WZGPUImagePreinstall : NSObject

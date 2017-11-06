@@ -27,24 +27,28 @@
 //for code
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                 action:@selector(longPress:)];
-        _gesture.minimumPressDuration = 0.5f;
-        [self addGestureRecognizer:_gesture];
-     
 //        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
 
-- (void)longPressed {
-     NSLog(@"被长按了:%@",[self class]);
+- (void)longPressedUseable:(BOOL)boolean {
+    if (boolean) {
+        if (_gesture) {
+            _gesture.enabled = true;
+        } else {
+            _gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                     action:@selector(longPress:)];
+            _gesture.minimumPressDuration = 0.5f;
+            [self addGestureRecognizer:_gesture];
+        }
+    } else {
+        _gesture.enabled = false;
+    }
 }
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPress {
-    if (longPress.state == UIGestureRecognizerStateBegan) {
-        [self longPressed];
-    }
+    
 }
 
 - (void)awakeFromNib {

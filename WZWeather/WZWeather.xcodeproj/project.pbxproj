@@ -255,6 +255,11 @@
 		84514D8D1E9DCE7A00F07EF8 /* UIWebVIew+JKSwipeGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CB61E9DCE7A00F07EF8 /* UIWebVIew+JKSwipeGesture.m */; };
 		84514D8E1E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CB81E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m */; };
 		84514D8F1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514CBB1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m */; };
+		8453F5DB1FB0372100E0ABAE /* WZMediaConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8453F5DA1FB0372100E0ABAE /* WZMediaConfigView.m */; };
+		8453F5DE1FB03AC700E0ABAE /* WZMediaConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8453F5DD1FB03AC700E0ABAE /* WZMediaConfigCell.m */; };
+		8453F5E11FB03FAE00E0ABAE /* WZMediaConfigObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8453F5E01FB03FAE00E0ABAE /* WZMediaConfigObject.m */; };
+		8453F5E41FB05A6700E0ABAE /* GPUImageVideoCamera+assist.m in Sources */ = {isa = PBXBuildFile; fileRef = 8453F5E31FB05A6700E0ABAE /* GPUImageVideoCamera+assist.m */; };
+		8453F5E71FB071D100E0ABAE /* WZMediaEffectShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8453F5E61FB071D100E0ABAE /* WZMediaEffectShow.m */; };
 		845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */; };
 		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
 		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
@@ -823,6 +828,16 @@
 		84514CB81E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+JKWebStorage.m"; sourceTree = "<group>"; };
 		84514CBA1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+JKHierarchy.h"; sourceTree = "<group>"; };
 		84514CBB1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+JKHierarchy.m"; sourceTree = "<group>"; };
+		8453F5D91FB0372100E0ABAE /* WZMediaConfigView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaConfigView.h; sourceTree = "<group>"; };
+		8453F5DA1FB0372100E0ABAE /* WZMediaConfigView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaConfigView.m; sourceTree = "<group>"; };
+		8453F5DC1FB03AC700E0ABAE /* WZMediaConfigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaConfigCell.h; sourceTree = "<group>"; };
+		8453F5DD1FB03AC700E0ABAE /* WZMediaConfigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaConfigCell.m; sourceTree = "<group>"; };
+		8453F5DF1FB03FAE00E0ABAE /* WZMediaConfigObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaConfigObject.h; sourceTree = "<group>"; };
+		8453F5E01FB03FAE00E0ABAE /* WZMediaConfigObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaConfigObject.m; sourceTree = "<group>"; };
+		8453F5E21FB05A6700E0ABAE /* GPUImageVideoCamera+assist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GPUImageVideoCamera+assist.h"; sourceTree = "<group>"; };
+		8453F5E31FB05A6700E0ABAE /* GPUImageVideoCamera+assist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "GPUImageVideoCamera+assist.m"; sourceTree = "<group>"; };
+		8453F5E51FB071D100E0ABAE /* WZMediaEffectShow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaEffectShow.h; sourceTree = "<group>"; };
+		8453F5E61FB071D100E0ABAE /* WZMediaEffectShow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaEffectShow.m; sourceTree = "<group>"; };
 		845BD8F11EB077F8004AC354 /* WZAFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -2263,10 +2278,20 @@
 				848633301F95CCD20086C96E /* WZMediaController.m */,
 				402898121FAD6FB700F36DA3 /* WZMediaPreviewView.h */,
 				402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */,
+				8453F5E21FB05A6700E0ABAE /* GPUImageVideoCamera+assist.h */,
+				8453F5E31FB05A6700E0ABAE /* GPUImageVideoCamera+assist.m */,
+				8453F5E51FB071D100E0ABAE /* WZMediaEffectShow.h */,
+				8453F5E61FB071D100E0ABAE /* WZMediaEffectShow.m */,
 				4028980F1FAD6FA000F36DA3 /* WZMediaOperationView.h */,
 				402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */,
 				4000982D1FADCD9F00D2A248 /* WZGPUImagePreinstall.h */,
 				4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */,
+				8453F5D91FB0372100E0ABAE /* WZMediaConfigView.h */,
+				8453F5DA1FB0372100E0ABAE /* WZMediaConfigView.m */,
+				8453F5DC1FB03AC700E0ABAE /* WZMediaConfigCell.h */,
+				8453F5DD1FB03AC700E0ABAE /* WZMediaConfigCell.m */,
+				8453F5DF1FB03FAE00E0ABAE /* WZMediaConfigObject.h */,
+				8453F5E01FB03FAE00E0ABAE /* WZMediaConfigObject.m */,
 			);
 			path = WZGPUImage;
 			sourceTree = "<group>";
@@ -2531,6 +2556,7 @@
 				84514CE41E9DCE7A00F07EF8 /* NSNotificationCenter+JKMainThread.m in Sources */,
 				84514D5E1E9DCE7A00F07EF8 /* UINavigationItem+JKMargin.m in Sources */,
 				84514D771E9DCE7A00F07EF8 /* UIView+JKDraggable.m in Sources */,
+				8453F5DE1FB03AC700E0ABAE /* WZMediaConfigCell.m in Sources */,
 				84514D7B1E9DCE7A00F07EF8 /* UIView+JKRecursion.m in Sources */,
 				84514D2C1E9DCE7A00F07EF8 /* UIButton+JKImagePosition.m in Sources */,
 				84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */,
@@ -2607,6 +2633,7 @@
 				84514D7A1E9DCE7A00F07EF8 /* UIView+JKNib.m in Sources */,
 				84514CC71E9DCE7A00F07EF8 /* NSData+JKAPNSToken.m in Sources */,
 				84514CDE1E9DCE7A00F07EF8 /* NSFileHandle+JKReadLine.m in Sources */,
+				8453F5DB1FB0372100E0ABAE /* WZMediaConfigView.m in Sources */,
 				84514CFA1E9DCE7A00F07EF8 /* NSString+JKEmoji.m in Sources */,
 				84514D601E9DCE7A00F07EF8 /* UIResponder+JKChain.m in Sources */,
 				84514D761E9DCE7A00F07EF8 /* UIView+JKCustomBorder.m in Sources */,
@@ -2641,6 +2668,7 @@
 				845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */,
 				84514D0D1E9DCE7A00F07EF8 /* NSURL+JKQueryDictionary.m in Sources */,
 				40287B351F09269900D9383B /* UIView+WZMinistrant.m in Sources */,
+				8453F5E41FB05A6700E0ABAE /* GPUImageVideoCamera+assist.m in Sources */,
 				846920E01E63D6920048BBDC /* MainViewController.m in Sources */,
 				84514D031E9DCE7A00F07EF8 /* NSString+JKScore.m in Sources */,
 				8402EB251ECD64A40030CCE1 /* WZVariousBaseCell.m in Sources */,
@@ -2675,6 +2703,7 @@
 				84514CBD1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.m in Sources */,
 				84514CDB1E9DCE7A00F07EF8 /* NSDictionary+JKURL.m in Sources */,
 				84514D381E9DCE7A00F07EF8 /* UIControl+JKSound.m in Sources */,
+				8453F5E11FB03FAE00E0ABAE /* WZMediaConfigObject.m in Sources */,
 				84514D791E9DCE7A00F07EF8 /* UIView+JKFrame.m in Sources */,
 				84514D321E9DCE7A00F07EF8 /* UIColor+JKHEX.m in Sources */,
 				4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */,
@@ -2704,6 +2733,7 @@
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
+				8453F5E71FB071D100E0ABAE /* WZMediaEffectShow.m in Sources */,
 				84514D5C1E9DCE7A00F07EF8 /* UINavigationItem+JKLoading.m in Sources */,
 				84514D661E9DCE7A00F07EF8 /* UISplitViewController+JKQuickAccess.m in Sources */,
 				84514D651E9DCE7A00F07EF8 /* UISearchBar+JKBlocks.m in Sources */,

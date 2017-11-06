@@ -75,6 +75,7 @@
         ///以frambufferSize 以及 纹理环绕等配置作为缓存的键
         NSString *lookupHash = [self hashForSize:framebufferSize textureOptions:textureOptions onlyTexture:onlyTexture];
         NSNumber *numberOfMatchingTexturesInCache = [framebufferTypeCounts objectForKey:lookupHash];
+       
         NSInteger numberOfMatchingTextures = [numberOfMatchingTexturesInCache integerValue];
         
         if ([numberOfMatchingTexturesInCache integerValue] < 1)

@@ -26,8 +26,10 @@
 @property (nonatomic, strong) UILongPressGestureRecognizer *gesture;
 
 + (CGFloat)heightForData:(WZVariousBaseObject *)obj;
-- (void)singleClicked;
-- (void)longPressed;
-- (void)isLastElement:(BOOL)boolean;
 
+- (void)isLastElement:(BOOL)boolean;
+- (void)singleClicked;
+
+- (void)longPressedUseable:(BOOL)boolean;
+- (void)longPress:(UILongPressGestureRecognizer *)longPress;
 @end
