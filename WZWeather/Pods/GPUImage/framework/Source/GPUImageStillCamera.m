@@ -133,8 +133,7 @@ void GPUImageCreateResizedSampleBuffer(CVPixelBufferRef cameraFrame, CGSize fina
     [super removeInputsAndOutputs];
 }
 
-#pragma mark -
-#pragma mark Photography controls
+ #pragma mark Photography controls
 
 - (void)capturePhotoAsSampleBufferWithCompletionHandler:(void (^)(CMSampleBufferRef imageSampleBuffer, NSError *error))block
 {

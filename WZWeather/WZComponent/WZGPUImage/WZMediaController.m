@@ -2,7 +2,7 @@
 //  WZMediaController.m
 //  WZWeather
 //
-//  Created by admin on 17/10/17.
+//  Created by Wizet on 17/10/17.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -104,6 +104,7 @@
 }
 
 - (void)operationView:(WZMediaOperationView*)view pickBtnAction:(UIButton *)sender {
+#warning 连拍会产生崩溃
     [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
         if (image) {
             NSLog(@"%@", NSStringFromCGSize(image.size));
@@ -162,13 +163,14 @@
             break;
     }
 }
+
 #pragma mark - Public Method
 - (void)createViews {
     //适配iOS 11
     _mediaPreviewView = [[WZMediaPreviewView alloc] initWithFrame:self.view.bounds];
     _mediaPreviewView.delegate = self;
     [self.view addSubview:_mediaPreviewView];
-//    [_mediaPreviewView launchCamera];//启动
+    [_mediaPreviewView launchCamera];//启动
     
     _mediaOperationView = [[WZMediaOperationView alloc] initWithFrame:_mediaPreviewView.bounds];
     _mediaOperationView.delegate = self;

@@ -2,7 +2,7 @@
 //  WZMediaConfigView.h
 //  WZWeather
 //
-//  Created by admin on 6/11/17.
+//  Created by Wizet on 6/11/17.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

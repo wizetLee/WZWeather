@@ -7,17 +7,21 @@
 //
 
 #import "WZMediaOperationView.h"
+#import "WZMediaEffectShow.h"
+#import "WZCameraAssist.h"
 
+@interface WZMediaOperationView ()<WZMediaConfigViewProtocol, WZMediaEffectShowProtocol>
 
-@interface WZMediaOperationView ()<WZMediaConfigViewProtocol>
-
-@property (nonatomic, strong) WZMediaConfigView *configView;
+@property (nonatomic, strong) WZMediaConfigView *configView;//左手势
+@property (nonatomic, strong) WZMediaEffectShow *effectView;//右手势
 @property (nonatomic, strong) UIButton *closeBtn;
 @property (nonatomic, strong) UIButton *pickBtn;
 
 ///通过enable 判断是否在配置中
 @property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePan;
+@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePanR;//右边
 
+@property (nonatomic, strong) AVAudioPlayer *timeMusicPlayer;//倒计时
 @end
 
 @implementation WZMediaOperationView
@@ -46,6 +50,8 @@
         }
     }
     
+    [self addSubview:self.effectView];
+    
     _closeBtn = [[UIButton alloc] init];
     _closeBtn.frame = CGRectMake(0.0, topH, 44.0 * 2, 44.0);
     [_closeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -66,13 +72,18 @@
     
     _edgePan = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
     _edgePan.edges = UIRectEdgeLeft;
+    _edgePanR = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
+    _edgePan.edges = UIRectEdgeLeft;//有坑...
+    _edgePanR.edges = UIRectEdgeRight;
     [self addGestureRecognizer:_edgePan];
+    [self addGestureRecognizer:_edgePanR];
     
     
     [self addSubview:self.configView];
-   
+    
 }
 
+///
 - (void)clickedBtn:(UIButton *)sender {
     if (sender == _closeBtn) {
         if ([_delegate respondsToSelector:@selector(operationView:closeBtnAction:)]) {
@@ -85,33 +96,52 @@
     }
 }
 
-
+///边缘手势
 - (void)screenEdgePan:(UIScreenEdgePanGestureRecognizer *)pan {
-  
-    CGFloat restrictCritical = MACRO_FLOAT_SCREEN_WIDTH / 2.0;
-    CGPoint curPoint = [pan locationInView:self];
-    _configView.maxX  = curPoint.x;
-    if (pan.state == UIGestureRecognizerStateBegan) {
-        
-    } else if (pan.state == UIGestureRecognizerStateChanged) {
-        
-    } else if (pan.state == UIGestureRecognizerStateEnded
-               || pan.state == UIGestureRecognizerStateCancelled
-               || pan.state == UIGestureRecognizerStateFailed) {
-        [UIView animateWithDuration:0.25 animations:^{
-            if (curPoint.x > restrictCritical) {
-                _configView.maxX = MACRO_FLOAT_SCREEN_WIDTH;
-   
-                _edgePan.enabled = false;
+    if (pan.edges == UIRectEdgeLeft) {
+        CGFloat restrictCritical = MACRO_FLOAT_SCREEN_WIDTH / 2.0;
+        CGPoint curPoint = [pan locationInView:self];
+        _configView.maxX  = curPoint.x;
+        if (pan.state == UIGestureRecognizerStateEnded
+                   || pan.state == UIGestureRecognizerStateCancelled
+                   || pan.state == UIGestureRecognizerStateFailed) {
+            [UIView animateWithDuration:0.25 animations:^{
+                if (curPoint.x > restrictCritical) {
+                    _configView.maxX = MACRO_FLOAT_SCREEN_WIDTH;
+                    _edgePan.enabled = false;
+                    _edgePanR.enabled = false;
+                } else {
+                    _configView.maxX = 0.0;
+                }
+            }];
+        }
+    } else if (pan.edges == UIRectEdgeRight) {
+        CGFloat w = 80.0;
+        CGPoint curPoint = [pan locationInView:self];
+            CGFloat scale = ((curPoint.x - (MACRO_FLOAT_SCREEN_WIDTH - w)) / w);
+            if (scale <= 0) {
+                [_effectView showPercent:1];
             } else {
-                _configView.maxX = 0.0;
+                [_effectView showPercent:1 - scale];
             }
-        }];
+       if (pan.state == UIGestureRecognizerStateEnded
+                   || pan.state == UIGestureRecognizerStateCancelled
+                   || pan.state == UIGestureRecognizerStateFailed) {
+           [UIView animateWithDuration:0.25 animations:^{
+               if (self.alpha > 0.5) {
+                   [_effectView showPercent:1];
+                   pan.enabled = false;
+               } else {
+                   [_effectView showPercent:0];
+               }
+           }];
+        }
     }
 }
 
 - (void)tap:(UITapGestureRecognizer *)tap {
     _edgePan.enabled = true;
+    _edgePanR.enabled = true;
     [UIView animateWithDuration:0.25 animations:^{
         _configView.maxX = 0.0;
     }];
@@ -126,9 +156,26 @@
         _configView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.25];
         _configView.maxX = 0;
         _configView.delegate = self;
-        
     }
     return _configView;
+}
+
+- (WZMediaEffectShow *)effectView {
+    if (!_effectView) {
+        _effectView = [[WZMediaEffectShow alloc] initWithFrame:self.bounds];
+        _effectView.backgroundColor = [UIColor clearColor];
+        _effectView.delegate = self;
+    }
+    return _effectView;
+}
+
+- (AVAudioPlayer *)timeMusicPlayer {
+    if (!_timeMusicPlayer) {
+        NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"tickta" ofType:@"wav"];       //创建音乐文件路径,可以选其他格式
+        NSURL *musicURL = [[NSURL alloc] initFileURLWithPath:musicFilePath];
+        _timeMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL error:nil];
+    }
+    return _timeMusicPlayer;
 }
 
 #pragma mark - WZMediaConfigViewProtocol
@@ -136,5 +183,12 @@
     if ([_delegate respondsToSelector:@selector(operationView:configType:)]) {
         [_delegate operationView:self configType:type];
     }
+}
+
+#pragma mark - WZMediaEffectShowProtocol
+
+
+- (void)mediaEffectShowDidShrinked {
+    _edgePanR.enabled = true;
 }
 @end

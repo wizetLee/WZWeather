@@ -10,7 +10,7 @@
 
 //This small extension allows you to easly manage CH1903 (swiss coordinate system) within the CLLocation object.
 //All the calculation are based on the official swiss federal informations:
-//http://www.swisstopo.admin.ch/internet/swisstopo/de/home/products/software/products/skripts.html
+//http://www.swisstopo.Wizet.ch/internet/swisstopo/de/home/products/software/products/skripts.html
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>

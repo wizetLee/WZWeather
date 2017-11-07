@@ -2,7 +2,7 @@
 //  GPUImageVideoCamera+assist.m
 //  WZWeather
 //
-//  Created by admin on 6/11/17.
+//  Created by Wizet on 6/11/17.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 #import <CoreMotion/CoreMotion.h>
@@ -84,14 +84,6 @@
     objc_setAssociatedObject(self, @selector(setMotionManager:), motionManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(void)setAssistDelegate:(id<GPUImageVideoCameraAssistProtocol>)assistDelegate {
-    objc_setAssociatedObject(self, @selector(setAssistDelegate:), assistDelegate, OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (id<GPUImageVideoCameraAssistProtocol>)assistDelegate {
-   return objc_getAssociatedObject(self, @selector(setAssistDelegate:));
-}
-
 ///使用陀螺仪检测设备方向
 - (void)addCMMotionToMobile {
     self.motionManager = [[CMMotionManager alloc] init];
@@ -103,7 +95,7 @@
         
         [ self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
             CMAcceleration acceleration = weakSelf.motionManager.accelerometerData.acceleration;
-            if ([self.assistDelegate respondsToSelector:@selector(videoCamera:currentOrientation:)]) {
+           
                 UIDeviceOrientation orientation = UIDeviceOrientationPortrait;
                 if (acceleration.x < -0.8 && (0.5>acceleration.y >-0.8)) {
                     orientation = UIDeviceOrientationLandscapeLeft;
@@ -118,10 +110,71 @@
                     orientation = UIDeviceOrientationPortrait;
                     //正面
                 }
-                [self.assistDelegate videoCamera:self currentOrientation:orientation];
-            }
         }];
     }
 }
+
+///自动对焦 以及 自动曝光、曝光点自定义
+- (void)autoFocusAndExposureAtPoint:(CGPoint)point
+{
+    AVCaptureDevice *tmpDevice = self.inputCamera;
+    if ([tmpDevice isFocusPointOfInterestSupported]
+        && [tmpDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+        NSError *error;
+        if ([tmpDevice lockForConfiguration:&error]) {
+            [tmpDevice setFocusPointOfInterest:point];
+            [tmpDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+            [tmpDevice unlockForConfiguration];
+        } else {
+            NSLog(@"自动对焦错误：%@",[error description]);
+        }
+    }
+    if ([tmpDevice isExposurePointOfInterestSupported]
+        && [tmpDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+        NSError *error;
+        if ([tmpDevice lockForConfiguration:&error]) {
+            [tmpDevice setExposurePointOfInterest:point];
+            [tmpDevice setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+            [tmpDevice unlockForConfiguration];
+        } else {
+            NSLog(@"自动曝光错误：%@",[error description]);
+        }
+    }
+}
+
+//曝光量自动变更、曝光点自定义 setExposurePointOfInterest ： A value of (0,0) indicates that the camera should adjust exposure based on the top left corner of the image, while a value of (1,1) indicates that it should adjust exposure based on the bottom right corner.
+- (void)exposureAtPoint:(CGPoint)point {
+    AVCaptureDevice *tmpDevice = self.inputCamera;
+    if ([tmpDevice isExposurePointOfInterestSupported]
+        && [tmpDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+        NSError *error;
+        if ([tmpDevice lockForConfiguration:&error]) {
+            [tmpDevice setExposurePointOfInterest:point];
+            [tmpDevice setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+            [tmpDevice unlockForConfiguration];
+        } else {
+            NSLog(@"定点曝光错误：%@",[error description]);
+        }
+    }
+}
+
+//定点对焦 setFocusPointOfInterest ： A value of (0,0) indicates that the camera should focus on the top left corner of the image, while a value of (1,1) indicates that it should focus on the bottom right.
+- (void)continuousFocusAtPoint:(CGPoint)point {
+    AVCaptureDevice *tmpDevice = self.inputCamera;
+    if ([tmpDevice isFocusPointOfInterestSupported]
+        && [tmpDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+        NSError *error;
+        if ([tmpDevice lockForConfiguration:&error]) {
+            [tmpDevice setFocusPointOfInterest:point];
+            [tmpDevice setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+            // [tmpDevice setWhiteBalanceMode:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance];
+            [tmpDevice unlockForConfiguration];
+        } else {
+          
+            NSLog(@"定点对焦错误：%@",[error description]);
+        }
+    }
+}
+
 
 @end

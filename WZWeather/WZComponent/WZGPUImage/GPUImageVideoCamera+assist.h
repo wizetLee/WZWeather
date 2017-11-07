@@ -2,7 +2,7 @@
 //  GPUImageVideoCamera+assist.h
 //  WZWeather
 //
-//  Created by admin on 6/11/17.
+//  Created by Wizet on 6/11/17.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
@@ -11,7 +11,6 @@
 
 @protocol GPUImageVideoCameraAssistProtocol<NSObject>
 
-- (void)videoCamera:(GPUImageVideoCamera *)camera currentOrientation:(UIDeviceOrientation *)orientation;
 
 @end
 
@@ -29,11 +28,18 @@ typedef NS_ENUM(NSUInteger, GPUImageCameraTorchType) {
 
 @interface GPUImageVideoCamera (assist)
 
-@property (nonatomic, weak) id<GPUImageVideoCameraAssistProtocol> assistDelegate;
 
 - (void)setFlashType:(GPUImageCameraFlashType)type;
 - (void)setTorchType:(GPUImageCameraTorchType)type;
-///使用陀螺仪检测设备方向
+
+//(0,0) ~ (1,1)
+- (void)autoFocusAndExposureAtPoint:(CGPoint)point;
+- (void)exposureAtPoint:(CGPoint)point;
+- (void)continuousFocusAtPoint:(CGPoint)point;
+
+
+
+///使用陀螺仪检测设备方向   建议使用一个全局接收通知
 - (void)addCMMotionToMobile;
 
 

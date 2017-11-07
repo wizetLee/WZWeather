@@ -35,6 +35,7 @@
 
 - (void)launchCamera;
 - (void)pauseCamera;
+- (void)resumeCamera;
 - (void)stopCamera;
 
 - (void)setCropValue:(CGFloat)value;

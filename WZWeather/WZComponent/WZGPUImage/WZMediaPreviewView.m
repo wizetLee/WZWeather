@@ -17,6 +17,7 @@
 @property (nonatomic, strong) GPUImageCropFilter *cropFilter;
 
 
+
 @end
 
 @implementation WZMediaPreviewView
@@ -58,7 +59,6 @@
     
     //    [_camera stopCameraCapture];
     [_cameraCurrent addCMMotionToMobile];
-    _cameraCurrent.assistDelegate = self;
     _cameraCurrent.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
     ///前后摄像头镜像配置
     _cameraCurrent.horizontallyMirrorFrontFacingCamera = false;
@@ -124,7 +124,11 @@
 }
 
 - (void)pauseCamera {
-    [_cameraCurrent stopCameraCapture];
+    [_cameraCurrent pauseCameraCapture];
+}
+
+- (void)resumeCamera {
+    [_cameraCurrent resumeCameraCapture];
 }
 
 - (void)stopCamera {
