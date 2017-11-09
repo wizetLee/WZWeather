@@ -18,12 +18,14 @@
 @protocol WZMediaEffectShowProtocol <NSObject>
 
 - (void)mediaEffectShowDidShrinked;
+- (void)mediaEffectShow:(WZMediaEffectShow *)view didSelectedFilter:(GPUImageFilter *)filter;
 
 @end
 
 @interface WZMediaEffectShow : UIView
 
-@property (nonatomic, weak) id<WZMediaEffectShowProtocol> delegate;
+@property (nonatomic,  weak) id<WZMediaEffectShowProtocol> delegate;
+@property (nonatomic,  weak) GPUImageOutput *inputSource;
 
 - (void)showPercent:(CGFloat)percent;
 - (void)caculateStatus;

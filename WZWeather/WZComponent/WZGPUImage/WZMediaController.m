@@ -114,6 +114,8 @@
 
 ///配置类型时间
 - (void)operationView:(WZMediaOperationView*)view configType:(WZMediaConfigType)type {
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
     /*
      WZMediaConfigType_none                  = 0,
      
@@ -132,10 +134,15 @@
     switch (type) {
         case WZMediaConfigType_canvas_1_multiply_1: {
             //                切换到选中效果
-            [_mediaPreviewView setCropValue:0.5];
+            CGFloat targetH = screenW / 1.0 * 1.0;//显示在屏幕的控件高度
+            CGFloat rateH = targetH / screenH;
+            [_mediaPreviewView setCropValue:rateH];
         } break;
         case WZMediaConfigType_canvas_3_multiply_4: {
-            [_mediaPreviewView setCropValue:0.75];
+            CGFloat targetH = screenW / 3.0 * 4.0;//3 ： 4
+            CGFloat rateH = targetH / screenH;
+            [_mediaPreviewView setCropValue:rateH];
+            
         } break;
         case WZMediaConfigType_canvas_9_multiply_16: {
             [_mediaPreviewView setCropValue:1];
@@ -164,6 +171,11 @@
     }
 }
 
+- (void)operationView:(WZMediaOperationView*)view didSelectedFilter:(GPUImageFilter *)filter {
+    
+    [_mediaPreviewView insertRenderFilter:filter];
+}
+
 #pragma mark - Public Method
 - (void)createViews {
     //适配iOS 11
@@ -175,6 +187,8 @@
     _mediaOperationView = [[WZMediaOperationView alloc] initWithFrame:_mediaPreviewView.bounds];
     _mediaOperationView.delegate = self;
     [self.view addSubview:_mediaOperationView];
+    [_mediaOperationView setSource:_mediaPreviewView.cropFilter];
+    
 }
 
 

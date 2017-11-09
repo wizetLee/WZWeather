@@ -28,7 +28,13 @@
 
 @property (nonatomic, strong) GPUImageVideoCamera *cameraCurrent;//当前的镜头
 @property (nonatomic, assign) WZMediaType mediaType;
+
+//内置滤镜 按照链顺序
+@property (nonatomic, strong) GPUImageFilter *scaleFilter;
+@property (nonatomic, strong) GPUImageCropFilter *cropFilter;//
+@property (nonatomic, strong) GPUImageFilter *insertFilter;
 @property (nonatomic, strong) GPUImageView *presentView;
+
 
 - (void)pickMediaType:(WZMediaType)mediaType;
 - (void)setFlashType:(GPUImageCameraFlashType)type;
@@ -38,6 +44,7 @@
 - (void)resumeCamera;
 - (void)stopCamera;
 
+- (void)insertRenderFilter:(GPUImageFilter *)filter;//插入滤镜
 - (void)setCropValue:(CGFloat)value;
 - (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler;
 

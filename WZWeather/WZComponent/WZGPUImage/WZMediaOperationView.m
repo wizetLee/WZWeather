@@ -169,6 +169,10 @@
     return _effectView;
 }
 
+- (void)setSource:(GPUImageOutput *)source {
+    self.effectView.inputSource = source;
+}
+
 - (AVAudioPlayer *)timeMusicPlayer {
     if (!_timeMusicPlayer) {
         NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"tickta" ofType:@"wav"];       //创建音乐文件路径,可以选其他格式
@@ -186,9 +190,13 @@
 }
 
 #pragma mark - WZMediaEffectShowProtocol
-
-
 - (void)mediaEffectShowDidShrinked {
     _edgePanR.enabled = true;
+}
+//选中了滤镜
+- (void)mediaEffectShow:(WZMediaEffectShow *)view didSelectedFilter:(GPUImageFilter *)filter {
+    if ([_delegate respondsToSelector:@selector(operationView:didSelectedFilter:)]) {
+        [_delegate operationView:self didSelectedFilter:filter];
+    }
 }
 @end

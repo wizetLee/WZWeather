@@ -12,7 +12,10 @@ void GPUImageCreateResizedSampleBuffer(CVPixelBufferRef cameraFrame, CGSize fina
     // CVPixelBufferCreateWithPlanarBytes for YUV input
     
     CGSize originalSize = CGSizeMake(CVPixelBufferGetWidth(cameraFrame), CVPixelBufferGetHeight(cameraFrame));
-
+/**
+ https://zhuanlan.zhihu.com/p/24762605
+ 通过CVPixelBufferGetBaseAddressOfPlane可以得到每个平面的数据指针。在得到 Address之前需要调用CVPixelBufferLockBaseAddress，这说明CVPixelBufferRef的内部存储不仅是内存也可能是其它外部存储，比如现存，所以在访问前要lock下来实现地址映射，同时lock也保证了没有读写冲突。
+ */
     CVPixelBufferLockBaseAddress(cameraFrame, 0);
     GLubyte *sourceImageBytes =  CVPixelBufferGetBaseAddress(cameraFrame);
     CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, sourceImageBytes, CVPixelBufferGetBytesPerRow(cameraFrame) * originalSize.height, NULL);
