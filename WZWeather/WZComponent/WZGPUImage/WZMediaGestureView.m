@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIImageView *exposurePointer;     //曝光
 @property (nonatomic, assign) CGFloat zoomScale;
 
+
 @end
 
 @implementation WZMediaGestureView

@@ -49,6 +49,8 @@
 		844A485C1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A485B1E9F82A30002829A /* WZVariousCollectionSectionsBaseProvider.m */; };
 		844A485F1E9F9A620002829A /* WZVariousCollectionReusableContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 844A485E1E9F9A620002829A /* WZVariousCollectionReusableContent.m */; };
 		844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */; };
+		845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 845034E31FB59F0700D3A285 /* OICameraSwitchFilter.fsh */; };
+		845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 845034E41FB59F0700D3A285 /* OICameraSwitchFilter.vsh */; };
 		84514CBC1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514ACB1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m */; };
 		84514CBD1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514ACE1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.m */; };
 		84514CBE1E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84514AD01E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m */; };
@@ -413,6 +415,8 @@
 		844A485E1E9F9A620002829A /* WZVariousCollectionReusableContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionReusableContent.m; sourceTree = "<group>"; };
 		844F3BDC1EB9E698005E6ACF /* WZTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZTimeSuperviser.h; sourceTree = "<group>"; };
 		844F3BDD1EB9E698005E6ACF /* WZTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZTimeSuperviser.m; sourceTree = "<group>"; };
+		845034E31FB59F0700D3A285 /* OICameraSwitchFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OICameraSwitchFilter.fsh; sourceTree = "<group>"; };
+		845034E41FB59F0700D3A285 /* OICameraSwitchFilter.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OICameraSwitchFilter.vsh; sourceTree = "<group>"; };
 		84514ACA1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+JKExtensions.h"; sourceTree = "<group>"; };
 		84514ACB1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+JKExtensions.m"; sourceTree = "<group>"; };
 		84514ACD1E9DCE7A00F07EF8 /* NSManagedObject+JKDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+JKDictionary.h"; sourceTree = "<group>"; };
@@ -1140,6 +1144,15 @@
 				84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */,
 			);
 			path = WZTimeSuperviser;
+			sourceTree = "<group>";
+		};
+		845034E21FB59F0700D3A285 /* CustomTinter */ = {
+			isa = PBXGroup;
+			children = (
+				845034E31FB59F0700D3A285 /* OICameraSwitchFilter.fsh */,
+				845034E41FB59F0700D3A285 /* OICameraSwitchFilter.vsh */,
+			);
+			path = CustomTinter;
 			sourceTree = "<group>";
 		};
 		84514AC71E9DCE7A00F07EF8 /* JKCategories */ = {
@@ -2302,6 +2315,7 @@
 		8486332B1F95CA030086C96E /* WZGPUImage */ = {
 			isa = PBXGroup;
 			children = (
+				845034E21FB59F0700D3A285 /* CustomTinter */,
 				840A439E1FB18A6100F6D449 /* tickta.wav */,
 				840A439C1FB18A3A00F6D449 /* photoShutter2.caf */,
 				840A43A01FB18AFC00F6D449 /* WZCameraAssist.h */,
@@ -2483,8 +2497,10 @@
 			files = (
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
+				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
+				845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

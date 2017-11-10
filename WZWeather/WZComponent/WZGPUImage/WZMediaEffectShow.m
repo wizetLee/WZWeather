@@ -346,14 +346,14 @@
     GPUImageFilter *filter = dic[filterKey];
     cell.headlineLabel.text = headline;
     
-	cell.surfaceLayer.hidden = !(_selectedIndexPath == indexPath);
-    cell.dataSource = _dataSource;
-    ///透过一个低倍的滤镜
-    __weak typeof(self) weakSelf = self;
-    runSynchronouslyOnVideoProcessingQueue(^{
-        [weakSelf.inputSource addTarget:filter];
-        [cell setFilter:filter];
-    });
+//    cell.surfaceLayer.hidden = !(_selectedIndexPath == indexPath);
+//    cell.dataSource = _dataSource;
+//    ///透过一个低倍的滤镜
+//    __weak typeof(self) weakSelf = self;
+//    runSynchronouslyOnVideoProcessingQueue(^{
+//        [weakSelf.inputSource addTarget:filter];
+//        [cell setFilter:filter];
+//    });
    
     return cell;
 }

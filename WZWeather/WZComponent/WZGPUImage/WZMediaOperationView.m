@@ -9,6 +9,7 @@
 #import "WZMediaOperationView.h"
 #import "WZMediaEffectShow.h"
 #import "WZCameraAssist.h"
+#import "WZMediaGestureView.h"
 
 @interface WZMediaOperationView ()<WZMediaConfigViewProtocol, WZMediaEffectShowProtocol>
 
@@ -17,7 +18,7 @@
 @property (nonatomic, strong) UIButton *closeBtn;
 @property (nonatomic, strong) UIButton *pickBtn;
 
-///通过enable 判断是否在配置中
+///通过enable 判断是否在配置中`
 @property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePan;
 @property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePanR;//右边
 

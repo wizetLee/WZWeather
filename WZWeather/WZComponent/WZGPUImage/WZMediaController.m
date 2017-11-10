@@ -12,8 +12,10 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-
-
+/*
+ PS:
+     处理好渲染线程和主线程之间的关系，在渲染线程处理数据必要时需要加锁
+ */
 
 @interface WZMediaController ()<WZMediaPreviewViewProtocol, WZMediaOperationViewProtocol>
 {
