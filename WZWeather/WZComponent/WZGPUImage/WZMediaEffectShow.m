@@ -96,6 +96,7 @@
 @property (nonatomic,   weak) NSIndexPath *selectedIndexPath;
 @property (nonatomic,   weak) WZMediaEffectShowCell *cellP;
 @property (nonatomic, strong) UIPanGestureRecognizer *pan;
+@property (nonatomic, strong) UISlider *slider;
 
 @property (nonatomic, strong) UIView *bgView;
 
@@ -128,6 +129,11 @@
     
 
     [self addSubview:self.collection];
+    _slider = [[UISlider alloc] init];
+    _slider.hidden = true;
+    _slider.frame = CGRectMake(10.0, 100, [UIScreen mainScreen].bounds.size.width - _slider.width- 10.0, 88.0);
+    [self addSubview:_slider];
+    [_slider addTarget:self action:@selector(slider:) forControlEvents:UIControlEventValueChanged];
     self.alpha = 0.0;
 }
 
@@ -138,12 +144,21 @@
     tmpDic = @{headlineKey:@"无",
                filterKey:filterNone,};
     [_dataSource addObject:tmpDic];
+    
+    //饱和度
+    GPUImageSaturationFilter *saturationFilter = [[GPUImageSaturationFilter alloc] init];
+    saturationFilter.saturation = 2;
+    tmpDic = @{headlineKey:@"饱和度",
+               filterKey:saturationFilter,};
+    [_dataSource addObject:tmpDic];
+    
     //亮度luminance
     GPUImageBrightnessFilter *brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
     brightnessFilter.brightness = 0.1;
     tmpDic = @{headlineKey:@"亮度",
                filterKey:brightnessFilter,};
     [_dataSource addObject:tmpDic];
+    
     //曝光
     GPUImageExposureFilter *exposureFilter = [[GPUImageExposureFilter alloc] init];
     exposureFilter.exposure = 1;
@@ -157,12 +172,7 @@
                filterKey:constrastFilter,};
     [_dataSource addObject:tmpDic];
     
-    //饱和度
-    GPUImageSaturationFilter *saturationFilter = [[GPUImageSaturationFilter alloc] init];
-    saturationFilter.saturation = 2;
-    tmpDic = @{headlineKey:@"饱和度",
-               filterKey:saturationFilter,};
-    [_dataSource addObject:tmpDic];
+  
     //伽马线
     GPUImageGammaFilter *gammaFilter = [[GPUImageGammaFilter alloc] init];
     gammaFilter.gamma = 3.0;
@@ -346,7 +356,7 @@
     GPUImageFilter *filter = dic[filterKey];
     cell.headlineLabel.text = headline;
     
-//    cell.surfaceLayer.hidden = !(_selectedIndexPath == indexPath);
+    cell.surfaceLayer.hidden = !(_selectedIndexPath == indexPath);
 //    cell.dataSource = _dataSource;
 //    ///透过一个低倍的滤镜
 //    __weak typeof(self) weakSelf = self;
@@ -386,7 +396,56 @@
         [_delegate mediaEffectShow:self didSelectedFilter:tmpFilter];
     }
     //更改实体数据选中项
+    
+    if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        //饱和度
+        ((GPUImageSaturationFilter *)tmpFilter).saturation = 1.0;
+        [_slider setValue:1.0];
+        [_slider setMinimumValue:0.0];
+        [_slider setMaximumValue:2.0];
+        _slider.hidden = false;
+    } else if ([tmpFilter isKindOfClass:[GPUImageContrastFilter class]]) {
+        [_slider setMinimumValue:0.0];
+        [_slider setMaximumValue:4.0];
+        [_slider setValue:1.0];
+        _slider.hidden = false;
+    } else if ([tmpFilter isKindOfClass:[GPUImageBrightnessFilter class]]) {
+        [_slider setMinimumValue:-1.0];
+        [_slider setMaximumValue:1.0];
+        [_slider setValue:0.0];
+        _slider.hidden = false;
+    } else if ([tmpFilter isKindOfClass:[GPUImageLevelsFilter class]]) {
+        [_slider setMinimumValue:0.0];
+        [_slider setMaximumValue:1.0];
+        [_slider setValue:0.0];
+        _slider.hidden = false;
+    } else if ([tmpFilter isKindOfClass:[GPUImageRGBFilter class]]) {
+        [_slider setMinimumValue:0.0];
+        [_slider setMaximumValue:2.0];
+        [_slider setValue:1.0];
+         _slider.hidden = false;
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    } else if ([tmpFilter isKindOfClass:[GPUImageSaturationFilter class]]) {
+        
+    }
+    
 }
+
+- (void)slider:(UISlider *)slider {
+    
+}
+
 
 - (void)didSelectedFilter:(GPUImageFilter *)filter {
     if ([filter isKindOfClass:[GPUImageFilter class]]) {

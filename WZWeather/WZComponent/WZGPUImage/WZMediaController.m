@@ -47,7 +47,10 @@
     [super loadView];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
-  
+    
+}
+- (void)dadsdsd:(WZMediaPreviewView *)mediaPreviewView {
+    WZMediaPreviewView *aa = mediaPreviewView = nil;
 }
 
 - (void)viewDidLoad {
