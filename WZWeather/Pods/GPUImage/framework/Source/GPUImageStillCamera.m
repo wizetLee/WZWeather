@@ -161,7 +161,7 @@ void GPUImageCreateResizedSampleBuffer(CVPixelBufferRef cameraFrame, CGSize fina
         UIImage *filteredPhoto = nil;
 
         if(!error){
-            filteredPhoto = [finalFilterInChain imageFromCurrentFramebuffer];
+            filteredPhoto = [finalFilterInChain imageFromCurrentFramebuffer];//FBO中的图片
         }
         dispatch_semaphore_signal(frameRenderingSemaphore);
 

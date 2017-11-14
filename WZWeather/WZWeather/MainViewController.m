@@ -88,15 +88,17 @@
     appVersion();
     appBundleID();
     
-    
-//    ///必应墙纸
-//    [WZHttpRequest requestBiYingWallpaperSerializationResult:^(id  _Nullable result, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
-//        if (!error && isDictionaty) {
-//            NSLog(@"%@", (NSDictionary *)result);
-//        }
-//    }];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:imageView];
+    [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
+        imageView.image = image;
+    }];//异步加载必应墙纸哦
     
 }
+
+
+
 
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];

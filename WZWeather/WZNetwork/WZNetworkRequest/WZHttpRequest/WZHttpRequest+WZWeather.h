@@ -7,6 +7,7 @@
 //
 
 #import "WZHttpRequest.h"
+#import <UIKit/UIKit.h>
 
 #define WZ_YIYUANWEATHER_APPKEY_VALUE_DIC @{@"apikey": @"9254d5a3e7cbd8027be0e56f4f03fe2f"}
 #define WZ_YIYUANWEATHER_URLSTRING @"http://apis.baidu.com/showapi_open_bus/weather_showapi/address"
@@ -57,6 +58,15 @@ typedef NS_ENUM(NSUInteger, WZBaiSiBuDeJieType) {
 
 //必应每日壁纸
 + (NSURLSessionTask *)requestBiYingWallpaperSerializationResult:(HttpRequestJSONSerializationResult)serializationResult;
+//必应
++ (void)loadBiYingImageInfo:(void(^)(NSString *BiYingCopyright,
+                                     NSString *BiYingDate,
+                                     NSString *BiYingDescription,
+                                     NSString *BiYingTitle,
+                                     NSString *BiYingSubtitle,
+                                     NSString *BiYingImg_1366,
+                                     NSString *BiYingImg_1920,
+                                     UIImage *image))info;
 
 //百思不得姐
 + (NSURLSessionTask *)requestBaiSiBuDeJieWithType:(WZBaiSiBuDeJieType)type title:(NSString *)title page:(NSUInteger)page SerializationResult:(HttpRequestJSONSerializationResult)serializationResult;

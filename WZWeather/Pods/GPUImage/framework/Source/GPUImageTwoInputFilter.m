@@ -98,7 +98,7 @@ NSString *const kGPUImageTwoInputTextureVertexShaderString = SHADER_STRING
     [outputFramebuffer activateFramebuffer];
     if (usingNextFrameForImageCapture)
     {
-        [outputFramebuffer lock];
+ [outputFramebuffer lock];
     }
 
     [self setUniformsForProgramAtIndex:0];

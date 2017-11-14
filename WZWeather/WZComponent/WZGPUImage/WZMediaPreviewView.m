@@ -38,6 +38,11 @@
 }
 
 - (void)dealloc {
+    [_cropFilter removeAllTargets];
+    [_insertFilter removeAllTargets];
+    [_scaleFilter removeAllTargets];
+    [_cameraVideo removeAllTargets];
+    [_cameraStillImage removeAllTargets];
     NSLog(@"%s",__func__);
 }
 
@@ -94,17 +99,17 @@
 #warning 除非在低分辨率的情况下 才可不停地修改此值， 因为GPUImage内部有做键值对缓存 或者修改源码...
 - (void)setCropValue:(CGFloat)value {
     //停止所有渲染的动作
+    __weak typeof(self) weakSelf = self;
     runSynchronouslyOnVideoProcessingQueue(^{
         
-        NSArray *tmpArr = _cropFilter.targets;
-        [_cropFilter removeAllTargets];
+        NSArray *tmpArr = weakSelf.cropFilter.targets;
+        [weakSelf.cropFilter removeAllTargets];
         
-     
-        [_cameraCurrent resetBenchmarkAverage];
-        [_cropFilter setCropRegion:CGRectMake(0.0, 0.0, 1.0, value)];
+        [weakSelf.cameraCurrent resetBenchmarkAverage];
+        [weakSelf.cropFilter setCropRegion:CGRectMake(0.0, 0.0, 1.0, value)];
         
         for (GPUImageFilter *filter in tmpArr) {
-            [_cropFilter addTarget:filter];
+            [weakSelf.cropFilter addTarget:filter];
         }
 
     });
@@ -112,37 +117,51 @@
 
 - (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler {
     ///无效函数
-    [_cameraStillImage capturePhotoAsImageProcessedUpToFilter:_cropFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+    
+//    _cropFilter.outputFrameSize = CGSizeMake(CGFloat width, CGFloat height)
+    //自己的图片的大小
+
+//步骤：
+//    更换size输出的Size
+//    完成后切换回去原来的size
+    
+    ///先取消缩小比例的滤镜
+    [_scaleFilter removeTarget:_cropFilter];
+    [_cameraCurrent addTarget:_cropFilter];
+    __weak typeof(self) weakSelf = self;
+    
+    GPUImageOutput <GPUImageInput> *tmpFilter = weakSelf.insertFilter;
+    if (!tmpFilter) {
+        tmpFilter = _cropFilter;
+    }
+
+    [_cameraStillImage capturePhotoAsImageProcessedUpToFilter:tmpFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         if (handler) {
             handler(processedImage);
         }
+        ///再添加缩小比例的滤镜回来
+        [weakSelf.cameraCurrent removeTarget:weakSelf.cropFilter];
+        [weakSelf.scaleFilter addTarget:weakSelf.cropFilter];
+        
     }];
 }
 
 - (void)insertRenderFilter:(GPUImageFilter *)filter {
+    
+    __weak typeof(self) weakSelf = self;
     runSynchronouslyOnVideoProcessingQueue(^{
         
+        [weakSelf.cropFilter removeTarget:weakSelf.presentView];//去掉支线
 
-
-        [_cropFilter removeTarget:self.presentView];//去掉支线
-        
-//        NSArray *tmpArr = _cropFilter.targets;
-//        [_cropFilter removeAllTargets];
-//        [GPUImageContext sharedImageProcessingContext];
-//        [_cameraCurrent resetBenchmarkAverage];
-//
-//        for (GPUImageFilter *filter in tmpArr) {
-//            [_cropFilter addTarget:filter];
-//        }
-        if (_insertFilter) {
-//            [_cropFilter removeTarget:_insertFilter];
-            [_insertFilter removeTarget:self.presentView];
+        if (weakSelf.insertFilter) {
+            [weakSelf.cropFilter removeTarget:_insertFilter];
+            [weakSelf.insertFilter removeTarget:weakSelf.presentView];
         }
         
-        [_cameraCurrent resetBenchmarkAverage];
-        _insertFilter = filter;
-        [_cropFilter addTarget:_insertFilter];
-        [_insertFilter addTarget:self.presentView];
+        [weakSelf.cameraCurrent resetBenchmarkAverage];
+        weakSelf.insertFilter = filter;
+        [weakSelf.cropFilter addTarget:weakSelf.insertFilter];
+        [weakSelf.insertFilter addTarget:weakSelf.presentView];
     });
 
 }

@@ -26,6 +26,10 @@
 		8402EB281ECD64A40030CCE1 /* WZVariousSectionsTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */; };
 		8402EB291ECD64A40030CCE1 /* WZVariousTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB221ECD64A40030CCE1 /* WZVariousTable.m */; };
 		8402EB2C1ECD6C520030CCE1 /* WZDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8402EB2B1ECD6C520030CCE1 /* WZDownloadController.m */; };
+		8405474D1FB97A280033EF9B /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 8405474A1FB97A270033EF9B /* mask.png */; };
+		8405474E1FB97A280033EF9B /* squares.png in Resources */ = {isa = PBXBuildFile; fileRef = 8405474B1FB97A280033EF9B /* squares.png */; };
+		8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 8405474C1FB97A280033EF9B /* CustomFilter.fsh */; };
+		840547561FB9A9380033EF9B /* WZToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 840547551FB9A9380033EF9B /* WZToast.m */; };
 		840A439A1FB141B100F6D449 /* WZBaseAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A43971FB141B100F6D449 /* WZBaseAlert.m */; };
 		840A439B1FB141B100F6D449 /* WZGleaminglyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A43991FB141B100F6D449 /* WZGleaminglyAlert.m */; };
 		840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 840A439C1FB18A3A00F6D449 /* photoShutter2.caf */; };
@@ -371,6 +375,11 @@
 		8402EB221ECD64A40030CCE1 /* WZVariousTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousTable.m; sourceTree = "<group>"; };
 		8402EB2A1ECD6C520030CCE1 /* WZDownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadController.h; sourceTree = "<group>"; };
 		8402EB2B1ECD6C520030CCE1 /* WZDownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadController.m; sourceTree = "<group>"; };
+		8405474A1FB97A270033EF9B /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
+		8405474B1FB97A280033EF9B /* squares.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = squares.png; sourceTree = "<group>"; };
+		8405474C1FB97A280033EF9B /* CustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CustomFilter.fsh; sourceTree = "<group>"; };
+		840547541FB9A9380033EF9B /* WZToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZToast.h; sourceTree = "<group>"; };
+		840547551FB9A9380033EF9B /* WZToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZToast.m; sourceTree = "<group>"; };
 		840A43961FB141B100F6D449 /* WZBaseAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBaseAlert.h; sourceTree = "<group>"; };
 		840A43971FB141B100F6D449 /* WZBaseAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBaseAlert.m; sourceTree = "<group>"; };
 		840A43981FB141B100F6D449 /* WZGleaminglyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGleaminglyAlert.h; sourceTree = "<group>"; };
@@ -1001,6 +1010,7 @@
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
+				840547531FB9A9380033EF9B /* WZToast */,
 				840A43951FB141B100F6D449 /* WZAlert */,
 				402AB18F1F0732D600136DB4 /* WZScrollOptions */,
 				846904DD1EFD284F007AD117 /* WZLoopView */,
@@ -1035,6 +1045,15 @@
 				8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */,
 			);
 			path = WZVariousTable;
+			sourceTree = "<group>";
+		};
+		840547531FB9A9380033EF9B /* WZToast */ = {
+			isa = PBXGroup;
+			children = (
+				840547541FB9A9380033EF9B /* WZToast.h */,
+				840547551FB9A9380033EF9B /* WZToast.m */,
+			);
+			path = WZToast;
 			sourceTree = "<group>";
 		};
 		840A43951FB141B100F6D449 /* WZAlert */ = {
@@ -1149,6 +1168,9 @@
 		845034E21FB59F0700D3A285 /* CustomTinter */ = {
 			isa = PBXGroup;
 			children = (
+				8405474C1FB97A280033EF9B /* CustomFilter.fsh */,
+				8405474A1FB97A270033EF9B /* mask.png */,
+				8405474B1FB97A280033EF9B /* squares.png */,
 				845034E31FB59F0700D3A285 /* OICameraSwitchFilter.fsh */,
 				845034E41FB59F0700D3A285 /* OICameraSwitchFilter.vsh */,
 			);
@@ -2213,8 +2235,9 @@
 				846920A41E63BB550048BBDC /* Products */,
 				846920D91E63BBB30048BBDC /* WZComponent */,
 				8440FE641EC2A454002A893E /* WZNetwork */,
-				8497C42B1EB3465200EB9F60 /* WZTodayExtension */,
+				8469C0831FBA72B600C1C58E /* WZSwift */,
 				846920DA1E63D1E00048BBDC /* WZVC */,
+				8497C42B1EB3465200EB9F60 /* WZTodayExtension */,
 				846920A51E63BB550048BBDC /* WZWeather */,
 				846920BF1E63BB550048BBDC /* WZWeatherTests */,
 				846920CA1E63BB550048BBDC /* WZWeatherUITests */,
@@ -2310,6 +2333,13 @@
 				848633461F95EBA60086C96E /* WZAppManager.m */,
 			);
 			path = WZVC;
+			sourceTree = "<group>";
+		};
+		8469C0831FBA72B600C1C58E /* WZSwift */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WZSwift;
 			sourceTree = "<group>";
 		};
 		8486332B1F95CA030086C96E /* WZGPUImage */ = {
@@ -2495,7 +2525,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
+				8405474D1FB97A280033EF9B /* mask.png in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
+				8405474E1FB97A280033EF9B /* squares.png in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
 				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
@@ -2652,6 +2685,7 @@
 				84514CC61E9DCE7A00F07EF8 /* NSBundle+JKAppIcon.m in Sources */,
 				84514CC81E9DCE7A00F07EF8 /* NSData+JKBase64.m in Sources */,
 				84514D201E9DCE7A00F07EF8 /* UIApplication+JKPermissions.m in Sources */,
+				840547561FB9A9380033EF9B /* WZToast.m in Sources */,
 				40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */,
 				84514D191E9DCE7A00F07EF8 /* CAMediaTimingFunction+JKAdditionalEquations.m in Sources */,
 				84514CCB1E9DCE7A00F07EF8 /* NSData+JKGzip.m in Sources */,

@@ -110,6 +110,7 @@
 
 - (void)operationView:(WZMediaOperationView*)view pickBtnAction:(UIButton *)sender {
 #warning 连拍会产生崩溃
+    
     [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
         if (image) {
             NSLog(@"%@", NSStringFromCGSize(image.size));
@@ -136,16 +137,18 @@
      WZMediaConfigType_countDown_3           = 32,
      WZMediaConfigType_countDown_off         = 33,
      */
-    switch (type) {
+    switch (type) {///有误差
         case WZMediaConfigType_canvas_1_multiply_1: {
             //                切换到选中效果
             CGFloat targetH = screenW / 1.0 * 1.0;//显示在屏幕的控件高度
             CGFloat rateH = targetH / screenH;
+            rateH = (int)(rateH * 1000) / 1000.0;
             [_mediaPreviewView setCropValue:rateH];
         } break;
         case WZMediaConfigType_canvas_3_multiply_4: {
             CGFloat targetH = screenW / 3.0 * 4.0;//3 ： 4
             CGFloat rateH = targetH / screenH;
+            rateH = (int)(rateH * 100) / 100.0;
             [_mediaPreviewView setCropValue:rateH];
             
         } break;

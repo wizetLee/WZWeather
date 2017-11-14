@@ -51,7 +51,6 @@
 //        self.preferredContentSize = CGSizeMake(0, 310);
 //        
 //    }
-//    
 //}
 
 #pragma mark NCWidgetProviding

@@ -11,8 +11,6 @@
 @class WZMediaEffectShow;
 @interface WZMediaEffectShowCell : UICollectionViewCell
 
-- (void)setFilter:(GPUImageFilter *)filter;
-
 @end
 
 @protocol WZMediaEffectShowProtocol <NSObject>
