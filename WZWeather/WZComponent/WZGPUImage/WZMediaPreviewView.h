@@ -28,6 +28,7 @@
 
 @property (nonatomic, strong) GPUImageVideoCamera *cameraCurrent;//当前的镜头
 @property (nonatomic, assign) WZMediaType mediaType;
+@property (nonatomic, assign) BOOL recording;//正在录制
 
 //内置滤镜 按照链顺序
 @property (nonatomic, strong) GPUImageFilter *scaleFilter;

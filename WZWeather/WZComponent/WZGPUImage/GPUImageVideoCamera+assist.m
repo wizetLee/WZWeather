@@ -7,7 +7,7 @@
 //
 #import <CoreMotion/CoreMotion.h>
 #import "GPUImageVideoCamera+assist.h"
-@interface GPUImageVideoCamera()
+@interface GPUImageVideoCamera()<AVCaptureMetadataOutputObjectsDelegate>
 
 @property (nonatomic, strong) CMMotionManager *motionManager;                   // 手机方向检查
 
@@ -74,6 +74,7 @@
     }
     return nil;
 }
+
 
 #pragma mark - Accessor
 - (CMMotionManager *)motionManager {
@@ -174,6 +175,52 @@
             NSLog(@"定点对焦错误：%@",[error description]);
         }
     }
+}
+
+///人像识别 二维码
+- (void)configMetadataOutputWithDelegete {
+    [self.captureSession beginConfiguration];
+    AVCaptureMetadataOutput *_metadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    if ([self.captureSession canAddOutput:_metadataOutput]) {
+        [self.captureSession addOutput:_metadataOutput];
+        NSArray* supportTypes = _metadataOutput.availableMetadataObjectTypes;
+        if ([supportTypes containsObject:AVMetadataObjectTypeFace]) {
+            [_metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
+            [_metadataOutput setMetadataObjectsDelegate:(id<AVCaptureMetadataOutputObjectsDelegate>)self queue:dispatch_get_main_queue()];
+            
+        }
+    }
+    [self.captureSession commitConfiguration];
+}
+
+#pragma mark - 二维码扫描代理 人脸识别 AVCaptureMetadataOutputObjectsDelegate
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
+//    if ([metadataObjects count]) {
+//        AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
+//        NSString *result;
+//        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
+//            result = metadataObj.stringValue;
+//            NSLog(@"得到扫描结果 %@", result);
+//        }
+//    }
+    {
+        
+        if ([self.delegate respondsToSelector:@selector(cameraDidOutputMetadataObjects:)]) {
+            [self.delegate performSelector:@selector(cameraDidOutputMetadataObjects:) withObject:metadataObjects];
+        }
+    }
+}
+
+- (void)captureMetadataObject:(AVMetadataFaceObject *)object {
+    
+}
+
+// 透视投影
+static CATransform3D PerspectiveTransformMake(CGFloat eyePosition)
+{
+    CATransform3D transform = CATransform3DIdentity;
+    transform.m34 = -1.0 / eyePosition;
+    return transform;
 }
 
 

@@ -89,11 +89,14 @@
     appBundleID();
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    imageView.contentMode = UIViewContentModeScaleToFill;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
     [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
-        imageView.image = image;
+        dispatch_async(dispatch_get_main_queue(), ^{
+           imageView.image = image;
+        });
     }];//异步加载必应墙纸哦
+    
     
 }
 

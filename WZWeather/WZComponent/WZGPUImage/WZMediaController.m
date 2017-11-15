@@ -197,6 +197,10 @@
     [self.view addSubview:_mediaOperationView];
     [_mediaOperationView setSource:_mediaPreviewView.cropFilter];
     
+    if (_mediaPreviewView.mediaType == WZMediaTypeVideo) {
+        //切换UI
+        
+    }
 }
 
 

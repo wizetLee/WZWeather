@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GPUImage/GPUImage.h>
 #import "WZMediaConfigView.h"
+#import "WZGPUImagePreinstall.h"
 
 @class WZMediaOperationView;
 @protocol WZMediaOperationViewProtocol<NSObject>
@@ -26,5 +27,6 @@
 
 @property (nonatomic, weak) id<WZMediaOperationViewProtocol> delegate;
 - (void)setSource:(GPUImageOutput *)source;
+- (void)switchModeWithType:(WZMediaType)type;
 
 @end

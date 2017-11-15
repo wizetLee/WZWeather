@@ -7,13 +7,21 @@
 //
 
 #import "WZMediaPreviewView.h"
+#import <Vision/Vision.h>
 
-@interface WZMediaPreviewView()<GPUImageVideoCameraAssistProtocol>
+@interface WZMediaPreviewView()<GPUImageVideoCameraDelegate>
 
 @property (nonatomic, strong) GPUImageStillCamera *cameraStillImage;//静态图
 @property (nonatomic, strong) GPUImageVideoCamera *cameraVideo;//录像
 
+@property (nonatomic, strong) GPUImageMovieWriter *movieWriter;//录像
+@property (nonatomic,   weak) GPUImageOutput <GPUImageInput >* trailingOutput;
+@property (nonatomic, strong) NSURL *movieURL;
 
+
+///用于人脸识别
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
+@property (nonatomic, strong) NSMutableDictionary <NSString*, UIView *>*faceMap;
 
 @end
 
@@ -47,6 +55,7 @@
 }
 
 - (void)config {
+    _faceMap = [NSMutableDictionary dictionary];
     _mediaType = WZMediaTypeStillImage;
     //首次 高画质 背面配置
     AVCaptureSessionPreset preset = AVCaptureSessionPresetHigh;
@@ -169,7 +178,9 @@
 - (void)createViews {
     
     [self addSubview:self.presentView];
-    
+    _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.cameraCurrent.captureSession];
+//    [self.layer addSublayer:_previewLayer];
+    _previewLayer.frame = CGRectMake(0.0, 0.0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
 }
 
 -(void)setFrame:(CGRect)frame {
@@ -178,9 +189,176 @@
     
 }
 
+#pragma mark - GPUImageVideoCameraDelegate
+
+- (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+    if (@available(iOS 11.0, *)) {
+        
+        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        
+        //创建请求句柄
+        VNImageRequestHandler *detectRequestHandler = [[VNImageRequestHandler alloc]initWithCVPixelBuffer:pixelBuffer options:@{}];
+        
+        // 探测脸部矩形请求
+        VNDetectFaceRectanglesRequest *detectRequest = [[VNDetectFaceRectanglesRequest alloc]initWithCompletionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) {
+            //回调
+            NSArray *observations = request.results;
+            //监测数据
+            for (VNFaceObservation *observation  in observations) {
+                //位置 尺寸 转换
+                CGSize imageSize = CVImageBufferGetDisplaySize(pixelBuffer);
+                CGRect faceRect = [[self class] convertRect:observation.boundingBox imageSize:imageSize];
+                
+                static UIView *tmpView;
+                if (tmpView) {
+                    tmpView.frame = faceRect;
+                } else {
+                    tmpView = [[UIView alloc] init];
+                    tmpView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
+                    [self addSubview:tmpView];
+                    tmpView.frame = faceRect;
+                }
+                
+                //精确数据的计算
+                VNFaceLandmarks2D *faceLandmark2D = observation.landmarks;
+                
+                NSMutableArray <VNFaceLandmarkRegion2D *>*pointArray = [NSMutableArray array];
+                [pointArray addObject:faceLandmark2D.allPoints];
+                [pointArray addObject:faceLandmark2D.faceContour];
+                
+                [pointArray addObject:faceLandmark2D.leftEye];
+                [pointArray addObject:faceLandmark2D.rightEye];
+                
+                [pointArray addObject:faceLandmark2D.leftEyebrow];
+                [pointArray addObject:faceLandmark2D.rightEyebrow];
+                
+                [pointArray addObject:faceLandmark2D.nose];
+                [pointArray addObject:faceLandmark2D.noseCrest];
+                
+                [pointArray addObject:faceLandmark2D.medianLine];
+                [pointArray addObject:faceLandmark2D.outerLips];
+                [pointArray addObject:faceLandmark2D.innerLips];
+                
+                [pointArray addObject:faceLandmark2D.leftPupil];
+                [pointArray addObject:faceLandmark2D.rightPupil];
+                
+                
+                // 遍历所有特征x
+                for (VNFaceLandmarkRegion2D *landmarks2D in pointArray) {
+                    CGPoint points[landmarks2D.pointCount];
+                    // 转换特征的所有点
+                    for (int i = 0; i < landmarks2D.pointCount; i++) {
+                     const CGPoint *point = [landmarks2D pointsInImageOfSize:imageSize];
+//                        vector_float2 point = [landmarks2D pointAtIndex:i];
+                        
+                        CGFloat rectWidth  = imageSize.width * observation.boundingBox.size.width;
+                        CGFloat rectHeight = imageSize.height * observation.boundingBox.size.height;
+                        CGPoint p = CGPointMake( point[i].x * rectWidth + observation.boundingBox.origin.x * imageSize.width
+                                                , observation.boundingBox.origin.y * imageSize.height + point[i].y * rectHeight);
+                        points[i]  = p;
+                    }
+                    
+                    UIGraphicsBeginImageContextWithOptions(imageSize, false, 1);
+                    CGContextRef context = UIGraphicsGetCurrentContext();
+                    [[UIColor greenColor] set];
+                    CGContextSetLineWidth(context, 2);
+                    
+                    // 设置翻转
+                    CGContextTranslateCTM(context, 0, imageSize.height);
+                    CGContextScaleCTM(context, 1.0, -1.0);
+                    
+                    // 设置线类型
+                    CGContextSetLineJoin(context, kCGLineJoinRound);
+                    CGContextSetLineCap(context, kCGLineCapRound);
+                    
+                    // 设置抗锯齿
+                    CGContextSetShouldAntialias(context, true);
+                    CGContextSetAllowsAntialiasing(context, true);
+                    
+                    // 绘制
+                    CGRect rect = CGRectMake(0, 0, imageSize.width, imageSize.height);
+//                    CGContextDrawImage(context, rect, sourceImage.CGImage);
+                    CGContextAddLines(context, points, landmarks2D.pointCount);////画线部分  使用layer画线
+                    CGContextDrawPath(context, kCGPathStroke);
+                    
+                    // 结束绘制
+//                    sourceImage = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                }
+            }
+        }];
+        
+        // 发送识别请求
+        NSError *error = nil;
+        [detectRequestHandler performRequests:@[detectRequest] error:&error];
+        if (error) {
+            NSLog(@"%@", error.debugDescription);
+        }
+        
+    } else {
+        // Fallback on earlier versions
+    }
+    
+    
+}
+
+/// 转换Rect
++ (CGRect)convertRect:(CGRect)oldRect imageSize:(CGSize)imageSize{
+    CGFloat w = oldRect.size.width * imageSize.width;
+    CGFloat h = oldRect.size.height * imageSize.height;
+    CGFloat x = oldRect.origin.x * imageSize.width;
+    CGFloat y = imageSize.height - (oldRect.origin.y * imageSize.height) - h;
+    return CGRectMake(x, y, w, h);
+}
+
+
 #pragma mark - GPUImageVideoCameraAssistProtocol
 - (void)videoCamera:(GPUImageVideoCamera *)camera currentOrientation:(UIDeviceOrientation *)orientation {
     
+}
+
+- (void)cleanFaceMap {
+    for (UIView *tmpView in _faceMap.allValues) {
+        tmpView.alpha = 0;
+    }
+}
+
+///人脸识别    苹果的算法也有缺陷、太远的距离 不精确
+- (void)cameraDidOutputMetadataObjects:(NSArray *)metadataObjects {
+   
+    if (metadataObjects && metadataObjects.count) {
+        [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(cleanFaceMap) object:nil];
+        [self performSelector:@selector(cleanFaceMap) withObject:nil afterDelay:0.2];
+
+        //移除所有的得到人脸识别的view
+        for (UIView *tmpView in _faceMap.allValues) {
+            tmpView.alpha = 0;
+        }
+        for (AVMetadataObject *object in metadataObjects) {
+            if ( [[object type] isEqual:AVMetadataObjectTypeFace]) {
+                AVMetadataFaceObject* face = (AVMetadataFaceObject*)object;
+                AVMetadataObject *transFace = [_previewLayer transformedMetadataObjectForMetadataObject:face];
+                CGRect faceRectangle = transFace.bounds;
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                    UIView *view = _faceMap[[NSString stringWithFormat:@"%ld", face.faceID]];
+                
+                    if (!view) {
+                        view = [[UIView alloc] initWithFrame:faceRectangle];
+                        view.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.5];
+                        [self addSubview:view];
+                        _faceMap[[NSString stringWithFormat:@"%ld", face.faceID]] = view;
+                    } else {
+                        view.alpha = 1;
+                        view.frame = faceRectangle;
+                    }
+                });
+                //                CGFloat rollAngle = [face rollAngle];//人脸倾斜角
+                //                CGFloat yawAngle = [face yawAngle];//人脸偏转角
+            }
+        }
+    } else {
+        
+    }
 }
 
 #pragma mark - Public
@@ -190,8 +368,12 @@
 }
 
 - (void)launchCamera {
+    _cameraCurrent.delegate = (id<GPUImageVideoCameraDelegate>)self;
+    [_cameraCurrent configMetadataOutputWithDelegete];
     [_cameraCurrent startCameraCapture];
 }
+
+
 
 - (void)pauseCamera {
     [_cameraCurrent pauseCameraCapture];
@@ -209,11 +391,56 @@
     [_cameraCurrent setFlashType:type];
 }
 
+
+/**
+ 
+ 需求：
+     若干段视频，可重录上一段（数组，多段录制）
+     有方向性的录制
+ 
+ 
+ **/
+- (void)prepareRecordWithMovieURL:(NSURL *)movieURL outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput {
+    _trailingOutput = trailingOutput;
+    _movieURL = movieURL;
+    //录制前检查录制文件是否存在
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_movieURL.path]) {
+        [[NSFileManager defaultManager] removeItemAtURL:_movieURL error:nil];
+    }
+	GPUImageMovieWriter *movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:outputSize];
+    movieWriter.encodingLiveVideo = true;
+    ///已经配置完毕的链
+    [_trailingOutput addTarget:movieWriter];
+}
+
+- (void)startRecord {
+    _recording = true;
+    if (_movieWriter) {
+        _cameraVideo.audioEncodingTarget = _movieWriter;
+//        _movieWriter startRecordingInOrientation:(CGAffineTransform)
+        /////录制方向变更
+        [_movieWriter startRecording];
+    }
+}
+
+- (void)stopRecord {
+    _recording = false;
+    if (_movieWriter) {
+        [_trailingOutput removeTarget:_movieWriter];
+        _cameraVideo.audioEncodingTarget = nil;
+        [_movieWriter finishRecording];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:_movieURL.path]) {
+            
+        }
+    }
+}
+
+
 //有声音 无声音
 
 
 #pragma mark - Accessor
--(GPUImageView *)presentView {
+- (GPUImageView *)presentView {
     if (!_presentView) {
         _presentView = [[GPUImageView alloc] initWithFrame:self.bounds];
     }

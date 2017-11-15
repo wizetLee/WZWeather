@@ -1052,7 +1052,6 @@
         [_collection registerClass:[WZMediaEffectShowCell class] forCellWithReuseIdentifier:@"WZMediaEffectShowCell"];
         _collection.delegate = self;
         _collection.dataSource = self;
-        
     }
     return _collection;
 }

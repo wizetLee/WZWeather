@@ -11,7 +11,7 @@
 @interface WZCameraAssist : NSObject
 
 #pragma mark - 去除系统声音（添加文件时勾选add to target）
-+ (void)removeSystemSound:(BOOL)boolean;
++ (void)removeSystemSound;
 #pragma mark - 从图片中直接读取二维码 iOS8.0
 + (NSString *)scQRReaderForImage:(UIImage *)qrimage;
 

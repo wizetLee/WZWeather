@@ -9,10 +9,7 @@
 #import <GPUImage/GPUImage.h>
 
 
-@protocol GPUImageVideoCameraAssistProtocol<NSObject>
 
-
-@end
 
 typedef NS_ENUM(NSUInteger, GPUImageCameraFlashType) {
     GPUImageCameraFlashType_auto,
@@ -41,6 +38,6 @@ typedef NS_ENUM(NSUInteger, GPUImageCameraTorchType) {
 
 ///使用陀螺仪检测设备方向   建议使用一个全局接收通知
 - (void)addCMMotionToMobile;
-
+- (void)configMetadataOutputWithDelegete;
 
 @end
