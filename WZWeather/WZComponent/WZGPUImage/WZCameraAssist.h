@@ -15,4 +15,9 @@
 #pragma mark - 从图片中直接读取二维码 iOS8.0
 + (NSString *)scQRReaderForImage:(UIImage *)qrimage;
 
+#pragma mark - 权限检查
++ (void)checkAuthorizationWithHandler:(void (^)(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization))handler;
+
+#pragma mark  - 打开应用设置项
++ (void)openAppSettings;
 @end

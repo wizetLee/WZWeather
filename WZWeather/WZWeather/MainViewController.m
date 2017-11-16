@@ -15,7 +15,7 @@
 #import "UIButton+WZMinistrant.h"
 #import "WZSystemDetails.h"
 #import "WZMediaController.h"
-
+#import "WZCameraAssist.h"
 @interface MainViewController ()
 
 @property (nonatomic,strong) WZScrollOptions *menuView;
@@ -138,14 +138,39 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    
-    ///下载页面
-    [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
-//    WZDownloadController *vc = [[WZDownloadController alloc] init];
-    WZMediaController *vc = [WZMediaController new];
+    [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
+        if (videoAuthorization
+            && audioAuthorization
+            && libraryAuthorization) {
+            ///下载页面
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
+                //    WZDownloadController *vc = [[WZDownloadController alloc] init];
+                WZMediaController *vc = [WZMediaController new];
+                
+                [self.navigationController pushViewController:vc animated:true];
 
-    [self.navigationController pushViewController:vc animated:true];
+            });
+        } else {
+            [self showAlter];
+        }
+    }];
+ 
     
+}
+
+
+- (void)showAlter {
+    UIAlertController *alter = [UIAlertController alertControllerWithTitle:@"视频、音频、相册权限受阻" message:@"是否要到设置处进行权限设置" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [WZCameraAssist openAppSettings];
+    }];
+    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alter dismissViewControllerAnimated:true completion:nil];
+    }];
+    [alter addAction:actionSure];
+    [alter addAction:actionCancel];
+    [self presentViewController:alter animated:true completion:nil];
 }
 
 #pragma mark - WZProtocolPageViewController

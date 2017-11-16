@@ -22,20 +22,23 @@
 }
 
 + (BOOL)wz_createFolderAtPath:(NSString *)path {
-    NSFileManager *manager = [NSFileManager defaultManager];
-    BOOL boolean = false;
-    if ([self wz_fileExistsAtPath:path]) {
-        boolean = true;
-    } else {
-        NSError *error = nil;
-        if ([manager createDirectoryAtPath:path withIntermediateDirectories:true attributes:nil error:&error]) {
-            //createIntermediates:如果创建的路径的自路径不存在时，是否连同自路径一起创建
+   __block BOOL boolean = false;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSFileManager *manager = [NSFileManager defaultManager];
+        if ([self wz_fileExistsAtPath:path]) {
             boolean = true;
-            if (error) {
-                 boolean = false;
+        } else {
+            NSError *error = nil;
+            if ([manager createDirectoryAtPath:path withIntermediateDirectories:true attributes:nil error:&error]) {
+                //createIntermediates:如果创建的路径的自路径不存在时，是否连同自路径一起创建
+                boolean = true;
+                if (error) {
+                    boolean = false;
+                }
             }
         }
-    }
+    });
+    
     return boolean;
 }
 

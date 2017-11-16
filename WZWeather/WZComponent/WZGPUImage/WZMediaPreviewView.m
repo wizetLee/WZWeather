@@ -9,6 +9,8 @@
 #import "WZMediaPreviewView.h"
 #import <Vision/Vision.h>
 
+#define MovieFolderName @"WZ_movieFolder"
+
 @interface WZMediaPreviewView()<GPUImageVideoCameraDelegate>
 
 @property (nonatomic, strong) GPUImageStillCamera *cameraStillImage;//静态图
@@ -16,12 +18,12 @@
 
 @property (nonatomic, strong) GPUImageMovieWriter *movieWriter;//录像
 @property (nonatomic,   weak) GPUImageOutput <GPUImageInput >* trailingOutput;
-@property (nonatomic, strong) NSURL *movieURL;
-
 
 ///用于人脸识别
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 @property (nonatomic, strong) NSMutableDictionary <NSString*, UIView *>*faceMap;
+
+@property (nonatomic, strong) NSString *curRecordingName;//当前正在录制的视频/或是上一次录制好的视频的名字 需要配合上路径访问视频
 
 @end
 
@@ -57,12 +59,13 @@
 - (void)config {
     _faceMap = [NSMutableDictionary dictionary];
     _mediaType = WZMediaTypeStillImage;
-
     
+#warning 最好提前创建好的目录 不然我也不知道会发生什么错误....
+    [NSObject wz_createFolderAtPath:[NSObject wz_filePath:WZSearchPathDirectoryDocument fileName:MovieFolderName]];
+   
     [self pickMediaType:_mediaType];
     
    
-    
 }
 
 #warning 除非在低分辨率的情况下 才可不停地修改此值， 因为GPUImage内部有做键值对缓存 或者修改源码...
@@ -95,42 +98,38 @@
 //    完成后切换回去原来的size
     
     ///先取消缩小比例的滤镜
-    [_scaleFilter removeTarget:_cropFilter];
-    [_cameraCurrent addTarget:_cropFilter];
+ 
     __weak typeof(self) weakSelf = self;
     
     GPUImageOutput <GPUImageInput> *tmpFilter = weakSelf.insertFilter;
     if (!tmpFilter) {
         tmpFilter = _cropFilter;
     }
+  
 
     [_cameraStillImage capturePhotoAsImageProcessedUpToFilter:tmpFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         if (handler) {
             handler(processedImage);
         }
-        ///再添加缩小比例的滤镜回来
-        [weakSelf.cameraCurrent removeTarget:weakSelf.cropFilter];
-        [weakSelf.scaleFilter addTarget:weakSelf.cropFilter];
+       
 //        weakSelf.cameraStillImage.currentCaptureMetadata;//照片信息
     }];
 }
 
 - (void)insertRenderFilter:(GPUImageFilter *)filter {
-    
+    [_cropFilter removeTarget:_scaleFilter];
     __weak typeof(self) weakSelf = self;
     runSynchronouslyOnVideoProcessingQueue(^{
         
-        [weakSelf.cropFilter removeTarget:weakSelf.presentView];//去掉支线
-
         if (weakSelf.insertFilter) {
-            [weakSelf.cropFilter removeTarget:_insertFilter];
-            [weakSelf.insertFilter removeTarget:weakSelf.presentView];
+            [weakSelf.cropFilter removeTarget:weakSelf.insertFilter];
+            [weakSelf.insertFilter removeTarget:weakSelf.scaleFilter];
         }
         
         [weakSelf.cameraCurrent resetBenchmarkAverage];
         weakSelf.insertFilter = filter;
         [weakSelf.cropFilter addTarget:weakSelf.insertFilter];
-        [weakSelf.insertFilter addTarget:weakSelf.presentView];
+        [weakSelf.insertFilter addTarget:weakSelf.scaleFilter];
     });
 
 }
@@ -345,6 +344,15 @@ static int stride = 0;
 }
 
 #pragma mark - Public
+
+- (NSURL *)movieURLWithMovieName:(NSString *)name {
+	return [NSURL fileURLWithPath:[[self movieFolder] stringByAppendingPathComponent:name]];
+}
+
+- (NSString *)movieFolder {
+    return [NSObject wz_filePath:WZSearchPathDirectoryDocument fileName:MovieFolderName];
+}
+
 - (void)pickMediaType:(WZMediaType)mediaType {
     if (_mediaType == mediaType && _cameraStillImage) {return;}
     
@@ -395,16 +403,15 @@ static int stride = 0;
 
     //缩减渲染比例 降低渲染成本
     
-    [_cameraCurrent removeTarget:_scaleFilter];
+    [_cameraCurrent addTarget:_cropFilter];
     
-//    [_cameraCurrent addTarget:_scaleFilter];
-//    [_scaleFilter addTarget:_cropFilter];
-//    [_cropFilter addTarget:self.presentView];
+    GPUImageOutput <GPUImageInput> *tmpFilter = _insertFilter;
+    if (!tmpFilter) {
+        tmpFilter = _cropFilter;
+    }
     
-    
-    [_cameraCurrent addTarget:_scaleFilter];
-    [_scaleFilter addTarget:_cropFilter];
-    [_cropFilter addTarget:self.presentView];
+    [tmpFilter addTarget:_scaleFilter];
+    [_scaleFilter addTarget:self.presentView];
     
 }
 
@@ -424,6 +431,10 @@ static int stride = 0;
 
 - (void)stopCamera {
     [_cameraCurrent stopCameraCapture];
+    
+    [_cameraCurrent removeAllTargets];
+    [_cameraCurrent removeInputsAndOutputs];
+    [_cameraCurrent removeOutputFramebuffer];
 }
 
 - (void)setFlashType:(GPUImageCameraFlashType)type {
@@ -431,34 +442,61 @@ static int stride = 0;
 }
 
 
+
+#pragma mark - 视频录制部分
 /**
  
  需求：
      若干段视频，可重录上一段（数组，多段录制）
      有方向性的录制
  
- 
- **/
-- (void)prepareRecordWithMovieURL:(NSURL *)movieURL outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput {
-    _trailingOutput = trailingOutput;
-    _movieURL = movieURL;
-    //录制前检查录制文件是否存在
-    if ([[NSFileManager defaultManager] fileExistsAtPath:_movieURL.path]) {
-        [[NSFileManager defaultManager] removeItemAtURL:_movieURL error:nil];
+ */
+/**
+ 视频录制开始之前的动作
+
+ @param movieName 将要保存的名字
+ @param outputSize 输出的尺寸
+ @param trailingOutput source   PS：source一般使用crop，因为录制出源视频，是对之后的视频处理是有帮助的哦~~~
+ */
+- (void)prepareRecordWithMovieName:(NSString *)movieName outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput {
+    if (!trailingOutput) {
+        trailingOutput = _cropFilter;
     }
-	GPUImageMovieWriter *movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:outputSize];
-    movieWriter.encodingLiveVideo = true;
+    
+    if (CGSizeEqualToSize(outputSize, CGSizeZero)) {
+        outputSize = _cropFilter.outputFrameSize;
+    }
+    
+    _trailingOutput = trailingOutput;
+    NSURL *url = [self movieURLWithMovieName:movieName];
+    _curRecordingName = movieName;
+    
+    //录制前检查录制文件是否存在
+    if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+    }
+    
+	_movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:url size:outputSize];
+    _movieWriter.encodingLiveVideo = true;
     ///已经配置完毕的链
-    [_trailingOutput addTarget:movieWriter];
+    [_trailingOutput addTarget:_movieWriter];
+    
 }
 
 - (void)startRecord {
-    _recording = true;
+    _cameraVideo.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
+    _cameraVideo.horizontallyMirrorFrontFacingCamera = NO;
+    _cameraVideo.horizontallyMirrorRearFacingCamera = NO;
+
+    [self prepareRecordWithMovieName:@"name.m4v" outputSize:CGSizeZero trailingOutPut:nil];
     if (_movieWriter) {
+        _recording = true;
         _cameraVideo.audioEncodingTarget = _movieWriter;
 //        _movieWriter startRecordingInOrientation:(CGAffineTransform)
         /////录制方向变更
         [_movieWriter startRecording];
+    } else {
+        NSLog(@"请注意：movie writer 还没配置完成");
     }
 }
 
@@ -474,12 +512,19 @@ static int stride = 0;
 
 - (void)endRecord {
     _recording = false;
-    if (_movieWriter) {
+    if (_movieWriter && _curRecordingName) {
         [_trailingOutput removeTarget:_movieWriter];
         _cameraVideo.audioEncodingTarget = nil;
         [_movieWriter finishRecording];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:_movieURL.path]) {
+        NSURL *url = [self movieURLWithMovieName:_curRecordingName];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
             //要不要保存之类的动作
+            NSLog(@"%@", url.path);
+            if (!_moviesNameContainer) {
+                _moviesNameContainer =[NSMutableArray array];
+            }
+            
+            [_moviesNameContainer addObject:url];
             
         } else {
             //保存失败
@@ -489,7 +534,6 @@ static int stride = 0;
 }
 
 
-//有声音 无声音
 
 
 #pragma mark - Accessor

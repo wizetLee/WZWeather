@@ -197,6 +197,7 @@
     if (longPress.view == _recordView) {
         if (longPress.state == UIGestureRecognizerStateBegan) {
             _recordView.backgroundColor = [UIColor greenColor];
+            NSLog(@"212233");
             //开始录制
             if ([_delegate respondsToSelector:@selector(operationView:startRecordGesture:)]) {
                 [_delegate operationView:self startRecordGesture:longPress];
