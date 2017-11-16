@@ -108,7 +108,7 @@
     
 }
 
-- (void)operationView:(WZMediaOperationView*)view pickBtnAction:(UIButton *)sender {
+- (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender {
 #warning 连拍会产生崩溃
     
     [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
@@ -184,6 +184,27 @@
     [_mediaPreviewView insertRenderFilter:filter];
 }
 
+///录像
+- (void)operationView:(WZMediaOperationView*)view startRecordGesture:(UILongPressGestureRecognizer *)gesture {
+    [_mediaPreviewView startRecord];
+}
+
+- (void)operationView:(WZMediaOperationView*)view endRecordGesture:(UILongPressGestureRecognizer *)gesture {
+    [_mediaPreviewView endRecord];
+}
+
+- (void)operationView:(WZMediaOperationView*)view breakRecordGesture:(UILongPressGestureRecognizer *)gesture {
+    [_mediaPreviewView cancelRecord];
+}
+
+///切换摄影 录影
+- (void)operationView:(WZMediaOperationView*)view swithToMediaType:(WZMediaType)type {
+    [_mediaPreviewView pickMediaType:type];
+    [_mediaPreviewView launchCamera];
+}
+
+
+
 #pragma mark - Public Method
 - (void)createViews {
     //适配iOS 11
@@ -195,7 +216,6 @@
     _mediaOperationView = [[WZMediaOperationView alloc] initWithFrame:_mediaPreviewView.bounds];
     _mediaOperationView.delegate = self;
     [self.view addSubview:_mediaOperationView];
-    [_mediaOperationView setSource:_mediaPreviewView.cropFilter];
     
     if (_mediaPreviewView.mediaType == WZMediaTypeVideo) {
         //切换UI

@@ -45,6 +45,10 @@
 - (void)resumeCamera;
 - (void)stopCamera;
 
+- (void)startRecord;
+- (void)cancelRecord;
+- (void)endRecord;
+
 - (void)insertRenderFilter:(GPUImageFilter *)filter;//插入滤镜
 - (void)setCropValue:(CGFloat)value;
 - (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler;

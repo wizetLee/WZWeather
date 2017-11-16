@@ -54,6 +54,9 @@
     countDown.selectedType = WZMediaConfigType_countDown_off;
     countDown.headline = @"倒计时";
     
+    
+    
+    
     _dataSource = [NSMutableArray arrayWithArray:@[canvas, flash, countDown]];
     _table.datas = _dataSource;
     [_table reloadData];

@@ -17,16 +17,25 @@
 @optional
 
 - (void)operationView:(WZMediaOperationView*)view closeBtnAction:(UIButton *)sender;
-- (void)operationView:(WZMediaOperationView*)view pickBtnAction:(UIButton *)sender;
+- (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender;
 - (void)operationView:(WZMediaOperationView*)view configType:(WZMediaConfigType)type;
 - (void)operationView:(WZMediaOperationView*)view didSelectedFilter:(GPUImageFilter *)filter;
+
+///切换摄影 录影
+- (void)operationView:(WZMediaOperationView*)view swithToMediaType:(WZMediaType)type;
+
+///录像
+- (void)operationView:(WZMediaOperationView*)view startRecordGesture:(UILongPressGestureRecognizer *)gesture;
+- (void)operationView:(WZMediaOperationView*)view endRecordGesture:(UILongPressGestureRecognizer *)gesture;
+- (void)operationView:(WZMediaOperationView*)view breakRecordGesture:(UILongPressGestureRecognizer *)gesture;
 
 @end
 
 @interface WZMediaOperationView : UIView
 
 @property (nonatomic, weak) id<WZMediaOperationViewProtocol> delegate;
-- (void)setSource:(GPUImageOutput *)source;
+
+///切换为对应的UI
 - (void)switchModeWithType:(WZMediaType)type;
 
 @end

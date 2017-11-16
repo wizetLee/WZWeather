@@ -57,51 +57,11 @@
 - (void)config {
     _faceMap = [NSMutableDictionary dictionary];
     _mediaType = WZMediaTypeStillImage;
-    //首次 高画质 背面配置
-    AVCaptureSessionPreset preset = AVCaptureSessionPresetHigh;
-    AVCaptureDevicePosition position = AVCaptureDevicePositionBack;
-    if (_mediaType == WZMediaTypeVideo) {
-        _cameraVideo = [[GPUImageVideoCamera alloc] initWithSessionPreset:preset cameraPosition:position];
-        _cameraCurrent = _cameraVideo;
-    } else {
-        _cameraStillImage = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
-        _cameraCurrent = _cameraStillImage;
-    }
-    
-    //    [_camera stopCameraCapture];
-    [_cameraCurrent addCMMotionToMobile];
-    _cameraCurrent.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
-    ///前后摄像头镜像配置
-    _cameraCurrent.horizontallyMirrorFrontFacingCamera = false;
-    _cameraCurrent.horizontallyMirrorRearFacingCamera = false;
-    
-    //内建滤镜
-    _cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0, 0.0, 1.0, 1.0)];
 
-    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
-//     CGFloat targetH = targetW / 1.0 * 1.0;
-//    CGFloat targetH = targetW / 3.0 * 4.0;//3 ： 4
-    CGFloat targetH = screenW / 9.0 * 16.0;//9 ： 16
-    CGFloat rateH = targetH / screenH;
-    if (rateH > 1) {
-        rateH = 1;
-    }
-    _cropFilter.cropRegion = CGRectMake(0.0, 0.0, 1.0, rateH);//0~1 自动居中 Q:如何设置1：1  3：4 等图片的尺寸
-//
-        /*
-     1:1
-     screenW / screenH
-     */
     
-    _scaleFilter = [[GPUImageFilter alloc] init];
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize size = [UIScreen mainScreen].bounds.size;
-    [_scaleFilter forceProcessingAtSizeRespectingAspectRatio:CGSizeMake(size.width * scale, size.height * scale)];
-    //缩减渲染比例 降低渲染成本
-    [_cameraCurrent addTarget:_scaleFilter];
-    [_scaleFilter addTarget:_cropFilter];
-    [_cropFilter addTarget:self.presentView];
+    [self pickMediaType:_mediaType];
+    
+   
     
 }
 
@@ -151,7 +111,7 @@
         ///再添加缩小比例的滤镜回来
         [weakSelf.cameraCurrent removeTarget:weakSelf.cropFilter];
         [weakSelf.scaleFilter addTarget:weakSelf.cropFilter];
-        
+//        weakSelf.cameraStillImage.currentCaptureMetadata;//照片信息
     }];
 }
 
@@ -192,7 +152,15 @@
 #pragma mark - GPUImageVideoCameraDelegate
 
 - (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+    /// Vision 视觉库的代码
     if (@available(iOS 11.0, *)) {
+        /*
+         大致流程
+             1、创建不同的request
+             2、生成handler 用以执行request 产生回调
+             3、处理回调结果
+         */
+        
         
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         
@@ -257,33 +225,36 @@
                                                 , observation.boundingBox.origin.y * imageSize.height + point[i].y * rectHeight);
                         points[i]  = p;
                     }
+                    UIBezierPath *path = [UIBezierPath bezierPath];
+                    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
                     
-                    UIGraphicsBeginImageContextWithOptions(imageSize, false, 1);
-                    CGContextRef context = UIGraphicsGetCurrentContext();
-                    [[UIColor greenColor] set];
-                    CGContextSetLineWidth(context, 2);
                     
-                    // 设置翻转
-                    CGContextTranslateCTM(context, 0, imageSize.height);
-                    CGContextScaleCTM(context, 1.0, -1.0);
-                    
-                    // 设置线类型
-                    CGContextSetLineJoin(context, kCGLineJoinRound);
-                    CGContextSetLineCap(context, kCGLineCapRound);
-                    
-                    // 设置抗锯齿
-                    CGContextSetShouldAntialias(context, true);
-                    CGContextSetAllowsAntialiasing(context, true);
-                    
-                    // 绘制
-                    CGRect rect = CGRectMake(0, 0, imageSize.width, imageSize.height);
-//                    CGContextDrawImage(context, rect, sourceImage.CGImage);
-                    CGContextAddLines(context, points, landmarks2D.pointCount);////画线部分  使用layer画线
-                    CGContextDrawPath(context, kCGPathStroke);
-                    
-                    // 结束绘制
-//                    sourceImage = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
+//                    UIGraphicsBeginImageContextWithOptions(imageSize, false, 1);
+//                    CGContextRef context = UIGraphicsGetCurrentContext();
+//                    [[UIColor greenColor] set];
+//                    CGContextSetLineWidth(context, 2);
+//
+//                    // 设置翻转
+//                    CGContextTranslateCTM(context, 0, imageSize.height);
+//                    CGContextScaleCTM(context, 1.0, -1.0);
+//
+//                    // 设置线类型
+//                    CGContextSetLineJoin(context, kCGLineJoinRound);
+//                    CGContextSetLineCap(context, kCGLineCapRound);
+//
+//                    // 设置抗锯齿
+//                    CGContextSetShouldAntialias(context, true);
+//                    CGContextSetAllowsAntialiasing(context, true);
+//
+//                    // 绘制
+//                    CGRect rect = CGRectMake(0, 0, imageSize.width, imageSize.height);
+////                    CGContextDrawImage(context, rect, sourceImage.CGImage);
+//                    CGContextAddLines(context, points, landmarks2D.pointCount);////画线部分  使用layer画线
+//                    CGContextDrawPath(context, kCGPathStroke);
+//
+//                    // 结束绘制
+////                    sourceImage = UIGraphicsGetImageFromCurrentImageContext();
+//                    UIGraphicsEndImageContext();
                 }
             }
         }];
@@ -321,11 +292,19 @@
     for (UIView *tmpView in _faceMap.allValues) {
         tmpView.alpha = 0;
     }
+    NSLog(@"_______");
 }
 
 ///人脸识别    苹果的算法也有缺陷、太远的距离 不精确
+static int stride = 0;
 - (void)cameraDidOutputMetadataObjects:(NSArray *)metadataObjects {
-   
+   ///建议3 - 5帧作一个检查
+    stride++;
+    if (stride == 3) {
+        stride = 0;
+        return;
+    }
+    
     if (metadataObjects && metadataObjects.count) {
         [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(cleanFaceMap) object:nil];
         [self performSelector:@selector(cleanFaceMap) withObject:nil afterDelay:0.2];
@@ -334,14 +313,17 @@
         for (UIView *tmpView in _faceMap.allValues) {
             tmpView.alpha = 0;
         }
+        //视图/layer的位置尺寸更改
         for (AVMetadataObject *object in metadataObjects) {
             if ( [[object type] isEqual:AVMetadataObjectTypeFace]) {
+                
                 AVMetadataFaceObject* face = (AVMetadataFaceObject*)object;
                 AVMetadataObject *transFace = [_previewLayer transformedMetadataObjectForMetadataObject:face];
                 CGRect faceRectangle = transFace.bounds;
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                    UIView *view = _faceMap[[NSString stringWithFormat:@"%ld", face.faceID]];
                 
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      
+                    UIView *view = _faceMap[[NSString stringWithFormat:@"%ld", face.faceID]];
                     if (!view) {
                         view = [[UIView alloc] initWithFrame:faceRectangle];
                         view.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.5];
@@ -351,6 +333,7 @@
                         view.alpha = 1;
                         view.frame = faceRectangle;
                     }
+                      
                 });
                 //                CGFloat rollAngle = [face rollAngle];//人脸倾斜角
                 //                CGFloat yawAngle = [face yawAngle];//人脸偏转角
@@ -363,8 +346,66 @@
 
 #pragma mark - Public
 - (void)pickMediaType:(WZMediaType)mediaType {
+    if (_mediaType == mediaType && _cameraStillImage) {return;}
+    
+    _mediaType = mediaType;
     //断链
     //初始化配置
+    //首次 高画质 背面配置
+    
+    [_cameraCurrent stopCameraCapture];
+    
+    AVCaptureSessionPreset preset = AVCaptureSessionPresetHigh;
+    AVCaptureDevicePosition position = AVCaptureDevicePositionBack;
+    if (_mediaType == WZMediaTypeVideo) {
+        _cameraVideo = [[GPUImageVideoCamera alloc] initWithSessionPreset:preset cameraPosition:position];
+        _cameraCurrent = _cameraVideo;
+    } else {
+ 
+        _cameraStillImage = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
+        _cameraCurrent = _cameraStillImage;
+    }
+    
+    [_cameraCurrent addCMMotionToMobile];
+    _cameraCurrent.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
+    ///前后摄像头镜像配置
+    _cameraCurrent.horizontallyMirrorFrontFacingCamera = false;
+    _cameraCurrent.horizontallyMirrorRearFacingCamera = false;
+    
+    //内建滤镜
+    if (!_cropFilter) {
+        _cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0, 0.0, 1.0, 1.0)];
+        CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+        CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+        CGFloat targetH = screenW / 9.0 * 16.0;//9 ： 16
+        CGFloat rateH = targetH / screenH;
+        if (rateH > 1) {
+            rateH = 1;
+        }
+        _cropFilter.cropRegion = CGRectMake(0.0, 0.0, 1.0, rateH);//0~1 自动居中 Q:如何设置1：1  3：4 等图片的尺寸
+    }
+    
+    
+    if (!_scaleFilter) {
+        _scaleFilter = [[GPUImageFilter alloc] init];
+        CGFloat scale = [UIScreen mainScreen].scale;
+        CGSize size = [UIScreen mainScreen].bounds.size;
+        [_scaleFilter forceProcessingAtSizeRespectingAspectRatio:CGSizeMake(size.width * scale, size.height * scale)];
+    }
+
+    //缩减渲染比例 降低渲染成本
+    
+    [_cameraCurrent removeTarget:_scaleFilter];
+    
+//    [_cameraCurrent addTarget:_scaleFilter];
+//    [_scaleFilter addTarget:_cropFilter];
+//    [_cropFilter addTarget:self.presentView];
+    
+    
+    [_cameraCurrent addTarget:_scaleFilter];
+    [_scaleFilter addTarget:_cropFilter];
+    [_cropFilter addTarget:self.presentView];
+    
 }
 
 - (void)launchCamera {
@@ -372,8 +413,6 @@
     [_cameraCurrent configMetadataOutputWithDelegete];
     [_cameraCurrent startCameraCapture];
 }
-
-
 
 - (void)pauseCamera {
     [_cameraCurrent pauseCameraCapture];
@@ -423,13 +462,27 @@
     }
 }
 
-- (void)stopRecord {
+- (void)cancelRecord {
+    _recording = false;
+    if (_movieWriter) {
+        [_trailingOutput removeTarget:_movieWriter];
+        _cameraVideo.audioEncodingTarget = nil;
+        [_movieWriter finishRecording];
+//        _movieURL.path;//一般都会有内容的 要不要 外部决定
+    }
+}
+
+- (void)endRecord {
     _recording = false;
     if (_movieWriter) {
         [_trailingOutput removeTarget:_movieWriter];
         _cameraVideo.audioEncodingTarget = nil;
         [_movieWriter finishRecording];
         if ([[NSFileManager defaultManager] fileExistsAtPath:_movieURL.path]) {
+            //要不要保存之类的动作
+            
+        } else {
+            //保存失败
             
         }
     }

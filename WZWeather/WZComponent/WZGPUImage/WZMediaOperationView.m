@@ -15,8 +15,17 @@
 
 @property (nonatomic, strong) WZMediaConfigView *configView;//左手势
 @property (nonatomic, strong) WZMediaEffectShow *effectView;//右手势
+///退出拍摄 录影
 @property (nonatomic, strong) UIButton *closeBtn;
-@property (nonatomic, strong) UIButton *pickBtn;
+///拍摄按钮
+@property (nonatomic, strong) UIButton *shootBtn;
+///录影按钮
+@property (nonatomic, strong) UIView *recordView;
+///切换拍摄 录影 按钮
+@property (nonatomic, strong) UIButton *switchBtn;
+
+
+@property (nonatomic, assign) WZMediaType type;
 
 ///通过enable 判断是否在配置中`
 @property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePan;
@@ -45,13 +54,15 @@
     
     CGFloat topH = 0.0, bottomH = 0.0;
     if (@available(iOS 11.0, *)) {
-        if (MACRO_SYSTEM_IS_IPHONE_X) {
+        if (MACRO_SYSTEM_IS_IPHONE_X) 
+        {
             topH = 24.0;
             bottomH = 34.0;
         }
     }
     
     [self addSubview:self.effectView];
+    
     
     _closeBtn = [[UIButton alloc] init];
     _closeBtn.frame = CGRectMake(0.0, topH, 44.0 * 2, 44.0);
@@ -61,20 +72,40 @@
     [self addSubview:_closeBtn];
     [_closeBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    _pickBtn = [[UIButton alloc] init];
-    _pickBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - bottomH - 44.0, 44.0 * 2, 44.0);
-    _pickBtn.center = CGPointMake(MACRO_FLOAT_SCREEN_WIDTH / 2.0, _pickBtn.center.y);
-    [_pickBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_pickBtn setTitle:@"拍照" forState:UIControlStateNormal];
-    _pickBtn.backgroundColor = [UIColor yellowColor];
-    [self addSubview:_pickBtn];
-    [_pickBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _shootBtn = [[UIButton alloc] init];
+    _shootBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - bottomH - 44.0, 44.0 * 2, 44.0);
+    _shootBtn.center = CGPointMake(MACRO_FLOAT_SCREEN_WIDTH / 2.0, _shootBtn.center.y);
+    [_shootBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [_shootBtn setTitle:@"拍照" forState:UIControlStateNormal];
+    _shootBtn.backgroundColor = [UIColor yellowColor];
+    [self addSubview:_shootBtn];
+    [_shootBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    _recordView = [[UIView alloc] init];
+    _recordView.frame = _shootBtn.frame;
+    _recordView.backgroundColor = [UIColor redColor];
+    _recordView.hidden = true;
+    [self addSubview:_recordView];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] init];
+    [longPress addTarget:self action:@selector(longPress:)];
+    [_recordView addGestureRecognizer:longPress];
     
     
+    _switchBtn = [[UIButton alloc] init];
+    _switchBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - 44, 44.0 * 2.0, 44);
+    _switchBtn.backgroundColor = [UIColor magentaColor];
+    [_switchBtn setTitle:@"切换" forState:UIControlStateNormal];
+    [_switchBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_switchBtn];
+    
+    
+#warning Why it need two edge gesture.....
     _edgePan = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
     _edgePan.edges = UIRectEdgeLeft;
     _edgePanR = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
-    _edgePan.edges = UIRectEdgeLeft;//有坑...
+    _edgePan.edges = UIRectEdgeLeft;
     _edgePanR.edges = UIRectEdgeRight;
     [self addGestureRecognizer:_edgePan];
     [self addGestureRecognizer:_edgePanR];
@@ -90,12 +121,26 @@
         if ([_delegate respondsToSelector:@selector(operationView:closeBtnAction:)]) {
             [_delegate operationView:self closeBtnAction:sender];
         }
-    } else if (sender == _pickBtn) {
-        if ([_delegate respondsToSelector:@selector(operationView:pickBtnAction:)]) {
-            [_delegate operationView:self pickBtnAction:sender];
+    } else if (sender == _shootBtn) {
+        if ([_delegate respondsToSelector:@selector(operationView:shootBtnAction:)]) {
+            [_delegate operationView:self shootBtnAction:sender];
         }
+    } else if (sender == _switchBtn) {
+        WZMediaType targetType = WZMediaTypeStillImage;
+        
+        if (_type == WZMediaTypeVideo) {
+        } else {
+            targetType = WZMediaTypeVideo;
+        }
+        
+        if ([_delegate respondsToSelector:@selector(operationView:swithToMediaType:)]) {
+            [_delegate operationView:self swithToMediaType:targetType];
+        }
+        [self switchModeWithType:targetType];
     }
 }
+
+
 
 ///边缘手势
 - (void)screenEdgePan:(UIScreenEdgePanGestureRecognizer *)pan {
@@ -148,6 +193,34 @@
     }];
 }
 
+- (void)longPress:(UILongPressGestureRecognizer *)longPress {
+    if (longPress.view == _recordView) {
+        if (longPress.state == UIGestureRecognizerStateBegan) {
+            _recordView.backgroundColor = [UIColor greenColor];
+            //开始录制
+            if ([_delegate respondsToSelector:@selector(operationView:startRecordGesture:)]) {
+                [_delegate operationView:self startRecordGesture:longPress];
+            }
+        } else if (longPress.state == UIGestureRecognizerStateEnded
+                   || longPress.state == UIGestureRecognizerStateCancelled
+                   || longPress.state == UIGestureRecognizerStateFailed) {
+            _recordView.backgroundColor = [UIColor redColor];
+            //结束录制
+            if (longPress.state == UIGestureRecognizerStateEnded) {
+                //传结束代理
+                if ([_delegate respondsToSelector:@selector(operationView:endRecordGesture:)]) {
+                    [_delegate operationView:self endRecordGesture:longPress];
+                }
+            } else {
+                //传终止代理
+                if ([_delegate respondsToSelector:@selector(operationView:breakRecordGesture:)]) {
+                    [_delegate operationView:self breakRecordGesture:longPress];
+                }
+            }
+        }
+    }
+}
+
 #pragma mark - Accessor
 -(WZMediaConfigView *)configView {
     if (!_configView) {
@@ -170,10 +243,6 @@
     return _effectView;
 }
 
-- (void)setSource:(GPUImageOutput *)source {
-    self.effectView.inputSource = source;
-}
-
 - (AVAudioPlayer *)timeMusicPlayer {
     if (!_timeMusicPlayer) {
         NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"tickta" ofType:@"wav"];       //创建音乐文件路径,可以选其他格式
@@ -181,6 +250,23 @@
         _timeMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL error:nil];
     }
     return _timeMusicPlayer;
+}
+
+#pragma mark - Public
+
+- (void)switchModeWithType:(WZMediaType)type {
+    _type = type;
+    if (type == WZMediaTypeVideo) {
+        //video
+        _recordView.hidden = false;
+        _shootBtn.hidden = true;
+        
+    } else {
+        //still image
+        _recordView.hidden = true;
+        _shootBtn.hidden = false;
+        
+    }
 }
 
 #pragma mark - WZMediaConfigViewProtocol
