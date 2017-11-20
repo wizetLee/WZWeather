@@ -68,7 +68,7 @@
    
 }
 
-#warning 除非在低分辨率的情况下 才可不停地修改此值， 因为GPUImage内部有做键值对缓存 或者修改源码...
+#warning 除非在低分辨率的情况下 才可不停地修改此值， 因为GPUImage内部有做键值对缓存 或者修改源码... 另外的contex单例中的缓存是比较大的 可以考虑适时释放掉那个缓存
 - (void)setCropValue:(CGFloat)value {
     //停止所有渲染的动作
     __weak typeof(self) weakSelf = self;
@@ -368,6 +368,8 @@ static int stride = 0;
     if (_mediaType == WZMediaTypeVideo) {
         _cameraVideo = [[GPUImageVideoCamera alloc] initWithSessionPreset:preset cameraPosition:position];
         _cameraCurrent = _cameraVideo;
+#warning 如果临时加上音频输出的化 会出现闪烁 所以加在初始化这里
+        [_cameraVideo addAudioInputsAndOutputs];///
     } else {
  
         _cameraStillImage = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
@@ -481,6 +483,10 @@ static int stride = 0;
     ///已经配置完毕的链
     [_trailingOutput addTarget:_movieWriter];
     
+    //开启声音采集 an expensive operation ........ https://stackoverflow.com/questions/30251784/gpuimagemoviewriter-black-frame-caused-by-audioencodingtarget
+    _movieWriter.hasAudioTrack = true;
+    _movieWriter.shouldPassthroughAudio = true;
+    _cameraVideo.audioEncodingTarget = _movieWriter;//////因为重新配置了输出和输入operation
 }
 
 - (void)startRecord {
@@ -491,7 +497,7 @@ static int stride = 0;
     [self prepareRecordWithMovieName:@"name.m4v" outputSize:CGSizeZero trailingOutPut:nil];
     if (_movieWriter) {
         _recording = true;
-        _cameraVideo.audioEncodingTarget = _movieWriter;
+       
 //        _movieWriter startRecordingInOrientation:(CGAffineTransform)
         /////录制方向变更
         [_movieWriter startRecording];
@@ -525,6 +531,9 @@ static int stride = 0;
             }
             
             [_moviesNameContainer addObject:url];
+            
+            
+            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];
             
         } else {
             //保存失败

@@ -903,6 +903,14 @@
 		846D16071FBC0C5D00E78FFF /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
+		8483E7BB1FC2658500C559EF /* WZSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZSearchBar.h; sourceTree = "<group>"; };
+		8483E7BC1FC2658500C559EF /* WZSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZSearchBar.m; sourceTree = "<group>"; };
+		8483E7BE1FC2658C00C559EF /* WZTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTextView.h; sourceTree = "<group>"; };
+		8483E7BF1FC2658C00C559EF /* WZTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTextView.m; sourceTree = "<group>"; };
+		8483E7C01FC2659A00C559EF /* WZTriangleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTriangleView.m; sourceTree = "<group>"; };
+		8483E7C11FC2659A00C559EF /* WZTriangleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTriangleView.h; sourceTree = "<group>"; };
+		8483E7C31FC265DF00C559EF /* WZStarRatingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZStarRatingView.h; sourceTree = "<group>"; };
+		8483E7C41FC265DF00C559EF /* WZStarRatingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZStarRatingView.m; sourceTree = "<group>"; };
 		8486332F1F95CCD20086C96E /* WZMediaController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaController.h; sourceTree = "<group>"; };
 		848633301F95CCD20086C96E /* WZMediaController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaController.m; sourceTree = "<group>"; };
 		848633451F95EBA60086C96E /* WZAppManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAppManager.h; sourceTree = "<group>"; };
@@ -1015,6 +1023,11 @@
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
+				8483E7C21FC265DF00C559EF /* WZStarRatingView */,
+				8483E7C11FC2659A00C559EF /* WZTriangleView.h */,
+				8483E7C01FC2659A00C559EF /* WZTriangleView.m */,
+				8483E7BD1FC2658C00C559EF /* WZTextView */,
+				8483E7BA1FC2658500C559EF /* WZSearchBar */,
 				840547531FB9A9380033EF9B /* WZToast */,
 				840A43951FB141B100F6D449 /* WZAlert */,
 				402AB18F1F0732D600136DB4 /* WZScrollOptions */,
@@ -2346,6 +2359,33 @@
 			children = (
 			);
 			path = WZSwift;
+			sourceTree = "<group>";
+		};
+		8483E7BA1FC2658500C559EF /* WZSearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				8483E7BB1FC2658500C559EF /* WZSearchBar.h */,
+				8483E7BC1FC2658500C559EF /* WZSearchBar.m */,
+			);
+			path = WZSearchBar;
+			sourceTree = "<group>";
+		};
+		8483E7BD1FC2658C00C559EF /* WZTextView */ = {
+			isa = PBXGroup;
+			children = (
+				8483E7BE1FC2658C00C559EF /* WZTextView.h */,
+				8483E7BF1FC2658C00C559EF /* WZTextView.m */,
+			);
+			path = WZTextView;
+			sourceTree = "<group>";
+		};
+		8483E7C21FC265DF00C559EF /* WZStarRatingView */ = {
+			isa = PBXGroup;
+			children = (
+				8483E7C31FC265DF00C559EF /* WZStarRatingView.h */,
+				8483E7C41FC265DF00C559EF /* WZStarRatingView.m */,
+			);
+			path = WZStarRatingView;
 			sourceTree = "<group>";
 		};
 		8486332B1F95CA030086C96E /* WZGPUImage */ = {

@@ -93,7 +93,6 @@
         //得到一个检查方向的回调
         __weak typeof(self) weakSelf = self;
         
-        
         [ self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
             CMAcceleration acceleration = weakSelf.motionManager.accelerometerData.acceleration;
            

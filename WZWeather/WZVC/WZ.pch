@@ -42,6 +42,8 @@
 //第三方
 #import "AFNetworking/AFNetworking.h"
 #import "MJRefresh.h"///iOS 11 上应该是有BUG的
+#import <GPUImage/GPUImage.h>
+#import <Masonry/Masonry.h>
 
 //第三方的派生
 #import "WZAFNetworkReachabilityManager.h"
