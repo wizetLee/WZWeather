@@ -18,8 +18,8 @@
 @interface WZVariousCollectionSectionsBaseProvider : NSObject
 @property (nonatomic, weak) id<WZVariousCollectionSectionsBaseProviderDelegate> providerDelegate;
 
-@property (nonatomic, strong) id headerData;
-@property (nonatomic, strong) id footerData;
+@property (nonatomic, strong) id headerData;//更新header的模型
+@property (nonatomic, strong) id footerData;//同上
 @property (nonatomic, assign) UIEdgeInsets sectionInsect;
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;

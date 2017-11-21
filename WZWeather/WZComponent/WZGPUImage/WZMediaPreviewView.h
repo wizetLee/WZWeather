@@ -12,13 +12,20 @@
 #import "WZGPUImagePreinstall.h"
 #import "GPUImageVideoCamera+assist.h"
 
+/***
+     关于视频录制的时间：参考抖音 15s短视频
+ 
+
+ ****/
 @class WZMediaPreviewView;
 
 @protocol WZMediaPreviewViewProtocol <NSObject>
 
 @optional
-- (void)previewView:(WZMediaPreviewView *)view;
-
+///完成了一份视频的录制
+- (void)previewView:(WZMediaPreviewView *)view didCompleteTheRecordingWithFileURL:(NSURL *)fileURL;
+///录制的时间回调 最后的时间会稍微有点波动，但最后输出的是正确的时间
+- (void)previewView:(WZMediaPreviewView *)view audioVideoWriterRecordingCurrentTime:(CMTime)time last:(BOOL)last;
 
 @end
 
@@ -42,7 +49,7 @@
  */
 
 
-@property (nonatomic, strong) NSMutableArray *moviesNameContainer;//存名字   URL为 相对路径+名字
+@property (nonatomic, strong, readonly) NSMutableArray *moviesNameContainer;//存名字   URL为 相对路径+名字
 
 
 - (void)pickMediaType:(WZMediaType)mediaType;

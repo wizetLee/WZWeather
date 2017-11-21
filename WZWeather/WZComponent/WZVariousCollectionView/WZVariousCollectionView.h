@@ -16,8 +16,8 @@
 //注册header footer cell
 @property (nonatomic, strong) NSMutableArray <WZVariousCollectionSectionsBaseProvider *>*sectionsProviders;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, Class>*registerCellDic;
-@property (nonatomic, weak) id<WZVariousCollectionDelegate> variousCollectionDelegate;
-@property (nonatomic, weak) UIViewController *locatedController;
+@property (nonatomic,   weak) id<WZVariousCollectionDelegate> variousCollectionDelegate;
+@property (nonatomic,   weak) UIViewController *locatedController;
 //数据源
 /**
  *  section data Source

@@ -13,10 +13,10 @@
 
 @interface WZMediaPreviewView()<GPUImageVideoCameraDelegate>
 
-@property (nonatomic, strong) GPUImageStillCamera *cameraStillImage;//静态图
-@property (nonatomic, strong) GPUImageVideoCamera *cameraVideo;//录像
+@property (nonatomic, strong) GPUImageStillCamera *cameraStillImage;//静态图采样
+@property (nonatomic, strong) GPUImageVideoCamera *cameraVideo;//录像采样
 
-@property (nonatomic, strong) GPUImageMovieWriter *movieWriter;//录像
+@property (nonatomic, strong) GPUImageMovieWriter *movieWriter;//录像机
 @property (nonatomic,   weak) GPUImageOutput <GPUImageInput >* trailingOutput;
 
 ///用于人脸识别
@@ -24,6 +24,10 @@
 @property (nonatomic, strong) NSMutableDictionary <NSString*, UIView *>*faceMap;
 
 @property (nonatomic, strong) NSString *curRecordingName;//当前正在录制的视频/或是上一次录制好的视频的名字 需要配合上路径访问视频
+@property (nonatomic, strong) NSMutableArray *moviesNameContainer;//存名字   URL为 相对路径+名字
+
+@property (nonatomic, assign) CMTime recordStartTime;//开始录制的事件(output sample 的时间)
+@property (nonatomic, assign) CMTime recordTotalTime;//一共录制了多少时间
 
 @end
 
@@ -58,14 +62,14 @@
 
 - (void)config {
     _faceMap = [NSMutableDictionary dictionary];
+    _moviesNameContainer = [NSMutableArray array];
     _mediaType = WZMediaTypeStillImage;
-    
+    _recordStartTime = kCMTimeZero;
+    _recordTotalTime = kCMTimeZero;
 #warning 最好提前创建好的目录 不然我也不知道会发生什么错误....
+    [[NSFileManager defaultManager] removeItemAtPath:[NSObject wz_filePath:WZSearchPathDirectoryDocument fileName:MovieFolderName] error:nil];
     [NSObject wz_createFolderAtPath:[NSObject wz_filePath:WZSearchPathDirectoryDocument fileName:MovieFolderName]];
-   
-    [self pickMediaType:_mediaType];
     
-   
 }
 
 #warning 除非在低分辨率的情况下 才可不停地修改此值， 因为GPUImage内部有做键值对缓存 或者修改源码... 另外的contex单例中的缓存是比较大的 可以考虑适时释放掉那个缓存
@@ -149,8 +153,10 @@
 }
 
 #pragma mark - GPUImageVideoCameraDelegate
-
+///都是图像的采样
 - (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+    [self calculateTimeWith:sampleBuffer];
+    
     /// Vision 视觉库的代码
     if (@available(iOS 11.0, *)) {
         /*
@@ -159,7 +165,6 @@
              2、生成handler 用以执行request 产生回调
              3、处理回调结果
          */
-        
         
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         
@@ -281,7 +286,6 @@
     return CGRectMake(x, y, w, h);
 }
 
-
 #pragma mark - GPUImageVideoCameraAssistProtocol
 - (void)videoCamera:(GPUImageVideoCamera *)camera currentOrientation:(UIDeviceOrientation *)orientation {
     
@@ -291,7 +295,6 @@
     for (UIView *tmpView in _faceMap.allValues) {
         tmpView.alpha = 0;
     }
-    NSLog(@"_______");
 }
 
 ///人脸识别    苹果的算法也有缺陷、太远的距离 不精确
@@ -354,7 +357,7 @@ static int stride = 0;
 }
 
 - (void)pickMediaType:(WZMediaType)mediaType {
-    if (_mediaType == mediaType && _cameraStillImage) {return;}
+//    if (_mediaType == mediaType && _cameraStillImage) {return;}
     
     _mediaType = mediaType;
     //断链
@@ -418,6 +421,7 @@ static int stride = 0;
 }
 
 - (void)launchCamera {
+    [self pickMediaType:_mediaType];
     _cameraCurrent.delegate = (id<GPUImageVideoCameraDelegate>)self;
     [_cameraCurrent configMetadataOutputWithDelegete];
     [_cameraCurrent startCameraCapture];
@@ -486,24 +490,85 @@ static int stride = 0;
     //开启声音采集 an expensive operation ........ https://stackoverflow.com/questions/30251784/gpuimagemoviewriter-black-frame-caused-by-audioencodingtarget
     _movieWriter.hasAudioTrack = true;
     _movieWriter.shouldPassthroughAudio = true;
-    _cameraVideo.audioEncodingTarget = _movieWriter;//////因为重新配置了输出和输入operation
+    _cameraVideo.audioEncodingTarget = _movieWriter;//因为重新配置了输出和输入operation
+}
+
+///计算录像的总时间
+- (void)calculateTimeWith:(CMSampleBufferRef)sampleBuffer {
+    if (_recording) {
+        //得到时间
+        //        CMTime duration = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+        
+        CMTime duration = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+        if (CMTimeCompare(_recordStartTime, kCMTimeZero) == 0) {
+            _recordStartTime = CMTimeMake(duration.value, duration.timescale);//获得拍摄的时间
+        }
+        CMTime progressTime = CMTimeSubtract(duration , _recordStartTime);//有点误差， 需要录制完之后再校对一次吧
+        progressTime = CMTimeAdd(_recordTotalTime, progressTime);//加上之前拍照的总时间数目
+        //回调出去
+       
+        if ([_delegate respondsToSelector:@selector(previewView:audioVideoWriterRecordingCurrentTime:last:)]) {
+            [_delegate previewView:self audioVideoWriterRecordingCurrentTime:progressTime last:false];
+        }
+    } else {
+        
+    }
+}
+
+- (void)startRecordTimeConfig {
+    _recordStartTime = kCMTimeZero;
+
+}
+
+- (void)resetTotalTime {
+    _recordTotalTime = kCMTimeZero;
+    for (NSURL *url in _moviesNameContainer) {
+        if ([url isKindOfClass:[NSURL class]]) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+                AVAsset *asset = [AVAsset assetWithURL:url];
+                _recordTotalTime = CMTimeAdd(_recordTotalTime, asset.duration);
+            }
+        }
+    }
+}
+
+- (void)endRecordTimeConfig {
+//    结算总时间
+    sleep(0.1);//为了准确获取时间
+    [self resetTotalTime];
+    if ([_delegate respondsToSelector:@selector(previewView:audioVideoWriterRecordingCurrentTime:last:)]) {
+        [_delegate previewView:self audioVideoWriterRecordingCurrentTime:_recordTotalTime last:true];//传回准确的总拍摄时间
+    }
 }
 
 - (void)startRecord {
+    ///时间配置
+    [self startRecordTimeConfig];
+    
+    ///相机配置
     _cameraVideo.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
     _cameraVideo.horizontallyMirrorFrontFacingCamera = NO;
     _cameraVideo.horizontallyMirrorRearFacingCamera = NO;
-
-    [self prepareRecordWithMovieName:@"name.m4v" outputSize:CGSizeZero trailingOutPut:nil];
+    ///带变量的文件名
+    
+    [self prepareRecordWithMovieName:[self newMovieName] outputSize:CGSizeZero trailingOutPut:nil];
     if (_movieWriter) {
-        _recording = true;
+        
        
 //        _movieWriter startRecordingInOrientation:(CGAffineTransform)
         /////录制方向变更
         [_movieWriter startRecording];
+        _recording = true;
+        
+       
     } else {
         NSLog(@"请注意：movie writer 还没配置完成");
     }
+}
+
+- (NSString *)newMovieName {
+    NSString *movieName = [NSString stringWithFormat:@"recordMovie%ld.m4v", _moviesNameContainer.count];
+    return movieName;
 }
 
 - (void)cancelRecord {
@@ -519,27 +584,25 @@ static int stride = 0;
 - (void)endRecord {
     _recording = false;
     if (_movieWriter && _curRecordingName) {
-        [_trailingOutput removeTarget:_movieWriter];
-        _cameraVideo.audioEncodingTarget = nil;
-        [_movieWriter finishRecording];
+        [self cancelRecord];
         NSURL *url = [self movieURLWithMovieName:_curRecordingName];
         if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
             //要不要保存之类的动作
-            NSLog(@"%@", url.path);
-            if (!_moviesNameContainer) {
-                _moviesNameContainer =[NSMutableArray array];
+            NSLog(@"当前录制的文件路径：%@", url.path);
+            [_moviesNameContainer addObject:url];
+            if ([_delegate respondsToSelector:@selector(previewView:didCompleteTheRecordingWithFileURL:)]) {
+                [_delegate previewView:self didCompleteTheRecordingWithFileURL:url];
             }
             
-            [_moviesNameContainer addObject:url];
-            
-            
-            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];
-            
+//            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];//
         } else {
             //保存失败
             
         }
     }
+    
+    ///时间配置
+    [self endRecordTimeConfig];
 }
 
 

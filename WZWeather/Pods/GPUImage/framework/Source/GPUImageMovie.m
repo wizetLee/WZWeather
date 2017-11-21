@@ -172,7 +172,7 @@
     AVURLAsset *inputAsset = [[AVURLAsset alloc] initWithURL:self.url options:inputOptions];
     
     GPUImageMovie __block *blockSelf = self;
-    
+    //异步检查状态
     [inputAsset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObject:@"tracks"] completionHandler: ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *error = nil;
@@ -210,6 +210,7 @@
 
     NSArray *audioTracks = [self.asset tracksWithMediaType:AVMediaTypeAudio];
     BOOL shouldRecordAudioTrack = (([audioTracks count] > 0) && (self.audioEncodingTarget != nil) );
+    //判断是否存在音轨 以及 有无音频编码对象
     AVAssetReaderTrackOutput *readerAudioTrackOutput = nil;
 
     if (shouldRecordAudioTrack)
@@ -244,6 +245,7 @@
         }
     }
 
+    ////开始读写
     if ([reader startReading] == NO) 
     {
             NSLog(@"Error reading from file at URL: %@", self.url);
@@ -254,6 +256,7 @@
 
     if (synchronizedMovieWriter != nil)
     {
+        ///从帧缓存中得到  也就是  实际录制的状态
         [synchronizedMovieWriter setVideoInputReadyCallback:^{
             return [weakSelf readNextVideoFrameFromOutput:readerVideoTrackOutput];
         }];
@@ -266,6 +269,7 @@
     }
     else
     {
+        ///从文件中读取
         while (reader.status == AVAssetReaderStatusReading && (!_shouldRepeat || keepLooping))
         {
                 [weakSelf readNextVideoFrameFromOutput:readerVideoTrackOutput];
