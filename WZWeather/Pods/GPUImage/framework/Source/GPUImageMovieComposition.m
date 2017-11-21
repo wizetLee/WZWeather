@@ -50,14 +50,14 @@
     readerVideoOutput.alwaysCopiesSampleData = NO;
     [assetReader addOutput:readerVideoOutput];
 
-    NSArray *audioTracks = [_compositon tracksWithMediaType:AVMediaTypeAudio];
+    NSArray *audioTracks = [_compositon tracksWithMediaType:AVMediaTypeAudio];//多个声音通道 组成的混音
     BOOL shouldRecordAudioTrack = (([audioTracks count] > 0) && (self.audioEncodingTarget != nil) );
     AVAssetReaderAudioMixOutput *readerAudioOutput = nil;
 
     if (shouldRecordAudioTrack)
     {
         [self.audioEncodingTarget setShouldInvalidateAudioSampleWhenDone:YES];
-        
+        AVAsset
         readerAudioOutput = [AVAssetReaderAudioMixOutput assetReaderAudioMixOutputWithAudioTracks:audioTracks audioSettings:nil];
         readerAudioOutput.audioMix = self.audioMix;
         readerAudioOutput.alwaysCopiesSampleData = NO;

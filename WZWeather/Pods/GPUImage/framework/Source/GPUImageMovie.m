@@ -361,12 +361,12 @@
             if (_playAtActualSpeed)
             {
                 // Do this outside of the video processing queue to not slow that down while waiting
-                CMTime currentSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBufferRef);
-                CMTime differenceFromLastFrame = CMTimeSubtract(currentSampleTime, previousFrameTime);
-                CFAbsoluteTime currentActualTime = CFAbsoluteTimeGetCurrent();
+                CMTime currentSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBufferRef);//渲染输出的时间
+                CMTime differenceFromLastFrame = CMTimeSubtract(currentSampleTime, previousFrameTime);//先前的帧的时间
+                CFAbsoluteTime currentActualTime = CFAbsoluteTimeGetCurrent();//得到相对时间
                 
-                CGFloat frameTimeDifference = CMTimeGetSeconds(differenceFromLastFrame);
-                CGFloat actualTimeDifference = currentActualTime - previousActualFrameTime;
+                CGFloat frameTimeDifference = CMTimeGetSeconds(differenceFromLastFrame);//
+                CGFloat actualTimeDifference = currentActualTime - previousActualFrameTime;//
                 
                 if (frameTimeDifference > actualTimeDifference)
                 {
@@ -380,7 +380,7 @@
             __unsafe_unretained GPUImageMovie *weakSelf = self;
             runSynchronouslyOnVideoProcessingQueue(^{
                 [weakSelf processMovieFrame:sampleBufferRef];
-                CMSampleBufferInvalidate(sampleBufferRef);
+                CMSampleBufferInvalidate(sampleBufferRef);//释放
                 CFRelease(sampleBufferRef);
             });
 
