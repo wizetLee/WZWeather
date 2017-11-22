@@ -19,7 +19,7 @@
      处理好渲染线程和主线程之间的关系，在渲染线程处理数据必要时需要加锁
  */
 
-@interface WZMediaController ()<WZMediaPreviewViewProtocol, WZMediaOperationViewProtocol>
+@interface WZMediaController ()<WZMediaPreviewViewProtocol, WZMediaOperationViewProtocol, WZMediaGestureViewProtocol>
 {
     BOOL sysetmNavigationBarHiddenState;
 }
@@ -74,7 +74,7 @@
         sysetmNavigationBarHiddenState = self.navigationController.navigationBarHidden;
         self.navigationController.navigationBarHidden = true;
     }
-    
+    [_mediaPreviewView pickMediaType:_mediaPreviewView.mediaType];
     [_mediaPreviewView launchCamera];
 }
 
@@ -129,12 +129,39 @@
     });
 }
 
+#pragma mark - WZMediaGestureViewProtocol
+///更新焦点
+- (void)gestureView:(WZMediaGestureView *)view updateFocusAtPoint:(CGPoint)point; {
+    CGPoint targetPoint = [self.mediaPreviewView calculatePointOfInterestWithPoint:point];
+    [self.mediaPreviewView.cameraCurrent focusAtPoint:targetPoint];
+}
+///更新曝光点
+- (void)gestureView:(WZMediaGestureView *)view updateExposureAtPoint:(CGPoint)point; {
+    CGPoint targetPoint = [self.mediaPreviewView calculatePointOfInterestWithPoint:point];
+    [self.mediaPreviewView.cameraCurrent exposureAtPoint:targetPoint];
+}
+
+///同时更新焦点以及曝光点
+- (void)gestureView:(WZMediaGestureView *)view updateFocusAndExposureAtPoint:(CGPoint)point; {
+    CGPoint targetPoint = [self.mediaPreviewView calculatePointOfInterestWithPoint:point];
+    
+    [self.mediaPreviewView.cameraCurrent autoFocusAndExposureAtPoint:targetPoint];
+}
+
+
+///焦距更变
+- (void)gestureView:(WZMediaGestureView *)view updateZoom:(CGFloat)zoom {
+    [self.mediaPreviewView setZoom:zoom];
+}
+
+//边缘手势
+- (void)gestureView:(WZMediaGestureView *)view screenEdgePan:(UIScreenEdgePanGestureRecognizer *)screenEdgePan {
+    [self.mediaOperationView screenEdgePan:screenEdgePan];
+}
 #pragma mark - WZMediaOperationViewProtocol
 - (void)operationView:(WZMediaOperationView*)view closeBtnAction:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:true];
     //清空数据
-    
-    
 }
 
 - (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender {
@@ -150,6 +177,7 @@
 ///配置类型时间
 - (void)operationView:(WZMediaOperationView*)view configType:(WZMediaConfigType)type {
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+#warning 这个比例在iPhoneX 需要更改 目前只是修改为屏幕的1:1、4:3、16:9的比例 需要更改
     CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
     /*
      WZMediaConfigType_none                  = 0,
@@ -170,6 +198,7 @@
         case WZMediaConfigType_canvas_1_multiply_1: {
             //                切换到选中效果
             CGFloat targetH = screenW / 1.0 * 1.0;//显示在屏幕的控件高度
+
             CGFloat rateH = targetH / screenH;
             rateH = (int)(rateH * 1000) / 1000.0;
             [_mediaPreviewView setCropValue:rateH];
@@ -241,27 +270,22 @@
     //设置输出目标为GPUImageMovieWriter并开始处理
     //把处理完毕的数据写入手机
     
-    AVAsset *asset;
-    AVMutableComposition *mutavleComosition = [AVMutableComposition composition];
-    // 视频时间范围
-    CMTimeRange videoTimeRange = CMTimeRangeMake(kCMTimeZero, asset.duration);
-    AVMutableCompositionTrack *videoTrack = [mutavleComosition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-    AVAssetTrack *videoAssetTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] firstObject];//视频通道
-  
-    
-    
-    
-    AVComposition *composition = [[AVComposition alloc] init];
-    AVVideoComposition *videoComposition = [[AVVideoComposition alloc] init];//
-    AVAudioMix *audioMIx = [[AVAudioMix alloc] init];
-    
-    ///
-    GPUImageMovieComposition *movieComposition = [[GPUImageMovieComposition alloc] initWithComposition:composition andVideoComposition:videoComposition andAudioMix:audioMIx];
-    
+    //1、合成单一一个视频  加入渐变效果？  以下代码有较高的准确率
+    NSMutableArray *assetMArr = [NSMutableArray array];
+    for (NSString *tmpStr in self.mediaPreviewView.moviesNameMarr) {
+        AVAsset *asset = [AVAsset assetWithURL:[self.mediaPreviewView movieURLWithMovieName:tmpStr]];
+        NSLog(@"~~~~~%lf", CMTimeGetSeconds(asset.duration));
+        if (asset) {
+            [assetMArr addObject:asset];
+        }
+    }
+    AVMutableComposition *mutableComposition = [[self class] compositionWithSegments:assetMArr];
+    NSLog(@"~~~~~%lf", CMTimeGetSeconds(mutableComposition.duration));
+    //2、插入视频的编码
 }
 
 ///输出合成的视频
-- (void)exportWithComposition:(AVComposition *)composition outputURL:(NSURL *)outputURL withProgressHandler:(void (^)(CGFloat progress))handler result:(void (^)(BOOL success))result {
++ (void)exportWithComposition:(AVComposition *)composition outputURL:(NSURL *)outputURL withProgressHandler:(void (^)(CGFloat progress))handler result:(void (^)(BOOL success))result {
     //    AVMutableComposition *composition = [WZCamera compositionWithSegments:_camera.videoRecordSegmentMArr];
     //    NSLog(@"合成路径!!!:%@", composition);
     //    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:composition];
@@ -299,6 +323,7 @@
     //输出
     exportSession = nil;//置空
 }
+
 
 
 
@@ -402,6 +427,7 @@
     
     _mediaOperationView = [[WZMediaOperationView alloc] initWithFrame:_mediaPreviewView.bounds];
     _mediaOperationView.delegate = self;
+    _mediaOperationView.gestureDelegate = self;
     [self.view addSubview:_mediaOperationView];
     
     if (_mediaPreviewView.mediaType == WZMediaTypeVideo) {

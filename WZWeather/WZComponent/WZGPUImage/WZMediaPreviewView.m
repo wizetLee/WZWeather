@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSMutableDictionary <NSString*, UIView *>*faceMap;
 
 @property (nonatomic, strong) NSString *curRecordingName;//当前正在录制的视频/或是上一次录制好的视频的名字 需要配合上路径访问视频
-@property (nonatomic, strong) NSMutableArray *moviesNameContainer;//存名字   URL为 相对路径+名字
+@property (nonatomic, strong) NSMutableArray *moviesNameMarr;//存名字   URL为 相对路径+名字
 
 @property (nonatomic, assign) CMTime recordStartTime;//开始录制的事件(output sample 的时间)
 @property (nonatomic, assign) CMTime recordTotalTime;//一共录制了多少时间
@@ -62,7 +62,7 @@
 
 - (void)config {
     _faceMap = [NSMutableDictionary dictionary];
-    _moviesNameContainer = [NSMutableArray array];
+    _moviesNameMarr = [NSMutableArray array];
     _mediaType = WZMediaTypeStillImage;
     _recordStartTime = kCMTimeZero;
     _recordTotalTime = kCMTimeZero;
@@ -87,7 +87,6 @@
         for (GPUImageFilter *filter in tmpArr) {
             [weakSelf.cropFilter addTarget:filter];
         }
-
     });
 }
 
@@ -141,15 +140,12 @@
 - (void)createViews {
     
     [self addSubview:self.presentView];
-    _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.cameraCurrent.captureSession];
-//    [self.layer addSublayer:_previewLayer];
-    _previewLayer.frame = CGRectMake(0.0, 0.0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+  
 }
 
 -(void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     _presentView.frame = self.bounds;
-    
 }
 
 #pragma mark - GPUImageVideoCameraDelegate
@@ -348,6 +344,10 @@ static int stride = 0;
 
 #pragma mark - Public
 
+- (void)setZoom:(CGFloat)zoom {
+    [self.cameraCurrent setDeviceZoomFactor:zoom];
+}
+
 - (NSURL *)movieURLWithMovieName:(NSString *)name {
 	return [NSURL fileURLWithPath:[[self movieFolder] stringByAppendingPathComponent:name]];
 }
@@ -373,11 +373,41 @@ static int stride = 0;
         _cameraCurrent = _cameraVideo;
 #warning 如果临时加上音频输出的化 会出现闪烁 所以加在初始化这里
         [_cameraVideo addAudioInputsAndOutputs];///
+        
+        AVCaptureVideoStabilizationMode stabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+        //视频防抖  产生延时效果
+//        if ([_cameraCurrent.inputCamera.activeFormat isVideoStabilizationModeSupported:stabilizationMode]) {
+//            AVCaptureConnection *videoOutput = [_cameraCurrent videoCaptureConnection];
+//            [videoOutput setPreferredVideoStabilizationMode:stabilizationMode];
+//        }
+        
+        
     } else {
  
         _cameraStillImage = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
         _cameraCurrent = _cameraStillImage;
     }
+    
+    
+    
+    //视频 HDR (高动态范围图像)
+    if ([_cameraCurrent.inputCamera lockForConfiguration:nil]) {
+        _cameraCurrent.inputCamera.automaticallyAdjustsVideoHDREnabled = true;//留给系统处理;
+        [_cameraCurrent.inputCamera unlockForConfiguration];
+    }
+    
+    //注意layer 因为与session相关 所以也需要重新配置
+    _previewLayer = nil;
+    _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.cameraCurrent.captureSession];
+    _previewLayer.frame = CGRectMake(0.0, 0.0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    _previewLayer.videoGravity = AVLayerVideoGravityResizeAspect; // 设置预览时的视频缩放方式
+    if ([_previewLayer.connection isVideoOrientationSupported]) {//设置视频的朝向
+        [[_previewLayer connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
+    }
+ 
+    //焦点 曝光
+    [self.cameraCurrent autoFocusAndExposureAtPoint:CGPointMake(0.5, 0.5)];//居中
+    
     
     [_cameraCurrent addCMMotionToMobile];
     _cameraCurrent.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向
@@ -421,7 +451,6 @@ static int stride = 0;
 }
 
 - (void)launchCamera {
-    [self pickMediaType:_mediaType];
     _cameraCurrent.delegate = (id<GPUImageVideoCameraDelegate>)self;
     [_cameraCurrent configMetadataOutputWithDelegete];
     [_cameraCurrent startCameraCapture];
@@ -447,7 +476,10 @@ static int stride = 0;
     [_cameraCurrent setFlashType:type];
 }
 
-
+- (CGPoint)calculatePointOfInterestWithPoint:(CGPoint)point {
+    if (!_previewLayer) {return  CGPointZero;}
+    return [_previewLayer captureDevicePointOfInterestForPoint:point];
+}
 
 #pragma mark - 视频录制部分
 /**
@@ -517,12 +549,12 @@ static int stride = 0;
 
 - (void)startRecordTimeConfig {
     _recordStartTime = kCMTimeZero;
-
 }
 
 - (void)resetTotalTime {
     _recordTotalTime = kCMTimeZero;
-    for (NSURL *url in _moviesNameContainer) {
+    for (NSString *fileName in _moviesNameMarr) {
+        NSURL *url = [self movieURLWithMovieName:fileName];
         if ([url isKindOfClass:[NSURL class]]) {
             if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
                 AVAsset *asset = [AVAsset assetWithURL:url];
@@ -567,7 +599,7 @@ static int stride = 0;
 }
 
 - (NSString *)newMovieName {
-    NSString *movieName = [NSString stringWithFormat:@"recordMovie%ld.m4v", _moviesNameContainer.count];
+    NSString *movieName = [NSString stringWithFormat:@"recordMovie%ld.m4v", _moviesNameMarr.count];
     return movieName;
 }
 
@@ -589,7 +621,7 @@ static int stride = 0;
         if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
             //要不要保存之类的动作
             NSLog(@"当前录制的文件路径：%@", url.path);
-            [_moviesNameContainer addObject:url];
+            [_moviesNameMarr addObject:_curRecordingName];
             if ([_delegate respondsToSelector:@selector(previewView:didCompleteTheRecordingWithFileURL:)]) {
                 [_delegate previewView:self didCompleteTheRecordingWithFileURL:url];
             }

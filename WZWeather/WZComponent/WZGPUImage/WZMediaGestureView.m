@@ -8,16 +8,28 @@
 
 #import "WZMediaGestureView.h"
 
-@interface WZMediaGestureView()
+@interface WZMediaGestureView()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIImageView *focusPointer;        //焦点
 @property (nonatomic, strong) UIImageView *exposurePointer;     //曝光
-@property (nonatomic, assign) CGFloat zoomScale;
+//@property (nonatomic, assign) CGFloat zoomScale;//配合pinch手势
+@property (nonatomic, assign) CGFloat zoom;//配合pan手势
+
 
 
 @end
 
 @implementation WZMediaGestureView
+
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self createViews];
+    }
+    return self;
+}
 
 - (void)createViews {
     self.backgroundColor = [UIColor clearColor];
@@ -32,13 +44,35 @@
     _focusPointer.alpha = 0.0;
     _exposurePointer.alpha = 0.0;
     
+    
+    _edgePan = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
+    _edgePan.edges = UIRectEdgeLeft;
+    _edgePanR = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
+    _edgePan.edges = UIRectEdgeLeft;
+    _edgePanR.edges = UIRectEdgeRight;
+    [self addGestureRecognizer:_edgePan];
+    [self addGestureRecognizer:_edgePanR];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [_focusPointer addGestureRecognizer:pan];
+    pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [_exposurePointer addGestureRecognizer:pan];
+    pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+
+    [self addGestureRecognizer:pan];
+   
+    ///设置优先级
+    [pan requireGestureRecognizerToFail:_edgePanR];
+    [pan requireGestureRecognizerToFail:_edgePan];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self addGestureRecognizer:tap];
     _focusPointer.center = self.center;
     _exposurePointer.center = self.center;
     
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinch:)];
-    [self addGestureRecognizer:pinch];
+//    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinch:)];
+//    [self addGestureRecognizer:pinch];
+    
 }
 
 #pragma mark - gesture
@@ -59,7 +93,6 @@ static BOOL focusPointerAndExposurePointerAnimating = false;
     focusPointerAndExposurePointerAnimating = true;
     
     //控制位置
-    
     CAAnimationGroup *groupAnimtion = [[self class] groupAnimationWithOrigionPoint:_focusPointer.center destinationPoint:curPoint];
     groupAnimtion.delegate = (id<CAAnimationDelegate>)self;
     [_focusPointer.layer addAnimation:groupAnimtion forKey:@"focusPointerGroupAnimation"];
@@ -70,6 +103,9 @@ static BOOL focusPointerAndExposurePointerAnimating = false;
     
     [self performSelector:@selector(mix:) withObject:[NSValue valueWithCGPoint:curPoint] afterDelay:groupAnimtion.duration];
     
+    if ([_delegate respondsToSelector:@selector(gestureView:updateFocusAndExposureAtPoint:)]) {
+        [_delegate gestureView:self updateFocusAndExposureAtPoint:curPoint];
+    }
 }
 
 + (CAAnimationGroup *)groupAnimationWithOrigionPoint:(CGPoint)origionPoint destinationPoint:(CGPoint)destinationPoint {
@@ -129,8 +165,8 @@ static BOOL focusPointerAndExposurePointerAnimating = false;
         _focusPointer.alpha = 0;
         _exposurePointer.alpha = 0;
     }];
-    NSLog(@"---%@", NSStringFromCGRect(_focusPointer.frame));
-    NSLog(@"---%@", NSStringFromCGRect(_exposurePointer.frame));
+//    NSLog(@"---%@", NSStringFromCGRect(_focusPointer.frame));
+//    NSLog(@"---%@", NSStringFromCGRect(_exposurePointer.frame));
 }
 
 ///平移手势
@@ -142,33 +178,64 @@ static BOOL focusPointerAndExposurePointerAnimating = false;
     if (locatedView == _focusPointer
         || locatedView == _exposurePointer) {
         [self moveFocusExposureWithPan:pan];
+    } else if (locatedView == self) {
+        if (pan.state == UIGestureRecognizerStateBegan) {
+            //记录开始的点
+            
+        } else if (pan.state == UIGestureRecognizerStateChanged) {
+            //相对转换
+            CGPoint point = [pan velocityInView:self];
+            
+            _zoom += point.y / self.frame.size.height / 100.0;
+            if (_zoom < 0) {
+                _zoom = 0;
+            }
+            if (_zoom > 1) {
+                _zoom = 1;
+            }
+            if ([self.delegate respondsToSelector:@selector(gestureView:updateZoom:)]) {
+                [self.delegate gestureView:self updateZoom:_zoom];
+            }
+        } else if (pan.state == UIGestureRecognizerStateFailed
+                   || pan.state == UIGestureRecognizerStateCancelled
+                   || pan.state == UIGestureRecognizerStateEnded) {
+            //
+            
+        }
     }
+    
+    //
 }
 
 ///捏合手势
-static float lastPinchScale = 0.0;
-- (void)pinch:(UIPinchGestureRecognizer *)pinch {
-    if (_zoomScale == 0) {_zoomScale = 1.0;}
-    if (lastPinchScale - 0.000001 > 0) {
-        if (lastPinchScale - pinch.scale > 0) {
-            //在缩小
-            _zoomScale -= 0.02;
-        } else {
-            //在增大
-            _zoomScale += 0.02;
-        }
-        if (_zoomScale <= 1.0) {
-            _zoomScale = 1.0;
-        } else if (_zoomScale >= 4.0) {
-            _zoomScale = 4.0;
-        }
-        //代理处缩放的比例
-//        if ([self.delegate respondsToSelector:@selector(cameraGestureView:pinchScale:)]) {
-//            [self.delegate cameraGestureView:self pinchScale:_zoomScale];
+//static float lastPinchScale = 0.0;
+/// 0 ~ 1
+//- (void)pinch:(UIPinchGestureRecognizer *)pinch {
+////    if (_zoomScale <= 0) {_zoomScale = 0.0;}
+//    if (lastPinchScale > 0) {
+//        if (lastPinchScale - pinch.scale > 0) {
+//            //在缩小
+//            _zoomScale -= 0.005;
+//        } else {
+//            //在增大
+//            _zoomScale += 0.005;
 //        }
-    }
-    lastPinchScale = pinch.scale;
-}
+//        if (_zoomScale <= 0) {
+//            _zoomScale = 0;
+//        } else if (_zoomScale >= 1.0) {
+//            _zoomScale = 1.0;
+//        }
+//        //代理处缩放的比例
+//        if ([self.delegate respondsToSelector:@selector(gestureView:updateZoom:)]) {
+//            CGFloat mapZoom = _zoomScale ;
+//            [self.delegate gestureView:self updateZoom:mapZoom];
+//        }
+//
+//    }
+//    if (pinch.scale > 0) {
+//        lastPinchScale = pinch.scale;
+//    }
+//}
 
 ///移动焦点、曝光点
 - (void)moveFocusExposureWithPan:(UIPanGestureRecognizer *)pan {
@@ -192,13 +259,13 @@ static float lastPinchScale = 0.0;
             //传出代理
             //传出曝光点或者是聚焦点的位置
             if (locatedView == _focusPointer) {
-//                if ([_delegate respondsToSelector:@selector(cameraGestureView:focus:)]) {
-//                    [_delegate cameraGestureView:self focus:locatedView.center];
-//                }
+                if ([_delegate respondsToSelector:@selector(gestureView:updateFocusAtPoint:)]) {
+                    [_delegate gestureView:self updateFocusAtPoint:locatedView.center];
+                }
             } else if (locatedView == _exposurePointer) {
-//                if ([_delegate respondsToSelector:@selector(cameraGestureView:exposure:)]) {
-//                    [_delegate cameraGestureView:self exposure:locatedView.center];
-//                }
+                if ([_delegate respondsToSelector:@selector(gestureView:updateExposureAtPoint:)]) {
+                    [_delegate gestureView:self updateExposureAtPoint:locatedView.center];
+                }
             }
         }
     }
@@ -207,4 +274,45 @@ static float lastPinchScale = 0.0;
     
 }
 
+- (void)screenEdgePan:(UIScreenEdgePanGestureRecognizer *)screenEdgePan {
+    if ([_delegate respondsToSelector:@selector(gestureView:screenEdgePan:)]) {
+        [_delegate gestureView:self screenEdgePan:screenEdgePan];
+    }
+}
+
+#pragma mark - WZMediaGestureViewProtocol
+
+///更新焦点
+- (void)gestureView:(WZMediaGestureView *)view updateFocusAtPoint:(CGPoint)point; {
+    
+}
+///更新曝光点
+- (void)gestureView:(WZMediaGestureView *)view updateExposureAtPoint:(CGPoint)point; {
+    
+}
+///同时更新焦点以及曝光点
+- (void)gestureView:(WZMediaGestureView *)view updateFocusAndExposureAtPoint:(CGPoint)point; {
+    
+}
+///焦距更变
+- (void)gestureView:(WZMediaGestureView *)view updateZoom:(CGFloat)zoom; {
+    
+}
+
+
+#pragma mark - CAAnimationDelegate 动态代理
+- (void)animationDidStart:(CAAnimation *)anim {
+    
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if ([CAAnimation defaultValueForKey:@"blink"] == anim) {
+        
+    } else {
+        focusPointerAndExposurePointerAnimating = false;
+        [_exposurePointer.layer removeAnimationForKey:@"exposurePointerGroupAnimation"];
+        [_focusPointer.layer removeAnimationForKey:@"focusPointerGroupAnimation"];
+    }
+    
+}
 @end

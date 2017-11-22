@@ -15,6 +15,7 @@
 @property (nonatomic, strong) WZVariousTable *table;
 @property (nonatomic, strong) NSMutableArray <WZMediaConfigObject *>*dataSource;
 
+
 @end
 
 @implementation WZMediaConfigView
@@ -60,6 +61,25 @@
     _dataSource = [NSMutableArray arrayWithArray:@[canvas, flash, countDown]];
     _table.datas = _dataSource;
     [_table reloadData];
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [self addGestureRecognizer:tap];
+}
+
+- (void)tap:(UITapGestureRecognizer *)tap {
+    if ([_delegate respondsToSelector:@selector(mediaConfigView:tap:)]) {
+        [_delegate mediaConfigView:self tap:tap];
+    }
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == self) {
+        return nil;
+    } else {
+        return view;
+    }
 }
 
 #pragma mark - WZVariousViewDelegate

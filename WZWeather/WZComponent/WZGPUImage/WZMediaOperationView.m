@@ -9,7 +9,6 @@
 #import "WZMediaOperationView.h"
 #import "WZMediaEffectShow.h"
 #import "WZCameraAssist.h"
-#import "WZMediaGestureView.h"
 #import "WZMediaTmpRecordList.h"
 #import "WZMediaRecordTimeBar.h"
 
@@ -18,6 +17,7 @@
 @property (nonatomic, strong) WZMediaConfigView *configView;//左手势
 @property (nonatomic, strong) WZMediaEffectShow *effectView;//右手势
 @property (nonatomic, strong) UIImageView *catalogueImageView;//切换相册或者是视频的目录
+@property (nonatomic, strong) WZMediaGestureView *gestureView;
 
 //---------------------------------------通用
 ///退出拍摄 录影
@@ -35,12 +35,13 @@
 ///视频合成按钮入口
 @property (nonatomic, strong) UIButton *compositionBtn;
 
+
 @property (nonatomic, strong) WZMediaTmpRecordList *recordListView;//保留录制记录的view
 @property (nonatomic, strong) WZMediaRecordTimeBar *recordTimeBar;
 
-///通过enable 判断是否在配置中`
-@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePan;
-@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePanR;//右边
+///通过enable 判断是否在配置中
+//@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePan;
+//@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePanR;//右边
 
 @property (nonatomic, strong) AVAudioPlayer *timeMusicPlayer;//倒计时
 @end
@@ -72,6 +73,9 @@
         }
     }
     
+    _gestureView = [[WZMediaGestureView alloc] initWithFrame:self.bounds];
+    [self addSubview:_gestureView];
+    
     [self addSubview:self.effectView];
     
     
@@ -82,7 +86,6 @@
     _closeBtn.backgroundColor = [UIColor yellowColor];
     [self addSubview:_closeBtn];
     [_closeBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
     
     CGFloat w = (MACRO_FLOAT_SCREEN_WIDTH- 5*2) / 3.0 ;
     _shootBtn = [[UIButton alloc] init];
@@ -121,21 +124,24 @@
     [self addSubview:_compositionBtn];
     
 #warning Why it need two edge gesture.....
-    _edgePan = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
-    _edgePan.edges = UIRectEdgeLeft;
-    _edgePanR = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
-    _edgePan.edges = UIRectEdgeLeft;
-    _edgePanR.edges = UIRectEdgeRight;
-    [self addGestureRecognizer:_edgePan];
-    [self addGestureRecognizer:_edgePanR];
+//    _edgePan = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
+//    _edgePan.edges = UIRectEdgeLeft;
+//    _edgePanR = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
+//    _edgePan.edges = UIRectEdgeLeft;
+//    _edgePanR.edges = UIRectEdgeRight;
+//    [self addGestureRecognizer:_edgePan];
+//    [self addGestureRecognizer:_edgePanR];
     
     
     _recordTimeBar = [[WZMediaRecordTimeBar alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, 10.0)];
     [self addSubview:_recordTimeBar];
     
-    [self addSubview:self.configView];
     
+  
+    [self addSubview:self.configView];//最顶层
 }
+
+
 
 ///
 - (void)clickedBtn:(UIButton *)sender {
@@ -163,8 +169,10 @@
         //合成
         //这个功能不应该这里
         ///若干个视频
-        
         ///
+        if ([_delegate respondsToSelector:@selector(operationView:compositionBtnAction:)]) {
+            [_delegate operationView:self compositionBtnAction:sender];
+        }
     }
 }
 
@@ -182,8 +190,10 @@
             [UIView animateWithDuration:0.25 animations:^{
                 if (curPoint.x > restrictCritical) {
                     _configView.maxX = MACRO_FLOAT_SCREEN_WIDTH;
-                    _edgePan.enabled = false;
-                    _edgePanR.enabled = false;
+                    _gestureView.edgePan.enabled = false;
+                    _gestureView.edgePanR.enabled = false;
+//                    _edgePan.enabled = false;
+//                    _edgePanR.enabled = false;
                 } else {
                     _configView.maxX = 0.0;
                 }
@@ -213,13 +223,6 @@
     }
 }
 
-- (void)tap:(UITapGestureRecognizer *)tap {
-    _edgePan.enabled = true;
-    _edgePanR.enabled = true;
-    [UIView animateWithDuration:0.25 animations:^{
-        _configView.maxX = 0.0;
-    }];
-}
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPress {
     if (longPress.view == _recordView) {
@@ -250,11 +253,15 @@
 }
 
 #pragma mark - Accessor
+- (void)setGestureDelegate:(id<WZMediaGestureViewProtocol>)gestureDelegate {
+    _gestureDelegate = gestureDelegate;
+    _gestureView.delegate = gestureDelegate;
+    
+}
+
 -(WZMediaConfigView *)configView {
     if (!_configView) {
         _configView = [[WZMediaConfigView alloc] initWithFrame:self.bounds];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-        [_configView addGestureRecognizer:tap];
         _configView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.25];
         _configView.maxX = 0;
         _configView.delegate = self;
@@ -312,9 +319,20 @@
     }
 }
 
+- (void)mediaConfigView:(WZMediaConfigView *)view tap:(UITapGestureRecognizer *)tap {
+//    _edgePan.enabled = true;
+//    _edgePanR.enabled = true;
+    _gestureView.edgePan.enabled = true;
+    _gestureView.edgePanR.enabled = true;
+    [UIView animateWithDuration:0.25 animations:^{
+        _configView.maxX = 0.0;
+    }];
+}
+
 #pragma mark - WZMediaEffectShowProtocol
 - (void)mediaEffectShowDidShrinked {
-    _edgePanR.enabled = true;
+//    _edgePanR.enabled = true;
+    _gestureView.edgePanR.enabled = true;
 }
 //选中了滤镜
 - (void)mediaEffectShow:(WZMediaEffectShow *)view didSelectedFilter:(GPUImageFilter *)filter {

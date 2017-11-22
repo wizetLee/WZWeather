@@ -49,7 +49,7 @@
  */
 
 
-@property (nonatomic, strong, readonly) NSMutableArray *moviesNameContainer;//存名字   URL为 相对路径+名字
+@property (nonatomic, strong, readonly) NSMutableArray *moviesNameMarr;//存名字   URL为 相对路径+名字
 
 
 - (void)pickMediaType:(WZMediaType)mediaType;
@@ -60,16 +60,25 @@
 - (void)resumeCamera;
 - (void)stopCamera;
 
-// 后两个参数如果不设置 默认为 crop滤镜的配置
+// 后两个参数如果不设置 默认为crop滤镜的配置
 - (void)prepareRecordWithMovieName:(NSString *)movieName outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput;
 - (void)startRecord;
 - (void)cancelRecord;
 - (void)endRecord;
 
-- (void)insertRenderFilter:(GPUImageFilter *)filter;//插入滤镜
+///插入滤镜
+- (void)insertRenderFilter:(GPUImageFilter *)filter;
+///设置拍摄比例
 - (void)setCropValue:(CGFloat)value;
+///拍照动作
 - (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler;
 
+///文件夹路径
 - (NSString *)movieFolder;
-
+///设置焦距
+- (void)setZoom:(CGFloat)zoom;
+///用于计算焦点曝光点
+- (CGPoint)calculatePointOfInterestWithPoint:(CGPoint)point;
+///使用文件名合成路径
+- (NSURL *)movieURLWithMovieName:(NSString *)name;
 @end

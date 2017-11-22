@@ -13,6 +13,7 @@
 @protocol WZMediaConfigViewProtocol<NSObject>
 
 - (void)mediaConfigView:(WZMediaConfigView *)view configType:(WZMediaConfigType)type;
+- (void)mediaConfigView:(WZMediaConfigView *)view tap:(UITapGestureRecognizer *)tap;
 
 @end
 

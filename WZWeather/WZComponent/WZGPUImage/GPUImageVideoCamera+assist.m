@@ -114,7 +114,7 @@
     }
 }
 
-///自动对焦 以及 自动曝光、曝光点自定义
+///自动对焦 以及 自动曝光 点的自定义
 - (void)autoFocusAndExposureAtPoint:(CGPoint)point
 {
     AVCaptureDevice *tmpDevice = self.inputCamera;
@@ -129,7 +129,7 @@
             NSLog(@"自动对焦错误：%@",[error description]);
         }
     }
-    if ([tmpDevice isExposurePointOfInterestSupported]
+    if ([tmpDevice isExposurePointOfInterestSupported]//是否支持对一个兴趣点进行聚焦
         && [tmpDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
         NSError *error;
         if ([tmpDevice lockForConfiguration:&error]) {
@@ -145,7 +145,7 @@
 //曝光量自动变更、曝光点自定义 setExposurePointOfInterest ： A value of (0,0) indicates that the camera should adjust exposure based on the top left corner of the image, while a value of (1,1) indicates that it should adjust exposure based on the bottom right corner.
 - (void)exposureAtPoint:(CGPoint)point {
     AVCaptureDevice *tmpDevice = self.inputCamera;
-    if ([tmpDevice isExposurePointOfInterestSupported]
+    if ([tmpDevice isExposurePointOfInterestSupported]//是否支持对一个兴趣点进行曝光
         && [tmpDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
         NSError *error;
         if ([tmpDevice lockForConfiguration:&error]) {
@@ -159,7 +159,7 @@
 }
 
 //定点对焦 setFocusPointOfInterest ： A value of (0,0) indicates that the camera should focus on the top left corner of the image, while a value of (1,1) indicates that it should focus on the bottom right.
-- (void)continuousFocusAtPoint:(CGPoint)point {
+- (void)focusAtPoint:(CGPoint)point {
     AVCaptureDevice *tmpDevice = self.inputCamera;
     if ([tmpDevice isFocusPointOfInterestSupported]
         && [tmpDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
@@ -170,7 +170,6 @@
             // [tmpDevice setWhiteBalanceMode:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance];
             [tmpDevice unlockForConfiguration];
         } else {
-          
             NSLog(@"定点对焦错误：%@",[error description]);
         }
     }
@@ -221,6 +220,66 @@ static CATransform3D PerspectiveTransformMake(CGFloat eyePosition)
     transform.m34 = -1.0 / eyePosition;
     return transform;
 }
+
+- (CGFloat)videoMaxZoomFactor {
+    return self.inputCamera.activeFormat.videoMaxZoomFactor;
+}
+
+///经过映射的变焦
+- (void)setDeviceZoomFactor:(CGFloat)zoomFactor {
+    CGFloat maxFactor = [self videoMaxZoomFactor];
+    //iPod 6  =  95.625
+    
+    zoomFactor = 1 + zoomFactor * maxFactor / 10.0;// 除以10.0的操作是为了 缩减放大因子 因为放得太大对客户而言是无用功
+    [self deviceZoomFactor:zoomFactor];
+}
+
+//标准的变焦
+- (void)deviceZoomFactor:(CGFloat)zoomFactor {
+   
+    CGFloat maxFactor = [self videoMaxZoomFactor];//摄像头最大的缩放等级 缩放等级默认均为1
+ 
+    //可用捕获设备的 activeVideoMinFrameDuration 和 activeVideoMaxFrameDuration 属性设置帧速率，一帧的时长是帧速率的倒数
+    //为了确保帧速率恒定，可以将最小与最大的帧时长设置成一样的值
+    //self.backLensDevice.activeVideoMinFrameDuration.value
+    
+    if (zoomFactor < 1.0) {
+        zoomFactor = 1.0;
+    }
+    if (zoomFactor > maxFactor) {
+        zoomFactor = maxFactor;
+    }
+    NSError *error = [self device:self.inputCamera configuration:^{
+        [self.inputCamera setVideoZoomFactor:zoomFactor];
+    }];
+    if (error) {
+        //缩放失败
+        [WZToast toastWithContent:[NSString stringWithFormat:@"缩放失败:%@", error.description]];
+    } else {
+        //缩放成功
+    }
+
+    //    self.device.activeFormat.videoZoomFactorUpscaleThreshold;
+}
+
+//配置设备
+- (NSError *)device:(AVCaptureDevice *)device configuration:(void (^)())config {
+    NSError *error = nil;
+    if (config) {
+        BOOL lockAcquired = [device lockForConfiguration:&error];
+        if (!lockAcquired) {
+            return error;
+        } else {
+            config();
+            [device unlockForConfiguration];
+        }
+    } else {
+        return error = [NSError errorWithDomain:@"未实现config闭包" code:-1 userInfo:nil];
+    }
+    return error;
+}
+
+///对焦完毕再拍照
 
 
 @end
