@@ -36,12 +36,12 @@
 //类目
 #import "WZSystemDetails.h"
 #import "JKCategories.h"
-#import "NSObject+WZFile.h" //文件 创建 删除等扩展
-#import "UIView+WZFrameAssistance.h"  //frame 扩展
+#import "WZCategories.h"
+#import "WZDisplayLinkSuperviser.h" //计时器
 
 //第三方
 #import "AFNetworking/AFNetworking.h"
-#import "MJRefresh.h"///iOS 11 上应该是有BUG的
+#import "MJRefresh.h"           ///iOS 11 上应该是有BUG的
 #import <GPUImage/GPUImage.h>
 #import <Masonry/Masonry.h>
 

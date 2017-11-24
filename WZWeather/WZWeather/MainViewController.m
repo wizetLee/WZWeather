@@ -74,7 +74,7 @@
     UIButton *button                = [[UIButton alloc] init];
     button.frame                    = CGRectMake(0.0, 300, 100, 50);
     button.layer.backgroundColor    = [UIColor orangeColor].CGColor;
-    button.cornerRadius             = button.frame.size.height / 2.0;
+    button.wz_cornerRadius             = button.frame.size.height / 2.0;
     button.layer.shadowColor        = [UIColor blackColor].CGColor;
     button.layer.shadowOffset       = CGSizeMake(5, 5);
     button.layer.shadowOpacity      = 1;
@@ -95,9 +95,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
            imageView.image = image;
         });
-    }];//异步加载必应墙纸哦
-    
-    
+    }];//异步加载必应墙纸
 }
 
 

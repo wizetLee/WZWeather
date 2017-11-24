@@ -11,9 +11,9 @@
 
 @interface UIButton (WZMinistrant)
 
-- (void)setNormalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage;
+- (void)wz_setNormalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage;
 
 
-- (void)setCornerRadius:(CGFloat)cornerRadius;
+- (void)wz_setCornerRadius:(CGFloat)cornerRadius;
 
 @end

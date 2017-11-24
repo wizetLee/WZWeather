@@ -2,8 +2,8 @@
 //  WZSearchBar.h
 //  WZSearchBar
 //
-//  Created by admin on 16/10/19.
-//  Copyright © 2016年 admin. All rights reserved.
+//  Created by wizet on 16/10/19.
+//  Copyright © 2016年 wizet. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

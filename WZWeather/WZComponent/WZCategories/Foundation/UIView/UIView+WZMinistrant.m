@@ -9,13 +9,15 @@
 #import "UIView+WZMinistrant.h"
 
 @implementation UIView (WZMinistrant)
-- (void)setCornerRadius:(CGFloat)cornerRadius {
-    objc_setAssociatedObject(self, @selector(setCornerRadius:), @(cornerRadius), OBJC_ASSOCIATION_ASSIGN);
+- (void)setWz_cornerRadius:(CGFloat)cornerRadius {
+    objc_setAssociatedObject(self, @selector(setWz_cornerRadius:), @(cornerRadius), OBJC_ASSOCIATION_ASSIGN);
     self.layer.cornerRadius = cornerRadius;
 }
 
-- (CGFloat)cornerRadius {
-    return [objc_getAssociatedObject(self, @selector(setCornerRadius:)) floatValue];
+- (CGFloat)wz_cornerRadius {
+    return [objc_getAssociatedObject(self, @selector(setWz_cornerRadius:)) floatValue];
 }
+
+
 
 @end

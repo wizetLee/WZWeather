@@ -10,7 +10,7 @@
 
 @implementation UIButton (WZMinistrant)
 
-- (void)setNormalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage {
+- (void)wz_setNormalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage {
     if ([normalImage isKindOfClass:[UIImage class]]) {
         [self setImage:normalImage forState:UIControlStateNormal];
     }
@@ -19,7 +19,7 @@
     }
 }
 
-- (void)setCornerRadius:(CGFloat)cornerRadius {
+- (void)wz_setCornerRadius:(CGFloat)cornerRadius {
     objc_setAssociatedObject(self, @selector(setCornerRadius:), @(cornerRadius), OBJC_ASSOCIATION_ASSIGN);
     self.imageView.layer.cornerRadius = cornerRadius;
     self.layer.cornerRadius = cornerRadius;

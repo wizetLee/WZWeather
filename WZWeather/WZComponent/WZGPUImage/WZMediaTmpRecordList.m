@@ -2,7 +2,7 @@
 //  WZMediaTmpRecordList.m
 //  WZWeather
 //
-//  Created by admin on 21/11/17.
+//  Created by wizet on 21/11/17.
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 

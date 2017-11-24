@@ -2,7 +2,7 @@
 //  WZTriangleView.m
 //  WZSettingPicker
 //
-//  Created by admin on 16/12/26.
+//  Created by wizet on 16/12/26.
 //  Copyright © 2016年 WZ. All rights reserved.
 //
 

@@ -6,4 +6,5 @@ pod 'MJRefresh', '~> 3.1.12'
 pod 'IQKeyboardManager', '~> 4.0.8'
 pod 'GPUImage', '~> 0.1.7'
 pod 'Masonry'
+pod 'SDWebImage'
 end

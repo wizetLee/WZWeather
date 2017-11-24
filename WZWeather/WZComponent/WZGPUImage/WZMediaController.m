@@ -148,7 +148,6 @@
     [self.mediaPreviewView.cameraCurrent autoFocusAndExposureAtPoint:targetPoint];
 }
 
-
 ///焦距更变
 - (void)gestureView:(WZMediaGestureView *)view updateZoom:(CGFloat)zoom {
     [self.mediaPreviewView setZoom:zoom];
