@@ -20,6 +20,8 @@
 
 @property (nonatomic,strong) WZScrollOptions *menuView;
 
+@property (nonatomic, strong) UITableView *table;
+
 @end
 
 @implementation MainViewController
@@ -88,18 +90,122 @@
     appVersion();
     appBundleID();
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:imageView];
-    [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-           imageView.image = image;
-        });
-    }];//异步加载必应墙纸
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    [self.view addSubview:imageView];
+//    [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//           imageView.image = image;
+//        });
+//    }];//异步加载必应墙纸
+    
+    
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, MACRO_VC_FLOAT_SAFEAREA_TOP, 20, MACRO_FLOAT_SCREEN_HEIGHT)];
+    
+    if(!_table) {
+        UITableView *table = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        [self.view addSubview:table];
+//        [table mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo((self.view));
+//            make.right.mas_equalTo(self.view);
+//            if (@available(iOS 11.0, *)) {
+//                make.top.mas_equalTo(loop.mas_bottom);
+//                make.bottom.mas_equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+//            } else {
+//                make.top.mas_equalTo(loop.mas_bottom);
+//                make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
+//            }
+//        }];
+        table.delegate = (id<UITableViewDelegate>)self;
+        table.dataSource = (id<UITableViewDataSource>)self;
+        table.backgroundColor = UIColor.yellowColor;
+        table.estimatedRowHeight = UITableViewAutomaticDimension;
+        table.estimatedSectionFooterHeight = 0.0;
+        table.estimatedSectionHeaderHeight = 0.0;
+        
+        [table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"id"];
+        table.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+            [table.mj_header endRefreshing];
+        }];
+        
+            CGFloat top = 0.0;
+            CGFloat bottom = 0.0;
+            CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
+            CGFloat screenH = UIScreen.mainScreen.bounds.size.height;
+        
+            top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
+            bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;
+            
+            CGFloat height = screenH - bottom - top;
+           _table = table;
+           self.table.frame = CGRectMake(0.0, top, screenW, height);
+     
+    }
 }
 
+//不用masonry 就使用下面的代码
+//- (void)viewWillLayoutSubviews {
+//    [super viewWillLayoutSubviews];
+//
+//
+//
+//    ///
+//    CGFloat top = 0.0;
+//    CGFloat bottom = 0.0;
+//    CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
+//    CGFloat screenH = UIScreen.mainScreen.bounds.size.height;
+//    if (@available(iOS 11.0, *)) {
+//        top = self.view.safeAreaInsets.top;
+//        bottom = self.view.safeAreaInsets.bottom;
+//    } else {
+//        top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
+//    }
+//    CGFloat height = screenH - bottom - top;
+//
+//    self.table.frame = CGRectMake(0.0, top, screenW, height);
+//}
 
 
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return 10;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView; {
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath; {
+      return 50.0;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section; {
+      return 0.01;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section; {
+      return 0.01;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0); {
+    return 0.01;
+}
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0) {
+    return 0.01;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", indexPath];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    NSLog(@"1");
+}
 
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];

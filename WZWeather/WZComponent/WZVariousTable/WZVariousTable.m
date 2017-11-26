@@ -46,6 +46,10 @@
     self.datas = [NSMutableArray array];//初始化
     self.separatorStyle = UITableViewCellSeparatorStyleNone;//无分割线
     
+    self.estimatedRowHeight = UITableViewAutomaticDimension;
+    self.estimatedSectionFooterHeight = 0.0;
+    self.estimatedSectionHeaderHeight = 0.0;
+    
     //代理
     self.delegate = self;
     self.dataSource = self;
