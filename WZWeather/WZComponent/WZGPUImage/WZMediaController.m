@@ -267,8 +267,7 @@
     //视频操作指令和音频指令参数
     //创建GPUImageMovieComposition类
     //设置输出目标为GPUImageMovieWriter并开始处理
-    //把处理完毕的数据写入手机
-    
+    //把处理完毕的数据写入手机j   
     //1、合成单一一个视频  加入渐变效果？  以下代码有较高的准确率
     NSMutableArray *assetMArr = [NSMutableArray array];
     for (NSString *tmpStr in self.mediaPreviewView.moviesNameMarr) {
@@ -281,6 +280,7 @@
     AVMutableComposition *mutableComposition = [[self class] compositionWithSegments:assetMArr];
     NSLog(@"~~~~~%lf", CMTimeGetSeconds(mutableComposition.duration));
     //2、插入视频的编码
+    
 }
 
 ///输出合成的视频
@@ -299,6 +299,10 @@
     exportSession.outputURL = outputURL;
     exportSession.outputFileType = AVFileTypeMPEG4;
    __block CGFloat progress = 0.0 ;
+    
+    
+    //     exportSession.timeRange =   ;//配置时间范围
+    
     [exportSession exportAsynchronouslyWithCompletionHandler:^{
         //输出状态查询
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -320,7 +324,7 @@
         });
     }];
     //输出
-    exportSession = nil;//置空
+    
 }
 
 

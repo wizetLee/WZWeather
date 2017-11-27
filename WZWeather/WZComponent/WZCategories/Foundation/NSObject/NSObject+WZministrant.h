@@ -14,4 +14,9 @@
 //MARK:- 获取当前视图所在的视图控制器
 + (UIViewController *)wz_currentViewController;
 
+
+
++ (CGSize)wz_fitSizeComparisonWithScreenBound:(CGSize)targetSize;
+
+
 @end

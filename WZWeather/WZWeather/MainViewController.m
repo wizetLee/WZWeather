@@ -16,6 +16,8 @@
 #import "WZSystemDetails.h"
 #import "WZMediaController.h"
 #import "WZCameraAssist.h"
+#import "WZAPLSimpleEditor.h"
+#import "WZAVPlayerViewController.h"
 @interface MainViewController ()
 
 @property (nonatomic,strong) WZScrollOptions *menuView;
@@ -123,9 +125,10 @@
         table.estimatedSectionFooterHeight = 0.0;
         table.estimatedSectionHeaderHeight = 0.0;
         
-        [table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"id"];
+        [table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+        __weak typeof(self) weakSelf = self;
         table.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
-            [table.mj_header endRefreshing];
+            [weakSelf.table.mj_header endRefreshing];
         }];
         
             CGFloat top = 0.0;
@@ -135,7 +138,6 @@
         
             top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
             bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;
-            
             CGFloat height = screenH - bottom - top;
            _table = table;
            self.table.frame = CGRectMake(0.0, top, screenW, height);
@@ -168,12 +170,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return 10;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView; {
-    return 2;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath; {
@@ -186,25 +183,94 @@
       return 0.01;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0); {
-    return 0.01;
-}
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0) {
-    return 0.01;
-}
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(7_0); {
+//      return 0.01;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0); {
+//      return 0.01;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0) {
+//      return 0.01;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%@", indexPath];
+    switch (indexPath.row) {
+        case 0: {
+            cell.textLabel.text = [NSString stringWithFormat:@"跳转至：拍摄、录像"];
+        } break;
+        case 1: {
+            cell.textLabel.text = [NSString stringWithFormat:@"视频合成测试"];
+        } break;
+        case 2: {
+            
+        } break;
+        case 3: {
+            
+        } break;
+        case 4: {
+            
+        } break;
+            
+        default:
+            break;
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   
-    NSLog(@"1");
+    switch (indexPath.row) {
+        case 0: {
+            [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
+                if (videoAuthorization
+                    && audioAuthorization
+                    && libraryAuthorization) {
+                    ///下载页面
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
+                        //    WZDownloadController *vc = [[WZDownloadController alloc] init];
+                        WZMediaController *vc = [WZMediaController new];
+                        
+                        [self.navigationController pushViewController:vc animated:true];
+                        
+                    });
+                } else {
+                    [self showAlter];
+                }
+            }];
+        } break;
+        case 1: {
+            AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
+            AVURLAsset *asset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip2" ofType:@"mov"]]];
+            AVURLAsset *asset3 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"01_nebula" ofType:@"mp4"]]];
+            AVURLAsset *asset4 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"02_blackhole" ofType:@"mp4"]]];
+            AVURLAsset *asset5 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"03_nebula" ofType:@"mp4"]]];
+            AVURLAsset *asset6 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"04_quasar" ofType:@"mp4"]]];
+            AVURLAsset *asset7 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"05_blackhole" ofType:@"mp4"]]];
+            
+            WZAPLSimpleEditor *editor = [[WZAPLSimpleEditor alloc] init];
+            [editor updateEditorWithVideoAssets:@[asset4, asset3, asset2, asset1]];
+        } break;
+        case 2: {
+            
+            WZAVPlayerViewController *vc = [WZAVPlayerViewController new];
+            [self.navigationController pushViewController:vc animated:true];
+        } break;
+        case 3: {
+            
+        } break;
+        case 4: {
+            
+        } break;
+            
+        default:
+            break;
+    }
+    
 }
 
 - (void)viewSafeAreaInsetsDidChange {
@@ -240,29 +306,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
-        if (videoAuthorization
-            && audioAuthorization
-            && libraryAuthorization) {
-            ///下载页面
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
-                //    WZDownloadController *vc = [[WZDownloadController alloc] init];
-                WZMediaController *vc = [WZMediaController new];
-                
-                [self.navigationController pushViewController:vc animated:true];
-
-            });
-        } else {
-            [self showAlter];
-        }
-    }];
- 
-    
-}
-
 
 - (void)showAlter {
     UIAlertController *alter = [UIAlertController alertControllerWithTitle:@"视频、音频、相册权限受阻" message:@"是否要到设置处进行权限设置" preferredStyle:UIAlertControllerStyleAlert];

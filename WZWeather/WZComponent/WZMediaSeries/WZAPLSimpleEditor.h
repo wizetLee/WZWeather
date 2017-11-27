@@ -78,10 +78,12 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 ///混音的类
 @property (nonatomic, readonly, retain) AVMutableAudioMix *audioMix;
 
-//MARK: - 自定义属性
-@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionTypeMarr;
+//MARK: - 自定义属性 使用APLSimpleEditorTransitionType的number类型
+
 ///过渡的类型
-@property (nonatomic, strong) NSArray <NSNumber *>*transationTypes;
+@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionTypeMArr;
+///某一段用不用过渡
+@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionsEnabledMArr;
 
 //MARK: - 播放 或者 重播
 // Builds the composition and videoComposition
@@ -107,6 +109,8 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 
 //统一尺寸
 
+
+- (CALayer *)animationToolLayerWithTargetSize:(CGSize)targetSize;
 
 @end
 

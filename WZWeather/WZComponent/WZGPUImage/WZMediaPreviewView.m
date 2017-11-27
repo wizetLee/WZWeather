@@ -629,10 +629,8 @@ static int stride = 0;
 //            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];//
         } else {
             //保存失败
-            
         }
     }
-    
     ///时间配置
     [self endRecordTimeConfig];
 }

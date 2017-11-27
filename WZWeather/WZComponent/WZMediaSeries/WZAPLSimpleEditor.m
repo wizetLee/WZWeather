@@ -201,48 +201,10 @@
                 AVMutableVideoCompositionLayerInstruction *toLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[1-alternatingIndex]];
                 //fromLayer toLayer 获得交替的前后层
                 
-                
-                
 //MARK:- 设置自定义的动画
-                    if (self.transitionTypeMarr.count > i) {
-                        NSUInteger targetType = [self.transitionTypeMarr[i] intValue];
-                        
-                        switch (targetType) {
-                            case APLSimpleEditorTransitionType_Push: {
-                                CGAffineTransform identityTransform = CGAffineTransformIdentity;
-        
-                                CGFloat videoWidth = videoComposition.renderSize.width;//要获取到需要的尺寸
-        
-                                CGAffineTransform fromDestTransform =
-                                CGAffineTransformMakeTranslation(-videoWidth, 0.0);
-        
-                                CGAffineTransform toStartTransform =
-                                CGAffineTransformMakeTranslation(videoWidth, 0.0);
-        
-                                [fromLayer setTransformRampFromStartTransform:identityTransform
-                                                               toEndTransform:fromDestTransform
-                                                                    timeRange:transitionTimeRanges[i]];
-        
-                                [toLayer setTransformRampFromStartTransform:toStartTransform
-                                                             toEndTransform:identityTransform
-                                                                  timeRange:transitionTimeRanges[i]];
-                            } break;
-                            case APLSimpleEditorTransitionType_Wipe: {
-                                CGFloat videoWidth = videoComposition.renderSize.width;
-                                CGFloat videoHeight = videoComposition.renderSize.height;
-        
-                                CGRect startRect = CGRectMake(0.0f, 0.0f, videoWidth, videoHeight);
-                                CGRect endRect = CGRectMake(0.0f, videoHeight, videoWidth, 0.0f);
-        
-                                [fromLayer setCropRectangleRampFromStartCropRectangle:startRect
-                                                                   toEndCropRectangle:endRect
-                                                                            timeRange:transitionTimeRanges[i]];
-                            } break;
-        
-                            default:{
-                                [toLayer setOpacityRampFromStartOpacity:0.0 toEndOpacity:1.0 timeRange:transitionTimeRanges[i]];
-                            }  break;
-                        }
+                
+                    if (self.transitionTypeMArr.count > i) {
+                        [self animationWithFromLayer:fromLayer toLayer:toLayer    targetSize:self.targetSize transitionTimeRange:transitionTimeRanges[i] targetType:[self.transitionTypeMArr[i] unsignedIntegerValue]];
                     } else {
                         //使用默认类型的过渡效果
                         //Fade in the toLayer by setting a ramp from 0.0 to 1.0.
@@ -251,7 +213,6 @@
                 
                 NSLog(@"transition : %@", [NSValue valueWithCMTimeRange:transitionInstruction.timeRange]);
                 transitionInstruction.layerInstructions = @[toLayer, fromLayer];
-                
                 [instructions addObject:transitionInstruction];
             }
 
@@ -280,28 +241,71 @@
 
     NSLog(@"视频片段数目:(非过渡+过渡) %ld", instructions.count);//一直都会是奇数
     
-    
     videoComposition.instructions = instructions;//把需要过渡的片段加入到资源集合中
     audioMix.inputParameters = trackMixArray;
     for (AVVideoCompositionInstruction *ins in instructions) {
         NSLog(@"%@", [NSValue valueWithCMTimeRange:ins.timeRange]);
     }
-   
 }
 
-- (void)buildCompositionObjectsForPlayback
-{
+
+- (void)animationWithFromLayer:(AVMutableVideoCompositionLayerInstruction *)fromLayer toLayer:(AVMutableVideoCompositionLayerInstruction *)toLayer targetSize:(CGSize)targetSize transitionTimeRange:(CMTimeRange)transitionTimeRange targetType:(NSUInteger)targetType {
+               switch (targetType) {
+        case APLSimpleEditorTransitionType_Push: {
+            CGAffineTransform identityTransform = CGAffineTransformIdentity;
+            
+            CGFloat videoWidth = targetSize.width;//要获取到需要的尺寸
+            
+            CGAffineTransform fromDestTransform =
+            CGAffineTransformMakeTranslation(-videoWidth, 0.0);
+            
+            CGAffineTransform toStartTransform =
+            CGAffineTransformMakeTranslation(videoWidth, 0.0);
+            
+            [fromLayer setTransformRampFromStartTransform:identityTransform
+                                           toEndTransform:fromDestTransform
+                                                timeRange:transitionTimeRange];
+            
+            [toLayer setTransformRampFromStartTransform:toStartTransform
+                                         toEndTransform:identityTransform
+                                              timeRange:transitionTimeRange];
+        } break;
+        case APLSimpleEditorTransitionType_Wipe: {
+            
+            CGFloat videoWidth = targetSize.width;
+            CGFloat videoHeight = targetSize.height;
+            
+            CGRect startRect = CGRectMake(0.0f, 0.0f, videoWidth, videoHeight);
+            CGRect endRect = CGRectMake(0.0f, videoHeight, videoWidth, 0.0f);
+            
+            [fromLayer setCropRectangleRampFromStartCropRectangle:startRect
+                                               toEndCropRectangle:endRect
+                                                        timeRange:transitionTimeRange];
+            
+        } break;
+            
+        default:{
+            [toLayer setOpacityRampFromStartOpacity:0.0 toEndOpacity:1.0 timeRange:transitionTimeRange];
+        }  break;
+    }
+}
+
+- (void)buildCompositionObjectsForPlayback {
 	if ( (self.clips == nil) || [self.clips count] == 0 ) {
 		self.composition = nil;
 		self.videoComposition = nil;
 		return;
 	}
 	
-	CGSize videoSize = [[self.clips objectAtIndex:0] naturalSize];
 	AVMutableComposition *composition = [AVMutableComposition composition];
 	AVMutableVideoComposition *videoComposition = nil;
 	AVMutableAudioMix *audioMix = nil;
 	
+    if (CGSizeEqualToSize(self.targetSize, CGSizeZero)) {
+        self.targetSize = [[self.clips objectAtIndex:0] naturalSize];
+    }
+    ///如果不设置targetSize 则默认size为第一个视频的size
+    CGSize videoSize = self.targetSize;
 	composition.naturalSize = videoSize;
 	
 	// With transitions:
@@ -312,7 +316,7 @@
 	videoComposition = [AVMutableVideoComposition videoComposition];
 	audioMix = [AVMutableAudioMix audioMix];
 
-    //MARK: - 取第一个视频的大小 这里需要修改
+//MARK: - 取第一个视频的大小 这里需要修改
     videoComposition.renderSize = videoSize;
 	[self buildTransitionComposition:composition andVideoComposition:videoComposition andAudioMix:audioMix];
 	
@@ -322,6 +326,25 @@
 		videoComposition.renderSize = videoSize;
 	}
 	
+#warning 加上CoreAnimation的动画 解析的效率有点差
+//    {///加上这一段 layer 动画 简直慢到爆炸   效率让人痴迷...
+//        CALayer *animationLayer = [CALayer layer];
+//        animationLayer.frame = CGRectMake(0, 0, self.targetSize.width, self.targetSize.height);
+//
+//        CALayer *videoLayer = [CALayer layer];
+//        videoLayer.frame = CGRectMake(0, 0, self.targetSize.width, self.targetSize.height);
+//
+//        [animationLayer addSublayer:videoLayer];
+//
+//        [animationLayer addSublayer:[self animationToolLayerWithTargetSize:self.targetSize]];
+//
+//        animationLayer.geometryFlipped = true;//确保能被正确渲染（如果没设置图像会颠倒（也就是坐标紊乱））
+//        AVVideoCompositionCoreAnimationTool *animationTool =
+//        [AVVideoCompositionCoreAnimationTool videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:videoLayer
+//                                                                                                     inLayer:animationLayer];
+//        videoComposition.animationTool = animationTool;//赋值 CAAnaimtion
+//    }
+    
 	self.composition = composition;
 	self.videoComposition = videoComposition;
 	self.audioMix = audioMix;
@@ -333,7 +356,7 @@
                 if (success) {
                     NSLog(@"保存成功");
                 } else {
-                    NSLog(@"保存失败");
+                    NSLog(@"保g");
                 }
             }];
         } else {
@@ -342,28 +365,31 @@
     }];
 }
 
-- (AVPlayerItem *)playerItem
-{
+
+
+- (AVPlayerItem *)playerItem {
+    
 	AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:self.composition];
 	playerItem.videoComposition = self.videoComposition;
 	playerItem.audioMix = self.audioMix;
-	
+    
+//    AVSynchronizedLayer *synchronizedLayer = [AVSynchronizedLayer synchronizedLayerWithPlayerItem:playerItem]
+//    [synchronizedLayer addSubLayer:]//add上动画的layer 那个layer 要缩减到屏幕的比例  在AVPlayer上才会看得到哦
+    
 	return playerItem;
 }
 
+
 #pragma mark - Accessor
 
-- (NSMutableArray *)transitionTypeMarr {
-    if (!_transitionTypeMarr) {
-        _transitionTypeMarr = [NSMutableArray array];
+- (NSMutableArray *)transitionTypeMArr {
+    if (!_transitionTypeMArr) {
+        _transitionTypeMArr = [NSMutableArray array];
     }
-    return _transitionTypeMarr;
+    return _transitionTypeMArr;
 }
 
-
-
 @end
-
 
 //MARK: - 延展
 @implementation WZAPLSimpleEditor(assist)
@@ -392,16 +418,53 @@
         exportSession.outputFileType = AVFileTypeMPEG4;
         NSLog(@"%@", NSHomeDirectory());
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (handler) {
                     handler(exportSession.status, outputURL);
                 }
+          
+                if (exportSession.status == AVAssetExportSessionStatusFailed
+                    || exportSession.status == AVAssetExportSessionStatusCancelled) {
+                    [self currentProgress:0.0];
+                } else if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+                    [self currentProgress:1.0];
+                }
             });
         }];
+        [self monitorExportProgressWithExportSession:exportSession];
     }
-   
 }
 
+///检查进度
+- (void)monitorExportProgressWithExportSession:(AVAssetExportSession *)exportSession {
+
+    if (!exportSession) {
+        return;
+    }
+    double delayInSeconds = 0.1;
+    int64_t delta = (int64_t)delayInSeconds * NSEC_PER_SEC;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delta);
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(popTime, dispatch_get_main_queue(), ^{
+        
+        AVAssetExportSessionStatus status = exportSession.status;
+        
+        if (status == AVAssetExportSessionStatusExporting
+            || status == AVAssetExportSessionStatusWaiting) {
+   
+            [weakSelf currentProgress:exportSession.progress];
+            [weakSelf monitorExportProgressWithExportSession:exportSession];
+            ///进度回调
+        } else {
+   
+        }
+    });
+}
+
+- (void)currentProgress:(CGFloat)progress {
+    NSLog(@"progress: %f", progress);
+}
 
 - (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler {
     if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
@@ -422,6 +485,7 @@
 //    NSArray *assetKeysToLoadAndTest = @[@"tracks", @"duration", @"composable"];
     dispatch_group_t dispatchGroup = nil;
     NSArray *assetKeysToLoadAndTest = nil;
+    
     for (AVAsset *tmpAsset in assets) {
         if (CMTIME_IS_VALID(tmpAsset.duration)
             && CMTIME_COMPARE_INLINE(tmpAsset.duration, >, kCMTimeZero)) {
@@ -437,8 +501,7 @@
 }
 
 ///加载资源
-- (void)loadAsset:(AVAsset *)asset withKeys:(NSArray *)assetKeysToLoad usingDispatchGroup:(dispatch_group_t)dispatchGroup
-{
+- (void)loadAsset:(AVAsset *)asset withKeys:(NSArray *)assetKeysToLoad usingDispatchGroup:(dispatch_group_t)dispatchGroup {
     if (!self.clipTimeRanges) {
         self.clipTimeRanges = [NSMutableArray array];
     }
@@ -485,12 +548,12 @@
     
     BOOL transitionsEnabled = true;
     // Transitions
-    if (0) {
+    if (transitionsEnabled) {
         self.transitionDuration = CMTimeMakeWithSeconds(2, 600);
     } else {
         self.transitionDuration = kCMTimeZero;
     }
-    [self.transitionTypeMarr addObject:@(1)];
+    [self.transitionTypeMArr addObject:@(1)];
     
     [self buildCompositionObjectsForPlayback];
     
@@ -506,6 +569,32 @@
     //    [player play];
     //    player.
 }
+
+
+////配置动画的类型哦
+- (CALayer *)animationToolLayerWithTargetSize:(CGSize)targetSize {
+    //可以做一些动画之类的
+    CALayer *parentLayer = [CALayer layer];
+    parentLayer.backgroundColor = [UIColor yellowColor].CGColor;
+    parentLayer.frame = CGRectMake(0, 0, targetSize.width, targetSize.height);
+    parentLayer.opacity = 0.0f;
+    
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+    animation.values = @[@0.0f, @1.0, @1.0f, @0.0f];
+    animation.keyTimes = @[@0.0f, @0.25f, @0.75f, @1.0f];
+    
+//    animation.beginTime = AVCoreAnimationBeginTimeAtZero;//如果期望在一开始就做这个动画
+    ///开始时间
+    animation.beginTime = 1;//CMTimeGetSeconds(self.startTimeInTimeline);
+    ///动画持续时间
+    animation.duration = 1;//CMTimeGetSeconds(self.timeRange.duration);
+    animation.removedOnCompletion = NO;
+    
+    [parentLayer addAnimation:animation forKey:nil];//加入动画
+    return parentLayer;
+}
+
 
 @end
 

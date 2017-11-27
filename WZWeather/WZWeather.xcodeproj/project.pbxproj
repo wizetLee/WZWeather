@@ -317,6 +317,20 @@
 		8497C4351EB3465200EB9F60 /* WZTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */; };
 		84CAD8081EA0BD5D00BDF9AA /* WZVariousCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */; };
+		84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3151FCBA7E400282C9A /* 01 Star Gazing.m4a */; };
+		84ECD3231FCBA7E400282C9A /* 02 Keep Going.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3161FCBA7E400282C9A /* 02 Keep Going.m4a */; };
+		84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3181FCBA7E400282C9A /* John F. Kennedy.m4a */; };
+		84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3191FCBA7E400282C9A /* Ronald Reagan.m4a */; };
+		84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD31B1FCBA7E400282C9A /* 01_nebula.mp4 */; };
+		84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD31C1FCBA7E400282C9A /* 02_blackhole.mp4 */; };
+		84ECD3281FCBA7E400282C9A /* 03_nebula.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD31D1FCBA7E400282C9A /* 03_nebula.mp4 */; };
+		84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD31E1FCBA7E400282C9A /* 04_quasar.mp4 */; };
+		84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD31F1FCBA7E400282C9A /* 05_blackhole.mp4 */; };
+		84ECD32B1FCBA7E400282C9A /* sample_clip1.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3201FCBA7E400282C9A /* sample_clip1.m4v */; };
+		84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3211FCBA7E400282C9A /* sample_clip2.mov */; };
+		84ECD32F1FCC1D3B00282C9A /* WZAVPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */; };
+		84ECD3351FCC2C9A00282C9A /* BIVideoEditingClippingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD3321FCC2C9A00282C9A /* BIVideoEditingClippingView.m */; };
+		84ECD3361FCC2C9A00282C9A /* WZRatioCutOutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD3341FCC2C9A00282C9A /* WZRatioCutOutView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -986,6 +1000,23 @@
 		84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZUserInfo.m; sourceTree = "<group>"; };
 		84CAD8061EA0BD5D00BDF9AA /* WZVariousCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVariousCollectionController.h; sourceTree = "<group>"; };
 		84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVariousCollectionController.m; sourceTree = "<group>"; };
+		84ECD3151FCBA7E400282C9A /* 01 Star Gazing.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "01 Star Gazing.m4a"; sourceTree = "<group>"; };
+		84ECD3161FCBA7E400282C9A /* 02 Keep Going.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "02 Keep Going.m4a"; sourceTree = "<group>"; };
+		84ECD3181FCBA7E400282C9A /* John F. Kennedy.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "John F. Kennedy.m4a"; sourceTree = "<group>"; };
+		84ECD3191FCBA7E400282C9A /* Ronald Reagan.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ronald Reagan.m4a"; sourceTree = "<group>"; };
+		84ECD31B1FCBA7E400282C9A /* 01_nebula.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 01_nebula.mp4; sourceTree = "<group>"; };
+		84ECD31C1FCBA7E400282C9A /* 02_blackhole.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 02_blackhole.mp4; sourceTree = "<group>"; };
+		84ECD31D1FCBA7E400282C9A /* 03_nebula.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 03_nebula.mp4; sourceTree = "<group>"; };
+		84ECD31E1FCBA7E400282C9A /* 04_quasar.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 04_quasar.mp4; sourceTree = "<group>"; };
+		84ECD31F1FCBA7E400282C9A /* 05_blackhole.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 05_blackhole.mp4; sourceTree = "<group>"; };
+		84ECD3201FCBA7E400282C9A /* sample_clip1.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_clip1.m4v; sourceTree = "<group>"; };
+		84ECD3211FCBA7E400282C9A /* sample_clip2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = sample_clip2.mov; sourceTree = "<group>"; };
+		84ECD32D1FCC1D3B00282C9A /* WZAVPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAVPlayerViewController.h; sourceTree = "<group>"; };
+		84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAVPlayerViewController.m; sourceTree = "<group>"; };
+		84ECD3311FCC2C9A00282C9A /* BIVideoEditingClippingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIVideoEditingClippingView.h; sourceTree = "<group>"; };
+		84ECD3321FCC2C9A00282C9A /* BIVideoEditingClippingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIVideoEditingClippingView.m; sourceTree = "<group>"; };
+		84ECD3331FCC2C9A00282C9A /* WZRatioCutOutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRatioCutOutView.h; sourceTree = "<group>"; };
+		84ECD3341FCC2C9A00282C9A /* WZRatioCutOutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRatioCutOutView.m; sourceTree = "<group>"; };
 		B89722B026D64E98689EF1AF /* Pods-WZWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2275,6 +2306,7 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
 			isa = PBXGroup;
 			children = (
+				84ECD3121FCBA7E400282C9A /* Resources */,
 				845664641FC82E8C0004BAC1 /* WZAPLSimpleEditor.h */,
 				845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */,
 				845664661FC82E8C0004BAC1 /* WZMediaFetcher */,
@@ -2433,10 +2465,13 @@
 		846920A51E63BB550048BBDC /* WZWeather */ = {
 			isa = PBXGroup;
 			children = (
+				84ECD3301FCC2C9A00282C9A /* Clipping */,
 				846920A91E63BB550048BBDC /* AppDelegate.h */,
 				846920AA1E63BB550048BBDC /* AppDelegate.m */,
 				846920DE1E63D6920048BBDC /* MainViewController.h */,
 				846920DF1E63D6920048BBDC /* MainViewController.m */,
+				84ECD32D1FCC1D3B00282C9A /* WZAVPlayerViewController.h */,
+				84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */,
 				8444C8AB1EA0594600DD6259 /* sViewController.h */,
 				8444C8AC1EA0594600DD6259 /* sViewController.m */,
 				846920B21E63BB550048BBDC /* Assets.xcassets */,
@@ -2593,6 +2628,67 @@
 			path = WZTodayExtension;
 			sourceTree = "<group>";
 		};
+		84ECD3121FCBA7E400282C9A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84ECD3131FCBA7E400282C9A /* Audio */,
+				84ECD31A1FCBA7E400282C9A /* Video */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		84ECD3131FCBA7E400282C9A /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				84ECD3141FCBA7E400282C9A /* Music */,
+				84ECD3171FCBA7E400282C9A /* VoiceOvers */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		84ECD3141FCBA7E400282C9A /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				84ECD3151FCBA7E400282C9A /* 01 Star Gazing.m4a */,
+				84ECD3161FCBA7E400282C9A /* 02 Keep Going.m4a */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		84ECD3171FCBA7E400282C9A /* VoiceOvers */ = {
+			isa = PBXGroup;
+			children = (
+				84ECD3181FCBA7E400282C9A /* John F. Kennedy.m4a */,
+				84ECD3191FCBA7E400282C9A /* Ronald Reagan.m4a */,
+			);
+			path = VoiceOvers;
+			sourceTree = "<group>";
+		};
+		84ECD31A1FCBA7E400282C9A /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				84ECD31B1FCBA7E400282C9A /* 01_nebula.mp4 */,
+				84ECD31C1FCBA7E400282C9A /* 02_blackhole.mp4 */,
+				84ECD31D1FCBA7E400282C9A /* 03_nebula.mp4 */,
+				84ECD31E1FCBA7E400282C9A /* 04_quasar.mp4 */,
+				84ECD31F1FCBA7E400282C9A /* 05_blackhole.mp4 */,
+				84ECD3201FCBA7E400282C9A /* sample_clip1.m4v */,
+				84ECD3211FCBA7E400282C9A /* sample_clip2.mov */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		84ECD3301FCC2C9A00282C9A /* Clipping */ = {
+			isa = PBXGroup;
+			children = (
+				84ECD3311FCC2C9A00282C9A /* BIVideoEditingClippingView.h */,
+				84ECD3321FCC2C9A00282C9A /* BIVideoEditingClippingView.m */,
+				84ECD3331FCC2C9A00282C9A /* WZRatioCutOutView.h */,
+				84ECD3341FCC2C9A00282C9A /* WZRatioCutOutView.m */,
+			);
+			path = Clipping;
+			sourceTree = "<group>";
+		};
 		BDE51CC601D75414A3C2652E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2734,15 +2830,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84ECD3231FCBA7E400282C9A /* 02 Keep Going.m4a in Resources */,
+				84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */,
 				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
+				84ECD32B1FCBA7E400282C9A /* sample_clip1.m4v in Resources */,
 				8405474D1FB97A280033EF9B /* mask.png in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
+				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
+				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
+				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
+				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
 				8405474E1FB97A280033EF9B /* squares.png in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
 				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
 				846D16081FBC0C5E00E78FFF /* face.png in Resources */,
+				84ECD3281FCBA7E400282C9A /* 03_nebula.mp4 in Resources */,
+				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
+				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
+				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
 				845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2836,6 +2943,7 @@
 				84514D1B1E9DCE7A00F07EF8 /* CATransaction+JKAnimateWithDuration.m in Sources */,
 				84514CF91E9DCE7A00F07EF8 /* NSString+JKDictionaryValue.m in Sources */,
 				84514D581E9DCE7A00F07EF8 /* UINavigationBar+JKAwesome.m in Sources */,
+				84ECD3361FCC2C9A00282C9A /* WZRatioCutOutView.m in Sources */,
 				84514CEB1E9DCE7A00F07EF8 /* NSObject+JKAppInfo.m in Sources */,
 				84514CC31E9DCE7A00F07EF8 /* CLLocation+JKCH1903.m in Sources */,
 				84514D8D1E9DCE7A00F07EF8 /* UIWebVIew+JKSwipeGesture.m in Sources */,
@@ -2887,6 +2995,7 @@
 				84514D731E9DCE7A00F07EF8 /* UIView+JKAnimation.m in Sources */,
 				84514D891E9DCE7A00F07EF8 /* UIWebView+JKLoad.m in Sources */,
 				84514D221E9DCE7A00F07EF8 /* UIBarButtonItem+JKBadge.m in Sources */,
+				84ECD3351FCC2C9A00282C9A /* BIVideoEditingClippingView.m in Sources */,
 				84514CDD1E9DCE7A00F07EF8 /* NSException+JKTrace.m in Sources */,
 				84514D471E9DCE7A00F07EF8 /* UIImage+JKMerge.m in Sources */,
 				84514D181E9DCE7A00F07EF8 /* CALayer+JKBorderColor.m in Sources */,
@@ -3022,6 +3131,7 @@
 				84514D321E9DCE7A00F07EF8 /* UIColor+JKHEX.m in Sources */,
 				4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */,
 				84514D1E1E9DCE7A00F07EF8 /* UIApplication+JKKeyboardFrame.m in Sources */,
+				84ECD32F1FCC1D3B00282C9A /* WZAVPlayerViewController.m in Sources */,
 				84514D6C1E9DCE7A00F07EF8 /* UITextField+JKInputLimit.m in Sources */,
 				84514D021E9DCE7A00F07EF8 /* NSString+JKRemoveEmoji.m in Sources */,
 				402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */,

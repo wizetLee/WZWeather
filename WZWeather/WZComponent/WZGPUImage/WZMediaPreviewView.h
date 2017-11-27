@@ -63,6 +63,8 @@
 // 后两个参数如果不设置 默认为crop滤镜的配置
 - (void)prepareRecordWithMovieName:(NSString *)movieName outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput;
 - (void)startRecord;
+//- (void)pauseRecord;
+//- (void)resumeRecord;
 - (void)cancelRecord;
 - (void)endRecord;
 
