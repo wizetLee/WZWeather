@@ -92,8 +92,7 @@
     
     _trailView.backgroundColor = [UIColor clearColor];
     _leadView.backgroundColor = [UIColor clearColor];
-//    _surfaceLayer.backgroundColor = [UIColor blueColor].CGColor;
-//    _internalLayer.backgroundColor = [UIColor yellowColor].CGColor;
+//    _surfaceLayer.backgroundColor = [UIColor bl ellowColor].CGColor;
     
     UIPanGestureRecognizer *panLeading = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
     UIPanGestureRecognizer *panTrading = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];

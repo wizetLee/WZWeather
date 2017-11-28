@@ -326,7 +326,11 @@
 		videoComposition.renderSize = videoSize;
 	}
 	
-#warning 加上CoreAnimation的动画 解析的效率有点差
+    self.composition = composition;
+    self.videoComposition = videoComposition;
+    self.audioMix = audioMix;
+    
+//#warning 加上CoreAnimation的动画 解析的效率有点差
 //    {///加上这一段 layer 动画 简直慢到爆炸   效率让人痴迷...
 //        CALayer *animationLayer = [CALayer layer];
 //        animationLayer.frame = CGRectMake(0, 0, self.targetSize.width, self.targetSize.height);
@@ -344,34 +348,34 @@
 //                                                                                                     inLayer:animationLayer];
 //        videoComposition.animationTool = animationTool;//赋值 CAAnaimtion
 //    }
-    
-	self.composition = composition;
-	self.videoComposition = videoComposition;
-	self.audioMix = audioMix;
-    
-    [self exportToSandboxDocumentWithFileName:@"my.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
-        if (statue == AVAssetExportSessionStatusCompleted) {
-            NSLog(@"导出成功");
-            [self saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
-                if (success) {
-                    NSLog(@"保存成功");
-                } else {
-                    NSLog(@"保g");
-                }
-            }];
-        } else {
-            NSLog(@"导出失败");
-        }
-    }];
+//    
+//
+//    
+//    [self exportToSandboxDocumentWithFileName:@"my.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
+//        if (statue == AVAssetExportSessionStatusCompleted) {
+//            NSLog(@"导出成功");
+//            [self saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
+//                if (success) {
+//                    NSLog(@"保存成功");
+//                } else {
+//                    NSLog(@"保g");
+//                }
+//            }];
+//        } else {
+//            NSLog(@"导出失败");
+//        }
+//    }];
 }
 
 
 
 - (AVPlayerItem *)playerItem {
     
-	AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:self.composition];
-	playerItem.videoComposition = self.videoComposition;
-	playerItem.audioMix = self.audioMix;
+	AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:[self.composition copy]];
+    AVMutableVideoComposition *videoComposition = [self.videoComposition copy];
+    videoComposition.animationTool = nil;
+	playerItem.videoComposition = videoComposition;
+	playerItem.audioMix = [self.audioMix copy];
     
 //    AVSynchronizedLayer *synchronizedLayer = [AVSynchronizedLayer synchronizedLayerWithPlayerItem:playerItem]
 //    [synchronizedLayer addSubLayer:]//add上动画的layer 那个layer 要缩减到屏幕的比例  在AVPlayer上才会看得到哦
@@ -464,9 +468,13 @@
 
 - (void)currentProgress:(CGFloat)progress {
     NSLog(@"progress: %f", progress);
+    if ([_delegate respondsToSelector:@selector(wzAPLSimpleEditor:currentProgress:)]) {
+        [_delegate wzAPLSimpleEditor:self currentProgress:progress];
+    }
 }
 
-- (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler {
+
++ (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler {
     if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             //请求 删除 修改 保存等请求
@@ -575,9 +583,9 @@
 - (CALayer *)animationToolLayerWithTargetSize:(CGSize)targetSize {
     //可以做一些动画之类的
     CALayer *parentLayer = [CALayer layer];
-    parentLayer.backgroundColor = [UIColor yellowColor].CGColor;
+    parentLayer.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.25].CGColor;
     parentLayer.frame = CGRectMake(0, 0, targetSize.width, targetSize.height);
-    parentLayer.opacity = 0.0f;
+//    parentLayer.opacity = 0.0f;
     
     
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
@@ -589,9 +597,29 @@
     animation.beginTime = 1;//CMTimeGetSeconds(self.startTimeInTimeline);
     ///动画持续时间
     animation.duration = 1;//CMTimeGetSeconds(self.timeRange.duration);
-    animation.removedOnCompletion = NO;
+    animation.removedOnCompletion = false;
     
-    [parentLayer addAnimation:animation forKey:nil];//加入动画
+//    [parentLayer addAnimation:animation forKey:nil];//加入动画
+    
+//    NSUInteger count = CMTimeGetSeconds(self.composition.duration) / 0.25;
+//    for (int i = 0; i < count; i++) {
+//        CALayer *layer = [CALayer layer];
+//        layer.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor;
+//        layer.opacity = 0;
+//        layer.frame = CGRectMake(i + 20, 5, 20, 20);
+//        CAKeyframeAnimation *baseAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+//        baseAnimation.values = @[@0.5f, @0.5, @0.1, @0.0f];
+//        baseAnimation.keyTimes = @[@0.0f, @0.25f, @0.75f, @1.0f];
+//        
+//        baseAnimation.removedOnCompletion = false;
+//        baseAnimation.beginTime = i * 0.25;//动画间隔
+//        baseAnimation.duration = 3;
+//        [layer addAnimation:baseAnimation forKey:nil];
+//      
+//        [parentLayer addSublayer:layer];
+//      
+//    }
+    
     return parentLayer;
 }
 

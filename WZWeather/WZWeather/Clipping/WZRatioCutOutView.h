@@ -27,7 +27,7 @@
 ///设置能得到的的最小比例值 默认值为0.1 也就是百分之10的比率/// 0 ~ 1
 @property (nonatomic, assign) CGFloat minimumRestrictRatio;
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;//要用initWithFrame
 ///滑动
 - (void)moveable:(BOOL)boolean;//defaul is true;
 ///设置不可动的预设范围

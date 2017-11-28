@@ -57,6 +57,15 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
     APLSimpleEditorTransitionType_Wipe,
 };
 
+@class WZAPLSimpleEditor;
+@protocol WZAPLSimpleEditorProtocol<NSObject>
+
+@optional;
+- (void)wzAPLSimpleEditor:(WZAPLSimpleEditor *)editor currentProgress:(CGFloat)progress;
+
+@end
+
+
 ///自定义视频过渡
 @interface WZAPLSimpleEditor : NSObject
 
@@ -84,6 +93,8 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 @property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionTypeMArr;
 ///某一段用不用过渡
 @property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionsEnabledMArr;
+@property (nonatomic, assign, readonly) CGSize targetSize;
+@property (nonatomic, weak) id<WZAPLSimpleEditorProtocol> delegate;
 
 //MARK: - 播放 或者 重播
 // Builds the composition and videoComposition
@@ -102,7 +113,7 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 - (void)exportToSandboxDocumentWithFileName:(NSString *)fileName completionHandler:(void (^)(AVAssetExportSessionStatus statue , NSURL *fileURL))handler ;
 
 ///保存到本地
-- (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler;
++ (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler;
 
 ///整个资源更新掉 资源赋值
 - (void)updateEditorWithVideoAssets:(NSArray <AVAsset *>*)assets;
