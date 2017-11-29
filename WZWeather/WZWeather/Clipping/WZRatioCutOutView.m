@@ -10,17 +10,18 @@
 
 @interface WZRatioCutOutView()
 
-@property (nonatomic, strong) UIView *leadView;
-@property (nonatomic, strong) UIView *trailView;
+@property (nonatomic, strong) UIView *leadView;//头部手势驱动图层
+@property (nonatomic, strong) UIView *trailView;//尾部手势驱动图层
 
-@property (nonatomic, strong) CALayer *internalLayer;
-@property (nonatomic, strong) CALayer *surfaceLayer;
+@property (nonatomic, strong) CALayer *leadMaskLayer;//头部遮罩
+@property (nonatomic, strong) CALayer *trailMaskLayer;//尾部遮罩
 
-@property (nonatomic, strong) CALayer *leadMaskView;
-@property (nonatomic, strong) CALayer *trailMaskView;
+@property (nonatomic, strong) UIImageView *leadViewImage;//头部手势驱动图层装饰图层   大小为头部手势驱动图层2分之一
+@property (nonatomic, strong) UIImageView *trailViewImage;//尾部手势驱动图层装饰图层  大小为尾部手势驱动图层2分之一
 
-@property (nonatomic, strong) UIImageView *leadViewImage;
-@property (nonatomic, strong) UIImageView *trailViewImage;
+//@property (nonatomic, strong) UIView *leadMaskView;///头部遮掩图层
+//@property (nonatomic, strong) UIView *trailMaskView;///尾部遮掩图层
+
 
 @property (nonatomic, assign) BOOL  moveable;
 
@@ -49,8 +50,8 @@
     CGFloat handleWH = 44.0;
     _leadView.frame = CGRectMake(0.0, 0.0, handleWH, self.frame.size.height);
     _trailView.frame = CGRectMake(self.frame.size.width - handleWH, 0.0, handleWH, self.frame.size.height);
-    _leadMaskView.frame = CGRectMake(0.0, _leadView.frame.origin.y, 0.0, _leadView.frame.size.height);
-    _trailMaskView.frame = CGRectMake(CGRectGetWidth(self.frame), _trailView.frame.origin.y, 0.0, _trailView.frame.size.height);
+    _leadMaskLayer.frame = CGRectMake(0.0, _leadView.frame.origin.y, 0.0, _leadView.frame.size.height);
+    _trailMaskLayer.frame = CGRectMake(CGRectGetWidth(self.frame), _trailView.frame.origin.y, 0.0, _trailView.frame.size.height);
 }
 
 - (void)createViews {
@@ -67,32 +68,23 @@
     _leadViewImage.backgroundColor = [UIColor redColor];
     _trailViewImage.backgroundColor = [UIColor greenColor];
     
-    _internalLayer = [CALayer layer];
-    _internalLayer.frame = CGRectMake(handleWH / 2.0, 0.0, self.frame.size.width - handleWH, self.frame.size.height);
-    _surfaceLayer = [CALayer layer];
-    _internalLayer.frame = _internalLayer.frame;
-    [self.layer addSublayer:_internalLayer];
-    [self.layer addSublayer:_surfaceLayer];
     
-    _leadMaskView = [CALayer layer];
-    _leadMaskView.frame = CGRectMake(0.0, _leadView.frame.origin.y, 0.0, _leadView.frame.size.height);
+    _leadMaskLayer = [CALayer layer];
+    _leadMaskLayer.frame = CGRectMake(0.0, _leadView.frame.origin.y, 0.0, _leadView.frame.size.height);
+
+    _trailMaskLayer = [CALayer layer];
     
-//    [[UIView alloc] initWithFrame:CGRectMake(0.0, _leadView.frame.origin.y, 0.0, _leadView.frame.size.height)];
-    _trailMaskView = [CALayer layer];
-//    [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame), _trailView.frame.origin.y, 0.0, _trailView.frame.size.height)];
-    _trailMaskView.frame = CGRectMake(CGRectGetWidth(self.frame), _trailView.frame.origin.y, 0.0, _trailView.frame.size.height);
-    _leadMaskView.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.5].CGColor;
-    _trailMaskView.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.5].CGColor;
-    [self.layer addSublayer:_leadMaskView];
-    [self.layer addSublayer:_trailMaskView];
-//    [self addSubview:_leadMaskView];
-//    [self addSubview:_trailMaskView];
+    _trailMaskLayer.frame = CGRectMake(CGRectGetWidth(self.frame), _trailView.frame.origin.y, 0.0, _trailView.frame.size.height);
+    _leadMaskLayer.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.5].CGColor;
+    _trailMaskLayer.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.5].CGColor;
+    [self.layer addSublayer:_leadMaskLayer];
+    [self.layer addSublayer:_trailMaskLayer];
     [self addSubview:_leadView];
     [self addSubview:_trailView];
     
     _trailView.backgroundColor = [UIColor clearColor];
     _leadView.backgroundColor = [UIColor clearColor];
-//    _surfaceLayer.backgroundColor = [UIColor bl ellowColor].CGColor;
+
     
     UIPanGestureRecognizer *panLeading = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
     UIPanGestureRecognizer *panTrading = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
@@ -117,7 +109,8 @@
     CGFloat viewW = pan.view.bounds.size.width;
     
     [CATransaction begin];
-    [CATransaction setDisableActions:true];
+    [CATransaction setDisableActions:true];//去隐式动画
+    
     if (pan.view == _leadView) {
         if (targetX < CGRectGetWidth(pan.view.frame) / 2.0) {
             targetX = CGRectGetWidth(pan.view.frame) / 2.0;
@@ -125,7 +118,7 @@
         if (_trailView.center.x - targetX <= (CGRectGetWidth(self.frame) - viewW) *_minimumRestrictRatio) {
             targetX = _trailView.center.x - (CGRectGetWidth(self.frame) - viewW) *_minimumRestrictRatio;
         }
-        _leadMaskView.frame = CGRectMake(_leadMaskView.frame.origin.x, _leadMaskView.frame.origin.y, targetX, _leadMaskView.frame.size.height);
+        _leadMaskLayer.frame = CGRectMake(_leadMaskLayer.frame.origin.x, _leadMaskLayer.frame.origin.y, targetX, _leadMaskLayer.frame.size.height);
         
     } else if (pan.view == _trailView) {
         if (targetX > (CGRectGetWidth(self.frame)) -  CGRectGetWidth(pan.view.frame) / 2.0) {
@@ -134,7 +127,7 @@
         if (targetX - _leadView.center.x <= (CGRectGetWidth(self.frame) - viewW) *_minimumRestrictRatio) {
             targetX = _leadView.center.x + (CGRectGetWidth(self.frame) - viewW) *_minimumRestrictRatio;
         }
-        _trailMaskView.frame = CGRectMake(targetX, _trailMaskView.frame.origin.y, (CGRectGetWidth(self.frame) - targetX), _trailMaskView.frame.size.height);
+        _trailMaskLayer.frame = CGRectMake(targetX, _trailMaskLayer.frame.origin.y, (CGRectGetWidth(self.frame) - targetX), _trailMaskLayer.frame.size.height);
     }
     [CATransaction commit];
     
@@ -212,12 +205,12 @@
     targetX = (1 - ratio) * scaleW / 2.0;
     targetX  = targetX + viewW / 2.0;
     _leadView.center = CGPointMake(targetX, _leadView.center.y);
-    _leadMaskView.frame = CGRectMake(_leadMaskView.frame.origin.x, _leadMaskView.frame.origin.y, targetX, _leadMaskView.frame.size.height);
+    _leadMaskLayer.frame = CGRectMake(_leadMaskLayer.frame.origin.x, _leadMaskLayer.frame.origin.y, targetX, _leadMaskLayer.frame.size.height);
     
     targetX = (1 - ratio) * scaleW / 2.0;
     targetX  = CGRectGetWidth(self.bounds) - targetX - viewW / 2.0;
     _trailView.center = CGPointMake(targetX, _trailView.center.y);
-    _trailMaskView.frame = CGRectMake(targetX, _trailMaskView.frame.origin.y, (CGRectGetWidth(self.frame) - targetX), _trailMaskView.frame.size.height);
+    _trailMaskLayer.frame = CGRectMake(targetX, _trailMaskLayer.frame.origin.y, (CGRectGetWidth(self.frame) - targetX), _trailMaskLayer.frame.size.height);
         
 //        NSLog(@"%f__%f", (_leadView.center.x - viewW / 2.0) / (CGRectGetWidth(self.frame) - viewW)
 //              , (_trailView.center.x - viewW / 2.0) / (CGRectGetWidth(self.frame) - viewW));

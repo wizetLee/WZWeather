@@ -276,7 +276,7 @@
 		8453F5E71FB071D100E0ABAE /* WZMediaEffectShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8453F5E61FB071D100E0ABAE /* WZMediaEffectShow.m */; };
 		8456645B1FC811870004BAC1 /* UIWindow+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8456645A1FC811870004BAC1 /* UIWindow+WZMinistrant.m */; };
 		8456645F1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8456645E1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m */; };
-		845664621FC813180004BAC1 /* NSObject+WZministrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664611FC813180004BAC1 /* NSObject+WZministrant.m */; };
+		845664621FC813180004BAC1 /* NSObject+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */; };
 		845664871FC82E8C0004BAC1 /* WZAPLSimpleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */; };
 		845664881FC82E8C0004BAC1 /* NSObject+WZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664681FC82E8C0004BAC1 /* NSObject+WZCommon.m */; };
 		845664891FC82E8C0004BAC1 /* WZMediaFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8456646A1FC82E8C0004BAC1 /* WZMediaFetcher.m */; };
@@ -911,8 +911,8 @@
 		8456645A1FC811870004BAC1 /* UIWindow+WZMinistrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+WZMinistrant.m"; sourceTree = "<group>"; };
 		8456645D1FC811AC0004BAC1 /* UIViewController+WZMinistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+WZMinistrant.h"; sourceTree = "<group>"; };
 		8456645E1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+WZMinistrant.m"; sourceTree = "<group>"; };
-		845664601FC813180004BAC1 /* NSObject+WZministrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZministrant.h"; sourceTree = "<group>"; };
-		845664611FC813180004BAC1 /* NSObject+WZministrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZministrant.m"; sourceTree = "<group>"; };
+		845664601FC813180004BAC1 /* NSObject+WZMinistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZMinistrant.h"; sourceTree = "<group>"; };
+		845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZMinistrant.m"; sourceTree = "<group>"; };
 		845664641FC82E8C0004BAC1 /* WZAPLSimpleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAPLSimpleEditor.h; sourceTree = "<group>"; };
 		845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAPLSimpleEditor.m; sourceTree = "<group>"; };
 		845664671FC82E8C0004BAC1 /* NSObject+WZCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZCommon.h"; sourceTree = "<group>"; };
@@ -1069,8 +1069,8 @@
 			children = (
 				40287B241F09210800D9383B /* NSObject+WZFile.h */,
 				40287B251F09210800D9383B /* NSObject+WZFile.m */,
-				845664601FC813180004BAC1 /* NSObject+WZministrant.h */,
-				845664611FC813180004BAC1 /* NSObject+WZministrant.m */,
+				845664601FC813180004BAC1 /* NSObject+WZMinistrant.h */,
+				845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */,
 			);
 			path = NSObject;
 			sourceTree = "<group>";
@@ -2535,9 +2535,9 @@
 				844A0C601F7E2E08001DF1CA /* WZNavigationController.m */,
 				846920E11E63F4430048BBDC /* WZ.pch */,
 				844A0C631F7E3961001DF1CA /* WZSystemDetails.h */,
-				844A0C641F7E3961001DF1CA /* WZSystemDetails.m */,
-				848979881ECC61DD008B07D2 /* WZAuthorization.h */,
 				848979891ECC61DD008B07D2 /* WZAuthorization.m */,
+				848979881ECC61DD008B07D2 /* WZAuthorization.h */,
+				844A0C641F7E3961001DF1CA /* WZSystemDetails.m */,
 				84CAD8031EA07EEA00BDF9AA /* WZUserInfo.h */,
 				84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */,
 				848633451F95EBA60086C96E /* WZAppManager.h */,
@@ -3189,7 +3189,7 @@
 				840A43A51FB1981400F6D449 /* WZMediaGestureView.m in Sources */,
 				84514CD31E9DCE7A00F07EF8 /* NSDate+JKReporting.m in Sources */,
 				84514D401E9DCE7A00F07EF8 /* UIImage+JKBetterFace.m in Sources */,
-				845664621FC813180004BAC1 /* NSObject+WZministrant.m in Sources */,
+				845664621FC813180004BAC1 /* NSObject+WZMinistrant.m in Sources */,
 				84514CFE1E9DCE7A00F07EF8 /* NSString+JKMatcher.m in Sources */,
 				84514D3D1E9DCE7A00F07EF8 /* UIFont+JKTTF.m in Sources */,
 				84514D881E9DCE7A00F07EF8 /* UIWebView+JKJavaScript.m in Sources */,

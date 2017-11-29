@@ -6,7 +6,7 @@
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
-#import "NSObject+WZministrant.h"
+#import "NSObject+WZMinistrant.h"
 
 @implementation NSObject (WZministrant)
 

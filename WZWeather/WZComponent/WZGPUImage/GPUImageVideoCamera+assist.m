@@ -282,4 +282,11 @@ static CATransform3D PerspectiveTransformMake(CGFloat eyePosition)
 ///对焦完毕再拍照
 
 
+- (void)lowLightMode {
+    //使用一种特殊的低光增强模式来提高图像质量
+    if (self.inputCamera.lowLightBoostSupported) {
+        self.inputCamera.automaticallyEnablesLowLightBoostWhenAvailable = true;
+    }
+}
+
 @end

@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, GPUImageCameraTorchType) {
 ///手电筒
 - (void)setTorchType:(GPUImageCameraTorchType)type;
 
-///焦点和曝光点(0,0) ~ (1,1)
+///焦点和曝光点[0,0] ~ [1,1]
 - (void)autoFocusAndExposureAtPoint:(CGPoint)point;
 - (void)exposureAtPoint:(CGPoint)point;
 - (void)focusAtPoint:(CGPoint)point;
@@ -46,4 +46,6 @@ typedef NS_ENUM(NSUInteger, GPUImageCameraTorchType) {
 ///在回调中配置设备
 - (NSError *)device:(AVCaptureDevice *)device configuration:(void (^)())config;
 
+
+- (void)lowLightMode;
 @end

@@ -14,7 +14,7 @@
  */
 
 //MARK - NSObject
-#import "NSObject+WZministrant.h"
+#import "NSObject+WZMinistrant.h"
 #import "NSObject+WZFile.h"
 
 //MArk - UIViewController
