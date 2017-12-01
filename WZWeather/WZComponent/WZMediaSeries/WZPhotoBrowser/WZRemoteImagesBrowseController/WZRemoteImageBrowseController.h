@@ -10,7 +10,9 @@
 #import "WZRemoteImageNavigationView.h"
 
 @interface WZRemoteImageBrowseController : WZAssetBrowseController
-
+/**
+     网络图片获取
+ **/
 @property (nonatomic, strong) UIImageView *mediumImageView;
 
 + (void)showRemoteImagesWithURLArray:(NSArray <NSURL *>*)urlArray loactedVC:(UIViewController *)locatedVC;

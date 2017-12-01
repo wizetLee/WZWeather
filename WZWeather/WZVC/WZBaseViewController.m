@@ -76,7 +76,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%@", self);
+    NSLog(@"%s", __FUNCTION__);
 }
 
 #pragma mark - Public Method

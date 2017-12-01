@@ -75,9 +75,11 @@
 @implementation WZPhotoCatalogueController
 
 #pragma mark - initialize
-+ (void)showPickerWithPresentedController:(UIViewController <WZProtocolMediaAsset>*)presentedController {
+
+//MARK: 图片选择
++ (void)showPickerWithPresentedController:(UIViewController <WZMediaAssetProtocol>*)presentedController {
     WZPhotoCatalogueController *VC = [[WZPhotoCatalogueController alloc] init];
-    VC.pickerVC.delegate = (id<WZProtocolMediaAsset>)presentedController;
+    VC.pickerVC.delegate = (id<WZMediaAssetProtocol>)presentedController;
     UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:VC];
     [presentedController presentViewController:navigationVC animated:true completion:^{}];
 }
@@ -102,8 +104,8 @@
     [self getAuthorization];
     [self createViews];
 
-    NSLog(@"%@", NSStringFromUIEdgeInsets(self.additionalSafeAreaInsets));
-    NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
+//    NSLog(@"%@", NSStringFromUIEdgeInsets(self.additionalSafeAreaInsets));
+//    NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
   
 }
 
@@ -115,7 +117,7 @@
     NSLog(@"%s", __func__);
 }
 
-#pragma mark - CreateViews
+#pragma mark - Private
 - (void)createViews {
     [self.view addSubview:self.collection];
     
@@ -129,7 +131,7 @@
     [self dismissViewControllerAnimated:true completion:^{}];
 }
 
-#pragma mark - fetchAuthorization
+#pragma mark - fetchAuthorization 权限获取
 - (void)getAuthorization {
     [NSObject requestPhotosLibraryAuthorization:^(BOOL ownAuthorization) {
         if (ownAuthorization) {

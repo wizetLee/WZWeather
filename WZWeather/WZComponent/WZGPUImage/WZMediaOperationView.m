@@ -11,14 +11,15 @@
 #import "WZCameraAssist.h"
 #import "WZMediaTmpRecordList.h"
 #import "WZMediaRecordTimeBar.h"
+#import "WZMediaRateTypeView.h"
 
-@interface WZMediaOperationView ()<WZMediaConfigViewProtocol, WZMediaEffectShowProtocol>
+@interface WZMediaOperationView ()<WZMediaConfigViewProtocol, WZMediaEffectShowProtocol, WZMediaRateTypeViewProtocol>
 
 @property (nonatomic, strong) WZMediaConfigView *configView;//左手势
 @property (nonatomic, strong) WZMediaEffectShow *effectView;//右手势
 @property (nonatomic, strong) UIImageView *catalogueImageView;//切换相册或者是视频的目录
 @property (nonatomic, strong) WZMediaGestureView *gestureView;
-
+@property (nonatomic, strong) WZMediaRateTypeView *videoRateTypeView;
 //---------------------------------------通用
 ///退出拍摄 录影
 @property (nonatomic, strong) UIButton *closeBtn;
@@ -115,7 +116,7 @@
     [_switchBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_switchBtn];
     
-    _compositionBtn =
+    
     _compositionBtn = [[UIButton alloc] init];
     _compositionBtn.frame = CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - w, MACRO_FLOAT_SCREEN_HEIGHT - 44, w, 44);
     _compositionBtn.backgroundColor = [UIColor magentaColor];
@@ -132,6 +133,12 @@
 //    [self addGestureRecognizer:_edgePan];
 //    [self addGestureRecognizer:_edgePanR];
     
+    _videoRateTypeView = [[WZMediaRateTypeView alloc] initWithFrame:CGRectMake(0.0, 0.0, 44.0 * 5, 44.0)];
+    _videoRateTypeView.layer.backgroundColor = [UIColor yellowColor].CGColor;
+    _videoRateTypeView.layer.cornerRadius = 22.0;
+    [self addSubview:_videoRateTypeView];
+    _videoRateTypeView.center = self.center;
+    _videoRateTypeView.delegate = self;
     
     _recordTimeBar = [[WZMediaRecordTimeBar alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, 10.0)];
     [self addSubview:_recordTimeBar];
@@ -143,7 +150,7 @@
 
 
 
-///
+//MARK:点击事件
 - (void)clickedBtn:(UIButton *)sender {
     if (sender == _closeBtn) {
         if ([_delegate respondsToSelector:@selector(operationView:closeBtnAction:)]) {
@@ -178,7 +185,7 @@
 
 
 
-///边缘手势
+//MARK:边缘手势
 - (void)screenEdgePan:(UIScreenEdgePanGestureRecognizer *)pan {
     if (pan.edges == UIRectEdgeLeft) {
         CGFloat restrictCritical = MACRO_FLOAT_SCREEN_WIDTH / 2.0;
@@ -223,7 +230,7 @@
     }
 }
 
-
+//MARK:长按手势
 - (void)longPress:(UILongPressGestureRecognizer *)longPress {
     if (longPress.view == _recordView) {
         if (longPress.state == UIGestureRecognizerStateBegan) {
@@ -288,15 +295,15 @@
 }
 
 #pragma mark - Public
-
+//MARK:录制的进度
 - (void)recordProgress:(CGFloat)progress {
     [_recordTimeBar setProgress:progress];
 }
-
+//MARK:添加一个录制断点
 - (void)addRecordSign {
     [_recordTimeBar addSign];
 }
-
+//MARK:录像 摄影之间的切换
 - (void)switchModeWithType:(WZMediaType)type {
     _type = type;
     if (type == WZMediaTypeVideo) {
@@ -309,6 +316,12 @@
         _recordView.hidden = true;
         _shootBtn.hidden = false;
         
+    }
+}
+#pragma mark - WZMediaRateTypeViewProtocl
+- (void)mediaRateTypeView:(WZMediaRateTypeView *)view didScrollToIndex:(NSUInteger)index; {
+    if ([_delegate respondsToSelector:@selector(operationView:didScrollToIndex:)]) {
+        [_delegate operationView:self didScrollToIndex:index];
     }
 }
 

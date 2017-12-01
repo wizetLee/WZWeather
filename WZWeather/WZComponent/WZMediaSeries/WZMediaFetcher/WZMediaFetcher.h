@@ -17,7 +17,7 @@
 #define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
 
 @class WZMediaAsset;
-@protocol WZProtocolMediaAsset <NSObject>
+@protocol WZMediaAssetProtocol <NSObject>
 
 @optional
 
@@ -119,32 +119,38 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 
 @end
 
+
+
 #pragma mark - WZMediaFetcher
+/**
+  视频 live photo 识别   gif 识别
+  音频
+ */
 @interface WZMediaFetcher : NSObject
 
-//扩展  获取视频  以及  特定音频的资源组合
-//获取所需要的资源集合的集合
+//MARK:扩展  获取视频  以及  特定音频的资源组合
+//MARK:获取所需要的资源集合的集合
 
-//获取最普通的资源集合
+//MARK:获取最普通的资源集合
 + (NSMutableArray <WZMediaAssetCollection *> *)fetchAssetCollection;
 
-//获取拥有所有图片的胶卷集合
+//MARK:获取拥有所有图片的胶卷集合
 + (NSArray <PHAsset *> *)allImagesAssets;
 
-//获取拥有所有视频的集合
+//MARK:获取拥有所有视频的集合
 + (NSArray <PHAsset *> *)allVideosAssets;
 
 
-//获取个人自定义创建的相册（也就是我的相簿）的集合<只有图片类型>
+//MARK:获取个人自定义创建的相册（也就是我的相簿）的集合<只有图片类型>
 + (NSArray <WZMediaAssetCollection *> *)customMediaAssetCollectionOnlyImageAsset;
-//获取个人自定义创建的相册（也就是我的相簿）的集合<只有视频类型>
+//MARK:获取个人自定义创建的相册（也就是我的相簿）的集合<只有视频类型>
 + (NSArray <WZMediaAssetCollection *> *)customMediaAssetCollectionOnlyVideoAsset;
-//获取个人自定义创建的相册（也就是我的相簿）的集合<也有视频/图片类型>
+//MARK:获取个人自定义创建的相册（也就是我的相簿）的集合<也有视频/图片类型>
 + (NSArray <WZMediaAssetCollection *> *)customMediaAssetCollectionOnlyImageHybirdVideoAsset;
 
 
-#pragma mark - Fetch Picture
-
+#pragma mark - Fetch Picture  图片部分
+//MARK: 根据某个asset同步获取对应的《缩略》图片
 /**
  *  获取目标资源的缩略图 size为WZMEDIAASSET_THUMBNAILSIZE
  *
@@ -155,7 +161,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
  *  @return 资源ID
  */
 + (int32_t)fetchThumbnailWithAsset:(PHAsset *)mediaAsset synchronous:(BOOL)synchronous handler:(void(^)(UIImage *thumbnail))handler ;
-
+//MARK: 根据某个asset同步获取对应的《源》图片
 /**
  *  获取目标资源的原尺寸图
  *
@@ -166,7 +172,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
  *  @return 资源ID
  */
 + (int32_t)fetchOrigionWith:(PHAsset *)mediaAsset synchronous:(BOOL)synchronous handler:(void(^)(UIImage *origion))handler;
-
+//MARK: 根据某个asset同步获取对应的《自定义尺寸》图片
 /**
  *  获取目标资源的图 自定义size
  *
@@ -178,7 +184,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
  *  @return 资源ID
  */
 + (int32_t)fetchImageWithAsset:(PHAsset *)mediaAsset costumSize:(CGSize)customSize synchronous:(BOOL)synchronous handler:(void(^)(UIImage *origion))handler;
-
+//MARK: 根据某个asset同步获取对应的图片的《data形式》
 /**
  *  获取目标资源的原尺寸图
  *
@@ -190,10 +196,14 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
  */
 + (int32_t)fetchImageWithAsset:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(NSData *  imageData, NSString * dataUTI, UIImageOrientation orientation, NSDictionary *  info))handler;
 
-#pragma mark - Fetch Video
+#pragma mark - Fetch Video  视频部分
 //+ (int32_t)fetchVideoWith:(PHAsset *)asset
 
 
-#pragma mark - Fetch Audio
+#pragma mark - Fetch Audio  音频部分
+
+
+#pragma mark - 删除某一些资源
+
 
 @end

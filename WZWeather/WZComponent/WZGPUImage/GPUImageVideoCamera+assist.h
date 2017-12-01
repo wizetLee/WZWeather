@@ -23,29 +23,49 @@ typedef NS_ENUM(NSUInteger, GPUImageCameraTorchType) {
 
 @interface GPUImageVideoCamera (assist)
 
-///闪光灯
+//MARK:闪光灯
 - (void)setFlashType:(GPUImageCameraFlashType)type;
-///手电筒
+//MARK:手电筒
 - (void)setTorchType:(GPUImageCameraTorchType)type;
 
-///焦点和曝光点[0,0] ~ [1,1]
+//MARK:焦点和曝光点[0,0] ~ [1,1]
 - (void)autoFocusAndExposureAtPoint:(CGPoint)point;
 - (void)exposureAtPoint:(CGPoint)point;
 - (void)focusAtPoint:(CGPoint)point;
 
-///镜头的变焦
+//MARK:镜头的变焦
 - (CGFloat)videoMaxZoomFactor;
 - (void)setDeviceZoomFactor:(CGFloat)zoomFactor;
 
+//MARK:设置和获取系统默认的拍摄帧率  慢动作配置之前的原始数据的保存
+- (void)setDefaultVideoMaxFrameDuration:(CMTime)defaultVideoMaxFrameDuration;
+- (CMTime)defaultVideoMaxFrameDuration;
+- (void)setDefaultFormat:(AVCaptureDeviceFormat *)defaultFormat;
+- (AVCaptureDeviceFormat *)defaultFormat;
 
-///使用陀螺仪检测设备方向   建议使用一个全局接收通知
+//MARK:使用陀螺仪检测设备方向   建议使用一个全局接收通知
 - (void)addCMMotionToMobile;
 - (void)configMetadataOutputWithDelegete;
 
 
-///在回调中配置设备
+//MARK:在回调中配置设备
 - (NSError *)device:(AVCaptureDevice *)device configuration:(void (^)())config;
 
 
-- (void)lowLightMode;
+//MARK:尽量使用低光增强模式
+- (void)attemptToUseLowLightMode:(BOOL)boolean;
+
+
+
+
+
+//MARK:SlowMotonVideoRecorder 中的代码            配置自定义的帧率
+- (void)switchFormatWithDesiredFPS:(CGFloat)desiredFPS;
+//MARK:恢复默认帧率
+- (void)resetFrameActiveFormat;
+
+
+
+
+
 @end

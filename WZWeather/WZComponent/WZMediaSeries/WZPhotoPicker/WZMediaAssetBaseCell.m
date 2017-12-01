@@ -59,6 +59,8 @@
         CGFloat selectedBtnHW = 33;
         _selectButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width - selectedBtnHW , 0, selectedBtnHW, selectedBtnHW)];
         [self.contentView addSubview:_selectButton];
+        NSAssert([UIImage imageNamed:@"message_oeuvre_btn_normal"], @"资源丢失");
+        NSAssert([UIImage imageNamed:@"message_oeuvre_btn_selected"], @"资源丢失");
         [_selectButton setImage:[UIImage imageNamed:@"message_oeuvre_btn_normal"] forState:UIControlStateNormal];
         [_selectButton setImage:[UIImage imageNamed:@"message_oeuvre_btn_selected"] forState:UIControlStateSelected];
         [_selectButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];

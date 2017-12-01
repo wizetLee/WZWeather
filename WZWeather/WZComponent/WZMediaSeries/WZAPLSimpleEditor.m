@@ -418,7 +418,7 @@
         
         AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:[self.composition copy] presetName:AVAssetExportPresetHighestQuality];
         exportSession.outputURL = outputURL;
-        exportSession.videoComposition = self.videoComposition;
+        exportSession.videoComposition = [self.videoComposition copy];//应该和scale有所冲突
         exportSession.outputFileType = AVFileTypeMPEG4;
         NSLog(@"%@", NSHomeDirectory());
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
@@ -547,6 +547,7 @@
     //    }];
 }
 
+///MARK:
 - (void)synchronizeWithEditor
 {
     // Clips
@@ -579,7 +580,7 @@
 }
 
 
-////配置动画的类型哦
+//MARK: 配置动画的类型哦
 - (CALayer *)animationToolLayerWithTargetSize:(CGSize)targetSize {
     //可以做一些动画之类的
     CALayer *parentLayer = [CALayer layer];
@@ -622,6 +623,9 @@
     
     return parentLayer;
 }
+
+
+
 
 
 @end

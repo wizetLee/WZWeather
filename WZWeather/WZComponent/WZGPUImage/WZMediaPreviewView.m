@@ -63,10 +63,11 @@
 - (void)config {
     _faceMap = [NSMutableDictionary dictionary];
     _moviesNameMarr = [NSMutableArray array];
+    _timeScaleMArr = [NSMutableArray array];
     _mediaType = WZMediaTypeStillImage;
     _recordStartTime = kCMTimeZero;
     _recordTotalTime = kCMTimeZero;
-#warning 最好提前创建好的目录 不然我也不知道会发生什么错误....
+#warning 最好提前创建好的目录 不然我也不知道会发生什么错误.... 使用懒加载会出现过崩溃的情况
     [[NSFileManager defaultManager] removeItemAtPath:[NSObject wz_filePath:WZSearchPathDirectoryDocument fileName:MovieFolderName] error:nil];
     [NSObject wz_createFolderAtPath:[NSObject wz_filePath:WZSearchPathDirectoryDocument fileName:MovieFolderName]];
     
@@ -90,6 +91,7 @@
     });
 }
 
+//MARK: 拍摄回调
 - (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler {
     ///无效函数
     
@@ -119,6 +121,7 @@
     }];
 }
 
+//MARK:临时插入一个滤镜到镜头链中
 - (void)insertRenderFilter:(GPUImageFilter *)filter {
     [_cropFilter removeTarget:_scaleFilter];
     __weak typeof(self) weakSelf = self;
@@ -138,9 +141,7 @@
 }
 
 - (void)createViews {
-    
     [self addSubview:self.presentView];
-  
 }
 
 -(void)setFrame:(CGRect)frame {
@@ -223,7 +224,7 @@
                         CGFloat rectHeight = imageSize.height * observation.boundingBox.size.height;
                         CGPoint p = CGPointMake( point[i].x * rectWidth + observation.boundingBox.origin.x * imageSize.width
                                                 , observation.boundingBox.origin.y * imageSize.height + point[i].y * rectHeight);
-                        points[i]  = p;
+                        points[i] = p;
                     }
                     UIBezierPath *path = [UIBezierPath bezierPath];
                     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
@@ -371,11 +372,11 @@ static int stride = 0;
     if (_mediaType == WZMediaTypeVideo) {
         _cameraVideo = [[GPUImageVideoCamera alloc] initWithSessionPreset:preset cameraPosition:position];
         _cameraCurrent = _cameraVideo;
-#warning 如果临时加上音频输出的化 会出现闪烁 所以加在初始化这里
+#warning 如果临时加上音频输出的化 会出现闪烁（因为要lock） 所以加在初始化这里
         [_cameraVideo addAudioInputsAndOutputs];///
         
-        AVCaptureVideoStabilizationMode stabilizationMode = AVCaptureVideoStabilizationModeCinematic;
-        //视频防抖  产生延时效果
+//        AVCaptureVideoStabilizationMode stabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+        //视频防抖  使用的过程会产生延时效果 初步判定可能是GPU内部的原因....
 //        if ([_cameraCurrent.inputCamera.activeFormat isVideoStabilizationModeSupported:stabilizationMode]) {
 //            AVCaptureConnection *videoOutput = [_cameraCurrent videoCaptureConnection];
 //            [videoOutput setPreferredVideoStabilizationMode:stabilizationMode];
@@ -387,7 +388,6 @@ static int stride = 0;
         _cameraStillImage = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
         _cameraCurrent = _cameraStillImage;
     }
-    
     
     
     //视频 HDR (高动态范围图像)
@@ -437,7 +437,6 @@ static int stride = 0;
     }
 
     //缩减渲染比例 降低渲染成本
-    
     [_cameraCurrent addTarget:_cropFilter];
     
     GPUImageOutput <GPUImageInput> *tmpFilter = _insertFilter;
@@ -567,7 +566,7 @@ static int stride = 0;
 - (void)endRecordTimeConfig {
 //    结算总时间
     sleep(0.1);//为了准确获取时间
-    [self resetTotalTime];
+    [self resetTotalTime];//看本地资源的事件可能为0 导致输出的time为0
     if ([_delegate respondsToSelector:@selector(previewView:audioVideoWriterRecordingCurrentTime:last:)]) {
         [_delegate previewView:self audioVideoWriterRecordingCurrentTime:_recordTotalTime last:true];//传回准确的总拍摄时间
     }
@@ -597,6 +596,15 @@ static int stride = 0;
         NSLog(@"请注意：movie writer 还没配置完成");
     }
 }
+
+
+//- (void)pauseRecord {
+//    _movieWriter.paused = true;
+//}
+//
+//- (void)resumeRecord {
+//    _movieWriter.paused = false;
+//}
 
 - (NSString *)newMovieName {
     NSString *movieName = [NSString stringWithFormat:@"recordMovie%ld.m4v", _moviesNameMarr.count];
@@ -631,8 +639,9 @@ static int stride = 0;
             //保存失败
         }
     }
-    ///时间配置
-    [self endRecordTimeConfig];
+    
+    ///时间重新配置 因为时间 每暂停一次 都会增加误差  但是下面这个设置是有所风险的
+//    [self endRecordTimeConfig];
 }
 
 

@@ -18,7 +18,10 @@
 #import "WZCameraAssist.h"
 #import "WZAPLSimpleEditor.h"
 #import "WZAVPlayerViewController.h"
-@interface MainViewController ()
+#import "WZPhotoCatalogueController.h"
+#import "WZVideoPickerController.h"
+
+@interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
 @property (nonatomic,strong) WZScrollOptions *menuView;
 
@@ -207,13 +210,13 @@
             cell.textLabel.text = [NSString stringWithFormat:@"视频合成测试"];
         } break;
         case 2: {
-            
+            cell.textLabel.text = [NSString stringWithFormat:@"播放、以及水印测试"];
         } break;
         case 3: {
-            
+            cell.textLabel.text = [NSString stringWithFormat:@"本地图片"];
         } break;
         case 4: {
-            
+            cell.textLabel.text = [NSString stringWithFormat:@"本地视频"];
         } break;
             
         default:
@@ -254,17 +257,19 @@
             
             WZAPLSimpleEditor *editor = [[WZAPLSimpleEditor alloc] init];
             [editor updateEditorWithVideoAssets:@[asset4, asset3, asset2, asset1]];
+            
         } break;
         case 2: {
             
             WZAVPlayerViewController *vc = [WZAVPlayerViewController new];
+            self.navigationController.navigationBarHidden = false;
             [self.navigationController pushViewController:vc animated:true];
         } break;
         case 3: {
-            
+             [WZPhotoCatalogueController showPickerWithPresentedController:self];
         } break;
         case 4: {
-            
+           [WZVideoPickerController showPickerWithPresentedController:self];
         } break;
             
         default:
@@ -273,6 +278,7 @@
     
 }
 
+//iOS11以下 是不会调用这个消息的   横竖屏改变 VC present pop 等操作都会执行这个消息
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];
      NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
@@ -320,7 +326,14 @@
     [self presentViewController:alter animated:true completion:nil];
 }
 
-#pragma mark - WZProtocolPageViewController
+#pragma mark - WZVideoPickerControllerProtocol
+
+///右击
+- (void)videoPickerControllerDidClickedRightItem; {
+    
+}
+
+#pragma mark - WZPageViewControllerProtocol
 //控制器角标传出
 - (void)pageViewController:(UIPageViewController *)pageViewController showVC:(WZPageViewAssistController *)VC inIndex:(NSInteger)index {
     NSLog(@"vc-%@=======index-%ld", VC, index);

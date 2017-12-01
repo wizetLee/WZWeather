@@ -14,7 +14,7 @@
 /**
   有一个BUG 多只手指滑动不停顿  滑动到另外一个控制器时，有多个代理是不会动的
  **/
-@protocol WZProtocolPageViewController <UIPageViewControllerDelegate>
+@protocol WZPageViewControllerProtocol <UIPageViewControllerDelegate>
 
 //控制器角标传出
 - (void)pageViewController:(UIPageViewController *)pageViewController showVC:(WZPageViewAssistController *)VC inIndex:(NSInteger)index;
@@ -23,7 +23,7 @@
 
 @interface WZPageViewController : UIPageViewController
 
-@property (nonatomic, weak) id<WZProtocolPageViewController> pageViewControllerDelegate;
+@property (nonatomic, weak) id<WZPageViewControllerProtocol> pageViewControllerDelegate;
 @property (nonatomic, strong) NSArray <WZPageViewAssistController *> *reusableVCArray;
 @property (nonatomic, strong) WZPageViewAssistController *currentVC;
 

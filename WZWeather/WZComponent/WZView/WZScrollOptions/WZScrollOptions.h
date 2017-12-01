@@ -10,7 +10,7 @@
 
 @class WZScrollOptions;
 
-@protocol WZProtocolScrollOptions <NSObject>
+@protocol WZScrollOptionsProtocol <NSObject>
 
 - (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index;
 
@@ -19,7 +19,7 @@
 ///标题 选取 控件
 @interface WZScrollOptions : UIScrollView
 
-@property (nonatomic, weak) id <WZProtocolScrollOptions> scrollOptionsDelegate;//代理
+@property (nonatomic, weak) id <WZScrollOptionsProtocol> scrollOptionsDelegate;//代理
 @property (nonatomic, strong) NSArray *titleArray;//title
 @property (nonatomic, assign, readonly) NSInteger currentIndex;//当前选择的角标
 @property (nonatomic, assign) CGFloat animationTime;//移动动画的事件

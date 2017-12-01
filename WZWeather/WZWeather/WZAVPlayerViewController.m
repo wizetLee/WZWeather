@@ -10,6 +10,7 @@
 #import "BIVideoEditingClippingView.h"
 #import "WZAPLSimpleEditor.h"
 
+
 /*
  动画 + 视频导出
  */
@@ -54,6 +55,7 @@
     _asset = asset1;
     [_editor updateEditorWithVideoAssets:@[asset1]];//得到targetSize
     
+    ///获得一个与合成的视频一样大的幕布
     _containLayer = [self parentLayerWithTargetAssetSize:_editor.targetSize];
     
     _startTime = kCMTimeZero;//默认0开始
@@ -79,6 +81,9 @@
 //MARK: 配置asset等
 - (void)dataConfig {
     _player = [[AVPlayer alloc] initWithPlayerItem:_targetItem];
+    
+    
+    
     __weak typeof(self) weakSelf = self;
     _timeObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.5, 600) queue:nil usingBlock:^(CMTime time) {
      //可以在此处理 配置一个循环播放的设置
@@ -306,12 +311,10 @@
 /**
  关于AVPlayer
      调整速率rate
- 
  ***/
 //MARK:- 视频剪裁
 - (void)videoClippingWithAsset:(AVAsset *)asset leadingTime:(CMTime)leadingTime trailingTime:(CMTime)trailingTime {
     NSAssert(CMTimeGetSeconds(asset.duration), @"资源为空");
-    
     AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetHighestQuality];
     {//配路径
         NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpClipping.mp4"];//临时文件路径
@@ -347,7 +350,6 @@
     
     
     {//导出
-        
         __weak typeof(self) weakSelf = self;
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -364,7 +366,8 @@
             });
         }];
     }
-    //监听
+    
+    //导出速率监听
     [self monitorExportProgressWithExportSession:exportSession];
 }
 
@@ -404,5 +407,22 @@
 - (void)exportcompleted {
     
 }
+
+//MARK: 根据某一个数据匹配对应的视频的播放速率
+//MARK: 新增一个属性用于调整速率
+- (void)sss:(AVMutableComposition *)composition {
+    if (![composition isKindOfClass:[AVMutableComposition class]]) { return;}
+    
+    ///修改视频的播放速率
+    NSArray<AVMutableCompositionTrack *> *tracks = composition.tracks;
+    for (AVMutableCompositionTrack *track in tracks) {
+        double videoScaleFactor = 0.5;
+        CMTime videoDuration = composition.duration;
+        [track scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoDuration)
+                   toDuration:CMTimeMake(videoDuration.value*videoScaleFactor, videoDuration.timescale)];
+    }
+}
+
+
 
 @end

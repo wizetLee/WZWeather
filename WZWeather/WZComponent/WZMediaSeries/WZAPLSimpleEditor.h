@@ -50,7 +50,7 @@
 
 
 
-//MARK: - 自定义枚举
+//MARK: - 自定义动画枚举
 typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
     APLSimpleEditorTransitionType_Fades             = 0,//或者叫 Dissolve
     APLSimpleEditorTransitionType_Push,
@@ -64,9 +64,10 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 - (void)wzAPLSimpleEditor:(WZAPLSimpleEditor *)editor currentProgress:(CGFloat)progress;
 
 @end
+/*********
+ 此类用于自定义视频的合成以及以及过度效果
+ *************/
 
-
-///自定义视频过渡
 @interface WZAPLSimpleEditor : NSObject
 
 // Set these properties before building the composition objects.

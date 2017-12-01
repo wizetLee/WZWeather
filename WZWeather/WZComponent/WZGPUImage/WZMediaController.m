@@ -27,8 +27,8 @@
 
 @property (nonatomic, strong) WZMediaPreviewView *mediaPreviewView;
 @property (nonatomic, strong) WZMediaOperationView *mediaOperationView;
-///------------------随便搭的UI
 
+@property (nonatomic, assign) CMTime currentRecordTime;
 
 @end
 
@@ -50,9 +50,6 @@
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
     
-}
-- (void)dadsdsd:(WZMediaPreviewView *)mediaPreviewView {
-    WZMediaPreviewView *aa = mediaPreviewView = nil;
 }
 
 - (void)viewDidLoad {
@@ -103,6 +100,7 @@
 }
 
 #pragma mark - WZMediaPreviewViewProtocol
+//MARK:完成录制的回调
 - (void)previewView:(WZMediaPreviewView *)view didCompleteTheRecordingWithFileURL:(NSURL *)fileURL {
 
     
@@ -119,8 +117,9 @@
 //    }
    
 }
-
+//MARK:录制时间的回调
 - (void)previewView:(WZMediaPreviewView *)view audioVideoWriterRecordingCurrentTime:(CMTime)time last:(BOOL)last {
+    _currentRecordTime = time;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mediaOperationView recordProgress:CMTimeGetSeconds(time) / 15.0];
         if (last) {
@@ -130,39 +129,50 @@
 }
 
 #pragma mark - WZMediaGestureViewProtocol
-///更新焦点
+//MARK:更新焦点
 - (void)gestureView:(WZMediaGestureView *)view updateFocusAtPoint:(CGPoint)point; {
     CGPoint targetPoint = [self.mediaPreviewView calculatePointOfInterestWithPoint:point];
     [self.mediaPreviewView.cameraCurrent focusAtPoint:targetPoint];
 }
-///更新曝光点
+//MARK:更新曝光点
 - (void)gestureView:(WZMediaGestureView *)view updateExposureAtPoint:(CGPoint)point; {
     CGPoint targetPoint = [self.mediaPreviewView calculatePointOfInterestWithPoint:point];
     [self.mediaPreviewView.cameraCurrent exposureAtPoint:targetPoint];
 }
 
-///同时更新焦点以及曝光点
+//MARK:同时更新焦点以及曝光点
 - (void)gestureView:(WZMediaGestureView *)view updateFocusAndExposureAtPoint:(CGPoint)point; {
     CGPoint targetPoint = [self.mediaPreviewView calculatePointOfInterestWithPoint:point];
     
     [self.mediaPreviewView.cameraCurrent autoFocusAndExposureAtPoint:targetPoint];
 }
 
-///焦距更变
+//MARK:焦距更变
 - (void)gestureView:(WZMediaGestureView *)view updateZoom:(CGFloat)zoom {
     [self.mediaPreviewView setZoom:zoom];
 }
 
-//边缘手势
+//MARK:边缘手势
 - (void)gestureView:(WZMediaGestureView *)view screenEdgePan:(UIScreenEdgePanGestureRecognizer *)screenEdgePan {
     [self.mediaOperationView screenEdgePan:screenEdgePan];
 }
+
 #pragma mark - WZMediaOperationViewProtocol
+//MARK:录像速率调节
+- (void)operationView:(WZMediaOperationView*)view didScrollToIndex:(NSUInteger)index {
+    if (self.mediaPreviewView.recording) {
+        [self addNode];
+        self.mediaPreviewView.lastTimeScaleType = index;
+    } else {
+        
+    }
+}
+//MARK:退出相机事件
 - (void)operationView:(WZMediaOperationView*)view closeBtnAction:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:true];
     //清空数据
 }
-
+//MARK:拍照事件
 - (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender {
 #warning 连拍会产生崩溃
     
@@ -173,7 +183,7 @@
     }];
 }
 
-///配置类型时间
+//MARK:配置类型时间事件
 - (void)operationView:(WZMediaOperationView*)view configType:(WZMediaConfigType)type {
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
 #warning 这个比例在iPhoneX 需要更改 目前只是修改为屏幕的1:1、4:3、16:9的比例 需要更改
@@ -235,31 +245,37 @@
             break;
     }
 }
-
+//MARK:选中滤镜事件
 - (void)operationView:(WZMediaOperationView*)view didSelectedFilter:(GPUImageFilter *)filter {
     
     [_mediaPreviewView insertRenderFilter:filter];
 }
 
-///录像
+//MARK:开始录像事件
 - (void)operationView:(WZMediaOperationView*)view startRecordGesture:(UILongPressGestureRecognizer *)gesture {
     [_mediaPreviewView startRecord];
 }
-
+//MARK:结束录像事件
 - (void)operationView:(WZMediaOperationView*)view endRecordGesture:(UILongPressGestureRecognizer *)gesture {
+    
     [_mediaPreviewView endRecord];
+    
+    //结束录制的时候要再记录一次self.mediaPreviewView.timeScaleMArr
+    [self addNode];
+    NSLog(@"%@", self.mediaPreviewView.timeScaleMArr);
 }
 
 - (void)operationView:(WZMediaOperationView*)view breakRecordGesture:(UILongPressGestureRecognizer *)gesture {
     [_mediaPreviewView cancelRecord];
 }
 
-///切换摄影 录影
+//MARK:切换摄影 录影
 - (void)operationView:(WZMediaOperationView*)view swithToMediaType:(WZMediaType)type {
     [_mediaPreviewView pickMediaType:type];
     [_mediaPreviewView launchCamera];
 }
 
+//MARK:视频合成点击事件
 - (void)operationView:(WZMediaOperationView*)view compositionBtnAction:(UIButton *)sender {
     //视频合成的思路
     //先加载视频信息
@@ -283,7 +299,7 @@
     
 }
 
-///输出合成的视频
+//MARK:输出合成的视频
 + (void)exportWithComposition:(AVComposition *)composition outputURL:(NSURL *)outputURL withProgressHandler:(void (^)(CGFloat progress))handler result:(void (^)(BOOL success))result {
     //    AVMutableComposition *composition = [WZCamera compositionWithSegments:_camera.videoRecordSegmentMArr];
     //    NSLog(@"合成路径!!!:%@", composition);
@@ -328,7 +344,33 @@
 }
 
 
-
+//MARK:增加速率变换的时间节点
+- (void)addNode {
+    //每转一次就生成一个新的记录对象
+    if (CMTimeCompare(_currentRecordTime, kCMTimeZero) != 0) {
+        NSLock *lock = [[NSLock alloc] init];
+        [lock tryLock];
+        {
+            CMTime leadingTime = kCMTimeZero;
+            CMTime trailintTime = _currentRecordTime;
+            //切换的起点
+            if (self.mediaPreviewView.timeScaleMArr.count != 0) {
+                NSDictionary *dic = self.mediaPreviewView.timeScaleMArr.lastObject;
+                leadingTime =  [dic[@"trailintTime"] CMTimeValue];//上一次的位置
+            } else {
+                self.mediaPreviewView.lastTimeScaleType = 2;
+            }
+            
+            //leading
+            NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
+            tmpDic[@"leadingTime"] = [NSValue valueWithCMTime:leadingTime]; //开始位置
+            tmpDic[@"trailintTime"] = [NSValue valueWithCMTime:trailintTime];//结束位置
+            tmpDic[@"type"] = [NSNumber numberWithUnsignedInteger:self.mediaPreviewView.lastTimeScaleType];//速率类型
+            [self.mediaPreviewView.timeScaleMArr addObject:tmpDic];
+        }
+        [lock unlock];
+    }
+}
 
 #pragma mark - SCRecorder 视频合成方案样例代码 稍有更改
 + (AVMutableComposition *)compositionWithSegments:(NSArray <AVAsset *>*)segments {
@@ -389,7 +431,7 @@
     return composition;
 }
 
-
+//
 + (CMTime)appendTrack:(AVAssetTrack *)track toCompositionTrack:(AVMutableCompositionTrack *)compositionTrack atTime:(CMTime)time withBounds:(CMTime)bounds {
     CMTimeRange timeRange = track.timeRange;//通道时间轴的所有的时间的范围
     time = CMTimeAdd(time, timeRange.start);//时间相加
@@ -420,7 +462,7 @@
 
 
 
-#pragma mark - Public Method
+#pragma mark - Private Method
 - (void)createViews {
     //适配iOS 11
     _mediaPreviewView = [[WZMediaPreviewView alloc] initWithFrame:self.view.bounds];
@@ -436,9 +478,11 @@
     if (_mediaPreviewView.mediaType == WZMediaTypeVideo) {
         //切换UI
         
+    } else {
+        
     }
 }
-
+#pragma mark - Public Method
 
 
 @end

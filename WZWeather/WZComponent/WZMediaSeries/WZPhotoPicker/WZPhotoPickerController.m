@@ -186,7 +186,7 @@
     [self finish];
 }
 
-#pragma mark - WZProtocolMediaAsset
+#pragma mark - WZMediaAssetProtocol
 - (void)fetchAssets:(NSArray <WZMediaAsset *> *)assets {
     if (assets) {
     }

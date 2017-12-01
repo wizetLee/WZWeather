@@ -46,26 +46,40 @@
      source -> crop -> 选中的滤镜s -> scale -> present
                     -> 选中的滤镜s -> 图片
                     -> 选中的滤镜s -> 视频
- */
+*/
 
+//MARK: 段落速率的匹配 用于在视频合成的时候修改视频的速率(scale)
+@property (nonatomic, strong) NSMutableArray *timeScaleMArr;
+@property (nonatomic, assign) NSUInteger lastTimeScaleType;//记录上一次的类型
 
-@property (nonatomic, strong, readonly) NSMutableArray *moviesNameMarr;//存名字   URL为 相对路径+名字
+//MARK:录制下来的视频的临时路径
+@property (nonatomic, strong, readonly) NSMutableArray *moviesNameMarr;
 
-
+//MARK:切换摄影模式(录像、拍照)
 - (void)pickMediaType:(WZMediaType)mediaType;
+//MARK:切换闪光灯
 - (void)setFlashType:(GPUImageCameraFlashType)type;
 
+//MARK:开启摄像头
 - (void)launchCamera;
+//MARK:暂停摄像头
 - (void)pauseCamera;
+//MARK:恢复摄像头
 - (void)resumeCamera;
+//MARK:停止摄像头
 - (void)stopCamera;
 
-// 后两个参数如果不设置 默认为crop滤镜的配置
+//MARK: 调用startRecord之前的预设   后两个参数如果不设置 默认为crop滤镜的配置
 - (void)prepareRecordWithMovieName:(NSString *)movieName outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput;
+
+//MARK:之所以录制成为多个文件，是因为需求中有一个需求 删除上可以删除录制过程中某一段自己不满意的视频段落
+//MARK: 开始录制
 - (void)startRecord;
 //- (void)pauseRecord;
 //- (void)resumeRecord;
+//MARK: 取消录制
 - (void)cancelRecord;
+//MARK: 结束录制
 - (void)endRecord;
 
 ///插入滤镜
@@ -83,4 +97,5 @@
 - (CGPoint)calculatePointOfInterestWithPoint:(CGPoint)point;
 ///使用文件名合成路径
 - (NSURL *)movieURLWithMovieName:(NSString *)name;
+
 @end

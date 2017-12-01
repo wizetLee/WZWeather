@@ -65,7 +65,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%@", self);
+    NSLog(@"%s", __FUNCTION__);
 }
 
 

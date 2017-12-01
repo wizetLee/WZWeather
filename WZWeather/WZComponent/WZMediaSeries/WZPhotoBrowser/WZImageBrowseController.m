@@ -50,6 +50,21 @@
     self.dataSource = self;
     self.delegate = self;
     [self createViews];
+    
+    for (UIView *view in self.view.subviews) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scroll = (UIScrollView *)view;
+            //            NSLog(@"___%@", scroll.delegate);//打印得知代理为null
+//            scroll.delegate = self;//可以做点什么
+            for (UIGestureRecognizer *gesture in scroll.gestureRecognizers) {
+                if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
+                    ((UIPanGestureRecognizer *)gesture).maximumNumberOfTouches = 1; //不能双手pan  能够解决pageView中的一个BUG
+                    break;
+                }
+            }
+            break;
+        }
+    }
 }
 
 - (void)createViews {

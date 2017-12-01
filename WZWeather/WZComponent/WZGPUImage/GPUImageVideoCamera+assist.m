@@ -85,6 +85,22 @@
     objc_setAssociatedObject(self, @selector(setMotionManager:), motionManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (void)setDefaultFormat:(AVCaptureDeviceFormat *)defaultFormat {
+    objc_setAssociatedObject(self, @selector(setDefaultFormat:), defaultFormat, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (AVCaptureDeviceFormat *)defaultFormat {
+    return objc_getAssociatedObject(self, @selector(setDefaultFormat:));
+}
+
+- (void)setDefaultVideoMaxFrameDuration:(CMTime)defaultVideoMaxFrameDuration {
+    objc_setAssociatedObject(self, @selector(setDefaultVideoMaxFrameDuration:), [NSValue valueWithCMTime:defaultVideoMaxFrameDuration], OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (CMTime)defaultVideoMaxFrameDuration {
+    return [objc_getAssociatedObject(self, @selector(setDefaultVideoMaxFrameDuration:)) CMTimeValue];
+}
+
 ///使用陀螺仪检测设备方向
 - (void)addCMMotionToMobile {
     self.motionManager = [[CMMotionManager alloc] init];
@@ -279,13 +295,87 @@ static CATransform3D PerspectiveTransformMake(CGFloat eyePosition)
     return error;
 }
 
-///对焦完毕再拍照
 
-
-- (void)lowLightMode {
+//MARK:尽量使用低光增强模式
+- (void)attemptToUseLowLightMode:(BOOL)boolean {
     //使用一种特殊的低光增强模式来提高图像质量
     if (self.inputCamera.lowLightBoostSupported) {
         self.inputCamera.automaticallyEnablesLowLightBoostWhenAvailable = true;
+    }
+}
+
+
+//MARK:SlowMotionVideoRecorder 中的代码 配置到自定义的帧率  慢动作 一般是120FPS 或者是 240FPS
+- (void)switchFormatWithDesiredFPS:(CGFloat)desiredFPS {
+    
+    //保存原始设置
+    if (CMTimeCompare(self.defaultVideoMaxFrameDuration, kCMTimeZero) == 0) {
+        [self setDefaultFormat:self.inputCamera.activeFormat];
+        [self setDefaultVideoMaxFrameDuration:self.inputCamera.activeVideoMaxFrameDuration];
+    }
+    
+    //记录拍摄状态
+    BOOL isRunning = self.captureSession.isRunning;
+    [self stopCameraCapture];
+    
+    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceFormat *selectedFormat = nil;
+    int32_t maxWidth = 0;
+    AVFrameRateRange *frameRateRange = nil;
+    
+    for (AVCaptureDeviceFormat *format in [videoDevice formats]) {
+        
+        for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges) {
+            
+            CMFormatDescriptionRef desc = format.formatDescription;
+            CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(desc);
+            int32_t width = dimensions.width;
+            
+            if (range.minFrameRate <= desiredFPS && desiredFPS <= range.maxFrameRate && width >= maxWidth) {
+                
+                selectedFormat = format;
+                frameRateRange = range;
+                maxWidth = width;
+            }
+        }
+    }
+    
+    if (selectedFormat) {
+        
+        if ([videoDevice lockForConfiguration:nil]) {
+            NSLog(@"selected format:%@", selectedFormat);
+            videoDevice.activeFormat = selectedFormat;
+            videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, (int32_t)desiredFPS);
+            videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, (int32_t)desiredFPS);
+            [videoDevice unlockForConfiguration];
+        }
+    }
+    
+    //恢复拍摄状态
+    if (isRunning) {
+        [self startCameraCapture];
+    }
+}
+
+//MARK:恢复默认帧率
+- (void)resetFrameActiveFormat {
+    //保存原始设置
+    if (CMTimeCompare(self.defaultVideoMaxFrameDuration, kCMTimeZero) == 0) {
+        BOOL isRunning = self.captureSession.isRunning;
+        
+        if (isRunning) {
+            [self.captureSession stopRunning];
+        }
+        
+        AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        [videoDevice lockForConfiguration:nil];
+        videoDevice.activeFormat = self.defaultFormat;
+        videoDevice.activeVideoMaxFrameDuration = self.defaultVideoMaxFrameDuration;
+        [videoDevice unlockForConfiguration];
+        
+        if (isRunning) {
+            [self.captureSession startRunning];
+        }
     }
 }
 

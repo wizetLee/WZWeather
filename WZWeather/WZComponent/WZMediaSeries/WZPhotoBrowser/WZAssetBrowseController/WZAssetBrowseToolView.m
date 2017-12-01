@@ -11,16 +11,28 @@
 @implementation WZAssetBrowseToolView
 
 + (instancetype)customAssetBrowseToolWithDelegate:(id<WZProtocolAssetBrowseTool>)delegate {
+    
+    CGFloat top = 0.0;
+    CGFloat bottom = 0.0;
+    CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
+    CGFloat screenH = UIScreen.mainScreen.bounds.size.height;
+    
+    top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
+    bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;
+    
+    CGFloat height = screenH - bottom - top;
+    
     WZAssetBrowseToolView *tool = [[WZAssetBrowseToolView alloc] init];
     tool.delegate = delegate;
     CGFloat toolH = 49.0;
-    tool.frame = CGRectMake(0.0, [UIScreen mainScreen].bounds.size.height - toolH, [UIScreen mainScreen].bounds.size.width, toolH);
+    tool.frame = CGRectMake(0.0, [UIScreen mainScreen].bounds.size.height - toolH - bottom, [UIScreen mainScreen].bounds.size.width, toolH);
     tool.backgroundColor = [UIColor colorWithRed:51.0 / 255 green:51.0 / 255 blue:51.0 / 255 alpha:0.4];
     
     tool.selectedButtonClear = [UIButton buttonWithType:UIButtonTypeCustom];
     CGFloat button_origionHW = 72 / 2.0;
     tool.selectedButtonClear.frame = CGRectMake(5.0, (toolH - button_origionHW)/2.0 , button_origionHW, button_origionHW);
-    
+    NSAssert([UIImage imageNamed:@"asset_selectedOrigion_normal"], @"资源丢失");
+    NSAssert([UIImage imageNamed:@"asset_selectedOrigion_selected"], @"资源丢失");
     [tool.selectedButtonClear setImage:[UIImage imageNamed:@"asset_selectedOrigion_normal"] forState:UIControlStateNormal];
         [tool.selectedButtonClear setImage:[UIImage imageNamed:@"asset_selectedOrigion_selected"] forState:UIControlStateSelected];
     
@@ -32,6 +44,7 @@
     tool.fetchClearInfo = ^(NSString *info){
         weakTool.clearInfoLabel.text = [NSString stringWithFormat:@"选择原图(%@)", info];
     };
+    
     
     tool.completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGFloat completeButtonHW = 45.0;
