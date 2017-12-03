@@ -14,7 +14,16 @@
 @interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *collection;
-@property (nonatomic, strong) NSArray <PHAsset *>* mediaAssetArray;
+
+@property (nonatomic, strong) NSArray <PHAsset *> *mediaAssetData;
+
+
+//@property (nonatomic, assign) BOOL innerMode;//在选择的模式之中
+
+@property (nonatomic, strong) NSMutableDictionary *imageMDic;//图片缓存。目的：fetch图片的步骤是一部的 因此获取过程有闪烁的现象因此需要缓存
+
+@property (nonatomic, strong) UIBarButtonItem *leftItem;
+@property (nonatomic, strong) UIBarButtonItem *rightItem;
 
 @end
 
@@ -31,13 +40,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = NSStringFromClass([self class]);
+
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    _mediaAssetArray = [NSMutableArray array];
-    _mediaAssetArray = [WZMediaFetcher allVideosAssets];
+    _imageMDic = [NSMutableDictionary dictionary];
     
+    _mediaAssetData = [WZMediaFetcher allVideosAssets];
+    [self resetStatue];
+   
     [self createViews];
+}
+
+- (void)resetStatue {
+    _targetSize = CGSizeZero;
+    _selectiveSequentialList = [NSMutableArray array];
+  
+     [_collection reloadData];
 }
 
 - (void)createViews {
@@ -52,46 +70,110 @@
     
     [self.view addSubview:self.collection];//系统自己匹配的安全区域显示的内容
     
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(leftButtonAction)];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"选择完成" style:UIBarButtonItemStyleDone target:self action:@selector(rightButtonAction)];
-    
+    _leftItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(leftButtonAction)];
+    _rightItem = [[UIBarButtonItem alloc] initWithTitle:@"模式选取" style:UIBarButtonItemStyleDone target:self action:@selector(rightButtonAction)];
+//    right.title =
     if (self.navigationController) {
-        self.navigationItem.leftBarButtonItem = left;
-        self.navigationItem.rightBarButtonItem = right;
+        self.navigationItem.leftBarButtonItem = _leftItem;
+        self.navigationItem.rightBarButtonItem = _rightItem;
     }
 }
 
+
+
+
 - (void)leftButtonAction {
-    if ([_delegate respondsToSelector:@selector(videoPickerControllerDidClickedLeftItem)]) {
-        [_delegate videoPickerControllerDidClickedLeftItem];
+    //在选中模式之中
+    if (0) {
+        //恢复状态
+        
     } else {
-        [self dismissViewControllerAnimated:true completion:nil];
+        //推出选择
+        if ([_delegate respondsToSelector:@selector(videoPickerControllerDidClickedLeftItem)]) {
+            [_delegate videoPickerControllerDidClickedLeftItem];
+        } else {
+            [self dismissViewControllerAnimated:true completion:nil];
+        }
     }
 }
 
 - (void)rightButtonAction {
-    if ([_delegate respondsToSelector:@selector(videoPickerControllerDidClickedRightItem)]) {
-        [_delegate videoPickerControllerDidClickedRightItem];
+    if (1) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选取模式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *surf = [UIAlertAction actionWithTitle:@"浏览模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.type = WZVideoPickerType_browse;
+        }];
+        UIAlertAction *pick = [UIAlertAction actionWithTitle:@"选取模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.type = WZVideoPickerType_pick;
+        }];
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:@"删除模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.type = WZVideoPickerType_delete;
+        }];
+
+        UIAlertAction *composition = [UIAlertAction actionWithTitle:@"合并模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.type = WZVideoPickerType_composition;
+        }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alert addAction:surf];
+        [alert addAction:pick];
+        [alert addAction:delete];
+        [alert addAction:composition];
+        [alert addAction:cancel];
+        
+        [self presentViewController:alert animated:true completion:^{
+            
+        }];
+    } else {
+        if ([_delegate respondsToSelector:@selector(videoPickerControllerDidClickedRightItem)]) {
+            [_delegate videoPickerControllerDidClickedRightItem];
+        }
     }
 }
 
 
-#pragma mark -
+#pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section; {
-    return _mediaAssetArray.count;
+    return _mediaAssetData ? _mediaAssetData.count : 0;
 }
-
 
 - (__kindof WZVideoPickerCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath; {
     WZVideoPickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"WZVideoPickerCell" forIndexPath:indexPath];
     
-    if (_mediaAssetArray.count > indexPath.row) {
-        PHAsset *tmpPHAsset = _mediaAssetArray[indexPath.row];
+    if (_mediaAssetData.count > indexPath.row) {
+        PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
+        
         cell.headlineLabel.text = [NSString stringWithFormat:@"%.2fsec", tmpPHAsset.duration];
-        [WZMediaFetcher fetchThumbnailWithAsset:tmpPHAsset synchronous:false handler:^(UIImage *thumbnail) {
-            cell.imageView.image = thumbnail;
-            
-        }];
+        cell.sizeLabel.text = [NSString stringWithFormat:@"%ld*%ld", tmpPHAsset.pixelWidth, tmpPHAsset.pixelHeight];
+        
+       
+        if (_imageMDic[tmpPHAsset.localIdentifier]) {
+            cell.imageView.image = _imageMDic[tmpPHAsset.localIdentifier];
+        } else {
+            [WZMediaFetcher fetchThumbnailWithAsset:tmpPHAsset synchronous:false handler:^(UIImage *thumbnail) {
+                cell.imageView.image = thumbnail;
+                _imageMDic[tmpPHAsset.localIdentifier] = thumbnail;
+            }];
+        }
+        
+        
+        cell.selectButton.hidden = true;
+        cell.sequenceLabel.hidden = true;
+        if (_type == WZVideoPickerType_pick
+            || _type == WZVideoPickerType_delete
+            || _type == WZVideoPickerType_composition) {
+            cell.selectButton.hidden = false;
+            cell.sequenceLabel.hidden = false;
+            cell.sequenceLabel.text = @"";
+            if ([_selectiveSequentialList containsObject:indexPath]) {
+                cell.sequenceLabel.text = [NSString stringWithFormat:@"%ld", [_selectiveSequentialList indexOfObject:indexPath]];
+                cell.selectButton.selected = true;
+            } else {
+               cell.selectButton.selected = false;
+            }
+        }
         
 //        PHVideoRequestOptions *option = [[PHVideoRequestOptions alloc] init];
 //        option.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
@@ -103,6 +185,28 @@
 }
 
 
+//MARK: - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+     if (_mediaAssetData.count > indexPath.row) {
+         PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
+         WZVideoPickerCell *cell = (WZVideoPickerCell *)[collectionView cellForItemAtIndexPath:indexPath];
+         
+         if (_type == WZVideoPickerType_pick
+             || _type == WZVideoPickerType_delete
+             || _type == WZVideoPickerType_composition) {
+             
+             if ([_selectiveSequentialList containsObject:indexPath]) {
+                 [_selectiveSequentialList removeObject:indexPath];
+                 cell.selectButton.selected = false;
+             } else {
+                 [_selectiveSequentialList addObject:indexPath];
+                  cell.selectButton.selected = true;
+             }
+             [collectionView reloadData];
+         }
+     }
+}
+
 #pragma mark - Accessor
 - (UICollectionView *)collection {
     if (!_collection) {
@@ -110,7 +214,7 @@
         CGRect rect = self.navigationController?CGRectMake(0.0, 64.0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64.0):self.view.bounds;
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        CGFloat gap = 10.0;
+        CGFloat gap = 1;
         layout.minimumLineSpacing = gap;
         layout.minimumInteritemSpacing = gap;
         layout.sectionInset = UIEdgeInsetsMake(gap, gap, gap, gap);
@@ -125,6 +229,38 @@
         
     }
     return _collection;
+}
+
+- (void)setType:(WZVideoPickerType)type {
+    _type = type;
+    switch (type) {
+        case WZVideoPickerType_browse:{
+            [self.navigationController.navigationBar setTitleTextAttributes:
+             @{NSForegroundColorAttributeName:[UIColor blueColor]}];
+            self.title = @"浏览模式";
+        } break;
+        case WZVideoPickerType_pick:{
+            [self.navigationController.navigationBar setTitleTextAttributes:
+             @{NSForegroundColorAttributeName:[UIColor greenColor]}];
+            self.title = @"选取模式";
+        } break;
+        case WZVideoPickerType_delete:{
+            [self.navigationController.navigationBar setTitleTextAttributes:
+             @{NSForegroundColorAttributeName:[UIColor redColor]}];
+            self.title = @"删除模式";
+        } break;
+        case WZVideoPickerType_composition:{
+            [self.navigationController.navigationBar setTitleTextAttributes:
+             @{NSForegroundColorAttributeName:[UIColor orangeColor]}];
+            self.title = @"视频合并模式";
+        } break;
+            
+        default:
+             self.title = @"";
+            break;
+    }
+    
+    [self resetStatue];
 }
 
 @end

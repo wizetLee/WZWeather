@@ -13,8 +13,10 @@
 
 #define WZMEDIAASSET_THUMBNAILSIZE CGSizeMake(250, 250)  //缩略图限定的尺寸
 
-#define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
-#define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
+//#define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 \
+//                                                green:((float)((hexValue & 0xFF00) >> 8))/255.0 \
+//                                                blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
+//#define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
 
 @class WZMediaAsset;
 @protocol WZMediaAssetProtocol <NSObject>

@@ -74,6 +74,10 @@
  或者如果确实需要使用frame
  可以在viewWillLayoutSubviews 重新处理图层的布局
  
+ 
+ 关于iPhoneX的安全域
+ 竖直 {88, 0, 34, 0}
+ 横  {32, 44, 21, 44}
  ****/
 
 
@@ -109,9 +113,9 @@
 #define MACRO_COLOR_RGBA(r, g, b, a)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
 #define MACRO_COLOR_RGB(r, g, b)  MACRO_COLOR_RGBA(r, g, b, 1.0)
 #define MACRO_COLOR_RANDOM MACRO_COLOR_RGB(arc4random_uniform(256),arc4random_uniform(256),arc4random_uniform(256))
-#define MACRO_COLOR_HEX_ALPHA(hexValue, alpha) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 \
+#define MACRO_COLOR_HEX_ALPHA(hexValue, a) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 \
                                                 green:((float)((hexValue & 0xFF00) >> 8))/255.0 \
-                                                blue:((float)(hexValue & 0xFF))/255.0 alpha:alpha]
+                                                blue:((float)(hexValue & 0xFF))/255.0 alpha:a]
 #define MACRO_COLOR_HEX(hexValue) MACRO_COLOR_HEX_ALPHA(hexValue, 1.0)
 
 #pragma mark - 文件路径

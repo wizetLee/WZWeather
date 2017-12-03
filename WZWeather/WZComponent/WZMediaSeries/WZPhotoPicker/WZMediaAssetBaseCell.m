@@ -26,6 +26,8 @@
         _imageView.backgroundColor = [UIColor lightGrayColor];
         _imageView.layer.masksToBounds = true;
         [self.contentView addSubview:_imageView];
+        
+       
     }
     return self;
 }
@@ -41,6 +43,7 @@
 - (void)setAsset:(WZMediaAsset *)asset {
     if ([asset isKindOfClass:[WZMediaAsset class]]) {
         _asset = asset;
+        self.headlineLabel.text = [NSString stringWithFormat:@"%ld * %ld", _asset.asset.pixelWidth, _asset.asset.pixelHeight];
         self.selectButton.selected = _asset.selected;
         if (_asset.imageThumbnail) {
             self.imageView.image = _asset.imageThumbnail;
@@ -54,6 +57,21 @@
 }
 
 #pragma mark - Accessor
+
+- (UILabel *)headlineLabel {
+    if (!_headlineLabel) {
+        CGFloat h = 22.0;
+        _headlineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, self.bounds.size.height - h, self.bounds.size.width, h)];
+        _headlineLabel.text = @"";
+        _headlineLabel.textColor = UIColor.whiteColor;
+        _headlineLabel.font = [UIFont systemFontOfSize:12];
+        _headlineLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:_headlineLabel];
+        _headlineLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
+    }
+    return _headlineLabel;
+}
+
 - (UIButton *)selectButton {
     if (!_selectButton) {
         CGFloat selectedBtnHW = 33;

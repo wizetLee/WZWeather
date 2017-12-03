@@ -30,7 +30,7 @@
 #pragma mark - ViewController Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = UIColor.whiteColor;
     self.title = NSStringFromClass([self class]);
     self.automaticallyAdjustsScrollViewInsets = false;
     if (!_mediaAssetArray) {
@@ -68,6 +68,7 @@
         [lock tryLock];
         NSMutableArray *mArray_images = [NSMutableArray array];
         for (WZMediaAsset *mediaAsset in self.mediaAssetArray) {
+            //只按照系统的顺序选在
             if (mediaAsset.selected) {
                 if (mediaAsset.origion) {
                     [mediaAsset fetchOrigionImageSynchronous:true handler:^(UIImage *image) {
@@ -195,9 +196,8 @@
 #pragma mark - Accessor
 - (void)setMediaAssetArray:(NSArray<WZMediaAsset *> *)mediaAssetArray {
     _mediaAssetArray = [mediaAssetArray isKindOfClass:[NSArray class]]?mediaAssetArray:nil;
-    if (_collection) {
-        [_collection reloadData];
-    }
+	[_collection reloadData];
+    
 }
 
 - (UICollectionView *)collection {
@@ -205,7 +205,7 @@
         CGRect rect = self.navigationController?CGRectMake(0.0, 64.0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64.0):self.view.bounds;
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        CGFloat gap = 10.0;
+        CGFloat gap = 1.0;
         layout.minimumLineSpacing = gap;
         layout.minimumInteritemSpacing = gap;
         layout.sectionInset = UIEdgeInsetsMake(gap, gap, gap, gap);

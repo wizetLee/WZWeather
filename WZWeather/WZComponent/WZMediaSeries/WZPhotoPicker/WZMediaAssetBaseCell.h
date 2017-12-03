@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIButton *selectButton;
 @property (nonatomic, strong) void (^selectedBlock)(BOOL selected);
 @property (nonatomic, strong) WZMediaAsset *asset;
+@property (nonatomic, strong) UILabel *headlineLabel;
 
 //网络加载 写进度
 

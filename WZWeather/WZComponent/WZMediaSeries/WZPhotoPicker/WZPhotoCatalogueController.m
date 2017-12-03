@@ -51,7 +51,7 @@
 - (void)setMediaAssetCollection:(WZMediaAssetCollection *)mediaAssetCollection {
     if ([mediaAssetCollection isKindOfClass:[WZMediaAssetCollection class]]) {
         _mediaAssetCollection = mediaAssetCollection;
-        self.titleLabel.text = mediaAssetCollection.title;
+        self.titleLabel.text = [NSString stringWithFormat:@"%@(%ld)", mediaAssetCollection.title, mediaAssetCollection.mediaAssetArray.count];
         [_mediaAssetCollection coverHandler:^(UIImage *image) {
             self.imageView.image = image;
         }];

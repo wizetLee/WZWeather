@@ -173,50 +173,51 @@
     }];
     
     ///数据信息 仅限于本地图片
-    PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
-    [mediaAsset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
-        //        contentEditingInput.mediaType
-        //        contentEditingInput.mediaSubtypes
-        //        contentEditingInput.location
-        //        contentEditingInput.creationDate
-        if (contentEditingInput.creationDate) {
-            //创建日期
-            NSDateFormatter *dataFormer = [[NSDateFormatter alloc] init];
-            [dataFormer setDateStyle:NSDateFormatterNoStyle];
-            [dataFormer stringFromDate:contentEditingInput.creationDate];
-        }
-        
-        if (contentEditingInput.location) {
-            //经纬度
-            
-        }
-        
-        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
-        NSDictionary *nsdic = fullImage.properties;
-        NSDictionary *originExif = nsdic[@"{Exif}"];
-        
-        // 镜头信息
-        NSString *lensModel = [NSString stringWithFormat:@"设备型号:%@",originExif[(NSString *)kCGImagePropertyExifLensModel]];
-        // 光圈系数
-        NSString *fNumber = [NSString stringWithFormat:@"光圈系数:f/%@",originExif[(NSString *)kCGImagePropertyExifFNumber]];
-        // 曝光时间
-        NSString *exposureTime = [NSString stringWithFormat:@"曝光时间:f/%@",originExif[(NSString *)kCGImagePropertyExifExposureTime]];
-        // 镜头焦距
-        NSString *focalLength = [NSString stringWithFormat:@"镜头焦距:%@mm",originExif[(NSString *)kCGImagePropertyExifFocalLength]];
-        // 日期和时间
-        NSString *dataTime = [NSString stringWithFormat:@"数字化时间:%@",originExif[(NSString *)kCGImagePropertyExifDateTimeDigitized]];
-        // ISO
-        NSString *isoSpeedRatings = [NSString stringWithFormat:@"ISO:%@",[originExif[(NSString *)kCGImagePropertyExifISOSpeedRatings] firstObject]];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"%@", lensModel);
-            NSLog(@"%@", fNumber);
-            NSLog(@"%@", exposureTime);
-            NSLog(@"%@", focalLength);
-            NSLog(@"%@", dataTime);
-            NSLog(@"%@", isoSpeedRatings);
-        });
-    }];
+//    PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+//   PHContentEditingInputRequestID ID =  [mediaAsset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
+//        //        contentEditingInput.mediaType
+//        //        contentEditingInput.mediaSubtypes
+//        //        contentEditingInput.location
+//        //        contentEditingInput.creationDate
+//        if (contentEditingInput.creationDate) {
+//            //创建日期
+//            NSDateFormatter *dataFormer = [[NSDateFormatter alloc] init];
+//            [dataFormer setDateStyle:NSDateFormatterNoStyle];
+//            [dataFormer stringFromDate:contentEditingInput.creationDate];
+//        }
+//
+//        if (contentEditingInput.location) {
+//            //经纬度
+//
+//        }
+//
+//        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
+//        NSDictionary *nsdic = fullImage.properties;
+//        NSDictionary *originExif = nsdic[@"{Exif}"];
+//
+//        // 镜头信息
+//        NSString *lensModel = [NSString stringWithFormat:@"设备型号:%@",originExif[(NSString *)kCGImagePropertyExifLensModel]];
+//        // 光圈系数
+//        NSString *fNumber = [NSString stringWithFormat:@"光圈系数:f/%@",originExif[(NSString *)kCGImagePropertyExifFNumber]];
+//        // 曝光时间
+//        NSString *exposureTime = [NSString stringWithFormat:@"曝光时间:f/%@",originExif[(NSString *)kCGImagePropertyExifExposureTime]];
+//        // 镜头焦距
+//        NSString *focalLength = [NSString stringWithFormat:@"镜头焦距:%@mm",originExif[(NSString *)kCGImagePropertyExifFocalLength]];
+//        // 日期和时间
+//        NSString *dataTime = [NSString stringWithFormat:@"数字化时间:%@",originExif[(NSString *)kCGImagePropertyExifDateTimeDigitized]];
+//        // ISO
+//        NSString *isoSpeedRatings = [NSString stringWithFormat:@"ISO:%@",[originExif[(NSString *)kCGImagePropertyExifISOSpeedRatings] firstObject]];
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSLog(@"%@", lensModel);
+//            NSLog(@"%@", fNumber);
+//            NSLog(@"%@", exposureTime);
+//            NSLog(@"%@", focalLength);
+//            NSLog(@"%@", dataTime);
+//            NSLog(@"%@", isoSpeedRatings);
+//        });
+//    }];
+//    [mediaAsset cancelContentEditingInputRequest:ID];//weak 引用这个asset
     
     return imageRequestID;
 }
