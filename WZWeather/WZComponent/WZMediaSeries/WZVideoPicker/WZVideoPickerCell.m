@@ -46,12 +46,14 @@
         
         _sequenceLabel = [[UILabel alloc] init];
         _sequenceLabel.frame = CGRectMake(0.0, 0.0, h * 2, h);
+        _sequenceLabel.layer.cornerRadius = h / 2.0;
+        _sequenceLabel.layer.masksToBounds = true;
         _sequenceLabel.text = @"";
-        _sequenceLabel.textColor = UIColor.redColor;
+        _sequenceLabel.textColor = UIColor.blackColor;
         _sequenceLabel.font = [UIFont systemFontOfSize:12];
         _sequenceLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_sequenceLabel];
-        _sequenceLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
+        _sequenceLabel.backgroundColor = [UIColor.orangeColor colorWithAlphaComponent:0.75];
         
         self.clipsToBounds = true;
     }

@@ -11,7 +11,7 @@
 #import <Photos/Photos.h>
 #import "WZMediaFetcher.h"
 
-@interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource , PHPhotoLibraryChangeObserver>
 
 @property (nonatomic, strong) UICollectionView *collection;
 
@@ -49,6 +49,8 @@
     [self resetStatue];
    
     [self createViews];
+
+    
 }
 
 - (void)resetStatue {
@@ -165,13 +167,20 @@
             || _type == WZVideoPickerType_delete
             || _type == WZVideoPickerType_composition) {
             cell.selectButton.hidden = false;
-            cell.sequenceLabel.hidden = false;
+            
+            
             cell.sequenceLabel.text = @"";
             if ([_selectiveSequentialList containsObject:indexPath]) {
                 cell.sequenceLabel.text = [NSString stringWithFormat:@"%ld", [_selectiveSequentialList indexOfObject:indexPath]];
                 cell.selectButton.selected = true;
+                cell.sequenceLabel.hidden = false;
             } else {
                cell.selectButton.selected = false;
+               cell.sequenceLabel.hidden = true;
+            }
+            
+            if (_type == WZVideoPickerType_delete) {
+                cell.sequenceLabel.hidden = true;
             }
         }
         
@@ -207,6 +216,12 @@
      }
 }
 
+#pragma mark - PHPhotoLibraryChangeObserver
+- (void)photoLibraryDidChange:(PHChange *)changeInstance; {
+    //刷新
+    [self setType:_type];
+}
+
 #pragma mark - Accessor
 - (UICollectionView *)collection {
     if (!_collection) {
@@ -233,6 +248,7 @@
 
 - (void)setType:(WZVideoPickerType)type {
     _type = type;
+    //UI更替
     switch (type) {
         case WZVideoPickerType_browse:{
             [self.navigationController.navigationBar setTitleTextAttributes:
