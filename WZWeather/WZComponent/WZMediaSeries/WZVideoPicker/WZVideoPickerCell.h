@@ -16,6 +16,8 @@
 @property (nonatomic, strong) UILabel *sequenceLabel;//选取的顺序
 
 @property (nonatomic, strong) UIButton *selectButton;//选取的标识
-@property (nonatomic, strong) void (^selectedBlock)();//选取的标识 的回调
+@property (nonatomic, strong) void (^selectedBlock)();//选取的标识 的回调】
+
+@property (nonatomic, strong) CALayer *maskLayer;
 
 @end

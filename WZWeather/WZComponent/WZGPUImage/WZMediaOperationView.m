@@ -30,9 +30,10 @@
 //---------------------------------------拍摄
 ///拍摄按钮
 @property (nonatomic, strong) UIButton *shootBtn;
-//---------------------------------------录制
+//---------------------------------------录制  长按拍摄  单击拍摄
 ///录影按钮（一个长按事件）
-@property (nonatomic, strong) UIView *recordView;
+@property (nonatomic, strong) UIView *recordView;//长按拍摄
+@property (nonatomic, strong) UIButton *recordView_singleClick;//单击拍摄
 ///视频合成按钮入口
 @property (nonatomic, strong) UIButton *compositionBtn;
 

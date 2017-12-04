@@ -54,10 +54,25 @@
         _sequenceLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_sequenceLabel];
         _sequenceLabel.backgroundColor = [UIColor.orangeColor colorWithAlphaComponent:0.75];
-        
         self.clipsToBounds = true;
+        
+        
+        _maskLayer = [CALayer layer];
+        _maskLayer.frame = self.bounds;
+        _maskLayer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+        _maskLayer.hidden = true;
+        [self.contentView.layer addSublayer:_maskLayer];
+        
     }
     return self;
+}
+
+- (void)prepareForReuse {
+    _maskLayer.hidden = true;
+    _sequenceLabel.text = nil;
+    _headlineLabel.text = nil;
+    _sizeLabel.text = nil;
+    _imageView.image = nil;
 }
 
 - (UIButton *)selectButton {

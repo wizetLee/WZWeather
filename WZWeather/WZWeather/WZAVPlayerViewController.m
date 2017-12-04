@@ -114,7 +114,6 @@
     [_player play];
 }
 
-
 - (void)createViews {
     CGFloat top = 0.0;
     CGFloat bottom = 0.0;

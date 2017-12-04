@@ -79,6 +79,7 @@
 	
 	// Make transitionDuration no greater than half the shortest clip duration.
 	CMTime transitionDuration = self.transitionDuration;
+    //遍历所有的资源 取出最小的过渡范围
 //    for (i = 0; i < clipsCount; i++ ) {
 //        NSValue *clipTimeRange = [self.clipTimeRanges objectAtIndex:i];
 //        if (clipTimeRange) {
@@ -101,6 +102,10 @@
 	CMTimeRange *passThroughTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);
 	CMTimeRange *transitionTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);
 
+//    compositionVideoTracks[0].preferredTransform =CGAffineTransformMake(0,1.0, -1.0,0, 0,0);
+//    compositionVideoTracks[1].preferredTransform =CGAffineTransformMake(0,1.0, -1.0,0, 0,0);
+   
+    NSLog(@"初始化默认的视轨方向%@", [NSValue valueWithCGAffineTransform:(compositionVideoTracks[0]).preferredTransform]);
 	// Place clips into alternating video & audio tracks in composition, overlapped by transitionDuration.
 	for (i = 0; i < clipsCount; i++ ) {
         //交替使用音轨和视轨
@@ -110,18 +115,31 @@
 		CMTimeRange timeRangeInAsset;
         if (clipTimeRange) {
             timeRangeInAsset = [clipTimeRange CMTimeRangeValue];
-        } else
+        } else {
 			timeRangeInAsset = CMTimeRangeMake(kCMTimeZero, [asset duration]);
+        }
         NSLog(@"时长 %@", [NSValue valueWithCMTimeRange:timeRangeInAsset]);
 		AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+         NSError *error = nil;
+        NSLog(@"!!!!!%@", [NSValue valueWithCGAffineTransform:asset.preferredTransform]);
+        NSLog(@"!!!!!%@", [NSValue valueWithCGAffineTransform:compositionVideoTracks[alternatingIndex].preferredTransform]);
+        
         //插入到视轨                                                ///就是完整的视频的时间范围啊~~~
-		[compositionVideoTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipVideoTrack atTime:nextClipStartTime error:nil];
+		[compositionVideoTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipVideoTrack atTime:nextClipStartTime error:&error];
+        if (error) {
+            NSLog(@"00000000 ____ %@", error.debugDescription);
+        }
         NSLog(@"视频的插入时间:%@", [NSValue valueWithCMTime:nextClipStartTime]);
 #pragma mark 可能不存在音轨 所以有所省缺
         //插入到音轨
         if ([asset tracksWithMediaType:AVMediaTypeAudio].count) {
+            NSError *error = nil;
             AVAssetTrack *clipAudioTrack = [[asset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];
-            [compositionAudioTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipAudioTrack atTime:nextClipStartTime error:nil];
+            
+            [compositionAudioTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipAudioTrack atTime:nextClipStartTime error:&error];
+            if (error) {
+                NSLog(@"00000000 ____ %@", error.debugDescription);
+            }
         }
 		
 		// Remember the time range in which this clip should pass through.
@@ -133,17 +151,18 @@
         
         
 //MRAK: - transitionDuration的判断
-        if (clipTimeRange) {
-            CMTime halfClipDuration = [clipTimeRange CMTimeRangeValue].duration;
-            halfClipDuration.timescale *= 2; // You can halve a rational by doubling its denominator.时间减半
-            transitionDuration = CMTimeMinimum(transitionDuration, halfClipDuration);
-        }
+//        if (clipTimeRange) {
+//            CMTime halfClipDuration = [clipTimeRange CMTimeRangeValue].duration;
+//            halfClipDuration.timescale *= 2; // You can halve a rational by doubling its denominator.时间减半
+//            transitionDuration = CMTimeMinimum(transitionDuration, halfClipDuration);
+//        }
+        
         if (CMTIME_COMPARE_INLINE(self.transitionDuration, ==, kCMTimeZero)) {
             transitionDuration = kCMTimeZero;
         } else if (CMTIME_COMPARE_INLINE(asset.duration, <=, transitionDuration)) {
-            transitionDuration = asset.duration;
+            //个人设定  如果视频的事件时间小于过渡时间则不使用过渡效果
+            transitionDuration = kCMTimeZero;
         }
-        
         {//重新适配pass 和 transition时间点
             if (i > 0) {
                 passThroughTimeRanges[i].start = CMTimeAdd(passThroughTimeRanges[i].start, transitionDuration);
@@ -177,20 +196,49 @@
    
     for (i = 0; i < clipsCount; i++ ) {
         NSInteger alternatingIndex = i % 2; // alternating targets
+        AVAsset *assert = self.clips[alternatingIndex];
 //MARK:- 非过渡
         {///非过渡
             // Pass through clip i.
             AVMutableVideoCompositionInstruction *passThroughInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+            
             passThroughInstruction.timeRange = passThroughTimeRanges[i];
             
             NSLog(@"pass: %@", [NSValue valueWithCMTimeRange:passThroughInstruction.timeRange]);
             ///在这里可以更改视频的尺寸
             AVMutableVideoCompositionLayerInstruction *passThroughLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[alternatingIndex]];
+//            {//方向
+//                CGFloat degress = 0.0;
+//                CGAffineTransform t = assert.preferredTransform;
+//
+//                if(t.a == 0 && t.b == 1.0 && t.c == -1.0 && t.d == 0){
+//                    // Portrait
+//                    degress = 90;
+//                }else if(t.a == 0 && t.b == -1.0 && t.c == 1.0 && t.d == 0){
+//                    // PortraitUpsideDown
+//                    degress = 270;
+//                }else if(t.a == 1.0 && t.b == 0 && t.c == 0 && t.d == 1.0){
+//                    // LandscapeRight
+//                    degress = 0;
+//                }else if(t.a == -1.0 && t.b == 0 && t.c == 0 && t.d == -1.0){
+//                    // LandscapeLeft
+//                    degress = 180;
+//                }
+//                CGAffineTransform rotate = CGAffineTransformMakeRotation(degress / 180.0 * M_PI );
+//                [passThroughLayer setTransform:compositionVideoTracks[alternatingIndex].preferredTransform atTime:kCMTimeZero];
+                [passThroughLayer setTransformRampFromStartTransform:[assert tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform toEndTransform:[assert tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform timeRange:passThroughInstruction.timeRange];
+//            }
+//            CGAffineTransform transform = CGAffineTransformMakeRotation( M_PI_2);
+//            [passThroughLayer setTransform:transform atTime:kCMTimeZero];
+//            [passThroughLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionTimeRanges[i]];
+            [compositionVideoTracks[0] setPreferredTransform:[assert tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform];
+            [compositionVideoTracks[1] setPreferredTransform:[assert tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform];
             
             passThroughInstruction.layerInstructions = @[passThroughLayer];
             
             [instructions addObject:passThroughInstruction];
         }
+        
 
         if (i+1 < clipsCount) {
 //MARK:- 过渡
@@ -200,18 +248,48 @@
                 AVMutableVideoCompositionLayerInstruction *fromLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[alternatingIndex]];
                 AVMutableVideoCompositionLayerInstruction *toLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[1-alternatingIndex]];
                 //fromLayer toLayer 获得交替的前后层
-                
+//                {//方向
+//                    CGFloat degress = 0.0;
+//                    CGAffineTransform t = assert.preferredTransform;
+//
+//                    if(t.a == 0 && t.b == 1.0 && t.c == -1.0 && t.d == 0){
+//                        // Portrait
+//                        degress = 90;
+//                    }else if(t.a == 0 && t.b == -1.0 && t.c == 1.0 && t.d == 0){
+//                        // PortraitUpsideDown
+//                        degress = 270;
+//                    }else if(t.a == 1.0 && t.b == 0 && t.c == 0 && t.d == 1.0){
+//                        // LandscapeRight
+//                        degress = 0;
+//                    }else if(t.a == -1.0 && t.b == 0 && t.c == 0 && t.d == -1.0){
+//                        // LandscapeLeft
+//                        degress = 180;
+//                    }
+//                    CGAffineTransform rotate = CGAffineTransformMakeRotation(degress / 180.0 * M_PI );
+////                    [fromLayer setTransform:rotate atTime:kCMTimeZero];
+//// [toLayer setTransform:rotate atTime:kCMTimeZero];
+//                      [fromLayer setTransform:compositionVideoTracks[alternatingIndex].preferredTransform atTime:kCMTimeZero];
+//                    [toLayer setTransform:compositionVideoTracks[alternatingIndex].preferredTransform atTime:kCMTimeZero];
+////                    [fromLayer setTransformRampFromStartTransform:rotate toEndTransform:rotate timeRange:transitionInstruction.timeRange];
+////                    [toLayer setTransformRampFromStartTransform:rotate toEndTransform:rotate timeRange:transitionInstruction.timeRange];
+//                }
 //MARK:- 设置自定义的动画
+//                CGAffineTransform transform = CGAffineTransformMakeRotation( M_PI_2);
+//                [fromLayer setTransform:transform atTime:kCMTimeZero];
+//                [toLayer setTransform:transform atTime:kCMTimeZero];
+//                NSLog(@"transition : %@", [NSValue valueWithCMTimeRange:transitionInstruction.timeRange]);
+//                [toLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionTimeRanges[i]];
+//                [fromLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionTimeRanges[i]];
                 
                     if (self.transitionTypeMArr.count > i) {
-                        [self animationWithFromLayer:fromLayer toLayer:toLayer    targetSize:self.targetSize transitionTimeRange:transitionTimeRanges[i] targetType:[self.transitionTypeMArr[i] unsignedIntegerValue]];
+                        [self animationWithFromLayer:fromLayer toLayer:toLayer targetSize:self.targetSize transitionTimeRange:transitionTimeRanges[i] targetType:[self.transitionTypeMArr[i] unsignedIntegerValue]];
                     } else {
                         //使用默认类型的过渡效果
                         //Fade in the toLayer by setting a ramp from 0.0 to 1.0.
                         [toLayer setOpacityRampFromStartOpacity:0.0 toEndOpacity:1.0 timeRange:transitionTimeRanges[i]];
                     }
                 
-                NSLog(@"transition : %@", [NSValue valueWithCMTimeRange:transitionInstruction.timeRange]);
+                
                 transitionInstruction.layerInstructions = @[toLayer, fromLayer];
                 [instructions addObject:transitionInstruction];
             }
@@ -229,18 +307,18 @@
                 AVMutableAudioMixInputParameters *trackMix2 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTracks[1 - alternatingIndex]];
 
                 [trackMix2 setVolumeRampFromStartVolume:0.0 toEndVolume:1.0 timeRange:transitionTimeRanges[i]];//增音
-                [trackMix2 setVolumeRampFromStartVolume:1.0 toEndVolume:1.0 timeRange:passThroughTimeRanges[i + 1]];//保持音量
-
-            
+                
+                //发生了异常 时间算得有点问题 有点偏差也会错... 当然这句代码其实是可以省略的
+//                NSLog(@"~~~~%@", [NSValue valueWithCMTimeRange:passThroughTimeRanges[i + 1]]);
+//                [trackMix2 setVolumeRampFromStartVolume:1.0 toEndVolume:1.0 timeRange:passThroughTimeRanges[i + 1]];//保持音量
+             
+                
                 [trackMixArray addObject:trackMix2];
             }
         }
     }
-   
-    
 
     NSLog(@"视频片段数目:(非过渡+过渡) %ld", instructions.count);//一直都会是奇数
-    
     videoComposition.instructions = instructions;//把需要过渡的片段加入到资源集合中
     audioMix.inputParameters = trackMixArray;
     for (AVVideoCompositionInstruction *ins in instructions) {
@@ -301,10 +379,11 @@
 	AVMutableVideoComposition *videoComposition = nil;
 	AVMutableAudioMix *audioMix = nil;
 	
+    //如果没有自定义targetSize视频尺寸则使用第一个视频资源的尺寸作为输出尺寸
     if (CGSizeEqualToSize(self.targetSize, CGSizeZero)) {
         self.targetSize = [[self.clips objectAtIndex:0] naturalSize];
     }
-    ///如果不设置targetSize 则默认size为第一个视频的size
+
     CGSize videoSize = self.targetSize;
 	composition.naturalSize = videoSize;
 	
@@ -367,8 +446,6 @@
 //    }];
 }
 
-
-
 - (AVPlayerItem *)playerItem {
     
 	AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:[self.composition copy]];
@@ -413,11 +490,16 @@
         
         NSURL *outputURL = [NSURL fileURLWithPath:pathWithComponent];
         if ([[NSFileManager defaultManager] fileExistsAtPath:outputURL.path]) {
-            [[NSFileManager defaultManager] removeItemAtPath:outputURL.path error:nil];
+            NSError *error;
+            [[NSFileManager defaultManager] removeItemAtPath:outputURL.path error:&error];
+            if (error) {
+                NSLog(@"文件删除失败：%@",error.description);
+            }
         }
-        
+    
         AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:[self.composition copy] presetName:AVAssetExportPresetHighestQuality];
         exportSession.outputURL = outputURL;
+        
         exportSession.videoComposition = [self.videoComposition copy];//应该和scale有所冲突
         exportSession.outputFileType = AVFileTypeMPEG4;
         NSLog(@"%@", NSHomeDirectory());
@@ -431,6 +513,7 @@
                 if (exportSession.status == AVAssetExportSessionStatusFailed
                     || exportSession.status == AVAssetExportSessionStatusCancelled) {
                     [self currentProgress:0.0];
+                    NSLog(@"出错提示：%@", exportSession.error.description);
                 } else if (exportSession.status == AVAssetExportSessionStatusCompleted) {
                     [self currentProgress:1.0];
                 }
@@ -510,8 +593,8 @@
 
 ///加载资源
 - (void)loadAsset:(AVAsset *)asset withKeys:(NSArray *)assetKeysToLoad usingDispatchGroup:(dispatch_group_t)dispatchGroup {
-    if (!self.clipTimeRanges) {
-        self.clipTimeRanges = [NSMutableArray array];
+    if (!self.clipTimeRangess) {
+        self.clipTimeRangess = [NSMutableArray array];
     }
     
     if (!self.clipss) {
@@ -558,11 +641,11 @@
     BOOL transitionsEnabled = true;
     // Transitions
     if (transitionsEnabled) {
-        self.transitionDuration = CMTimeMakeWithSeconds(2, 600);
+        self.transitionDuration = CMTimeMakeWithSeconds(1.0, 600);
     } else {
         self.transitionDuration = kCMTimeZero;
     }
-    [self.transitionTypeMArr addObject:@(1)];
+//    [self.transitionTypeMArr addObject:@(1)];
     
     [self buildCompositionObjectsForPlayback];
     

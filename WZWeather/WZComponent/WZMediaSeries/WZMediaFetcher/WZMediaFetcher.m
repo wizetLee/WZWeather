@@ -420,25 +420,27 @@
 //}
 
 #pragma mark - Fetch Video
-+ (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous {
++ (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info))handler {
     PHVideoRequestOptions *videoRequsetOptions = [[PHVideoRequestOptions alloc] init];
     videoRequsetOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
     videoRequsetOptions.networkAccessAllowed = false;
-//  PHImageRequestID imageRequestID =
-    PHImageRequestID imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-       
-    }];
+    PHImageRequestID imageRequestID = 0;
     
-    if (synchronous) {
+    if (!synchronous) {
         //异步
         imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-            
+            if (handler) {
+                handler(asset, audioMix, info);
+            }
         }];
     } else {
         //同步 使用信号量
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         //请求asset
         imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+            if (handler) {
+                handler(asset, audioMix, info);
+            }
             dispatch_semaphore_signal(semaphore);
         }];
         //等待信号
@@ -476,7 +478,7 @@
 
 
 #pragma mark - 删除某一些资源
-- (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler {
++ (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler {
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:localIdentifierArr options:nil];
         if (assets) { [PHAssetChangeRequest deleteAssets:assets]; }
