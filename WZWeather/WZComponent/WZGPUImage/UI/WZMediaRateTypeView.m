@@ -126,8 +126,6 @@
     [UIView animateWithDuration:0.25 animations:^{
         _errandView.center = CGPointMake(index * WZMeidaRateTypeViewCellWH + restrictW, restrictW);
     }];
-   
-   
 }
 
 - (void)pickNameWithIndex:(NSUInteger)index {
@@ -138,5 +136,7 @@
         _errandView.text = @"";
     }
 }
+
+
 
 @end

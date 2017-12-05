@@ -38,6 +38,7 @@
     return result;
 }
 
+///这里的范围指的是安全区的边界范围
 + (CGSize)wz_fitSizeComparisonWithScreenBound:(CGSize)targetSize {
     CGFloat top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
     CGFloat bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;

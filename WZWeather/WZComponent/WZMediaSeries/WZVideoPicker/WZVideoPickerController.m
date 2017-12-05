@@ -11,6 +11,7 @@
 #import <Photos/Photos.h>
 #import "WZMediaFetcher.h"
 #import "WZAPLSimpleEditor.h"
+#import "WZVideoSurfAlert.h"
 
 @interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource , PHPhotoLibraryChangeObserver>
 
@@ -26,6 +27,10 @@
 @property (nonatomic, strong) UIBarButtonItem *leftItem;
 @property (nonatomic, strong) UIBarButtonItem *rightItem;
 
+@property (nonatomic, strong) UIImageView *backgroundImageView;
+
+@property (nonatomic, strong) WZVideoSurfAlert *surfAlert;
+
 @end
 
 @implementation WZVideoPickerController
@@ -36,19 +41,18 @@
     VC.delegate = (id<WZVideoPickerControllerProtocol>)self;
     UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:VC];
     [presentedController presentViewController:navigationVC animated:true completion:^{}];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-
     self.automaticallyAdjustsScrollViewInsets = false;
     
     _imageMDic = [NSMutableDictionary dictionary];
     _mediaAssetData = [NSMutableArray arrayWithArray:[WZMediaFetcher allVideosAssets]];
     
     [self resetStatue];
-
     [self createViews];
 
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
@@ -82,8 +86,21 @@
     bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;
     CGFloat height = screenH - bottom - top;
     
-    [self.view addSubview:self.collection];//系统自己匹配的安全区域显示的内容
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    imageView.clipsToBounds = true;
+    [self.view addSubview:imageView];
+    imageView.image = [UIImage imageNamed:@"wallpaper3.jpeg"];
+    _backgroundImageView = imageView;
     
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor clearColor]];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+//    self.navigationController.navigationBar.backIndicatorTransitionMaskImage = [UIImage imageWithColor:[UIColor clearColor]];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];//透明
+//self.navigationController.navigationBar.backIndicatorImage
+    
+    [self.view addSubview:self.collection];//系统自己匹配的安全区域显示的内容
     _leftItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(leftButtonAction)];
     _rightItem = [[UIBarButtonItem alloc] initWithTitle:@"模式选取" style:UIBarButtonItemStyleDone target:self action:@selector(rightButtonAction)];
 //    right.title =
@@ -94,7 +111,6 @@
     
     self.type = WZVideoPickerType_browse;
 }
-
 
 - (void)leftButtonAction {
     //在选中模式之中
@@ -112,19 +128,22 @@
     }
 }
 
+
+
 - (void)rightButtonAction {
     if (!_innerMode) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选取模式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *surf = [UIAlertAction actionWithTitle:@"浏览模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            self.type = WZVideoPickerType_browse;
-        }];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选择当前需要使用的模式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+     
         UIAlertAction *pick = [UIAlertAction actionWithTitle:@"选取模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.type = WZVideoPickerType_pick;
         }];
-        UIAlertAction *delete = [UIAlertAction actionWithTitle:@"删除模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+       
+        
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:@"删除模式" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             self.type = WZVideoPickerType_delete;
         }];
-
+        
         UIAlertAction *composition = [UIAlertAction actionWithTitle:@"合并模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.type = WZVideoPickerType_composition;
         }];
@@ -132,10 +151,9 @@
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
         }];
-        [alert addAction:surf];
         [alert addAction:pick];
-        [alert addAction:delete];
         [alert addAction:composition];
+        [alert addAction:delete];
         [alert addAction:cancel];
         
         [self presentViewController:alert animated:true completion:^{
@@ -453,6 +471,19 @@
              } else {
                  _rightItem.enabled = false;
              }
+         } else if (_type == WZVideoPickerType_browse) {
+             _surfAlert = nil;
+             _surfAlert = [[WZVideoSurfAlert alloc] init];
+             _surfAlert.clickedBackgroundToDismiss = true;
+             self.view.userInteractionEnabled = false;
+             [WZMediaFetcher fetchVideoWith:tmpPHAsset synchronous:true handler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.view.userInteractionEnabled = true;
+                     _surfAlert.asset = asset;
+                     [_surfAlert alertShow];
+                 });
+             }];
+             
          }
      }
 }
@@ -479,7 +510,7 @@
         layout.itemSize = CGSizeMake(itemWH, itemWH);
         
         _collection = [[UICollectionView alloc] initWithFrame:rect collectionViewLayout:layout];
-        _collection.backgroundColor = [UIColor whiteColor];
+        _collection.backgroundColor = [UIColor clearColor];
         _collection.dataSource = self;
         _collection.delegate = self;
         [_collection registerClass:[WZVideoPickerCell class] forCellWithReuseIdentifier:NSStringFromClass([WZVideoPickerCell class])];
@@ -490,6 +521,8 @@
 
 - (void)setType:(WZVideoPickerType)type {
     _type = type;
+    self.leftItem.title = @"";
+    self.rightItem.title = @"";
     //UI更替
     dispatch_async(dispatch_get_main_queue(), ^{
         switch (type) {
@@ -502,6 +535,7 @@
                 _innerMode = false;
                 self.leftItem.title = @"返回";
                 self.rightItem.title = @"模式选取";
+                _backgroundImageView.image = [UIImage imageNamed:@"wallpaper3.jpeg"];
             } break;
             case WZVideoPickerType_pick:{
                 [self.navigationController.navigationBar setTitleTextAttributes:
@@ -512,6 +546,7 @@
                 self.rightItem.tintColor = [UIColor greenColor];
                 self.leftItem.title = @"浏览模式";
                 self.rightItem.title = @"选取";
+                _backgroundImageView.image = [UIImage imageNamed:@"wallpaper4.jpeg"];
                 
             } break;
             case WZVideoPickerType_delete:{
@@ -523,6 +558,7 @@
                 self.rightItem.tintColor = [UIColor redColor];
                 self.leftItem.title = @"浏览模式";
                 self.rightItem.title = @"删除";
+                _backgroundImageView.image = [UIImage imageNamed:@"wallpaper5.jpeg"];
             } break;
             case WZVideoPickerType_composition:{
                 [self.navigationController.navigationBar setTitleTextAttributes:
@@ -533,6 +569,7 @@
                 self.rightItem.tintColor = [UIColor orangeColor];
                 self.leftItem.title = @"浏览模式";
                 self.rightItem.title = @"开始合并";
+                _backgroundImageView.image = [UIImage imageNamed:@"wallpaper2.jpeg"];
             } break;
                 
             default:

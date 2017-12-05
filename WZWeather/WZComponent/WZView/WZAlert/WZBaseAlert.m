@@ -146,12 +146,17 @@
         }
         self.bgView.alpha = [self bgViewAlpha];
     } completion:^(BOOL finished) {
-        
+        [self beginningAnimationComletion];
     }];
 }
 
+//MARK: 显示的动画结束
+- (void)beginningAnimationComletion {
+    
+}
+
 - (void)alertShow {
-   [self viewDispaly];
+    [self viewDispaly];
 }
 
 - (void)alertDismissWithAnimated:(BOOL)animated {//结束动画的位置

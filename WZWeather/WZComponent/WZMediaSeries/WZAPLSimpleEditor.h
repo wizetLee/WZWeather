@@ -72,7 +72,7 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 
 // Set these properties before building the composition objects.
 
-////即将剪切的资源片段
+///即将剪切的资源片段
 @property (nonatomic, readonly, retain) NSArray <AVAsset *>*clips; // array of AVURLAssets
 
 //资源时间(asset.duration)
@@ -88,20 +88,23 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 ///混音的类
 @property (nonatomic, readonly, retain) AVMutableAudioMix *audioMix;
 
-//MARK: - 自定义属性 使用APLSimpleEditorTransitionType的number类型
-
 ///过渡的类型
 @property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionTypeMArr;
-///某一段用不用过渡
+///过渡数组(用于判定该段是否用于过渡)
 @property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionsEnabledMArr;
+///导出尺寸
 @property (nonatomic, assign, readonly) CGSize targetSize;
+///代理
 @property (nonatomic, weak) id<WZAPLSimpleEditorProtocol> delegate;
 
-//MARK: - 播放 或者 重播
-// Builds the composition and videoComposition
+
+/// Builds the composition and videoComposition
+/**
+ 播放 或者 重播
+ */
 - (void)buildCompositionObjectsForPlayback;
 
-//得到PlayerItem
+///得到PlayerItem
 - (AVPlayerItem *)playerItem;
 
 
@@ -110,18 +113,31 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 //MARK: - 自定义延展
 @interface WZAPLSimpleEditor (assist)
 
-///导出(导出的文件路径是固定的)，文件名字根据type配置
+//MARK: 资源导出
+/**
+ 导出(导出的文件路径是固定的)，文件名字根据type配置
+ @param fileName 文件名
+ @param handler 回调
+ */
 - (void)exportToSandboxDocumentWithFileName:(NSString *)fileName completionHandler:(void (^)(AVAssetExportSessionStatus statue , NSURL *fileURL))handler ;
 
-///保存到本地
+//MARK:保存到本地
+/**
+ 保存到本地
+ @param URL 保存的资源路径
+ @param handler 回调
+ */
 + (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler;
 
-///整个资源更新掉 资源赋值
+//MARK:整个资源更新掉 资源赋值
+
+/**
+  整个资源更新掉 资源赋值
+ @param assets 资源数组
+ */
 - (void)updateEditorWithVideoAssets:(NSArray <AVAsset *>*)assets;
 
-//统一尺寸
-
-
+//MARK: 根据size匹配水印layer
 - (CALayer *)animationToolLayerWithTargetSize:(CGSize)targetSize;
 
 @end
