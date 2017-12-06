@@ -17,7 +17,6 @@
 @property (nonatomic, strong) AVPlayerLayer *previewLayer;
 
 @property (nonatomic, strong) WZVideoSurfSilder *wz_slider;
-@property (nonatomic, strong) UISlider *slider;
 @property (nonatomic, strong) UIView *layerContainerView;
 
 @property (nonatomic, strong) UIButton *closeButton;
@@ -52,39 +51,31 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [_layerContainerView addGestureRecognizer:tap];
         
-        //设置音量
-        _slider = [[UISlider alloc] initWithFrame:CGRectMake(20.0, MACRO_FLOAT_SCREEN_HEIGHT - MACRO_FLOAT_SAFEAREA_BOTTOM - 44.0 - 20.0, MACRO_FLOAT_SCREEN_WIDTH - 40.0, 44.0)];
-        [self addSubview:_slider];
-        [_slider addTarget:self action:@selector(slider:) forControlEvents:UIControlEventValueChanged];
-        [_slider setThumbImage:[UIImage imageNamed:@"WZVideoSurfAlert_drag@3x.png"] forState:UIControlStateNormal];
-        [_slider setMaximumTrackTintColor:[UIColor whiteColor]];
-        [_slider setMinimumTrackTintColor:[UIColor whiteColor]];
-        
+
         _wz_slider = [[WZVideoSurfSilder alloc] initWithFrame:CGRectMake(20.0, MACRO_FLOAT_SCREEN_HEIGHT - MACRO_FLOAT_SAFEAREA_BOTTOM - 44.0 - 20.0 - 44 - 20, MACRO_FLOAT_SCREEN_WIDTH - 40.0, 44.0)];
         _wz_slider.backgroundColor = UIColor.greenColor;
         _wz_slider.delegate = self;
         [self addSubview:_wz_slider];
         
-        
         UILabel *leftLabel =  [[UILabel alloc] initWithFrame:CGRectMake(0.0, -22.0, 88.0, 22.0)];
-        UILabel *rightLabel =[[UILabel alloc] initWithFrame:CGRectMake(_slider.frame.size.width - 88.0, -22.0, 88.0, 22.0)];
+        UILabel *rightLabel =[[UILabel alloc] initWithFrame:CGRectMake(_wz_slider.frame.size.width - 88.0, -22.0, 88.0, 22.0)];
         leftLabel.font = [UIFont boldSystemFontOfSize:12.0];
         leftLabel.backgroundColor = [UIColor clearColor];
         leftLabel.textColor = [UIColor whiteColor];
-        [_slider addSubview:leftLabel];
+        [_wz_slider addSubview:leftLabel];
         rightLabel.font = [UIFont boldSystemFontOfSize:12.0];
         rightLabel.backgroundColor = [UIColor clearColor];
         rightLabel.textColor = [UIColor whiteColor];
-        [_slider addSubview:rightLabel];
+        [_wz_slider addSubview:rightLabel];
         rightLabel.textAlignment = NSTextAlignmentRight;
-        leftLabel.text = @"0.0";
-        rightLabel.text = [NSString stringWithFormat:@"%.2lf", CMTimeGetSeconds(_asset.duration)];
+        leftLabel.text = @"0.0sec";
+        rightLabel.text = [NSString stringWithFormat:@"%.2lfsec", CMTimeGetSeconds(_asset.duration)];
         
-        _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, [[UIApplication sharedApplication] statusBarFrame].size.height, 88.0, 44.0)];
-        _closeButton.backgroundColor = [UIColor redColor];
-        [_closeButton setTitle:@"退出" forState:UIControlStateNormal];
-        [_closeButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_closeButton];
+//        _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, [[UIApplication sharedApplication] statusBarFrame].size.height, 88.0, 44.0)];
+//        _closeButton.backgroundColor = [UIColor redColor];
+//        [_closeButton setTitle:@"退出" forState:UIControlStateNormal];
+//        [_closeButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:_closeButton];
     } else {
         return;
     }
@@ -92,22 +83,12 @@
 
 - (void)tap:(UITapGestureRecognizer *)tap {
     if (tap.state == UIGestureRecognizerStateEnded) {
-        if (1) {
-            
-        }
+        [self alertDismissWithAnimated:true];
     }
 }
 
 - (void)clickedBtn:(UIButton *)sender {
     [self alertDismissWithAnimated:true];
-}
-
-- (void)slider:(UISlider *)slider {
-    CMTime time = CMTimeMakeWithSeconds(CMTimeGetSeconds(_asset.duration) * slider.value, _asset.duration.timescale);
-//    [WZToast toastWithContent:[NSString stringWithFormat:@"%.2lf", CMTimeGetSeconds(_asset.duration) * slider.value]];
-    if (_player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
-        [_player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
-    }
 }
 
 //MARK: rewrite 重写父类逻辑
@@ -133,8 +114,7 @@
     __weak typeof(self) weakSelf = self;
     [self playerTimeObserverWithTimeHandler:^(CMTime time) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.slider.value = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.asset.duration);
-            [weakSelf.wz_slider setProgress:CMTimeGetSeconds(time) / CMTimeGetSeconds(self.asset.duration)];
+            [weakSelf.wz_slider setProgress:CMTimeGetSeconds(time) / CMTimeGetSeconds(weakSelf.asset.duration)];
         });
     }];
 }
@@ -165,7 +145,6 @@
 }
 
 //MARK: - WZSilderProtocol
-
 - (void)silderPanGestureStateBegan; {
     [_player pause];
 }

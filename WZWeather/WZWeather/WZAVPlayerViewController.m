@@ -87,7 +87,7 @@
     __weak typeof(self) weakSelf = self;
     _timeObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.5, 600) queue:nil usingBlock:^(CMTime time) {
      //可以在此处理 配置一个循环播放的设置
-        ///循环播放
+        ///循环播放 不应该再这里实现循环播放， 应当使用通知实现循环播放
       
         if (!weakSelf.dragging && weakSelf.recyclable) {
             if (CMTimeCompare(weakSelf.endTime, kCMTimeZero) != 0) {
@@ -108,6 +108,7 @@
     _previewLayer = [AVPlayerLayer playerLayerWithPlayer:_player] ;
    
 }
+
 - (void)delayPlay {
     NSLog(@"——————————————————————————————倒带");
     [_player seekToTime:_startTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];

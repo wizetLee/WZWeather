@@ -21,7 +21,7 @@
 @property (nonatomic, strong) WZTimeSuperviser *timeSuperviser;
 @property (nonatomic, strong) UIButton *btn;
 @property (nonatomic, strong) WZDownloadRequest * downloader;
-@property (nonatomic, strong)  NSProgress *progress;
+@property (nonatomic, strong) NSProgress *progress;
 @property (nonatomic, strong) UILabel *timeLabel;
 
 @property (nonatomic, strong) WZVariousTable *table;
@@ -48,7 +48,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
-
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 }
