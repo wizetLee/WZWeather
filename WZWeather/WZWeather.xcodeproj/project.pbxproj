@@ -289,8 +289,8 @@
 		8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227491FD62A0200D37FAE /* wallpaper4.jpeg */; };
 		846227511FD63C4E00D37FAE /* WZVideoSurfAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227501FD63C4E00D37FAE /* WZVideoSurfAlert.m */; };
 		846227531FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 846227521FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png */; };
-		846227641FD6ACCE00D37FAE /* WZSilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227631FD6ACCE00D37FAE /* WZSilder.m */; };
-		846227671FD6ACE900D37FAE /* WZVideoSurfSilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227661FD6ACE900D37FAE /* WZVideoSurfSilder.m */; };
+		846227641FD6ACCE00D37FAE /* WZSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227631FD6ACCE00D37FAE /* WZSlider.m */; };
+		846227671FD6ACE900D37FAE /* WZVideoSurfSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */; };
 		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
 		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
@@ -952,10 +952,10 @@
 		8462274F1FD63C4E00D37FAE /* WZVideoSurfAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoSurfAlert.h; sourceTree = "<group>"; };
 		846227501FD63C4E00D37FAE /* WZVideoSurfAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoSurfAlert.m; sourceTree = "<group>"; };
 		846227521FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WZVideoSurfAlert_drag@3x.png"; sourceTree = "<group>"; };
-		846227621FD6ACCE00D37FAE /* WZSilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZSilder.h; sourceTree = "<group>"; };
-		846227631FD6ACCE00D37FAE /* WZSilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZSilder.m; sourceTree = "<group>"; };
-		846227651FD6ACE900D37FAE /* WZVideoSurfSilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoSurfSilder.h; sourceTree = "<group>"; };
-		846227661FD6ACE900D37FAE /* WZVideoSurfSilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoSurfSilder.m; sourceTree = "<group>"; };
+		846227621FD6ACCE00D37FAE /* WZSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZSlider.h; sourceTree = "<group>"; };
+		846227631FD6ACCE00D37FAE /* WZSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZSlider.m; sourceTree = "<group>"; };
+		846227651FD6ACE900D37FAE /* WZVideoSurfSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoSurfSlider.h; sourceTree = "<group>"; };
+		846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoSurfSlider.m; sourceTree = "<group>"; };
 		84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAnimatedTransitionsBase.h; sourceTree = "<group>"; };
 		84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAnimatedTransitionsBase.m; sourceTree = "<group>"; };
 		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
@@ -2406,8 +2406,8 @@
 		846227611FD6ACCE00D37FAE /* WZSilder */ = {
 			isa = PBXGroup;
 			children = (
-				846227621FD6ACCE00D37FAE /* WZSilder.h */,
-				846227631FD6ACCE00D37FAE /* WZSilder.m */,
+				846227621FD6ACCE00D37FAE /* WZSlider.h */,
+				846227631FD6ACCE00D37FAE /* WZSlider.m */,
 			);
 			path = WZSilder;
 			sourceTree = "<group>";
@@ -2583,8 +2583,8 @@
 				846A310D1FD15188003CECAE /* WZVideoPickerCell.m */,
 				8462274F1FD63C4E00D37FAE /* WZVideoSurfAlert.h */,
 				846227501FD63C4E00D37FAE /* WZVideoSurfAlert.m */,
-				846227651FD6ACE900D37FAE /* WZVideoSurfSilder.h */,
-				846227661FD6ACE900D37FAE /* WZVideoSurfSilder.m */,
+				846227651FD6ACE900D37FAE /* WZVideoSurfSlider.h */,
+				846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */,
 			);
 			path = WZVideoPicker;
 			sourceTree = "<group>";
@@ -3075,7 +3075,7 @@
 				84514D8D1E9DCE7A00F07EF8 /* UIWebVIew+JKSwipeGesture.m in Sources */,
 				84514D121E9DCE7A00F07EF8 /* NSUserDefaults+JKiCloudSync.m in Sources */,
 				84514D721E9DCE7A00F07EF8 /* UITextView+JKSelect.m in Sources */,
-				846227671FD6ACE900D37FAE /* WZVideoSurfSilder.m in Sources */,
+				846227671FD6ACE900D37FAE /* WZVideoSurfSlider.m in Sources */,
 				84514D2D1E9DCE7A00F07EF8 /* UIButton+JKIndicator.m in Sources */,
 				84514D4D1E9DCE7A00F07EF8 /* UIImage+JKVector.m in Sources */,
 				84514D4C1E9DCE7A00F07EF8 /* UIImage+JKSuperCompress.m in Sources */,
@@ -3191,7 +3191,7 @@
 				84514D7D1E9DCE7A00F07EF8 /* UIView+JKShake.m in Sources */,
 				8402EB261ECD64A40030CCE1 /* WZVariousBaseMethodObject.m in Sources */,
 				84514D861E9DCE7A00F07EF8 /* UIWebView+JKBlocks.m in Sources */,
-				846227641FD6ACCE00D37FAE /* WZSilder.m in Sources */,
+				846227641FD6ACCE00D37FAE /* WZSlider.m in Sources */,
 				84514D841E9DCE7A00F07EF8 /* UIViewController+JKStoreKit.m in Sources */,
 				844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */,
 				84514CF71E9DCE7A00F07EF8 /* NSString+JKBase64.m in Sources */,

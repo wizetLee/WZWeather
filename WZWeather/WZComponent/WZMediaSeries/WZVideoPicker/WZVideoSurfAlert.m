@@ -7,16 +7,16 @@
 //
 
 #import "WZVideoSurfAlert.h"
-#import "WZVideoSurfSilder.h"
+#import "WZVideoSurfSlider.h"
 
-@interface WZVideoSurfAlert()<WZSilderProtocol>
+@interface WZVideoSurfAlert()<WZSliderProtocol>
 
 
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 @property (nonatomic, strong) AVPlayerLayer *previewLayer;
 
-@property (nonatomic, strong) WZVideoSurfSilder *wz_slider;
+@property (nonatomic, strong) WZVideoSurfSlider *wz_slider;
 @property (nonatomic, strong) UIView *layerContainerView;
 
 @property (nonatomic, strong) UIButton *closeButton;
@@ -50,9 +50,8 @@
         [_layerContainerView.layer addSublayer:_previewLayer];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [_layerContainerView addGestureRecognizer:tap];
-        
-
-        _wz_slider = [[WZVideoSurfSilder alloc] initWithFrame:CGRectMake(20.0, MACRO_FLOAT_SCREEN_HEIGHT - MACRO_FLOAT_SAFEAREA_BOTTOM - 44.0 - 20.0 - 44 - 20, MACRO_FLOAT_SCREEN_WIDTH - 40.0, 44.0)];
+       
+        _wz_slider = [[WZVideoSurfSlider alloc] initWithFrame:CGRectMake(20.0, MACRO_FLOAT_SCREEN_HEIGHT - MACRO_FLOAT_SAFEAREA_BOTTOM - 44.0 - 20.0 - 44 - 20, MACRO_FLOAT_SCREEN_WIDTH - 40.0, 44.0)];
         _wz_slider.backgroundColor = UIColor.greenColor;
         _wz_slider.delegate = self;
         [self addSubview:_wz_slider];
@@ -144,17 +143,17 @@
     //处理视图
 }
 
-//MARK: - WZSilderProtocol
-- (void)silderPanGestureStateBegan; {
+//MARK: - WZSliderProtocol
+- (void)sliderPanGestureStateBegan; {
     [_player pause];
 }
 
-- (void)silderPanGestureStateChangedWithProgress:(CGFloat)progress; {
+- (void)sliderPanGestureStateChangedWithProgress:(CGFloat)progress; {
     CMTime time = CMTimeMakeWithSeconds(CMTimeGetSeconds(_asset.duration) * progress, _asset.duration.timescale);
     [_player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
 }
 
-- (void)silderPanGestureStateEnd; {
+- (void)sliderPanGestureStateEnd; {
     [_player play];
 }
 

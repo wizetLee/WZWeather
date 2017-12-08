@@ -6,9 +6,9 @@
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
-#import "WZSilder.h"
+#import "WZSlider.h"
 
-@interface WZSilder()
+@interface WZSlider()
 
 @property (nonatomic, strong) UIImageView *thumbView;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation WZSilder
+@implementation WZSlider
 
 //MARK: 滑动视图宽度
 - (CGFloat)thumbWidth {
@@ -56,19 +56,19 @@
     _thumbView.center = CGPointMake(x, _thumbView.center.y);
     [pan setTranslation:CGPointZero inView:self];
     if (pan.state == UIGestureRecognizerStateBegan) {
-        if ([_delegate respondsToSelector:@selector(silderPanGestureStateBegan)]) {
-            [_delegate silderPanGestureStateBegan];
+        if ([_delegate respondsToSelector:@selector(sliderPanGestureStateBegan)]) {
+            [_delegate sliderPanGestureStateBegan];
         }
     } else if (pan.state == UIGestureRecognizerStateChanged) {
-        if ([_delegate respondsToSelector:@selector(silderPanGestureStateChangedWithProgress:)]) {
-            [_delegate silderPanGestureStateChangedWithProgress:[self progress]];
+        if ([_delegate respondsToSelector:@selector(sliderPanGestureStateChangedWithProgress:)]) {
+            [_delegate sliderPanGestureStateChangedWithProgress:[self progress]];
         }
          NSLog(@"%lf", [self progress]);
     } else if (pan.state == UIGestureRecognizerStateEnded
         || pan.state == UIGestureRecognizerStateCancelled
         || pan.state == UIGestureRecognizerStateFailed) {
-        if ([_delegate respondsToSelector:@selector(silderPanGestureStateEnd)]) {
-            [_delegate silderPanGestureStateEnd];
+        if ([_delegate respondsToSelector:@selector(sliderPanGestureStateEnd)]) {
+            [_delegate sliderPanGestureStateEnd];
         }
     }
 }
@@ -85,8 +85,8 @@
             x = self.frame.size.width - restrictW;
         }
         _thumbView.center = CGPointMake(x, _thumbView.center.y);
-        if ([_delegate respondsToSelector:@selector(silderPanGestureStateChangedWithProgress:)]) {
-            [_delegate silderPanGestureStateChangedWithProgress:[self progress]];
+        if ([_delegate respondsToSelector:@selector(sliderPanGestureStateChangedWithProgress:)]) {
+            [_delegate sliderPanGestureStateChangedWithProgress:[self progress]];
            
         }
     }
