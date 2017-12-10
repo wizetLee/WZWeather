@@ -9,6 +9,10 @@
 #import "WZVariousBaseCell.h"
 #define WZMediaConfigCellWidth (MACRO_FLOAT_SCREEN_WIDTH - 30)
 
+
+/**
+ 拍摄 录制的设置配置界面的CELL
+ */
 @interface WZMediaConfigCell : WZVariousBaseCell
 
 @end

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-///录制的进度视图
+/**
+ 录制的进度视图
+ */
 @interface WZMediaRecordTimeBar : UIView
 ///进度指示
 - (void)setProgress:(CGFloat)progress;

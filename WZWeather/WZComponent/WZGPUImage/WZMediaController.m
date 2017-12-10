@@ -14,6 +14,7 @@
 #import <GPUImage/GPUImage.h>
 #import <GPUImage/GPUImageMovieComposition.h>
 
+
 /*
  PS:
      处理好渲染线程和主线程之间的关系，在渲染线程处理数据必要时需要加锁

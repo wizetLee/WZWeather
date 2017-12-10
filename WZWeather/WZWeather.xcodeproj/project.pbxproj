@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */ = {isa = PBXBuildFile; fileRef = 4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */; };
+		4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4008F8131FDC0D2D000D67B5 /* Enlarged.fsh */; };
 		40287B2A1F09210800D9383B /* NSObject+WZFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B251F09210800D9383B /* NSObject+WZFile.m */; };
 		40287B2B1F09210800D9383B /* UIView+WZFrameAssistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B291F09210800D9383B /* UIView+WZFrameAssistance.m */; };
 		40287B2E1F09216C00D9383B /* UIButton+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */; };
@@ -16,6 +17,7 @@
 		402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */; };
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
+		40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
@@ -397,6 +399,7 @@
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		4000982D1FADCD9F00D2A248 /* WZGPUImagePreinstall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImagePreinstall.h; sourceTree = "<group>"; };
 		4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImagePreinstall.m; sourceTree = "<group>"; };
+		4008F8131FDC0D2D000D67B5 /* Enlarged.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Enlarged.fsh; sourceTree = "<group>"; };
 		40287B241F09210800D9383B /* NSObject+WZFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZFile.h"; sourceTree = "<group>"; };
 		40287B251F09210800D9383B /* NSObject+WZFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZFile.m"; sourceTree = "<group>"; };
 		40287B281F09210800D9383B /* UIView+WZFrameAssistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZFrameAssistance.h"; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
+		40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageEnlargedFilter.h; sourceTree = "<group>"; };
+		40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPUImageEnlargedFilter.m; sourceTree = "<group>"; };
 		40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundRenderLayer.h; sourceTree = "<group>"; };
 		40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRoundRenderLayer.m; sourceTree = "<group>"; };
 		40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundSelectorLogicView.h; sourceTree = "<group>"; };
@@ -2684,6 +2689,9 @@
 			children = (
 				846D16011FBBC03000E78FFF /* GPUImageBeautifyFilter.h */,
 				846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */,
+				40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */,
+				40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */,
+				4008F8131FDC0D2D000D67B5 /* Enlarged.fsh */,
 				845034E21FB59F0700D3A285 /* CustomTinter */,
 				840A439E1FB18A6100F6D449 /* tickta.wav */,
 				840A439C1FB18A3A00F6D449 /* photoShutter2.caf */,
@@ -2949,6 +2957,7 @@
 				8405474D1FB97A280033EF9B /* mask.png in Resources */,
 				846A31041FD0E686003CECAE /* message_oeuvre_btn_normal@3x.png in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
+				4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */,
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
@@ -3079,6 +3088,7 @@
 				84514D2D1E9DCE7A00F07EF8 /* UIButton+JKIndicator.m in Sources */,
 				84514D4D1E9DCE7A00F07EF8 /* UIImage+JKVector.m in Sources */,
 				84514D4C1E9DCE7A00F07EF8 /* UIImage+JKSuperCompress.m in Sources */,
+				40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */,
 				84514D301E9DCE7A00F07EF8 /* UIButton+JKTouchAreaInsets.m in Sources */,
 				84514D251E9DCE7A00F07EF8 /* UIBezierPath+JKSVGString.m in Sources */,
 				846A31361FD16337003CECAE /* WZMediaAssetBaseCell.m in Sources */,

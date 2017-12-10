@@ -12,6 +12,10 @@
 @end
 
 
+
+/**
+ 临时录制的视频的列表
+ */
 @interface WZMediaTmpRecordList : UIView
 
 @end

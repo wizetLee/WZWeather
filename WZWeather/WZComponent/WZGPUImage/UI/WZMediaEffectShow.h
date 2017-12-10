@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <GPUImage/GPUImage.h>
+#import "GPUImageEnlargedFilter.h"
+
 @class WZMediaEffectShow;
 @interface WZMediaEffectShowCell : UICollectionViewCell
 
@@ -20,6 +22,10 @@
 
 @end
 
+
+/**
+ 滤镜选择界面
+ */
 @interface WZMediaEffectShow : UIView
 
 @property (nonatomic,  weak) id<WZMediaEffectShowProtocol> delegate;

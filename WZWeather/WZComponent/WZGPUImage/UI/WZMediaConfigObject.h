@@ -8,6 +8,9 @@
 
 #import "WZVariousBaseObject.h"
 
+/**
+ 拍摄 录制的设置配置界面 模型
+ */
 typedef NS_ENUM(NSUInteger, WZMediaConfigType) {
     WZMediaConfigType_none                  = 0,
     

@@ -128,6 +128,9 @@
                filterKey:filterNone,};
     [_dataSource addObject:tmpDic];
     
+    filter = [[GPUImageEnlargedFilter alloc] init];
+    [self key:@"抖音" value:filter];
+    
     //饱和度
      filter = [[GPUImageSaturationFilter alloc] init];
      [self key:@"饱和度" value:filter];
@@ -902,21 +905,16 @@
         [_slider setMaximumValue:7500.0];
         [_slider setValue:((GPUImageWhiteBalanceFilter *)filter).temperature];
     } else if ([filter isKindOfClass:[GPUImageHalftoneFilter class]]) {
+        _slider.hidden = false;
         [_slider setValue:0.01];
         [_slider setMinimumValue:0.0];
         [_slider setMaximumValue:0.05];
-    } else if ([filter isKindOfClass:[GPUImageHalftoneFilter class]]) {
-        
-    } else if ([filter isKindOfClass:[GPUImageHalftoneFilter class]]) {
-        
-    } else if ([filter isKindOfClass:[GPUImageHalftoneFilter class]]) {
-        
-    } else if ([filter isKindOfClass:[GPUImageHalftoneFilter class]]) {
-        
-    } else if ([filter isKindOfClass:[GPUImageHalftoneFilter class]]) {
-        
+    } else if ([filter isKindOfClass:[GPUImageEnlargedFilter class]]) {
+        _slider.hidden = false;
+        [_slider setValue:0.1];
+        [_slider setMinimumValue:0.0];
+        [_slider setMaximumValue:0.1];
     }
-    
 }
 
 - (void)slider:(UISlider *)slider {
@@ -1029,6 +1027,8 @@
     } else if ([filter isKindOfClass:[GPUImageWhiteBalanceFilter class]]) {
         ((GPUImageWhiteBalanceFilter *)filter).temperature = _slider.value;
         
+    } else if ([filter isKindOfClass:[GPUImageEnlargedFilter class]]) {
+        ((GPUImageEnlargedFilter *)filter).enlargeWeight = _slider.value;
     }
 
 }

@@ -15,11 +15,15 @@
 
 @end
 
+
+/**
+ 拍摄速率调节界面 仿快手
+ */
 @interface WZMediaRateTypeView : UIView
 
 @property (nonatomic, weak) id<WZMediaRateTypeViewProtocol> delegate;
 
--(instancetype)init NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
 
 
 

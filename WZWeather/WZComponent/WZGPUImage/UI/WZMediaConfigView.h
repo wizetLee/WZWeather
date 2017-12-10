@@ -17,6 +17,10 @@
 
 @end
 
+
+/**
+ 拍摄 录制的设置配置界面
+ */
 @interface WZMediaConfigView : UIView
 
 @property (nonatomic,  weak) id<WZMediaConfigViewProtocol> delegate;
