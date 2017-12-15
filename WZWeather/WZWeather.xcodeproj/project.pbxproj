@@ -38,6 +38,10 @@
 		840A439F1FB18A6200F6D449 /* tickta.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840A439E1FB18A6100F6D449 /* tickta.wav */; };
 		840A43A21FB18AFC00F6D449 /* WZCameraAssist.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A43A11FB18AFC00F6D449 /* WZCameraAssist.m */; };
 		840A43A51FB1981400F6D449 /* WZMediaGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A43A41FB1981400F6D449 /* WZMediaGestureView.m */; };
+		840E3E9D1FE3BF8F00A5D559 /* WZAudioCodecController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */; };
+		840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */; };
+		840E3EA21FE3BFA300A5D559 /* WZVideoCodecController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */; };
+		840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */; };
 		84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */; };
 		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
@@ -452,6 +456,12 @@
 		840A43A11FB18AFC00F6D449 /* WZCameraAssist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZCameraAssist.m; sourceTree = "<group>"; };
 		840A43A31FB1981400F6D449 /* WZMediaGestureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaGestureView.h; sourceTree = "<group>"; };
 		840A43A41FB1981400F6D449 /* WZMediaGestureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaGestureView.m; sourceTree = "<group>"; };
+		840E3E9A1FE3BF8F00A5D559 /* WZAudioCodecController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAudioCodecController.h; sourceTree = "<group>"; };
+		840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAudioCodecController.m; sourceTree = "<group>"; };
+		840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZAudioCodecController.xib; sourceTree = "<group>"; };
+		840E3E9F1FE3BFA300A5D559 /* WZVideoCodecController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoCodecController.h; sourceTree = "<group>"; };
+		840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoCodecController.m; sourceTree = "<group>"; };
+		840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZVideoCodecController.xib; sourceTree = "<group>"; };
 		84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDisplayLinkSuperviser.h; sourceTree = "<group>"; };
 		84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDisplayLinkSuperviser.m; sourceTree = "<group>"; };
 		8444C8AB1EA0594600DD6259 /* sViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sViewController.h; sourceTree = "<group>"; };
@@ -1230,6 +1240,19 @@
 				840A43991FB141B100F6D449 /* WZGleaminglyAlert.m */,
 			);
 			path = WZAlert;
+			sourceTree = "<group>";
+		};
+		840E3E991FE3BF2600A5D559 /* WZHardwareCodec */ = {
+			isa = PBXGroup;
+			children = (
+				840E3E9A1FE3BF8F00A5D559 /* WZAudioCodecController.h */,
+				840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */,
+				840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */,
+				840E3E9F1FE3BFA300A5D559 /* WZVideoCodecController.h */,
+				840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */,
+				840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */,
+			);
+			path = WZHardwareCodec;
 			sourceTree = "<group>";
 		};
 		8440FE641EC2A454002A893E /* WZNetwork */ = {
@@ -2362,6 +2385,7 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
 			isa = PBXGroup;
 			children = (
+				840E3E991FE3BF2600A5D559 /* WZHardwareCodec */,
 				845664641FC82E8C0004BAC1 /* WZAPLSimpleEditor.h */,
 				845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */,
 				84ECD3121FCBA7E400282C9A /* Resources */,
@@ -2961,6 +2985,7 @@
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
+				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
@@ -2981,6 +3006,7 @@
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
+				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
@@ -3092,6 +3118,7 @@
 				84514D301E9DCE7A00F07EF8 /* UIButton+JKTouchAreaInsets.m in Sources */,
 				84514D251E9DCE7A00F07EF8 /* UIBezierPath+JKSVGString.m in Sources */,
 				846A31361FD16337003CECAE /* WZMediaAssetBaseCell.m in Sources */,
+				840E3EA21FE3BFA300A5D559 /* WZVideoCodecController.m in Sources */,
 				84514CD21E9DCE7A00F07EF8 /* NSDate+JKInternetDateTime.m in Sources */,
 				8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */,
 				846A31371FD16337003CECAE /* WZPhotoCatalogueController.m in Sources */,
@@ -3345,6 +3372,7 @@
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
 				848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */,
 				84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */,
+				840E3E9D1FE3BF8F00A5D559 /* WZAudioCodecController.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
 				848633311F95CCD20086C96E /* WZMediaController.m in Sources */,
 				84514D011E9DCE7A00F07EF8 /* NSString+JKPinyin.m in Sources */,

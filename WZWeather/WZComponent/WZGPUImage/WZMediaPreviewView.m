@@ -372,7 +372,7 @@ static int stride = 0;
     if (_mediaType == WZMediaTypeVideo) {
         _cameraVideo = [[GPUImageVideoCamera alloc] initWithSessionPreset:preset cameraPosition:position];
         _cameraCurrent = _cameraVideo;
-#warning 如果临时加上音频输出的化 会出现闪烁（因为要lock） 所以加在初始化这里
+#warning 如果临时加上音频输出的化 会出现闪烁（因为要更改lock） 所以加在初始化这里
         [_cameraVideo addAudioInputsAndOutputs];///
         
 //        AVCaptureVideoStabilizationMode stabilizationMode = AVCaptureVideoStabilizationModeCinematic;
@@ -382,13 +382,11 @@ static int stride = 0;
 //            [videoOutput setPreferredVideoStabilizationMode:stabilizationMode];
 //        }
         
-        
     } else {
  
         _cameraStillImage = [[GPUImageStillCamera alloc] initWithSessionPreset:preset cameraPosition:position];
         _cameraCurrent = _cameraStillImage;
     }
-    
     
     //视频 HDR (高动态范围图像)
     if ([_cameraCurrent.inputCamera lockForConfiguration:nil]) {
@@ -407,7 +405,6 @@ static int stride = 0;
  
     //焦点 曝光
     [self.cameraCurrent autoFocusAndExposureAtPoint:CGPointMake(0.5, 0.5)];//居中
-    
     
     [_cameraCurrent addCMMotionToMobile];
     _cameraCurrent.outputImageOrientation = UIInterfaceOrientationPortrait;//拍照方向

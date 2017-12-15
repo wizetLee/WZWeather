@@ -20,6 +20,8 @@
 #import "WZAVPlayerViewController.h"
 #import "WZPhotoCatalogueController.h"
 #import "WZVideoPickerController.h"
+#import "WZAudioCodecController.h"
+#import "WZVideoCodecController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -173,7 +175,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath; {
@@ -185,16 +187,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section; {
       return 0.01;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(7_0); {
-//      return 0.01;
-//}
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0); {
-//      return 0.01;
-//}
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section NS_AVAILABLE_IOS(7_0) {
-//      return 0.01;
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
@@ -218,7 +210,13 @@
         case 4: {
             cell.textLabel.text = [NSString stringWithFormat:@"本地视频"];
         } break;
-            
+        case 5: {
+            cell.textLabel.text = [NSString stringWithFormat:@"音频硬编解码"];
+        } break;
+        case 6: {
+            cell.textLabel.text = [NSString stringWithFormat:@"视频硬编解码"];
+        } break;
+
         default:
             break;
     }
@@ -270,6 +268,14 @@
         } break;
         case 4: {
            [WZVideoPickerController showPickerWithPresentedController:self];
+        } break;
+        case 5: {
+            UIViewController *VC = [[WZAudioCodecController alloc] initWithNibName:@"WZAudioCodecController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
+        } break;
+        case 6: {
+           UIViewController *VC = [[WZVideoCodecController alloc] initWithNibName:@"WZVideoCodecController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
         } break;
             
         default:
