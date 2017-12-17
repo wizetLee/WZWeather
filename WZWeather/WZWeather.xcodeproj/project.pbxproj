@@ -16,6 +16,7 @@
 		402898111FAD6FA000F36DA3 /* WZMediaOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */; };
 		402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */; };
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
+		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
@@ -418,6 +419,8 @@
 		402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaPreviewView.m; sourceTree = "<group>"; };
 		402AB1901F0732EE00136DB4 /* WZScrollOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZScrollOptions.h; sourceTree = "<group>"; };
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
+		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
+		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageEnlargedFilter.h; sourceTree = "<group>"; };
@@ -1245,6 +1248,8 @@
 		840E3E991FE3BF2600A5D559 /* WZHardwareCodec */ = {
 			isa = PBXGroup;
 			children = (
+				404735A11FE5FAC50089A5F2 /* WZH264Codec.h */,
+				404735A21FE5FAC50089A5F2 /* WZH264Codec.m */,
 				840E3E9A1FE3BF8F00A5D559 /* WZAudioCodecController.h */,
 				840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */,
 				840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */,
@@ -3116,6 +3121,7 @@
 				84514D4C1E9DCE7A00F07EF8 /* UIImage+JKSuperCompress.m in Sources */,
 				40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */,
 				84514D301E9DCE7A00F07EF8 /* UIButton+JKTouchAreaInsets.m in Sources */,
+				404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */,
 				84514D251E9DCE7A00F07EF8 /* UIBezierPath+JKSVGString.m in Sources */,
 				846A31361FD16337003CECAE /* WZMediaAssetBaseCell.m in Sources */,
 				840E3EA21FE3BFA300A5D559 /* WZVideoCodecController.m in Sources */,
