@@ -83,7 +83,7 @@
     UIButton *button                = [[UIButton alloc] init];
     button.frame                    = CGRectMake(0.0, 300, 100, 50);
     button.layer.backgroundColor    = [UIColor orangeColor].CGColor;
-    button.wz_cornerRadius             = button.frame.size.height / 2.0;
+    button.wz_cornerRadius          = button.frame.size.height / 2.0;
     button.layer.shadowColor        = [UIColor blackColor].CGColor;
     button.layer.shadowOffset       = CGSizeMake(5, 5);
     button.layer.shadowOpacity      = 1;
@@ -146,7 +146,6 @@
             CGFloat height = screenH - bottom - top;
            _table = table;
            self.table.frame = CGRectMake(0.0, top, screenW, height);
-     
     }
 }
 

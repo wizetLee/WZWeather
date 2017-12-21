@@ -92,8 +92,6 @@
     //指定已编码的比特流的概要和级别。
     VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_ProfileLevel, kVTProfileLevel_H264_Main_AutoLevel);
     
-    
-    
 }
 
 

@@ -17,6 +17,7 @@ static WZUserInfo *userInfo = nil;
     dispatch_once(&onceToken, ^{
         userInfo =  [[WZUserInfo alloc] init];
     });
+    
     return userInfo;
 }
 
