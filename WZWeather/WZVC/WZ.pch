@@ -87,7 +87,7 @@
 ////安全域顶部
 
 
-//默认不隐藏导航栏和状态栏
+//    //默认不隐藏导航栏和状态栏
 #define MACRO_VC_FLOAT_SAFEAREA_TOP ((!(MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK < 0)) ? MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK : [UIApplication sharedApplication].statusBarFrame.size.height + (MACRO_VC_CHECK_NAVIGATION?self.navigationController.navigationBar.frame.size.height:0.0))
 //    //加上是否隐藏导航栏的条件
 //#define MACRO_VC_FLOAT_SAFEAREA_TOP_HIDE_NAV(boolean) ((!(MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK < 0)) ? MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK : [UIApplication sharedApplication].statusBarFrame.size.height + ((MACRO_VC_CHECK_NAVIGATION && !boolean)?self.navigationController.navigationBar.frame.size.height:0.0))

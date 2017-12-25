@@ -22,7 +22,6 @@
 #import "WZVideoPickerController.h"
 #import "WZAudioCodecController.h"
 #import "WZVideoCodecController.h"
-#import "WZPCMPlayerController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -202,20 +201,20 @@
             cell.textLabel.text = [NSString stringWithFormat:@"视频合成测试"];
         } break;
         case 2: {
-            cell.textLabel.text = [NSString stringWithFormat:@"播放、以及水印制作测试"];
+            cell.textLabel.text = [NSString stringWithFormat:@"播放、以及水印测试"];
         } break;
         case 3: {
-            cell.textLabel.text = [NSString stringWithFormat:@"本地图片选取"];
+            cell.textLabel.text = [NSString stringWithFormat:@"本地图片"];
         } break;
         case 4: {
-            cell.textLabel.text = [NSString stringWithFormat:@"本地视频选取、合并、删除"];
+            cell.textLabel.text = [NSString stringWithFormat:@"本地视频"];
         } break;
         case 5: {
-            cell.textLabel.text = [NSString stringWithFormat:@"播放PCM文件"];
+            cell.textLabel.text = [NSString stringWithFormat:@"音频硬编解码"];
         } break;
-//        case 6: {
-//            cell.textLabel.text = [NSString stringWithFormat:@""];
-//        } break;
+        case 6: {
+            cell.textLabel.text = [NSString stringWithFormat:@"视频硬编解码"];
+        } break;
 
         default:
             break;
@@ -270,14 +269,13 @@
            [WZVideoPickerController showPickerWithPresentedController:self];
         } break;
         case 5: {
-            WZPCMPlayerController *VC = [[WZPCMPlayerController alloc] init];
-//            UIViewController *VC = [[WZAudioCodecController alloc] initWithNibName:@"WZAudioCodecController" bundle:NSBundle.mainBundle];
+            UIViewController *VC = [[WZAudioCodecController alloc] initWithNibName:@"WZAudioCodecController" bundle:NSBundle.mainBundle];
             [self.navigationController pushViewController:VC animated:true];
         } break;
-//        case 6: {
-//           UIViewController *VC = [[WZVideoCodecController alloc] initWithNibName:@"WZVideoCodecController" bundle:NSBundle.mainBundle];
-//            [self.navigationController pushViewController:VC animated:true];
-//        } break;
+        case 6: {
+           UIViewController *VC = [[WZVideoCodecController alloc] initWithNibName:@"WZVideoCodecController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
+        } break;
             
         default:
             break;
