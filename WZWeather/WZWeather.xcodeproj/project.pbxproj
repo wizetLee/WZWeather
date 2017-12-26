@@ -339,6 +339,8 @@
 		846D16031FBBC03000E78FFF /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */; };
 		846D16081FBC0C5E00E78FFF /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D16071FBC0C5D00E78FFF /* face.png */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
+		84714F931FF20B1700A02DAC /* WZIOPassThroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */; };
+		84714F941FF20B1700A02DAC /* WZIOPassThroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */; };
 		848633311F95CCD20086C96E /* WZMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633301F95CCD20086C96E /* WZMediaController.m */; };
 		848633471F95EBA60086C96E /* WZAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633461F95EBA60086C96E /* WZAppManager.m */; };
 		848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 848979861ECC3A97008B07D2 /* WZDownloadTarget.m */; };
@@ -1049,6 +1051,9 @@
 		846D16071FBC0C5D00E78FFF /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
+		84714F901FF20B1700A02DAC /* WZIOPassThroughViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZIOPassThroughViewController.h; sourceTree = "<group>"; };
+		84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZIOPassThroughViewController.m; sourceTree = "<group>"; };
+		84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZIOPassThroughViewController.xib; sourceTree = "<group>"; };
 		8483E7BB1FC2658500C559EF /* WZSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZSearchBar.h; sourceTree = "<group>"; };
 		8483E7BC1FC2658500C559EF /* WZSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZSearchBar.m; sourceTree = "<group>"; };
 		8483E7BE1FC2658C00C559EF /* WZTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTextView.h; sourceTree = "<group>"; };
@@ -1203,6 +1208,9 @@
 				406331FB1FEFEFE4009B262B /* PCMPlayer.m */,
 				406332041FEFF4DF009B262B /* WZPCMPlayerController.h */,
 				406332051FEFF4DF009B262B /* WZPCMPlayerController.m */,
+				84714F901FF20B1700A02DAC /* WZIOPassThroughViewController.h */,
+				84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */,
+				84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */,
 			);
 			path = "AuidoUnit播放PCM";
 			sourceTree = "<group>";
@@ -3024,6 +3032,7 @@
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
+				84714F941FF20B1700A02DAC /* WZIOPassThroughViewController.xib in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
 				846A31001FD0E686003CECAE /* asset_selectedOrigion_selected@3x.png in Resources */,
@@ -3173,6 +3182,7 @@
 				84514D831E9DCE7A00F07EF8 /* UIViewController+JKRecursiveDescription.m in Sources */,
 				84514CC11E9DCE7A00F07EF8 /* NSManagedObjectContext+JKFetchRequestsConstructors.m in Sources */,
 				846A310B1FD1509F003CECAE /* WZVideoPickerController.m in Sources */,
+				84714F931FF20B1700A02DAC /* WZIOPassThroughViewController.m in Sources */,
 				84514D7E1E9DCE7A00F07EF8 /* UIView+JKToast.m in Sources */,
 				84514D461E9DCE7A00F07EF8 /* UIImage+JKGIF.m in Sources */,
 				84514D151E9DCE7A00F07EF8 /* MKMapView+JKMoveLogo.m in Sources */,

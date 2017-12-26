@@ -9,8 +9,8 @@
 #import "PCMPlayer.h"
 
 const uint32_t CONST_BUFFER_SIZE = 0x10000;
-#define INPUT_BUS 1
-#define OUTPUT_BUS 0
+#define kInputBus 1
+#define kOutputBus 0
 
 @interface PCMPlayer(){
     AudioUnit audioUnit;
@@ -22,20 +22,22 @@ const uint32_t CONST_BUFFER_SIZE = 0x10000;
 
 @implementation PCMPlayer
 
-void logAudioStreamBasicDescription(AudioStreamBasicDescription ASBD) {
-    char formatID[5];
-    UInt32 mFormatID = CFSwapInt32HostToBig(ASBD.mFormatID);
-    bcopy (&mFormatID, formatID, 4);
-    formatID[4] = '\0';
-    printf("Sample Rate:         %10.0f\n",  ASBD.mSampleRate);
-    printf("Format ID:           %10s\n",    formatID);
-    printf("Format Flags:        %10X\n",    (unsigned int)ASBD.mFormatFlags);
-    printf("Bytes per Packet:    %10d\n",    (unsigned int)ASBD.mBytesPerPacket);
-    printf("Frames per Packet:   %10d\n",    (unsigned int)ASBD.mFramesPerPacket);
-    printf("Bytes per Frame:     %10d\n",    (unsigned int)ASBD.mBytesPerFrame);
-    printf("Channels per Frame:  %10d\n",    (unsigned int)ASBD.mChannelsPerFrame);
-    printf("Bits per Channel:    %10d\n",    (unsigned int)ASBD.mBitsPerChannel);
-    printf("\n");
+//官方loghttps://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioUnitHostingGuide_iOS/ConstructingAudioUnitApps/ConstructingAudioUnitApps.html#//apple_ref/doc/uid/TP40009492-CH16-SW1
+- (void)printASBD: (AudioStreamBasicDescription) asbd {
+    
+    char formatIDString[5];
+    UInt32 formatID = CFSwapInt32HostToBig (asbd.mFormatID);
+    bcopy (&formatID, formatIDString, 4);
+    formatIDString[4] = '\0';
+    
+    NSLog (@"  Sample Rate:         %10.0f",  asbd.mSampleRate);
+    NSLog (@"  Format ID:           %10s",    formatIDString);
+    NSLog (@"  Format Flags:        %10X",    asbd.mFormatFlags);
+    NSLog (@"  Bytes per Packet:    %10d",    asbd.mBytesPerPacket);
+    NSLog (@"  Frames per Packet:   %10d",    asbd.mFramesPerPacket);
+    NSLog (@"  Bytes per Frame:     %10d",    asbd.mBytesPerFrame);
+    NSLog (@"  Channels per Frame:  %10d",    asbd.mChannelsPerFrame);
+    NSLog (@"  Bits per Channel:    %10d",    asbd.mBitsPerChannel);
 }
 
 - (void)play {
@@ -46,14 +48,14 @@ void logAudioStreamBasicDescription(AudioStreamBasicDescription ASBD) {
         NSAssert(false, @"文件缺失");
     }
     
-    //开启流
+    //开启输入流
     [inputSteam open];
 
     //状态
     NSError *error = nil;
     OSStatus status = noErr;
     
-    //配置为播放模式
+    //配置session
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
    
@@ -73,7 +75,7 @@ void logAudioStreamBasicDescription(AudioStreamBasicDescription ASBD) {
     AudioComponentInstanceNew(inputComponent, &audioUnit);//创建
 
     
-//    {//使用AUGraph 替代 AUAudioUnit   官方代码
+//    {//使用AUGraph 替代 AUAudioUnit   官方代码  每一个Audio Processing Graph 有一个确定的 I/O Unit
 //        // Declare and instantiate an audio processing graph
 //        //
 //        AUGraph processingGraph;
@@ -92,7 +94,7 @@ void logAudioStreamBasicDescription(AudioStreamBasicDescription ASBD) {
 //        AUGraphOpen (processingGraph); // indirectly performs audio unit instantiation
 //
 //        // Obtain a reference to the newly-instantiated I/O unit
-//        //得到一个I/O unit 的引用
+//        //得到一个I/O unit的引用
 //        AudioUnit ioUnit;
 //        AUGraphNodeInfo (
 //                         processingGraph,
@@ -113,70 +115,72 @@ void logAudioStreamBasicDescription(AudioStreamBasicDescription ASBD) {
     buffList->mBuffers[0].mDataByteSize = CONST_BUFFER_SIZE;
     buffList->mBuffers[0].mData = malloc(CONST_BUFFER_SIZE);
     
-    
    
     UInt32 flag = 1;
     if (flag) {
         ///给Audio Unit配置属性kAudioOutputUnitProperty_EnableIO
-        status = AudioUnitSetProperty(audioUnit
-                                      , kAudioOutputUnitProperty_EnableIO
-                                      , kAudioUnitScope_Output
-                                      , OUTPUT_BUS
-                                      , &flag
-                                      , sizeof(flag));
+        status = AudioUnitSetProperty(audioUnit,
+                                      kAudioOutputUnitProperty_EnableIO,
+                                      kAudioUnitScope_Output,
+                                      kOutputBus,
+                                      &flag,
+                                      sizeof(flag));
     }
     if (status) {
         NSLog(@"AudioUnitSetProperty error with status:%d", status);
     }
     
-    //格式配置
-    AudioStreamBasicDescription outputFormat;
-    memset(&outputFormat, 0, sizeof(outputFormat));
-    outputFormat.mSampleRate       = 44100;
-    outputFormat.mFormatID         = kAudioFormatLinearPCM;
-    outputFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger;
-    outputFormat.mFramesPerPacket  = 1;
-    outputFormat.mChannelsPerFrame = 1;
+    //音频流格式
+    //格式配置 这个结构总是在app内或者app与硬件之间修改
+    AudioStreamBasicDescription outputFormat = {0};
+//    memset(&outputFormat, 0, sizeof(outputFormat));
+    
+    outputFormat.mFormatID         = kAudioFormatLinearPCM;//audio unit 使用非压缩数据
+    outputFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger;//表示PCM值样本值的布局细节
+    outputFormat.mFramesPerPacket  = 1;//
     outputFormat.mBytesPerFrame    = 2;
     outputFormat.mBytesPerPacket   = 2;
     outputFormat.mBitsPerChannel   = 16;
     
+    outputFormat.mChannelsPerFrame = 1;//1为单声道 2位立体声道
+    outputFormat.mSampleRate       = 44100;//采样率：确保与inoput的采样率相匹配 不然会造成声音快进或者延迟的效果 可修改
+    
     //信息打印
-    logAudioStreamBasicDescription(outputFormat);
+   [self printASBD:outputFormat];
     
      ///给Audio Unit配置属性 kAudioUnitProperty_StreamFormat
-    status = AudioUnitSetProperty(audioUnit
-                                  ,  kAudioUnitProperty_StreamFormat
-                                  ,  kAudioUnitScope_Input
-                                  ,  OUTPUT_BUS
-                                  ,  &outputFormat
-                                  , sizeof(outputFormat));
+    status = AudioUnitSetProperty(audioUnit,
+                                  kAudioUnitProperty_StreamFormat,
+                                  kAudioUnitScope_Input,
+                                  kOutputBus,
+                                  &outputFormat,
+                                  sizeof(outputFormat));
     if (status) {
         NSLog(@"AudioUnitSetProperty eror with status:%d", status);
     }
     
     //回调处理
     AURenderCallbackStruct playCallback;
-    playCallback.inputProc = PlayCallback;//互调过程
+    playCallback.inputProc = PlayCallback;//回调过程
     playCallback.inputProcRefCon = (__bridge void *)self;
     ///Audio Unit设置回调属性
-    AudioUnitSetProperty(audioUnit
-                         , kAudioUnitProperty_SetRenderCallback
-                         , kAudioUnitScope_Input
-                         , OUTPUT_BUS
-                         , &playCallback
-                         , sizeof(playCallback));
+    AudioUnitSetProperty(audioUnit,
+                         kAudioUnitProperty_SetRenderCallback,
+                         kAudioUnitScope_Input,
+                         kOutputBus ,
+                         &playCallback,
+                         sizeof(playCallback));
     
     OSStatus result = AudioUnitInitialize(audioUnit);
     NSLog(@"result %d", result);
     
-    
-    //开始输出
+    //开始消息传递给I / O单元  开始请求执行pull
     AudioOutputUnitStart(audioUnit);
 }
 
 //停止
 - (void)stop {
+    //停止消息传递给I / O单元
     AudioOutputUnitStop(audioUnit);
     if (buffList != NULL) {
         if (buffList->mBuffers[0].mData) {
@@ -196,15 +200,17 @@ void logAudioStreamBasicDescription(AudioStreamBasicDescription ASBD) {
 }
 
 ///解析出后调用的回调
-static OSStatus PlayCallback(void *inRefCon
-                             , AudioUnitRenderActionFlags *ioActionFlags
-                             , const AudioTimeStamp *inTimeStamp
-                             , UInt32 inBusNumber
-                             , UInt32 inNumberFrames
-                             , AudioBufferList *ioData) {
+static OSStatus PlayCallback(void *inRefCon                                 //负责执行render的上下文
+                             , AudioUnitRenderActionFlags *ioActionFlags    //提供一个表示unit没有需要处理的音频的标志（注意：静默处理）
+                             , const AudioTimeStamp *inTimeStamp            //表示执行回调的时间
+                             , UInt32 inBusNumber                           //表示哪一个audio unit bus执行的回调，可根据这个值与对应的audio unit做出相关联的处理
+                             , UInt32 inNumberFrames                        //当前回调的slice中的音频样本帧的数目。
+                             , AudioBufferList *ioData) {                   //缓冲区的指针。回调时，需要被填充（如果是调整为静默模式，可将缓冲区设置为0，使用memset函数）
     PCMPlayer *player = (__bridge PCMPlayer *)inRefCon;//强转
     
-    ioData->mBuffers[0].mDataByteSize = (UInt32)[player->inputSteam read:ioData->mBuffers[0].mData maxLength:(NSInteger)ioData->mBuffers[0].mDataByteSize];;
+    //pull工作
+    ioData->mBuffers[0].mDataByteSize = (UInt32)[player->inputSteam read:ioData->mBuffers[0].mData maxLength:(NSInteger)ioData->mBuffers[0].mDataByteSize];
+    
     NSLog(@"out size: %d", ioData->mBuffers[0].mDataByteSize);
     
     if (ioData->mBuffers[0].mDataByteSize <= 0) {
@@ -214,6 +220,19 @@ static OSStatus PlayCallback(void *inRefCon
     }
     return noErr;
 }
+
+//暂停输出
+- (void)pause {
+    //检查状态
+    
+}
+
+//恢复输出
+- (void)resume {
+    //检查状态
+    
+}
+
 
 //buffer 处理
 - (void)dealloc {

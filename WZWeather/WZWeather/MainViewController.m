@@ -23,6 +23,7 @@
 #import "WZAudioCodecController.h"
 #import "WZVideoCodecController.h"
 #import "WZPCMPlayerController.h"
+#import "WZIOPassThroughViewController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -213,9 +214,9 @@
         case 5: {
             cell.textLabel.text = [NSString stringWithFormat:@"播放PCM文件"];
         } break;
-//        case 6: {
-//            cell.textLabel.text = [NSString stringWithFormat:@""];
-//        } break;
+        case 6: {
+            cell.textLabel.text = [NSString stringWithFormat:@"IO直通"];
+        } break;
 
         default:
             break;
@@ -274,10 +275,10 @@
 //            UIViewController *VC = [[WZAudioCodecController alloc] initWithNibName:@"WZAudioCodecController" bundle:NSBundle.mainBundle];
             [self.navigationController pushViewController:VC animated:true];
         } break;
-//        case 6: {
-//           UIViewController *VC = [[WZVideoCodecController alloc] initWithNibName:@"WZVideoCodecController" bundle:NSBundle.mainBundle];
-//            [self.navigationController pushViewController:VC animated:true];
-//        } break;
+        case 6: {
+           UIViewController *VC = [[WZIOPassThroughViewController alloc] initWithNibName:@"WZIOPassThroughViewController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
+        } break;
             
         default:
             break;

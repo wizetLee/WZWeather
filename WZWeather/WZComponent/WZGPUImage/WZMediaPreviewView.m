@@ -415,14 +415,14 @@ static int stride = 0;
     //内建滤镜
     if (!_cropFilter) {
         _cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0, 0.0, 1.0, 1.0)];
-        CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-        CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
-        CGFloat targetH = screenW / 9.0 * 16.0;//9 ： 16
-        CGFloat rateH = targetH / screenH;
-        if (rateH > 1) {
-            rateH = 1;
-        }
-        _cropFilter.cropRegion = CGRectMake(0.0, 0.0, 1.0, rateH);//0~1 自动居中 Q:如何设置1：1  3：4 等图片的尺寸
+//        CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+//        CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+//        CGFloat targetH = screenW / 9.0 * 16.0;//9 ： 16
+//        CGFloat rateH = targetH / screenH;
+//        if (rateH > 1) {
+//            rateH = 1;
+//        }
+        _cropFilter.cropRegion = CGRectMake(0.0, 0.0, 1.0, 1.0);//0~1 自动居中 Q:如何设置1：1  3：4 等图片的尺寸
     }
     
     

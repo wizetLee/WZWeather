@@ -180,6 +180,21 @@
     [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
         if (image) {
             NSLog(@"%@", NSStringFromCGSize(image.size));
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImageView *tmpImageView = [[UIImageView alloc] initWithImage:image];
+                CGFloat hw = [UIScreen mainScreen].bounds.size.width * 2.0 / 3;
+                tmpImageView.frame = CGRectMake(0.0, 0.0,  hw, hw);
+                tmpImageView.contentMode = UIViewContentModeScaleAspectFit;
+                tmpImageView.center = self.view.center;
+                [self.view addSubview:tmpImageView];
+                self.view.userInteractionEnabled = false;
+                [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+                    tmpImageView.alpha = 0.0;
+                } completion:^(BOOL finished) {
+                    [tmpImageView removeFromSuperview];
+                    self.view.userInteractionEnabled = true;
+                }];
+            });
         }
     }];
 }
@@ -208,20 +223,23 @@
         case WZMediaConfigType_canvas_1_multiply_1: {
             //                切换到选中效果
             CGFloat targetH = screenW / 1.0 * 1.0;//显示在屏幕的控件高度
-
-            CGFloat rateH = targetH / screenH;
-            rateH = (int)(rateH * 1000) / 1000.0;
+//            if ((((int)screenW) % 2) == 1) {
+//                targetH = targetH + 1.0;
+//            }
+            CGFloat rateH = targetH / (targetH / (9 / 16.0));
+//            rateH = (int)(rateH * 1000) / 1000.0;
             [_mediaPreviewView setCropValue:rateH];
         } break;
         case WZMediaConfigType_canvas_3_multiply_4: {
             CGFloat targetH = screenW / 3.0 * 4.0;//3 ： 4
-            CGFloat rateH = targetH / screenH;
-            rateH = (int)(rateH * 100) / 100.0;
+            
+            CGFloat rateH = targetH / (screenW / (9 / 16.0));
+//            rateH = (int)(rateH * 100) / 100.0;
             [_mediaPreviewView setCropValue:rateH];
             
         } break;
         case WZMediaConfigType_canvas_9_multiply_16: {
-            [_mediaPreviewView setCropValue:1];
+            [_mediaPreviewView setCropValue:1.0];
         } break;
         case WZMediaConfigType_flash_auto: {
             [_mediaPreviewView setFlashType:GPUImageCameraFlashType_auto];
