@@ -302,6 +302,10 @@
 		846227641FD6ACCE00D37FAE /* WZSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227631FD6ACCE00D37FAE /* WZSlider.m */; };
 		846227671FD6ACE900D37FAE /* WZVideoSurfSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */; };
 		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
+		8465865C1FF31B1A005ED230 /* WZIORenderCallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465865A1FF31B1A005ED230 /* WZIORenderCallController.m */; };
+		8465865D1FF31B1A005ED230 /* WZIORenderCallController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8465865B1FF31B1A005ED230 /* WZIORenderCallController.xib */; };
+		846586611FF3759F005ED230 /* WZIORecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465865F1FF3759F005ED230 /* WZIORecordController.m */; };
+		846586621FF3759F005ED230 /* WZIORecordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846586601FF3759F005ED230 /* WZIORecordController.xib */; };
 		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
@@ -986,6 +990,12 @@
 		846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoSurfSlider.m; sourceTree = "<group>"; };
 		84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAnimatedTransitionsBase.h; sourceTree = "<group>"; };
 		84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAnimatedTransitionsBase.m; sourceTree = "<group>"; };
+		846586591FF31B1A005ED230 /* WZIORenderCallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZIORenderCallController.h; sourceTree = "<group>"; };
+		8465865A1FF31B1A005ED230 /* WZIORenderCallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZIORenderCallController.m; sourceTree = "<group>"; };
+		8465865B1FF31B1A005ED230 /* WZIORenderCallController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZIORenderCallController.xib; sourceTree = "<group>"; };
+		8465865E1FF3759F005ED230 /* WZIORecordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZIORecordController.h; sourceTree = "<group>"; };
+		8465865F1FF3759F005ED230 /* WZIORecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZIORecordController.m; sourceTree = "<group>"; };
+		846586601FF3759F005ED230 /* WZIORecordController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZIORecordController.xib; sourceTree = "<group>"; };
 		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
 		846904DF1EFD284F007AD117 /* WZLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZLoopView.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1211,6 +1221,12 @@
 				84714F901FF20B1700A02DAC /* WZIOPassThroughViewController.h */,
 				84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */,
 				84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */,
+				846586591FF31B1A005ED230 /* WZIORenderCallController.h */,
+				8465865A1FF31B1A005ED230 /* WZIORenderCallController.m */,
+				8465865B1FF31B1A005ED230 /* WZIORenderCallController.xib */,
+				8465865E1FF3759F005ED230 /* WZIORecordController.h */,
+				8465865F1FF3759F005ED230 /* WZIORecordController.m */,
+				846586601FF3759F005ED230 /* WZIORecordController.xib */,
 			);
 			path = "AuidoUnit播放PCM";
 			sourceTree = "<group>";
@@ -3027,6 +3043,7 @@
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
+				846586621FF3759F005ED230 /* WZIORecordController.xib in Resources */,
 				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
@@ -3041,6 +3058,7 @@
 				406332081FEFF776009B262B /* abc.pcm in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
 				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
+				8465865D1FF31B1A005ED230 /* WZIORenderCallController.xib in Resources */,
 				8462274D1FD62A0200D37FAE /* wallpaper2.jpeg in Resources */,
 				846D16081FBC0C5E00E78FFF /* face.png in Resources */,
 				84ECD3281FCBA7E400282C9A /* 03_nebula.mp4 in Resources */,
@@ -3355,6 +3373,7 @@
 				84514D331E9DCE7A00F07EF8 /* UIColor+JKModify.m in Sources */,
 				84514D751E9DCE7A00F07EF8 /* UIView+JKConstraints.m in Sources */,
 				84514CCA1E9DCE7A00F07EF8 /* NSData+JKEncrypt.m in Sources */,
+				846586611FF3759F005ED230 /* WZIORecordController.m in Sources */,
 				84514CFB1E9DCE7A00F07EF8 /* NSString+JKEncrypt.m in Sources */,
 				84514CF51E9DCE7A00F07EF8 /* NSRunLoop+JKPerformBlock.m in Sources */,
 				8456645B1FC811870004BAC1 /* UIWindow+WZMinistrant.m in Sources */,
@@ -3423,6 +3442,7 @@
 				840E3E9D1FE3BF8F00A5D559 /* WZAudioCodecController.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
 				848633311F95CCD20086C96E /* WZMediaController.m in Sources */,
+				8465865C1FF31B1A005ED230 /* WZIORenderCallController.m in Sources */,
 				84514D011E9DCE7A00F07EF8 /* NSString+JKPinyin.m in Sources */,
 				8402EB271ECD64A40030CCE1 /* WZVariousBaseObject.m in Sources */,
 				844A0C651F7E3961001DF1CA /* WZSystemDetails.m in Sources */,

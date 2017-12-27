@@ -62,7 +62,6 @@
     //The result of the AudioComponentFindNext function is a reference to the dynamically-linkable library that defines the audio unit
     ioComponent = AudioComponentFindNext(NULL, &ioUnitDescription);
     
-    
     //初始化 ioComponment
     OSStatus res = AudioComponentInstanceNew(ioComponent, &audioUnit);
     if (noErr != res) {
@@ -82,13 +81,15 @@
     /*
      This structure contains the information needed to make a connection between a source
      and destination audio unit.
+     配置在input element上
+     传播audio stream format
      */
     AudioUnitConnection connection;
-    connection.destInputNumber = 0;
-    connection.sourceAudioUnit = audioUnit;
-    connection.sourceOutputNumber = 1;
+    connection.sourceAudioUnit = audioUnit; //连接源
+    connection.destInputNumber = 0;         //目标音频单元的输入元素，用于连接
+    connection.sourceOutputNumber = 1;      //源音频单元的输出元素，用于连接
     err = AudioUnitSetProperty(audioUnit,
-                               kAudioUnitProperty_MakeConnection,
+                               kAudioUnitProperty_MakeConnection,//sets the kAudioUnitProperty_MakeConnection property in the input scope of the destination audio unit.
                                kAudioUnitScope_Input,
                                0,
                                &connection,
@@ -100,23 +101,7 @@
 }
 
 - (void)configProperty {
-    {
-        //查看信息
-//        UInt32 size = 0;
-//        memset(&audioStreamFormat, 0, sizeof(audioStreamFormat));
-//        OSStatus err = AudioUnitGetProperty(audioUnit,
-//                                            kAudioUnitProperty_StreamFormat,
-//                                            kAudioUnitScope_Output,
-//                                            kInputBus,
-//                                            &audioStreamFormat,
-//                                            &size);
-//        if (noErr != err) {
-//            [self showErrorStatus:err];
-//        }
-//        [self printASBD:audioStreamFormat];
-    }
-    
-    
+
     {//配置input scope
         UInt32 flag = 1;
         OSStatus err = AudioUnitSetProperty(audioUnit,
@@ -145,32 +130,35 @@
 //    }
 //
     
-    {//配置音频流格式
-        audioStreamFormat.mSampleRate         = rate;
-        audioStreamFormat.mFormatID           = kAudioFormatLinearPCM;
-        audioStreamFormat.mFormatFlags        = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
-        audioStreamFormat.mFramesPerPacket    = 1;
-        audioStreamFormat.mChannelsPerFrame   = 1;
-        audioStreamFormat.mBitsPerChannel     = 16;
-        audioStreamFormat.mBytesPerPacket     = 2;
-        audioStreamFormat.mBytesPerFrame      = 2;
-
-        OSStatus err = AudioUnitSetProperty(audioUnit,
-                                            kAudioUnitProperty_StreamFormat,
-                                            kAudioUnitScope_Input,
-                                            kOutputBus,
-                                            &audioStreamFormat,
-                                            sizeof(audioStreamFormat));
-        
-        if (noErr != err) {
-            [self showErrorStatus:err];
-        }
-        [self printASBD:audioStreamFormat];
-    }
+//    {//配置音频流格式
+//
+//        audioStreamFormat.mSampleRate         = rate;//采样率
+//        audioStreamFormat.mFormatID           = kAudioFormatLinearPCM;//PCM采样
+//        audioStreamFormat.mFormatFlags        = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+//        audioStreamFormat.mFramesPerPacket    = 1;//每个数据包多少帧
+//        audioStreamFormat.mChannelsPerFrame   = 1;//1单声道，2立体声
+//        audioStreamFormat.mBitsPerChannel     = 16;//语音每采样点占用位数
+//        audioStreamFormat.mBytesPerFrame      = audioStreamFormat.mBitsPerChannel * audioStreamFormat.mChannelsPerFrame / 8;//每帧的bytes数
+//        audioStreamFormat.mBytesPerPacket     = audioStreamFormat.mBytesPerFrame * audioStreamFormat.mFramesPerPacket;//每个数据包的bytes总数，每帧的bytes数＊每个数据包的帧数
+//        audioStreamFormat.mReserved           = 0;
+//
+//
+//        OSStatus err = AudioUnitSetProperty(audioUnit,
+//                                            kAudioUnitProperty_StreamFormat,
+//                                            kAudioUnitScope_Input,
+//                                            kOutputBus,
+//                                            &audioStreamFormat,
+//                                            sizeof(audioStreamFormat));
+//
+//        if (noErr != err) {
+//            [self showErrorStatus:err];
+//        }
+////        [self printASBD:audioStreamFormat];
+//    }
+    
 }
 
-- (void)start
-{
+- (void)start {
     NSLog(@"started");
     OSStatus err = AudioOutputUnitStart(audioUnit);
     if (noErr != err) {
@@ -178,8 +166,7 @@
     }
 }
 
-- (void)stop
-{
+- (void)stop {
     NSLog(@"stopped");
     OSStatus err = AudioOutputUnitStop(audioUnit);
     if (noErr != err) {

@@ -22,7 +22,7 @@ const uint32_t CONST_BUFFER_SIZE = 0x10000;
 
 @implementation PCMPlayer
 
-//官方loghttps://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioUnitHostingGuide_iOS/ConstructingAudioUnitApps/ConstructingAudioUnitApps.html#//apple_ref/doc/uid/TP40009492-CH16-SW1
+//官方log https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioUnitHostingGuide_iOS/ConstructingAudioUnitApps/ConstructingAudioUnitApps.html#//apple_ref/doc/uid/TP40009492-CH16-SW1
 - (void)printASBD: (AudioStreamBasicDescription) asbd {
     
     char formatIDString[5];
@@ -132,29 +132,30 @@ const uint32_t CONST_BUFFER_SIZE = 0x10000;
     
     //音频流格式
     //格式配置 这个结构总是在app内或者app与硬件之间修改
-    AudioStreamBasicDescription outputFormat = {0};
+    AudioStreamBasicDescription audioStreamFormat = {0};
 //    memset(&outputFormat, 0, sizeof(outputFormat));
     
-    outputFormat.mFormatID         = kAudioFormatLinearPCM;//audio unit 使用非压缩数据
-    outputFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger;//表示PCM值样本值的布局细节
-    outputFormat.mFramesPerPacket  = 1;//
-    outputFormat.mBytesPerFrame    = 2;
-    outputFormat.mBytesPerPacket   = 2;
-    outputFormat.mBitsPerChannel   = 16;
+    audioStreamFormat.mSampleRate         = [AVAudioSession sharedInstance].sampleRate;//采样率
+    audioStreamFormat.mFormatID           = kAudioFormatLinearPCM;//PCM采样
+    audioStreamFormat.mFormatFlags        = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+    audioStreamFormat.mFramesPerPacket    = 1;//每个数据包多少帧
+    audioStreamFormat.mChannelsPerFrame   = 1;//1单声道，2立体声
+    audioStreamFormat.mBitsPerChannel     = 16;//语音每采样点占用位数
+    audioStreamFormat.mBytesPerFrame      = audioStreamFormat.mBitsPerChannel * audioStreamFormat.mChannelsPerFrame / 8;//每帧的bytes数
+    audioStreamFormat.mBytesPerPacket     = audioStreamFormat.mBytesPerFrame * audioStreamFormat.mFramesPerPacket;//每个数据包的bytes总数，每帧的bytes数＊每个数据包的帧数
+    audioStreamFormat.mReserved           = 0;
     
-    outputFormat.mChannelsPerFrame = 1;//1为单声道 2位立体声道
-    outputFormat.mSampleRate       = 44100;//采样率：确保与inoput的采样率相匹配 不然会造成声音快进或者延迟的效果 可修改
     
     //信息打印
-   [self printASBD:outputFormat];
+   [self printASBD:audioStreamFormat];
     
      ///给Audio Unit配置属性 kAudioUnitProperty_StreamFormat
     status = AudioUnitSetProperty(audioUnit,
                                   kAudioUnitProperty_StreamFormat,
                                   kAudioUnitScope_Input,
                                   kOutputBus,
-                                  &outputFormat,
-                                  sizeof(outputFormat));
+                                  &audioStreamFormat,
+                                  sizeof(audioStreamFormat));
     if (status) {
         NSLog(@"AudioUnitSetProperty eror with status:%d", status);
     }

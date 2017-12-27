@@ -24,6 +24,8 @@
 #import "WZVideoCodecController.h"
 #import "WZPCMPlayerController.h"
 #import "WZIOPassThroughViewController.h"
+#import "WZIORenderCallController.h"
+
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -217,6 +219,9 @@
         case 6: {
             cell.textLabel.text = [NSString stringWithFormat:@"IO直通"];
         } break;
+        case 7: {
+            cell.textLabel.text = [NSString stringWithFormat:@"IOwithRenderCall"];
+        } break;
 
         default:
             break;
@@ -277,6 +282,10 @@
         } break;
         case 6: {
            UIViewController *VC = [[WZIOPassThroughViewController alloc] initWithNibName:@"WZIOPassThroughViewController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
+        } break;
+        case 7: {
+            UIViewController *VC = [[WZIORenderCallController alloc] initWithNibName:@"WZIORenderCallController" bundle:NSBundle.mainBundle];
             [self.navigationController pushViewController:VC animated:true];
         } break;
             

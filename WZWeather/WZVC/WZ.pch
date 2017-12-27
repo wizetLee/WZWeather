@@ -131,7 +131,21 @@
 #define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
 
 
-
-
+//来源http://blog.csdn.net/xiejx618/article/details/9790709
+static void CheckError(OSStatus error,const char *operaton){
+    if (error==noErr) {
+        return;
+    }
+    char errorString[20]={};
+    *(UInt32 *)(errorString+1)=CFSwapInt32HostToBig(error);
+    if (isprint(errorString[1])&&isprint(errorString[2])&&isprint(errorString[3])&&isprint(errorString[4])) {
+        errorString[0]=errorString[5]='\'';
+        errorString[6]='\0';
+    }else{
+        sprintf(errorString, "%d",(int)error);
+    }
+    fprintf(stderr, "Error:%s (%s)\n",operaton,errorString);
+    exit(1);
+}
 
 #endif /* WZ_pch */
