@@ -29,7 +29,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUp];
+    NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Vibraphone" ofType:@"aupreset"]];
+    if (presetURL) {
+        NSLog(@"Attempting to load preset '%@'\n", [presetURL description]);
+    }
+    
+    CheckError([self loadSynthFromPresetURL:presetURL], __func__);
+    
     [self start];
+    
+    
 }
 
 - (void)setUp {
@@ -93,7 +102,6 @@
     //
     
     {//配置音频流格式input
-        
         audioStreamFormat.mSampleRate         = rate;//采样率
         audioStreamFormat.mFormatID           = kAudioFormatLinearPCM;//PCM采样
         audioStreamFormat.mFormatFlags        = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
@@ -145,14 +153,6 @@ OSStatus outputRenderCall(void * inRefCon,
                      AudioBufferList * __nullable ioData) {
     WZIORenderCallController *VC = (__bridge WZIORenderCallController*)inRefCon;
 
-    
-    CheckError(AudioUnitRender(VC->audioUnit,
-                               ioActionFlags,
-                               inTimeStamp,
-                               1,
-                               inNumberFrames,
-                               ioData), __FUNCTION__);
-    
     BOOL silence = false;
     BOOL origion = false;
     if (silence) {
@@ -181,6 +181,14 @@ OSStatus outputRenderCall(void * inRefCon,
             mY1 = tmp_ioData[i];
         }
     }
+    
+    CheckError(AudioUnitRender(VC->audioUnit,
+                               ioActionFlags,
+                               inTimeStamp,
+                               1,
+                               inNumberFrames,
+                               ioData), __FUNCTION__);
+    
     return noErr;
 }
 
@@ -218,6 +226,56 @@ OSStatus outputRenderCall(void * inRefCon,
     NSLog (@"  Bits per Channel:    %10d",    asbd.mBitsPerChannel);
 }
 
-
+- (OSStatus) loadSynthFromPresetURL: (NSURL *) presetURL {
+    
+    CFDataRef propertyResourceData = 0;
+    Boolean status;
+    SInt32 errorCode = 0;
+    OSStatus result = noErr;
+    
+    // Read from the URL and convert into a CFData chunk
+    status = CFURLCreateDataAndPropertiesFromResource (
+                                                       kCFAllocatorDefault,
+                                                       (__bridge CFURLRef) presetURL,
+                                                       &propertyResourceData,
+                                                       NULL,
+                                                       NULL,
+                                                       &errorCode
+                                                       );
+    
+    NSAssert (status == YES && propertyResourceData != 0, @"Unable to create data and properties from a preset. Error code: %d '%.4s'", (int) errorCode, (const char *)&errorCode);
+    
+    // Convert the data object into a property list
+    CFPropertyListRef presetPropertyList = 0;
+    CFPropertyListFormat dataFormat = 0;
+    CFErrorRef errorRef = 0;
+    presetPropertyList = CFPropertyListCreateWithData (
+                                                       kCFAllocatorDefault,
+                                                       propertyResourceData,
+                                                       kCFPropertyListImmutable,
+                                                       &dataFormat,
+                                                       &errorRef
+                                                       );
+    
+    // Set the class info property for the Sampler unit using the property list as the value.
+    if (presetPropertyList != 0) {
+        
+        result = AudioUnitSetProperty(
+                                      audioUnit,//设置到samplerUnit上
+                                      kAudioUnitProperty_ClassInfo,
+                                      kAudioUnitScope_Global,
+                                      0,
+                                      &presetPropertyList,
+                                      sizeof(CFPropertyListRef)
+                                      );
+        
+        CFRelease(presetPropertyList);
+    }
+    
+    if (errorRef) CFRelease(errorRef);
+    CFRelease (propertyResourceData);
+    
+    return result;
+}
 
 @end

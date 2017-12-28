@@ -144,8 +144,8 @@ static void CheckError(OSStatus error,const char *operaton){
     }else{
         sprintf(errorString, "%d",(int)error);
     }
-    fprintf(stderr, "Error:%s (%s)\n",operaton,errorString);
-    exit(1);
+    fprintf(stderr, "Error:%s (%s) __%d__\n",operaton,errorString, __LINE__);
+//    exit(1);
 }
 
 #endif /* WZ_pch */

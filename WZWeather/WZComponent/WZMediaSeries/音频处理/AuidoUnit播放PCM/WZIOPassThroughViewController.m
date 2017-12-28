@@ -84,14 +84,17 @@
      配置在input element上
      传播audio stream format
      */
+    
+    //out to in
     AudioUnitConnection connection;
     connection.sourceAudioUnit = audioUnit; //连接源
-    connection.destInputNumber = 0;         //目标音频单元的输入元素，用于连接
     connection.sourceOutputNumber = 1;      //源音频单元的输出元素，用于连接
+    connection.destInputNumber = 0;         //目标音频单元的输入元素，用于连接
+
     err = AudioUnitSetProperty(audioUnit,
                                kAudioUnitProperty_MakeConnection,//sets the kAudioUnitProperty_MakeConnection property in the input scope of the destination audio unit.
-                               kAudioUnitScope_Input,
-                               0,
+                               kAudioUnitScope_Input,       // destination scope
+                               connection.destInputNumber,  // destination element
                                &connection,
                                sizeof(connection)
                                );

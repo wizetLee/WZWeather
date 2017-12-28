@@ -25,7 +25,7 @@
 #import "WZPCMPlayerController.h"
 #import "WZIOPassThroughViewController.h"
 #import "WZIORenderCallController.h"
-
+#import "WZGraphWithSamplerIOController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -178,7 +178,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return 100;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath; {
@@ -221,6 +221,9 @@
         } break;
         case 7: {
             cell.textLabel.text = [NSString stringWithFormat:@"IOwithRenderCall"];
+        } break;
+        case 8: {
+            cell.textLabel.text = [NSString stringWithFormat:@"GraphWithSamplerIO"];
         } break;
 
         default:
@@ -286,6 +289,10 @@
         } break;
         case 7: {
             UIViewController *VC = [[WZIORenderCallController alloc] initWithNibName:@"WZIORenderCallController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
+        } break;
+        case 8: {
+            UIViewController *VC = [[WZGraphWithSamplerIOController alloc] initWithNibName:@"WZGraphWithSamplerIOController" bundle:NSBundle.mainBundle];
             [self.navigationController pushViewController:VC animated:true];
         } break;
             
