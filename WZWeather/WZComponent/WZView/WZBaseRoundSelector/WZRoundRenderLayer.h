@@ -21,6 +21,7 @@
 
 
 /**
+ *   绘制圆
  *   始终在－PI / 2.0 处绘制   只负责绘制
  */
 @interface WZRoundRenderLayer : CALayer

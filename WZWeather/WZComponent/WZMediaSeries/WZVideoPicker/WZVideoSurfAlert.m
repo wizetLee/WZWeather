@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) id timeObserver;//监听播放速度的监听者 记得要移除
 @property (nonatomic, assign) BOOL isPlaying;//是否正在播放
+@property (nonatomic, assign) BOOL isSeeking;//是否正在播放
 
 @end
 
@@ -149,8 +150,19 @@
 }
 
 - (void)sliderPanGestureStateChangedWithProgress:(CGFloat)progress; {
+    if (_isSeeking) {
+        return;
+    }
+    _isSeeking = true;
+    
+    NSLog(@"%lf", CACurrentMediaTime());
     CMTime time = CMTimeMakeWithSeconds(CMTimeGetSeconds(_asset.duration) * progress, _asset.duration.timescale);
-    [_player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    NSLog(@"!!!!!!%lf", CACurrentMediaTime());
+    
+    [_player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:^(BOOL finished) {
+        _isSeeking = false;
+    }];
+  
 }
 
 - (void)sliderPanGestureStateEnd; {

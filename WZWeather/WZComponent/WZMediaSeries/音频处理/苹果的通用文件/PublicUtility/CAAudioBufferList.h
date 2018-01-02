@@ -1,7 +1,7 @@
 /*
-     File: CADebugMacros.cpp 
- Abstract:  CADebugMacros.h  
-  Version: 2.5 
+     File: CAAudioBufferList.h 
+ Abstract:  Part of CoreAudio Utility Classes  
+  Version: 1.0 
   
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple 
  Inc. ("Apple") in consideration of your agreement to the following 
@@ -44,45 +44,64 @@
  Copyright (C) 2012 Apple Inc. All Rights Reserved. 
   
 */
-#include "CADebugMacros.h"
-#include <stdio.h>
-#include <stdarg.h>
-#if TARGET_API_MAC_OSX
-	#include <syslog.h>
+#if !defined(__CAAudioBufferList_h__)
+#define __CAAudioBufferList_h__
+
+//=============================================================================
+//	Includes
+//=============================================================================
+
+//	System Includes
+#if !defined(__COREAUDIO_USE_FLAT_INCLUDES__)
+	#include <CoreAudio/CoreAudioTypes.h>
+#else
+	#include <CoreAudioTypes.h>
 #endif
 
-#if DEBUG
-#include <stdio.h>
+//=============================================================================
+//	Types
+//=============================================================================
 
-void	DebugPrint(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-#endif // DEBUG
+typedef AudioBufferList*	AudioBufferListPtr;
 
-#if TARGET_API_MAC_OSX
-void	LogError(const char *fmt, ...)
+//=============================================================================
+//	CAAudioBufferList
+//=============================================================================
+
+struct	CAAudioBufferList
 {
-	va_list args;
-	va_start(args, fmt);
-#if DEBUG
-	vprintf(fmt, args);
+
+//	Construction/Destruction
+public:
+	static AudioBufferList*	Create(UInt32 inNumberBuffers);
+	static void				Destroy(AudioBufferList* inBufferList);
+	static UInt32			CalculateByteSize(UInt32 inNumberBuffers);
+
+//	Operations
+public:
+	static UInt32			GetTotalNumberChannels(const AudioBufferList& inBufferList);
+	static bool				GetBufferForChannel(const AudioBufferList& inBufferList, UInt32 inChannel, UInt32& outBufferNumber, UInt32& outBufferChannel);
+	static void				Clear(AudioBufferList& outBufferList);
+	static void				Copy(const AudioBufferList& inSource, UInt32 inStartingSourceChannel, AudioBufferList& outDestination, UInt32 inStartingDestinationChannel);
+	static void				CopyChannel(const AudioBuffer& inSource, UInt32 inSourceChannel, AudioBuffer& outDestination, UInt32 inDestinationChannel);
+	static void				Sum(const AudioBufferList& inSourceBufferList, AudioBufferList& ioSummedBufferList);
+	static bool				HasData(AudioBufferList& inBufferList);
+#if	CoreAudio_Debug
+	static void				PrintToLog(const AudioBufferList& inBufferList);
 #endif
-	vsyslog(LOG_ERR, fmt, args);
-	va_end(args);
-}
 
-void	LogWarning(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-#if DEBUG
-	vprintf(fmt, args);
-#endif
-	vsyslog(LOG_WARNING, fmt, args);
-	va_end(args);
-}
+//  Constants
+public:
+	static AudioBufferList  sEmptyBufferList;
+
+};
+
+// Declare a variably-sized AudioBufferList on the stack
+#define STACK_ABL(name, nbufs) \
+	ThrowIf(nbufs < 1 || nbufs > 64, CAException(kAudio_ParamError), "STACK_ABL: invalid number of buffers") \
+	const size_t name##_ByteSize = sizeof(AudioBufferList) + (nbufs - 1) * sizeof(AudioBuffer); \
+	AudioBufferList &name = *(AudioBufferList *)alloca(name##_ByteSize); \
+	name.mNumberBuffers = nbufs;
+
+
 #endif

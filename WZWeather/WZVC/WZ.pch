@@ -9,6 +9,8 @@
 #ifndef WZ_pch
 #define WZ_pch
 
+///混编C++
+#ifdef __OBJC__
 #pragma mark - file
 
 //消除弃用警告 http://www.jianshu.com/p/eb03e20f7b1c
@@ -132,9 +134,9 @@
 
 
 //来源http://blog.csdn.net/xiejx618/article/details/9790709
-static void CheckError(OSStatus error,const char *operaton){
+static OSStatus CheckError(OSStatus error,const char *operaton){
     if (error==noErr) {
-        return;
+        return noErr;
     }
     char errorString[20]={};
     *(UInt32 *)(errorString+1)=CFSwapInt32HostToBig(error);
@@ -146,6 +148,8 @@ static void CheckError(OSStatus error,const char *operaton){
     }
     fprintf(stderr, "Error:%s (%s) __%d__\n",operaton,errorString, __LINE__);
 //    exit(1);
+    return error;
 }
 
+#endif
 #endif /* WZ_pch */

@@ -23,9 +23,14 @@
 
 @end
 
+
+
+/**
+    轮播图
+ */
 @interface WZLoopView : UIView
 
-@property (nonatomic, weak) id<WZLoopViewProtocol> delegate;
+@property (nonatomic,   weak) id<WZLoopViewProtocol> delegate;
 @property (nonatomic, assign) BOOL loop;
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 @property (nonatomic, strong) NSArray *images;

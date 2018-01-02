@@ -17,9 +17,6 @@
 		402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */; };
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
 		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
-		406331FC1FEFEFE4009B262B /* PCMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 406331FB1FEFEFE4009B262B /* PCMPlayer.m */; };
-		406332061FEFF4DF009B262B /* WZPCMPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406332051FEFF4DF009B262B /* WZPCMPlayerController.m */; };
-		406332081FEFF776009B262B /* abc.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 406332071FEFF776009B262B /* abc.pcm */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
@@ -302,10 +299,6 @@
 		846227641FD6ACCE00D37FAE /* WZSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227631FD6ACCE00D37FAE /* WZSlider.m */; };
 		846227671FD6ACE900D37FAE /* WZVideoSurfSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */; };
 		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
-		8465865C1FF31B1A005ED230 /* WZIORenderCallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465865A1FF31B1A005ED230 /* WZIORenderCallController.m */; };
-		8465865D1FF31B1A005ED230 /* WZIORenderCallController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8465865B1FF31B1A005ED230 /* WZIORenderCallController.xib */; };
-		846586611FF3759F005ED230 /* WZIORecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465865F1FF3759F005ED230 /* WZIORecordController.m */; };
-		846586621FF3759F005ED230 /* WZIORecordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846586601FF3759F005ED230 /* WZIORecordController.xib */; };
 		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
@@ -343,10 +336,6 @@
 		846D16031FBBC03000E78FFF /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */; };
 		846D16081FBC0C5E00E78FFF /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D16071FBC0C5D00E78FFF /* face.png */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
-		84714F931FF20B1700A02DAC /* WZIOPassThroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */; };
-		84714F941FF20B1700A02DAC /* WZIOPassThroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */; };
-		8476D55D1FF48D45004CE578 /* WZGraphWithSamplerIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8476D55B1FF48D44004CE578 /* WZGraphWithSamplerIOController.m */; };
-		8476D55E1FF48D45004CE578 /* WZGraphWithSamplerIOController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8476D55C1FF48D44004CE578 /* WZGraphWithSamplerIOController.xib */; };
 		8476D5611FF4A47A004CE578 /* Vibraphone.aupreset in Resources */ = {isa = PBXBuildFile; fileRef = 8476D55F1FF4A47A004CE578 /* Vibraphone.aupreset */; };
 		8476D5661FF4B0BA004CE578 /* Trombone.aupreset in Resources */ = {isa = PBXBuildFile; fileRef = 8476D5651FF4B0B9004CE578 /* Trombone.aupreset */; };
 		8476D57F1FF4C037004CE578 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 8476D57E1FF4C037004CE578 /* Sounds */; };
@@ -357,6 +346,24 @@
 		8497C42A1EB3465200EB9F60 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8497C4291EB3465200EB9F60 /* NotificationCenter.framework */; };
 		8497C42E1EB3465200EB9F60 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497C42D1EB3465200EB9F60 /* TodayViewController.m */; };
 		8497C4351EB3465200EB9F60 /* WZTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84A1ABAA1FFB512700AF9472 /* abc.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 84A1AB941FFB512700AF9472 /* abc.pcm */; };
+		84A1ABAB1FFB512700AF9472 /* PCMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1AB961FFB512700AF9472 /* PCMPlayer.m */; };
+		84A1ABAC1FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84A1AB981FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm */; };
+		84A1ABAD1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84A1AB9A1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm */; };
+		84A1ABAE1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1AB9B1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib */; };
+		84A1ABAF1FFB512700AF9472 /* WZGraphWithSamplerIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1AB9D1FFB512700AF9472 /* WZGraphWithSamplerIOController.m */; };
+		84A1ABB01FFB512700AF9472 /* WZGraphWithSamplerIOController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1AB9E1FFB512700AF9472 /* WZGraphWithSamplerIOController.xib */; };
+		84A1ABB11FFB512700AF9472 /* WZIOPassThroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */; };
+		84A1ABB21FFB512700AF9472 /* WZIOPassThroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */; };
+		84A1ABB31FFB512700AF9472 /* WZIORecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA31FFB512700AF9472 /* WZIORecordController.m */; };
+		84A1ABB41FFB512700AF9472 /* WZIORecordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1ABA41FFB512700AF9472 /* WZIORecordController.xib */; };
+		84A1ABB51FFB512700AF9472 /* WZIORenderCallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */; };
+		84A1ABB61FFB512700AF9472 /* WZIORenderCallController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */; };
+		84A1ABB71FFB512700AF9472 /* WZPCMPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA91FFB512700AF9472 /* WZPCMPlayerController.m */; };
+		84A1ABF51FFB637700AF9472 /* AUOutputBL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABE81FFB637700AF9472 /* AUOutputBL.cpp */; };
+		84A1ABF61FFB637700AF9472 /* CAAudioBufferList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABEA1FFB637700AF9472 /* CAAudioBufferList.cpp */; };
+		84A1ABF71FFB637700AF9472 /* CAComponentDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABED1FFB637700AF9472 /* CAComponentDescription.cpp */; };
+		84A1ABF81FFB637700AF9472 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABF31FFB637700AF9472 /* CAStreamBasicDescription.cpp */; };
 		84BC81911FCFDF6000FB76BC /* WZMediaRateTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */; };
 		84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8041EA07EEA00BDF9AA /* WZUserInfo.m */; };
 		84CAD8081EA0BD5D00BDF9AA /* WZVariousCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAD8071EA0BD5D00BDF9AA /* WZVariousCollectionController.m */; };
@@ -435,11 +442,6 @@
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
 		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
 		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
-		406331FA1FEFEFE4009B262B /* PCMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCMPlayer.h; sourceTree = "<group>"; };
-		406331FB1FEFEFE4009B262B /* PCMPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCMPlayer.m; sourceTree = "<group>"; };
-		406332041FEFF4DF009B262B /* WZPCMPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZPCMPlayerController.h; sourceTree = "<group>"; };
-		406332051FEFF4DF009B262B /* WZPCMPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZPCMPlayerController.m; sourceTree = "<group>"; };
-		406332071FEFF776009B262B /* abc.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = abc.pcm; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageEnlargedFilter.h; sourceTree = "<group>"; };
@@ -995,12 +997,6 @@
 		846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoSurfSlider.m; sourceTree = "<group>"; };
 		84648A781EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAnimatedTransitionsBase.h; sourceTree = "<group>"; };
 		84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAnimatedTransitionsBase.m; sourceTree = "<group>"; };
-		846586591FF31B1A005ED230 /* WZIORenderCallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZIORenderCallController.h; sourceTree = "<group>"; };
-		8465865A1FF31B1A005ED230 /* WZIORenderCallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZIORenderCallController.m; sourceTree = "<group>"; };
-		8465865B1FF31B1A005ED230 /* WZIORenderCallController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZIORenderCallController.xib; sourceTree = "<group>"; };
-		8465865E1FF3759F005ED230 /* WZIORecordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZIORecordController.h; sourceTree = "<group>"; };
-		8465865F1FF3759F005ED230 /* WZIORecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZIORecordController.m; sourceTree = "<group>"; };
-		846586601FF3759F005ED230 /* WZIORecordController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZIORecordController.xib; sourceTree = "<group>"; };
 		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
 		846904DF1EFD284F007AD117 /* WZLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZLoopView.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1066,12 +1062,6 @@
 		846D16071FBC0C5D00E78FFF /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
-		84714F901FF20B1700A02DAC /* WZIOPassThroughViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZIOPassThroughViewController.h; sourceTree = "<group>"; };
-		84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZIOPassThroughViewController.m; sourceTree = "<group>"; };
-		84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZIOPassThroughViewController.xib; sourceTree = "<group>"; };
-		8476D55A1FF48D44004CE578 /* WZGraphWithSamplerIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGraphWithSamplerIOController.h; sourceTree = "<group>"; };
-		8476D55B1FF48D44004CE578 /* WZGraphWithSamplerIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGraphWithSamplerIOController.m; sourceTree = "<group>"; };
-		8476D55C1FF48D44004CE578 /* WZGraphWithSamplerIOController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZGraphWithSamplerIOController.xib; sourceTree = "<group>"; };
 		8476D55F1FF4A47A004CE578 /* Vibraphone.aupreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Vibraphone.aupreset; sourceTree = "<group>"; };
 		8476D5651FF4B0B9004CE578 /* Trombone.aupreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Trombone.aupreset; sourceTree = "<group>"; };
 		8476D57E1FF4C037004CE578 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
@@ -1096,6 +1086,41 @@
 		8497C42C1EB3465200EB9F60 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		8497C42D1EB3465200EB9F60 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		8497C4321EB3465200EB9F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84A1AB941FFB512700AF9472 /* abc.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = abc.pcm; sourceTree = "<group>"; };
+		84A1AB951FFB512700AF9472 /* PCMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCMPlayer.h; sourceTree = "<group>"; };
+		84A1AB961FFB512700AF9472 /* PCMPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCMPlayer.m; sourceTree = "<group>"; };
+		84A1AB971FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAVCaptureAudioUnitEngine.h; sourceTree = "<group>"; };
+		84A1AB981FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WZAVCaptureAudioUnitEngine.mm; sourceTree = "<group>"; };
+		84A1AB991FFB512700AF9472 /* WZAVCaptureToAudioUnitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAVCaptureToAudioUnitController.h; sourceTree = "<group>"; };
+		84A1AB9A1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WZAVCaptureToAudioUnitController.mm; sourceTree = "<group>"; };
+		84A1AB9B1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZAVCaptureToAudioUnitController.xib; sourceTree = "<group>"; };
+		84A1AB9C1FFB512700AF9472 /* WZGraphWithSamplerIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGraphWithSamplerIOController.h; sourceTree = "<group>"; };
+		84A1AB9D1FFB512700AF9472 /* WZGraphWithSamplerIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGraphWithSamplerIOController.m; sourceTree = "<group>"; };
+		84A1AB9E1FFB512700AF9472 /* WZGraphWithSamplerIOController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZGraphWithSamplerIOController.xib; sourceTree = "<group>"; };
+		84A1AB9F1FFB512700AF9472 /* WZIOPassThroughViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZIOPassThroughViewController.h; sourceTree = "<group>"; };
+		84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZIOPassThroughViewController.m; sourceTree = "<group>"; };
+		84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZIOPassThroughViewController.xib; sourceTree = "<group>"; };
+		84A1ABA21FFB512700AF9472 /* WZIORecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZIORecordController.h; sourceTree = "<group>"; };
+		84A1ABA31FFB512700AF9472 /* WZIORecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZIORecordController.m; sourceTree = "<group>"; };
+		84A1ABA41FFB512700AF9472 /* WZIORecordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZIORecordController.xib; sourceTree = "<group>"; };
+		84A1ABA51FFB512700AF9472 /* WZIORenderCallController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZIORenderCallController.h; sourceTree = "<group>"; };
+		84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZIORenderCallController.m; sourceTree = "<group>"; };
+		84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZIORenderCallController.xib; sourceTree = "<group>"; };
+		84A1ABA81FFB512700AF9472 /* WZPCMPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZPCMPlayerController.h; sourceTree = "<group>"; };
+		84A1ABA91FFB512700AF9472 /* WZPCMPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZPCMPlayerController.m; sourceTree = "<group>"; };
+		84A1ABE81FFB637700AF9472 /* AUOutputBL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AUOutputBL.cpp; sourceTree = "<group>"; };
+		84A1ABE91FFB637700AF9472 /* AUOutputBL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUOutputBL.h; sourceTree = "<group>"; };
+		84A1ABEA1FFB637700AF9472 /* CAAudioBufferList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAudioBufferList.cpp; sourceTree = "<group>"; };
+		84A1ABEB1FFB637700AF9472 /* CAAudioBufferList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAudioBufferList.h; sourceTree = "<group>"; };
+		84A1ABEC1FFB637700AF9472 /* CACFDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACFDictionary.h; sourceTree = "<group>"; };
+		84A1ABED1FFB637700AF9472 /* CAComponentDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAComponentDescription.cpp; sourceTree = "<group>"; };
+		84A1ABEE1FFB637700AF9472 /* CAComponentDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAComponentDescription.h; sourceTree = "<group>"; };
+		84A1ABEF1FFB637700AF9472 /* CADebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugger.h; sourceTree = "<group>"; };
+		84A1ABF01FFB637700AF9472 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
+		84A1ABF11FFB637700AF9472 /* CALogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALogMacros.h; sourceTree = "<group>"; };
+		84A1ABF21FFB637700AF9472 /* CAMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMath.h; sourceTree = "<group>"; };
+		84A1ABF31FFB637700AF9472 /* CAStreamBasicDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStreamBasicDescription.cpp; sourceTree = "<group>"; };
+		84A1ABF41FFB637700AF9472 /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
 		84BC818F1FCFDF6000FB76BC /* WZMediaRateTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaRateTypeView.h; sourceTree = "<group>"; };
 		84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaRateTypeView.m; sourceTree = "<group>"; };
 		84CAD8031EA07EEA00BDF9AA /* WZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZUserInfo.h; sourceTree = "<group>"; };
@@ -1216,35 +1241,11 @@
 		406331F81FEFEFD5009B262B /* 音频处理 */ = {
 			isa = PBXGroup;
 			children = (
+				84A1AB931FFB512700AF9472 /* AuidoUnit */,
 				8476D54B1FF48D37004CE578 /* 苹果的通用文件 */,
 				8476D5471FF48D37004CE578 /* 素材 */,
-				406331F91FEFEFD5009B262B /* AuidoUnit播放PCM */,
 			);
 			path = "音频处理";
-			sourceTree = "<group>";
-		};
-		406331F91FEFEFD5009B262B /* AuidoUnit播放PCM */ = {
-			isa = PBXGroup;
-			children = (
-				406332071FEFF776009B262B /* abc.pcm */,
-				406331FA1FEFEFE4009B262B /* PCMPlayer.h */,
-				406331FB1FEFEFE4009B262B /* PCMPlayer.m */,
-				406332041FEFF4DF009B262B /* WZPCMPlayerController.h */,
-				406332051FEFF4DF009B262B /* WZPCMPlayerController.m */,
-				84714F901FF20B1700A02DAC /* WZIOPassThroughViewController.h */,
-				84714F911FF20B1700A02DAC /* WZIOPassThroughViewController.m */,
-				84714F921FF20B1700A02DAC /* WZIOPassThroughViewController.xib */,
-				846586591FF31B1A005ED230 /* WZIORenderCallController.h */,
-				8465865A1FF31B1A005ED230 /* WZIORenderCallController.m */,
-				8465865B1FF31B1A005ED230 /* WZIORenderCallController.xib */,
-				8476D55A1FF48D44004CE578 /* WZGraphWithSamplerIOController.h */,
-				8476D55B1FF48D44004CE578 /* WZGraphWithSamplerIOController.m */,
-				8476D55C1FF48D44004CE578 /* WZGraphWithSamplerIOController.xib */,
-				8465865E1FF3759F005ED230 /* WZIORecordController.h */,
-				8465865F1FF3759F005ED230 /* WZIORecordController.m */,
-				846586601FF3759F005ED230 /* WZIORecordController.xib */,
-			);
-			path = "AuidoUnit播放PCM";
 			sourceTree = "<group>";
 		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
@@ -2775,6 +2776,7 @@
 		8476D54B1FF48D37004CE578 /* 苹果的通用文件 */ = {
 			isa = PBXGroup;
 			children = (
+				84A1ABE71FFB637700AF9472 /* PublicUtility */,
 			);
 			path = "苹果的通用文件";
 			sourceTree = "<group>";
@@ -2851,6 +2853,55 @@
 				8497C4321EB3465200EB9F60 /* Info.plist */,
 			);
 			path = WZTodayExtension;
+			sourceTree = "<group>";
+		};
+		84A1AB931FFB512700AF9472 /* AuidoUnit */ = {
+			isa = PBXGroup;
+			children = (
+				84A1AB941FFB512700AF9472 /* abc.pcm */,
+				84A1AB951FFB512700AF9472 /* PCMPlayer.h */,
+				84A1AB961FFB512700AF9472 /* PCMPlayer.m */,
+				84A1AB971FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.h */,
+				84A1AB981FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm */,
+				84A1AB991FFB512700AF9472 /* WZAVCaptureToAudioUnitController.h */,
+				84A1AB9A1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm */,
+				84A1AB9B1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib */,
+				84A1AB9C1FFB512700AF9472 /* WZGraphWithSamplerIOController.h */,
+				84A1AB9D1FFB512700AF9472 /* WZGraphWithSamplerIOController.m */,
+				84A1AB9E1FFB512700AF9472 /* WZGraphWithSamplerIOController.xib */,
+				84A1AB9F1FFB512700AF9472 /* WZIOPassThroughViewController.h */,
+				84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */,
+				84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */,
+				84A1ABA21FFB512700AF9472 /* WZIORecordController.h */,
+				84A1ABA31FFB512700AF9472 /* WZIORecordController.m */,
+				84A1ABA41FFB512700AF9472 /* WZIORecordController.xib */,
+				84A1ABA51FFB512700AF9472 /* WZIORenderCallController.h */,
+				84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */,
+				84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */,
+				84A1ABA81FFB512700AF9472 /* WZPCMPlayerController.h */,
+				84A1ABA91FFB512700AF9472 /* WZPCMPlayerController.m */,
+			);
+			path = AuidoUnit;
+			sourceTree = "<group>";
+		};
+		84A1ABE71FFB637700AF9472 /* PublicUtility */ = {
+			isa = PBXGroup;
+			children = (
+				84A1ABE81FFB637700AF9472 /* AUOutputBL.cpp */,
+				84A1ABE91FFB637700AF9472 /* AUOutputBL.h */,
+				84A1ABEA1FFB637700AF9472 /* CAAudioBufferList.cpp */,
+				84A1ABEB1FFB637700AF9472 /* CAAudioBufferList.h */,
+				84A1ABEC1FFB637700AF9472 /* CACFDictionary.h */,
+				84A1ABED1FFB637700AF9472 /* CAComponentDescription.cpp */,
+				84A1ABEE1FFB637700AF9472 /* CAComponentDescription.h */,
+				84A1ABEF1FFB637700AF9472 /* CADebugger.h */,
+				84A1ABF01FFB637700AF9472 /* CADebugMacros.h */,
+				84A1ABF11FFB637700AF9472 /* CALogMacros.h */,
+				84A1ABF21FFB637700AF9472 /* CAMath.h */,
+				84A1ABF31FFB637700AF9472 /* CAStreamBasicDescription.cpp */,
+				84A1ABF41FFB637700AF9472 /* CAStreamBasicDescription.h */,
+			);
+			path = PublicUtility;
 			sourceTree = "<group>";
 		};
 		84BC818E1FCFDEBE00FB76BC /* UI */ = {
@@ -3082,6 +3133,7 @@
 				8462274A1FD62A0200D37FAE /* wallpaper5.jpeg in Resources */,
 				84ECD3231FCBA7E400282C9A /* 02 Keep Going.m4a in Resources */,
 				846A30FF1FD0E686003CECAE /* asset_selectedOrigion_selected@2x.png in Resources */,
+				84A1ABAA1FFB512700AF9472 /* abc.pcm in Resources */,
 				84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */,
 				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
 				8476D57F1FF4C037004CE578 /* Sounds in Resources */,
@@ -3093,39 +3145,39 @@
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
-				846586621FF3759F005ED230 /* WZIORecordController.xib in Resources */,
 				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
-				84714F941FF20B1700A02DAC /* WZIOPassThroughViewController.xib in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
+				84A1ABB01FFB512700AF9472 /* WZGraphWithSamplerIOController.xib in Resources */,
 				846A31001FD0E686003CECAE /* asset_selectedOrigion_selected@3x.png in Resources */,
 				846A31021FD0E686003CECAE /* imagesBrowse_back@3x.png in Resources */,
 				8405474E1FB97A280033EF9B /* squares.png in Resources */,
-				406332081FEFF776009B262B /* abc.pcm in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
 				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
-				8465865D1FF31B1A005ED230 /* WZIORenderCallController.xib in Resources */,
 				8462274D1FD62A0200D37FAE /* wallpaper2.jpeg in Resources */,
+				84A1ABAE1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib in Resources */,
 				8476D5611FF4A47A004CE578 /* Vibraphone.aupreset in Resources */,
 				846D16081FBC0C5E00E78FFF /* face.png in Resources */,
 				84ECD3281FCBA7E400282C9A /* 03_nebula.mp4 in Resources */,
 				846227531FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png in Resources */,
+				84A1ABB61FFB512700AF9472 /* WZIORenderCallController.xib in Resources */,
 				846A30FE1FD0E686003CECAE /* asset_selectedOrigion_normal@3x.png in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
+				84A1ABB41FFB512700AF9472 /* WZIORecordController.xib in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
-				8476D55E1FF48D45004CE578 /* WZGraphWithSamplerIOController.xib in Resources */,
 				8476D5661FF4B0BA004CE578 /* Trombone.aupreset in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
+				84A1ABB21FFB512700AF9472 /* WZIOPassThroughViewController.xib in Resources */,
 				845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3222,7 +3274,6 @@
 				84ECD3361FCC2C9A00282C9A /* WZRatioCutOutView.m in Sources */,
 				84514CEB1E9DCE7A00F07EF8 /* NSObject+JKAppInfo.m in Sources */,
 				84514CC31E9DCE7A00F07EF8 /* CLLocation+JKCH1903.m in Sources */,
-				406332061FEFF4DF009B262B /* WZPCMPlayerController.m in Sources */,
 				84514D8D1E9DCE7A00F07EF8 /* UIWebVIew+JKSwipeGesture.m in Sources */,
 				84514D121E9DCE7A00F07EF8 /* NSUserDefaults+JKiCloudSync.m in Sources */,
 				84514D721E9DCE7A00F07EF8 /* UITextView+JKSelect.m in Sources */,
@@ -3244,7 +3295,9 @@
 				846A31331FD16337003CECAE /* WZImageScrollView.m in Sources */,
 				84514D5E1E9DCE7A00F07EF8 /* UINavigationItem+JKMargin.m in Sources */,
 				84514D771E9DCE7A00F07EF8 /* UIView+JKDraggable.m in Sources */,
+				84A1ABB31FFB512700AF9472 /* WZIORecordController.m in Sources */,
 				8453F5DE1FB03AC700E0ABAE /* WZMediaConfigCell.m in Sources */,
+				84A1ABAF1FFB512700AF9472 /* WZGraphWithSamplerIOController.m in Sources */,
 				84514D7B1E9DCE7A00F07EF8 /* UIView+JKRecursion.m in Sources */,
 				846A31391FD16337003CECAE /* NSObject+WZCommon.m in Sources */,
 				84514D2C1E9DCE7A00F07EF8 /* UIButton+JKImagePosition.m in Sources */,
@@ -3253,7 +3306,6 @@
 				84514D831E9DCE7A00F07EF8 /* UIViewController+JKRecursiveDescription.m in Sources */,
 				84514CC11E9DCE7A00F07EF8 /* NSManagedObjectContext+JKFetchRequestsConstructors.m in Sources */,
 				846A310B1FD1509F003CECAE /* WZVideoPickerController.m in Sources */,
-				84714F931FF20B1700A02DAC /* WZIOPassThroughViewController.m in Sources */,
 				84514D7E1E9DCE7A00F07EF8 /* UIView+JKToast.m in Sources */,
 				84514D461E9DCE7A00F07EF8 /* UIImage+JKGIF.m in Sources */,
 				84514D151E9DCE7A00F07EF8 /* MKMapView+JKMoveLogo.m in Sources */,
@@ -3263,13 +3315,13 @@
 				84514D361E9DCE7A00F07EF8 /* UIControl+JKActionBlocks.m in Sources */,
 				84514CFF1E9DCE7A00F07EF8 /* NSString+JKMIME.m in Sources */,
 				846A31321FD16337003CECAE /* WZImageContainerController.m in Sources */,
-				8476D55D1FF48D45004CE578 /* WZGraphWithSamplerIOController.m in Sources */,
 				40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */,
 				84514D8B1E9DCE7A00F07EF8 /* UIWebView+JKMetaParser.m in Sources */,
 				84514D851E9DCE7A00F07EF8 /* UIViewController+JKVisible.m in Sources */,
 				84514CD71E9DCE7A00F07EF8 /* NSDictionary+JKBlock.m in Sources */,
 				84514CE91E9DCE7A00F07EF8 /* NSNumber+JKRound.m in Sources */,
 				844A484B1E9F657B0002829A /* WZVariousCollectionBaseObject.m in Sources */,
+				84A1ABB51FFB512700AF9472 /* WZIORenderCallController.m in Sources */,
 				846A31351FD16337003CECAE /* WZRemoteImageNavigationView.m in Sources */,
 				84514CD91E9DCE7A00F07EF8 /* NSDictionary+JKMerge.m in Sources */,
 				84514CCE1E9DCE7A00F07EF8 /* NSData+JKzlib.m in Sources */,
@@ -3292,7 +3344,7 @@
 				84514CF41E9DCE7A00F07EF8 /* NSObject+JKRuntime.m in Sources */,
 				84514CF81E9DCE7A00F07EF8 /* NSString+JKContains.m in Sources */,
 				84514CC51E9DCE7A00F07EF8 /* NSArray+JKSafeAccess.m in Sources */,
-				406331FC1FEFEFE4009B262B /* PCMPlayer.m in Sources */,
+				84A1ABAB1FFB512700AF9472 /* PCMPlayer.m in Sources */,
 				84514D821E9DCE7A00F07EF8 /* UIViewController+JKBlockSegue.m in Sources */,
 				846A313A1FD16337003CECAE /* WZMediaFetcher.m in Sources */,
 				84514CC61E9DCE7A00F07EF8 /* NSBundle+JKAppIcon.m in Sources */,
@@ -3320,6 +3372,7 @@
 				84514D631E9DCE7A00F07EF8 /* UIScrollView+JKAddition.m in Sources */,
 				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
+				84A1ABAC1FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm in Sources */,
 				84514CD61E9DCE7A00F07EF8 /* NSDateFormatter+JKMake.m in Sources */,
 				84514CDF1E9DCE7A00F07EF8 /* NSFileManager+JKPaths.m in Sources */,
 				84514D141E9DCE7A00F07EF8 /* MKMapView+JKBetterMaps.m in Sources */,
@@ -3328,6 +3381,7 @@
 				84514D0B1E9DCE7A00F07EF8 /* NSTimer+JKBlocks.m in Sources */,
 				84514CD81E9DCE7A00F07EF8 /* NSDictionary+JKJSONString.m in Sources */,
 				84514D571E9DCE7A00F07EF8 /* UILabel+JKSuggestSize.m in Sources */,
+				84A1ABAD1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm in Sources */,
 				84514D371E9DCE7A00F07EF8 /* UIControl+JKBlock.m in Sources */,
 				84514D0E1E9DCE7A00F07EF8 /* NSURLConnection+JKSelfSigned.m in Sources */,
 				84514D7A1E9DCE7A00F07EF8 /* UIView+JKNib.m in Sources */,
@@ -3396,6 +3450,7 @@
 				84514CFD1E9DCE7A00F07EF8 /* NSString+JKHTML.m in Sources */,
 				84514CF61E9DCE7A00F07EF8 /* NSSet+JKBlock.m in Sources */,
 				84514D211E9DCE7A00F07EF8 /* UIBarButtonItem+JKAction.m in Sources */,
+				84A1ABF51FFB637700AF9472 /* AUOutputBL.cpp in Sources */,
 				84514D1D1E9DCE7A00F07EF8 /* UIApplication+JKApplicationSize.m in Sources */,
 				84514CEC1E9DCE7A00F07EF8 /* NSObject+JKAssociatedObject.m in Sources */,
 				8456645F1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m in Sources */,
@@ -3417,17 +3472,18 @@
 				8453F5E11FB03FAE00E0ABAE /* WZMediaConfigObject.m in Sources */,
 				845349D51FC3C1E100D228DE /* WZMediaRecordTimeBar.m in Sources */,
 				84514D791E9DCE7A00F07EF8 /* UIView+JKFrame.m in Sources */,
+				84A1ABF61FFB637700AF9472 /* CAAudioBufferList.cpp in Sources */,
 				84514D321E9DCE7A00F07EF8 /* UIColor+JKHEX.m in Sources */,
 				4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */,
 				84514D1E1E9DCE7A00F07EF8 /* UIApplication+JKKeyboardFrame.m in Sources */,
 				84ECD32F1FCC1D3B00282C9A /* WZAVPlayerViewController.m in Sources */,
 				84514D6C1E9DCE7A00F07EF8 /* UITextField+JKInputLimit.m in Sources */,
+				84A1ABB71FFB512700AF9472 /* WZPCMPlayerController.m in Sources */,
 				84514D021E9DCE7A00F07EF8 /* NSString+JKRemoveEmoji.m in Sources */,
 				402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */,
 				84514D331E9DCE7A00F07EF8 /* UIColor+JKModify.m in Sources */,
 				84514D751E9DCE7A00F07EF8 /* UIView+JKConstraints.m in Sources */,
 				84514CCA1E9DCE7A00F07EF8 /* NSData+JKEncrypt.m in Sources */,
-				846586611FF3759F005ED230 /* WZIORecordController.m in Sources */,
 				84514CFB1E9DCE7A00F07EF8 /* NSString+JKEncrypt.m in Sources */,
 				84514CF51E9DCE7A00F07EF8 /* NSRunLoop+JKPerformBlock.m in Sources */,
 				8456645B1FC811870004BAC1 /* UIWindow+WZMinistrant.m in Sources */,
@@ -3445,6 +3501,7 @@
 				84514D421E9DCE7A00F07EF8 /* UIImage+JKCapture.m in Sources */,
 				84514CF11E9DCE7A00F07EF8 /* NSObject+JKGCD.m in Sources */,
 				8402EB101ECD34B00030CCE1 /* WZDownloadProgressCell.m in Sources */,
+				84A1ABB11FFB512700AF9472 /* WZIOPassThroughViewController.m in Sources */,
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
@@ -3483,6 +3540,7 @@
 				84514CFE1E9DCE7A00F07EF8 /* NSString+JKMatcher.m in Sources */,
 				84514D3D1E9DCE7A00F07EF8 /* UIFont+JKTTF.m in Sources */,
 				84514D881E9DCE7A00F07EF8 /* UIWebView+JKJavaScript.m in Sources */,
+				84A1ABF71FFB637700AF9472 /* CAComponentDescription.cpp in Sources */,
 				84514CF31E9DCE7A00F07EF8 /* NSObject+JKReflection.m in Sources */,
 				84514CDA1E9DCE7A00F07EF8 /* NSDictionary+JKSafeAccess.m in Sources */,
 				84514D441E9DCE7A00F07EF8 /* UIImage+JKFileName.m in Sources */,
@@ -3493,10 +3551,10 @@
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
 				848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */,
 				84CAD8051EA07EEA00BDF9AA /* WZUserInfo.m in Sources */,
+				84A1ABF81FFB637700AF9472 /* CAStreamBasicDescription.cpp in Sources */,
 				840E3E9D1FE3BF8F00A5D559 /* WZAudioCodecController.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
 				848633311F95CCD20086C96E /* WZMediaController.m in Sources */,
-				8465865C1FF31B1A005ED230 /* WZIORenderCallController.m in Sources */,
 				84514D011E9DCE7A00F07EF8 /* NSString+JKPinyin.m in Sources */,
 				8402EB271ECD64A40030CCE1 /* WZVariousBaseObject.m in Sources */,
 				844A0C651F7E3961001DF1CA /* WZSystemDetails.m in Sources */,

@@ -138,7 +138,7 @@
     }
 }
 
-//来自官方demo
+//来自官方demo中的修改
 // Load a synthesizer preset file and apply it to the Sampler unit
 - (OSStatus) loadSynthFromPresetURL: (NSURL *) presetURL {
     

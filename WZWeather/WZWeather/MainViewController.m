@@ -26,6 +26,7 @@
 #import "WZIOPassThroughViewController.h"
 #import "WZIORenderCallController.h"
 #import "WZGraphWithSamplerIOController.h"
+#import "WZAVCaptureToAudioUnitController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -225,6 +226,10 @@
         case 8: {
             cell.textLabel.text = [NSString stringWithFormat:@"GraphWithSamplerIO"];
         } break;
+        case 9: {
+            cell.textLabel.text = [NSString stringWithFormat:@"CaptureToAudioUnit"];
+        } break;
+            
 
         default:
             break;
@@ -293,6 +298,10 @@
         } break;
         case 8: {
             UIViewController *VC = [[WZGraphWithSamplerIOController alloc] initWithNibName:@"WZGraphWithSamplerIOController" bundle:NSBundle.mainBundle];
+            [self.navigationController pushViewController:VC animated:true];
+        } break;
+        case 9: {
+            UIViewController *VC = [[WZAVCaptureToAudioUnitController alloc] initWithNibName:@"WZAVCaptureToAudioUnitController" bundle:NSBundle.mainBundle];
             [self.navigationController pushViewController:VC animated:true];
         } break;
             

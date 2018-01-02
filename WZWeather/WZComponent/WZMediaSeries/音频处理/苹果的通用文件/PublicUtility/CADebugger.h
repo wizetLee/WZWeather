@@ -1,7 +1,7 @@
 /*
-     File: CAXException.cpp 
- Abstract:  CAXException.h  
-  Version: 2.5 
+     File: CADebugger.h 
+ Abstract:  Part of CoreAudio Utility Classes  
+  Version: 1.0 
   
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple 
  Inc. ("Apple") in consideration of your agreement to the following 
@@ -44,6 +44,13 @@
  Copyright (C) 2012 Apple Inc. All Rights Reserved. 
   
 */
-#include "CAXException.h"
+#if !defined(__CADebugger_h__)
+#define __CADebugger_h__
 
-CAXException::WarningHandler CAXException::sWarningHandler = NULL;
+//=============================================================================
+//	CADebugger
+//=============================================================================
+
+extern void	CADebuggerStop();
+
+#endif

@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, WZAlertDipalyDismissType) {
 @property (nonatomic, strong) void (^keyboardHeightBlock) (CGFloat keyboardHeight);
 //键盘block(出现或者回收键盘的时候调用block处理view的位置关系)
 
-@property (nonatomic, weak) UIWindow *forefrontWindow;              //最前方window
+@property (nonatomic,   weak) UIWindow *forefrontWindow;              //最前方window
 @property (nonatomic, strong) UIView *bgAnimatedView;               //动画层 载物层
 @property (nonatomic, strong) UIView *tapView;                      //点击回收层
 @property (nonatomic, strong) UIView *bgView;                       //背景颜色层

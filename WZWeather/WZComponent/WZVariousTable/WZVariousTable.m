@@ -28,7 +28,7 @@
     return self;
 }
 
-- (instancetype) initWithFrame:(CGRect)frame style:(UITableViewStyle)style {
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style {
     if (self = [super initWithFrame:frame style:style]) {
         [self prepareForTable];
     }

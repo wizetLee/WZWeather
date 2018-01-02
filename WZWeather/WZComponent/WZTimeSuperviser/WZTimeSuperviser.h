@@ -71,7 +71,7 @@
 - (void)timeSuperviserStop;
 
 
-#pragma  mark  for subClass
+#pragma  mark - for subClass
 - (void)fireEvent;
 
 //不期望在外部调用 在子类中调用

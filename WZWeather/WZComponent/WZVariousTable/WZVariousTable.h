@@ -17,8 +17,8 @@
  */
 @interface WZVariousTable : UITableView
 
-@property (nonatomic, weak) id<WZVariousViewDelegate> variousViewDelegate;
-@property (nonatomic, weak) UIViewController *locatedController;
+@property (nonatomic,   weak) id<WZVariousViewDelegate> variousViewDelegate;
+@property (nonatomic,   weak) UIViewController *locatedController;
 @property (nonatomic, strong) NSMutableArray *datas;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, Class>*registerCellDic;//外部注册
 
