@@ -22,10 +22,10 @@
  */
 @interface WZIOPassThroughViewController ()
 {
-    AudioComponentDescription ioUnitDescription;    //音频信息的唯一ID
-    AudioComponent ioComponent;                  //用于创建unit
-    AudioUnit audioUnit;                         //unit的引用
-    AudioStreamBasicDescription audioStreamFormat;//音频流格式
+    AudioComponentDescription ioUnitDescription;        //音频信息的唯一ID
+    AudioComponent ioComponent;                         //用于创建unit
+    AudioUnit audioUnit;                                //unit
+    AudioStreamBasicDescription audioStreamFormat;      //音频流格式
     double rate;//采样率
 }
 

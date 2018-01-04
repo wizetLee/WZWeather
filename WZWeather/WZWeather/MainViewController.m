@@ -29,6 +29,8 @@
 #import "WZAVCaptureToAudioUnitController.h"
 #import "WZAudioFileServicesController.h"
 #import "WZExtendedAudioFile.h"
+#import "WZMultichannelMixerController.h"
+
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 

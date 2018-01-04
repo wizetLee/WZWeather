@@ -333,6 +333,14 @@
 		846A31381FD16337003CECAE /* WZPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846A31281FD16336003CECAE /* WZPhotoPickerController.m */; };
 		846A31391FD16337003CECAE /* NSObject+WZCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 846A312B1FD16336003CECAE /* NSObject+WZCommon.m */; };
 		846A313A1FD16337003CECAE /* WZMediaFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 846A312D1FD16336003CECAE /* WZMediaFetcher.m */; };
+		846A67101FFDB27900BC6E44 /* DrumsMonoSTP.aif in Resources */ = {isa = PBXBuildFile; fileRef = 846A670E1FFDB27800BC6E44 /* DrumsMonoSTP.aif */; };
+		846A67111FFDB27900BC6E44 /* GuitarMonoSTP.aif in Resources */ = {isa = PBXBuildFile; fileRef = 846A670F1FFDB27800BC6E44 /* GuitarMonoSTP.aif */; };
+		846A671B1FFDB5B200BC6E44 /* WZMultichannelMixerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846A67191FFDB5B200BC6E44 /* WZMultichannelMixerController.m */; };
+		846A671C1FFDB5B200BC6E44 /* WZMultichannelMixerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846A671A1FFDB5B200BC6E44 /* WZMultichannelMixerController.xib */; };
+		846A671F1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 846A671E1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.m */; };
+		846A67291FFDCDA700BC6E44 /* 敢不敢.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 846A67261FFDCDA700BC6E44 /* 敢不敢.mp3 */; };
+		846A672A1FFDCDA700BC6E44 /* 小丑鱼.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 846A67271FFDCDA700BC6E44 /* 小丑鱼.mp3 */; };
+		846A672B1FFDCDA700BC6E44 /* 自我催眠.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 846A67281FFDCDA700BC6E44 /* 自我催眠.mp3 */; };
 		846D16031FBBC03000E78FFF /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */; };
 		846D16081FBC0C5E00E78FFF /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D16071FBC0C5D00E78FFF /* face.png */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
@@ -1061,6 +1069,16 @@
 		846A312B1FD16336003CECAE /* NSObject+WZCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZCommon.m"; sourceTree = "<group>"; };
 		846A312C1FD16336003CECAE /* WZMediaFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZMediaFetcher.h; sourceTree = "<group>"; };
 		846A312D1FD16336003CECAE /* WZMediaFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZMediaFetcher.m; sourceTree = "<group>"; };
+		846A670E1FFDB27800BC6E44 /* DrumsMonoSTP.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = DrumsMonoSTP.aif; sourceTree = "<group>"; };
+		846A670F1FFDB27800BC6E44 /* GuitarMonoSTP.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = GuitarMonoSTP.aif; sourceTree = "<group>"; };
+		846A67181FFDB5B200BC6E44 /* WZMultichannelMixerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMultichannelMixerController.h; sourceTree = "<group>"; };
+		846A67191FFDB5B200BC6E44 /* WZMultichannelMixerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMultichannelMixerController.m; sourceTree = "<group>"; };
+		846A671A1FFDB5B200BC6E44 /* WZMultichannelMixerController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZMultichannelMixerController.xib; sourceTree = "<group>"; };
+		846A671D1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMultichannelMixerEngine.h; sourceTree = "<group>"; };
+		846A671E1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMultichannelMixerEngine.m; sourceTree = "<group>"; };
+		846A67261FFDCDA700BC6E44 /* 敢不敢.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "敢不敢.mp3"; sourceTree = "<group>"; };
+		846A67271FFDCDA700BC6E44 /* 小丑鱼.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "小丑鱼.mp3"; sourceTree = "<group>"; };
+		846A67281FFDCDA700BC6E44 /* 自我催眠.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "自我催眠.mp3"; sourceTree = "<group>"; };
 		846D16011FBBC03000E78FFF /* GPUImageBeautifyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautifyFilter.h; sourceTree = "<group>"; };
 		846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautifyFilter.m; sourceTree = "<group>"; };
 		846D16071FBC0C5D00E78FFF /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
@@ -2766,6 +2784,18 @@
 			path = WZMediaFetcher;
 			sourceTree = "<group>";
 		};
+		846A67121FFDB51400BC6E44 /* 多通道 */ = {
+			isa = PBXGroup;
+			children = (
+				846A67181FFDB5B200BC6E44 /* WZMultichannelMixerController.h */,
+				846A67191FFDB5B200BC6E44 /* WZMultichannelMixerController.m */,
+				846A671A1FFDB5B200BC6E44 /* WZMultichannelMixerController.xib */,
+				846A671D1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.h */,
+				846A671E1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.m */,
+			);
+			path = "多通道";
+			sourceTree = "<group>";
+		};
 		847005341FFCA90400FFA2C4 /* AudioToolbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -2846,6 +2876,11 @@
 		8476D5471FF48D37004CE578 /* 素材 */ = {
 			isa = PBXGroup;
 			children = (
+				846A67261FFDCDA700BC6E44 /* 敢不敢.mp3 */,
+				846A67271FFDCDA700BC6E44 /* 小丑鱼.mp3 */,
+				846A67281FFDCDA700BC6E44 /* 自我催眠.mp3 */,
+				846A670E1FFDB27800BC6E44 /* DrumsMonoSTP.aif */,
+				846A670F1FFDB27800BC6E44 /* GuitarMonoSTP.aif */,
 				847005321FFC866400FFA2C4 /* Secretofmyheart.mp3 */,
 				8476D5481FF48D37004CE578 /* AUPreset */,
 			);
@@ -2946,6 +2981,7 @@
 		84A1AB931FFB512700AF9472 /* AuidoUnit */ = {
 			isa = PBXGroup;
 			children = (
+				846A67121FFDB51400BC6E44 /* 多通道 */,
 				8470053F1FFCAA4400FFA2C4 /* MIDI */,
 				8470053E1FFCAA1200FFA2C4 /* AVCaptureSession录音 */,
 				8470053D1FFCA9F700FFA2C4 /* 直通流 */,
@@ -3215,6 +3251,7 @@
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				8470053A1FFCA92C00FFA2C4 /* WZExtendedAudioFile.xib in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
+				846A672A1FFDCDA700BC6E44 /* 小丑鱼.mp3 in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
 				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
@@ -3222,6 +3259,7 @@
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
+				846A67291FFDCDA700BC6E44 /* 敢不敢.mp3 in Resources */,
 				847005331FFC866400FFA2C4 /* Secretofmyheart.mp3 in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
 				84A1ABB01FFB512700AF9472 /* WZGraphWithSamplerIOController.xib in Resources */,
@@ -3234,6 +3272,7 @@
 				84A1ABAE1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib in Resources */,
 				8476D5611FF4A47A004CE578 /* Vibraphone.aupreset in Resources */,
 				846D16081FBC0C5E00E78FFF /* face.png in Resources */,
+				846A671C1FFDB5B200BC6E44 /* WZMultichannelMixerController.xib in Resources */,
 				84ECD3281FCBA7E400282C9A /* 03_nebula.mp4 in Resources */,
 				846227531FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png in Resources */,
 				84A1ABB61FFB512700AF9472 /* WZIORenderCallController.xib in Resources */,
@@ -3243,8 +3282,10 @@
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
+				846A67101FFDB27900BC6E44 /* DrumsMonoSTP.aif in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
+				846A672B1FFDCDA700BC6E44 /* 自我催眠.mp3 in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				8476D5661FF4B0BA004CE578 /* Trombone.aupreset in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
@@ -3252,6 +3293,7 @@
 				847005311FFC7C5300FFA2C4 /* WZAudioFileServicesController.xib in Resources */,
 				84A1ABB21FFB512700AF9472 /* WZIOPassThroughViewController.xib in Resources */,
 				845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */,
+				846A67111FFDB27900BC6E44 /* GuitarMonoSTP.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3451,6 +3493,7 @@
 				84514D141E9DCE7A00F07EF8 /* MKMapView+JKBetterMaps.m in Sources */,
 				84514D261E9DCE7A00F07EF8 /* UIBezierPath+JKSymbol.m in Sources */,
 				84514D231E9DCE7A00F07EF8 /* UIBezierPath+JKBasicShapes.m in Sources */,
+				846A671B1FFDB5B200BC6E44 /* WZMultichannelMixerController.m in Sources */,
 				84514D0B1E9DCE7A00F07EF8 /* NSTimer+JKBlocks.m in Sources */,
 				84514CD81E9DCE7A00F07EF8 /* NSDictionary+JKJSONString.m in Sources */,
 				84514D571E9DCE7A00F07EF8 /* UILabel+JKSuggestSize.m in Sources */,
@@ -3619,6 +3662,7 @@
 				84514D441E9DCE7A00F07EF8 /* UIImage+JKFileName.m in Sources */,
 				84514D641E9DCE7A00F07EF8 /* UIScrollView+JKPages.m in Sources */,
 				84514D8A1E9DCE7A00F07EF8 /* UIWebView+JKLoadInfo.m in Sources */,
+				846A671F1FFDB5C400BC6E44 /* WZMultichannelMixerEngine.m in Sources */,
 				402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */,
 				84514D781E9DCE7A00F07EF8 /* UIView+JKFind.m in Sources */,
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
@@ -3800,6 +3844,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = G583SJY324;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = WZWeather/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

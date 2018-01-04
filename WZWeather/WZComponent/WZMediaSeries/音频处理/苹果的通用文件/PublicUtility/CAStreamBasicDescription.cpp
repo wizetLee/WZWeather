@@ -55,39 +55,39 @@
 
 #pragma mark	This file needs to compile on earlier versions of the OS, so please keep that in mind when editing it
 
-char *CAStringForOSType (OSType t, char *writeLocation)
-{
-	char *p = writeLocation;
-    unsigned char str[4] = {0}, *q = str;
-	*(UInt32 *)str = CFSwapInt32HostToBig(t);
-
-	bool hasNonPrint = false;
-	for (int i = 0; i < 4; ++i) {
-		if (!(isprint(*q) && *q != '\\')) {
-			hasNonPrint = true;
-			break;
-		}
-        q++;
-	}
-    q = str;
-	
-	if (hasNonPrint)
-		p += sprintf (p, "0x");
-	else
-		*p++ = '\'';
-		
-	for (int i = 0; i < 4; ++i) {
-		if (hasNonPrint) {
-			p += sprintf(p, "%02X", *q++);
-		} else {
-			*p++ = *q++;
-		}
-	}
-	if (!hasNonPrint)
-		*p++ = '\'';
-	*p = '\0';
-	return writeLocation;
-}
+//char *CAStringForOSType (OSType t, char *writeLocation)
+//{
+//    char *p = writeLocation;
+//    unsigned char str[4] = {0}, *q = str;
+//    *(UInt32 *)str = CFSwapInt32HostToBig(t);
+//
+//    bool hasNonPrint = false;
+//    for (int i = 0; i < 4; ++i) {
+//        if (!(isprint(*q) && *q != '\\')) {
+//            hasNonPrint = true;
+//            break;
+//        }
+//        q++;
+//    }
+//    q = str;
+//
+//    if (hasNonPrint)
+//        p += sprintf (p, "0x");
+//    else
+//        *p++ = '\'';
+//
+//    for (int i = 0; i < 4; ++i) {
+//        if (hasNonPrint) {
+//            p += sprintf(p, "%02X", *q++);
+//        } else {
+//            *p++ = *q++;
+//        }
+//    }
+//    if (!hasNonPrint)
+//        *p++ = '\'';
+//    *p = '\0';
+//    return writeLocation;
+//}
 
 
 const AudioStreamBasicDescription	CAStreamBasicDescription::sEmpty = { 0.0, 0, 0, 0, 0, 0, 0, 0, 0 };

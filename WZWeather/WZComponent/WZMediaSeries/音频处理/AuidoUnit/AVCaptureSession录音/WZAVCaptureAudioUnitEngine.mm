@@ -442,7 +442,7 @@ static OSStatus PushCurrentInputBufferIntoAudioUnit(void *                      
     
 }
 
-- (void)audioSessionRouteChangeNotificatio:(NSNotification *)notification {
+- (void)audioSessionRouteChangeNotification:(NSNotification *)notification {
     UInt8 reasonValue = [[notification.userInfo valueForKey: AVAudioSessionRouteChangeReasonKey] intValue];
     
     if (AVAudioSessionRouteChangeReasonNewDeviceAvailable == reasonValue

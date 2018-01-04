@@ -21,7 +21,9 @@
     
 /////权限为只读
 //1、配置URL
-     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Secretofmyheart" ofType:@"mp3"]];
+    /// the only supported file formats are m4a, wav, and aiff
+//     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"DrumsMonoSTP" ofType:@"aif"]];
+     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"小丑鱼" ofType:@"mp3"]];
 //2、openfile
     CheckError(ExtAudioFileOpenURL((__bridge CFURLRef)url, &audioFileRef), "ExtAudioFileOpenURL");
     
@@ -35,18 +37,30 @@
     UInt32 maxPacketSize_Size = sizeof(maxPacketSize);
     CheckError(ExtAudioFileGetProperty(audioFileRef, kExtAudioFileProperty_FileMaxPacketSize, &maxPacketSize_Size, &maxPacketSize), "kExtAudioFileProperty_FileMaxPacketSize");
     
-    AudioStreamBasicDescription outDesc = ASBD;
-    outDesc.mSampleRate = 44100;
-    outDesc.mFormatID = kAudioFormatLinearPCM;
-    outDesc.mFormatFlags = kLinearPCMFormatFlagIsFloat;
-    outDesc.mBitsPerChannel = 16; // 16bit sample depth
-    outDesc.mChannelsPerFrame = 2;
-    outDesc.mBytesPerFrame = outDesc.mChannelsPerFrame * outDesc.mBitsPerChannel/8;
-    outDesc.mFramesPerPacket = 1;
-    outDesc.mBytesPerPacket = outDesc.mFramesPerPacket * outDesc.mBytesPerFrame;
+//    AudioStreamBasicDescription outDesc = ASBD;
+//    outDesc.mSampleRate = 44100;
+//    outDesc.mFormatID = kAudioFormatLinearPCM;//MP3时:mFormatID = 778924083 //aif:mFormatID = 1819304813
+//    outDesc.mFormatFlags = kLinearPCMFormatFlagIsFloat | kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+//    outDesc.mBitsPerChannel = 16; // 16bit sample depth
+//    outDesc.mChannelsPerFrame = 2;
+//    outDesc.mBytesPerFrame = outDesc.mChannelsPerFrame * outDesc.mBitsPerChannel/8;
+//    outDesc.mFramesPerPacket = 1;
+//    outDesc.mBytesPerPacket = outDesc.mFramesPerPacket * outDesc.mBytesPerFrame;
     
-#warning 格式有点问题？？？
-    CheckError(ExtAudioFileSetProperty(audioFileRef, kExtAudioFileProperty_ClientDataFormat, sizeof(outDesc), &outDesc), "ExtAudioFileSetProperty");;
+#warning 使用MP3素材时格式出现的问题：-66563
+    /** AudioStreamBasicDescription.mformatID，格式类型出现的问题
+     You may be truncating a 32-bit OSStatus of -66563 (0xfffefbfd) to its lower 16 bits, -1027 (0xfffffbfd).
+     kExtAudioFileError_NonPCMClientFormat  = -66563,
+     The format you pass as a client data format must be PCM.
+     */
+
+//    CheckError(ExtAudioFileSetProperty(audioFileRef, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &ASBD), "ExtAudioFileSetProperty");//播MP3 报error
+    //改成
+    AVAudioFormat *format = [[AVAudioFormat alloc] initWithCommonFormat:AVAudioPCMFormatFloat32
+                                                                   sampleRate:44100
+                                                                     channels:1
+                                                                  interleaved:true];
+     CheckError(ExtAudioFileSetProperty(audioFileRef, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), format.streamDescription), "ExtAudioFileSetProperty");;
     
 //5、readfile
     [self readWith:maxPacketSize ASBD:ASBD];
