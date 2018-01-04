@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WZGraphWithSamplerIOController">
+            <connections>
+                <outlet property="note_0" destination="Nbb-oz-pua" id="J9y-30-NRa"/>
+                <outlet property="note_1" destination="Uhx-b3-lqb" id="y4D-ku-vhk"/>
+                <outlet property="note_2" destination="OFT-j8-ty2" id="4CT-uV-lsK"/>
+                <outlet property="note_3" destination="UqA-Qg-UYm" id="1hv-50-tg6"/>
+                <outlet property="note_4" destination="Wgt-RR-waJ" id="Fl9-dX-ebv"/>
+                <outlet property="note_5" destination="ajT-kh-3RB" id="bZV-fb-Xuy"/>
+                <outlet property="trombonePresetButton" destination="Nxs-YM-OnU" id="0uw-z7-WDJ"/>
+                <outlet property="vibraphonePresetButton" destination="dNV-hq-dxO" id="cl9-RF-d2h"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uhx-b3-lqb">
+                    <rect key="frame" x="20" y="347" width="335" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="V1R-uq-Iqx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDragEnter" id="WaS-QJ-cVv"/>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDown" id="vax-7G-0v6"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchDragExit" id="p6l-cJ-YwX"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchUpInside" id="q0c-B2-zwQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbb-oz-pua">
+                    <rect key="frame" x="20" y="283" width="335" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="66V-ng-1f5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDragEnter" id="LK0-gc-4P6"/>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDown" id="paL-Zz-Afk"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchDragExit" id="6kg-0k-iOt"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchUpInside" id="SQy-yV-lPE"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dNV-hq-dxO">
+                    <rect key="frame" x="197.5" y="199" width="157.5" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="dSp-Z7-usw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="电颤音">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="loadPreset:" destination="-1" eventType="touchUpInside" id="4IY-wF-LKD"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFT-j8-ty2">
+                    <rect key="frame" x="20" y="411" width="335" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="0Nx-GG-mQs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDown" id="00S-Uh-RnG"/>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDragEnter" id="9r1-sJ-NZl"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchUpInside" id="nJw-XW-oDE"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchDragExit" id="ulY-B0-rXf"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UqA-Qg-UYm">
+                    <rect key="frame" x="20" y="475" width="335" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="jJa-Hw-AHl"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDragEnter" id="dMN-dA-ZPU"/>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDown" id="vhx-PR-hyu"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchUpInside" id="8S7-fX-486"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchDragExit" id="xFq-yQ-68S"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajT-kh-3RB">
+                    <rect key="frame" x="20" y="603" width="335" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="l82-Xg-JWM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDown" id="GdT-cy-4cX"/>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDragEnter" id="mSA-Uv-WIy"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchUpInside" id="pjh-Mm-LYP"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchDragExit" id="tMb-KQ-kJY"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wgt-RR-waJ">
+                    <rect key="frame" x="20" y="539" width="335" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="F4b-nA-kaa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDown" id="PnZ-zD-5Q0"/>
+                        <action selector="startPlayNote:" destination="-1" eventType="touchDragEnter" id="dFo-Ae-OYg"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchDragExit" id="Bdx-IP-FKM"/>
+                        <action selector="stopPlayNote:" destination="-1" eventType="touchUpInside" id="yEB-9D-oxc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nxs-YM-OnU">
+                    <rect key="frame" x="20" y="199" width="157.5" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="0.6114886558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="XnY-hm-I1w"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <state key="normal" title="长号">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.83251284246575341" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="loadPreset:" destination="-1" eventType="touchUpInside" id="3HR-iJ-r30"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Uhx-b3-lqb" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="0ta-1e-gr4"/>
+                <constraint firstItem="Wgt-RR-waJ" firstAttribute="top" secondItem="UqA-Qg-UYm" secondAttribute="bottom" constant="20" id="2RJ-tV-wMm"/>
+                <constraint firstItem="Wgt-RR-waJ" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="5nh-sq-M4e"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="ajT-kh-3RB" secondAttribute="trailing" constant="20" id="7kz-vE-ZTx"/>
+                <constraint firstItem="UqA-Qg-UYm" firstAttribute="top" secondItem="OFT-j8-ty2" secondAttribute="bottom" constant="20" id="8Td-WT-huh"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="OFT-j8-ty2" secondAttribute="trailing" constant="20" id="Bdd-KD-qyq"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="dNV-hq-dxO" secondAttribute="trailing" constant="20" id="GGE-RQ-sZN"/>
+                <constraint firstItem="Nbb-oz-pua" firstAttribute="top" secondItem="dNV-hq-dxO" secondAttribute="bottom" constant="40" id="KHm-Bq-dbF"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="ajT-kh-3RB" secondAttribute="bottom" constant="20" id="KXb-co-hiI"/>
+                <constraint firstItem="ajT-kh-3RB" firstAttribute="top" secondItem="Wgt-RR-waJ" secondAttribute="bottom" constant="20" id="MJw-bg-YlK"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Uhx-b3-lqb" secondAttribute="trailing" constant="20" id="Sh3-zq-C61"/>
+                <constraint firstItem="OFT-j8-ty2" firstAttribute="top" secondItem="Uhx-b3-lqb" secondAttribute="bottom" constant="20" id="VKC-Pb-K2i"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="UqA-Qg-UYm" secondAttribute="trailing" constant="20" id="a7T-No-lBr"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Nbb-oz-pua" secondAttribute="trailing" constant="20" id="aPk-ub-VP0"/>
+                <constraint firstItem="Uhx-b3-lqb" firstAttribute="top" secondItem="Nbb-oz-pua" secondAttribute="bottom" constant="20" id="d5J-vd-gaA"/>
+                <constraint firstItem="Nbb-oz-pua" firstAttribute="top" secondItem="Nxs-YM-OnU" secondAttribute="bottom" constant="40" id="g9D-L6-PXv"/>
+                <constraint firstItem="dNV-hq-dxO" firstAttribute="leading" secondItem="Nxs-YM-OnU" secondAttribute="trailing" constant="20" id="gTE-r4-aln"/>
+                <constraint firstItem="Nxs-YM-OnU" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="gjD-ri-xkF"/>
+                <constraint firstItem="ajT-kh-3RB" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="hT3-UK-wCK"/>
+                <constraint firstItem="OFT-j8-ty2" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="iNi-FU-uhC"/>
+                <constraint firstItem="dNV-hq-dxO" firstAttribute="width" secondItem="Nxs-YM-OnU" secondAttribute="width" id="iZD-dV-nBM"/>
+                <constraint firstItem="Nbb-oz-pua" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="kfr-oR-coZ"/>
+                <constraint firstItem="UqA-Qg-UYm" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="oCC-cl-MUD"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Wgt-RR-waJ" secondAttribute="trailing" constant="20" id="xQ7-dz-FJq"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+</document>

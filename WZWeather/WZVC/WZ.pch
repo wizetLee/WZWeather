@@ -146,7 +146,7 @@ static OSStatus CheckError(OSStatus error,const char *operaton){
     }else{
         sprintf(errorString, "%d",(int)error);
     }
-    fprintf(stderr, "Error:%s (%s) __%d__\n",operaton,errorString, __LINE__);
+    fprintf(stderr, "Error:%s (%s) \n", operaton, errorString);
 //    exit(1);
     return error;
 }

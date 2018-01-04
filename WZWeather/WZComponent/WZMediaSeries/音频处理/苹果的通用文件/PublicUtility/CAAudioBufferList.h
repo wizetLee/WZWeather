@@ -68,6 +68,9 @@ typedef AudioBufferList*	AudioBufferListPtr;
 //	CAAudioBufferList
 //=============================================================================
 
+/**
+ 存储AudioBufferList的结构体
+ */
 struct	CAAudioBufferList
 {
 
@@ -79,8 +82,11 @@ public:
 
 //	Operations
 public:
+    ///获取channel数目
 	static UInt32			GetTotalNumberChannels(const AudioBufferList& inBufferList);
+    /// 获取对应channel上的outBufferNumber  outBufferChannel
 	static bool				GetBufferForChannel(const AudioBufferList& inBufferList, UInt32 inChannel, UInt32& outBufferNumber, UInt32& outBufferChannel);
+    //填充buffer数据为0
 	static void				Clear(AudioBufferList& outBufferList);
 	static void				Copy(const AudioBufferList& inSource, UInt32 inStartingSourceChannel, AudioBufferList& outDestination, UInt32 inStartingDestinationChannel);
 	static void				CopyChannel(const AudioBuffer& inSource, UInt32 inSourceChannel, AudioBuffer& outDestination, UInt32 inDestinationChannel);

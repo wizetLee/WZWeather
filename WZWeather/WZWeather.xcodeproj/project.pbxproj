@@ -336,6 +336,12 @@
 		846D16031FBBC03000E78FFF /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */; };
 		846D16081FBC0C5E00E78FFF /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D16071FBC0C5D00E78FFF /* face.png */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
+		847005301FFC7C5300FFA2C4 /* WZAudioFileServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8470052E1FFC7C5300FFA2C4 /* WZAudioFileServicesController.m */; };
+		847005311FFC7C5300FFA2C4 /* WZAudioFileServicesController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8470052F1FFC7C5300FFA2C4 /* WZAudioFileServicesController.xib */; };
+		847005331FFC866400FFA2C4 /* Secretofmyheart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 847005321FFC866400FFA2C4 /* Secretofmyheart.mp3 */; };
+		847005391FFCA92C00FFA2C4 /* WZExtendedAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 847005371FFCA92C00FFA2C4 /* WZExtendedAudioFile.m */; };
+		8470053A1FFCA92C00FFA2C4 /* WZExtendedAudioFile.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847005381FFCA92C00FFA2C4 /* WZExtendedAudioFile.xib */; };
+		847005411FFCB87D00FFA2C4 /* 01.caf in Resources */ = {isa = PBXBuildFile; fileRef = 847005401FFCB87C00FFA2C4 /* 01.caf */; };
 		8476D5611FF4A47A004CE578 /* Vibraphone.aupreset in Resources */ = {isa = PBXBuildFile; fileRef = 8476D55F1FF4A47A004CE578 /* Vibraphone.aupreset */; };
 		8476D5661FF4B0BA004CE578 /* Trombone.aupreset in Resources */ = {isa = PBXBuildFile; fileRef = 8476D5651FF4B0B9004CE578 /* Trombone.aupreset */; };
 		8476D57F1FF4C037004CE578 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 8476D57E1FF4C037004CE578 /* Sounds */; };
@@ -355,8 +361,6 @@
 		84A1ABB01FFB512700AF9472 /* WZGraphWithSamplerIOController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1AB9E1FFB512700AF9472 /* WZGraphWithSamplerIOController.xib */; };
 		84A1ABB11FFB512700AF9472 /* WZIOPassThroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */; };
 		84A1ABB21FFB512700AF9472 /* WZIOPassThroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */; };
-		84A1ABB31FFB512700AF9472 /* WZIORecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA31FFB512700AF9472 /* WZIORecordController.m */; };
-		84A1ABB41FFB512700AF9472 /* WZIORecordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1ABA41FFB512700AF9472 /* WZIORecordController.xib */; };
 		84A1ABB51FFB512700AF9472 /* WZIORenderCallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */; };
 		84A1ABB61FFB512700AF9472 /* WZIORenderCallController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */; };
 		84A1ABB71FFB512700AF9472 /* WZPCMPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A1ABA91FFB512700AF9472 /* WZPCMPlayerController.m */; };
@@ -1062,6 +1066,14 @@
 		846D16071FBC0C5D00E78FFF /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
+		8470052D1FFC7C5300FFA2C4 /* WZAudioFileServicesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAudioFileServicesController.h; sourceTree = "<group>"; };
+		8470052E1FFC7C5300FFA2C4 /* WZAudioFileServicesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAudioFileServicesController.m; sourceTree = "<group>"; };
+		8470052F1FFC7C5300FFA2C4 /* WZAudioFileServicesController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZAudioFileServicesController.xib; sourceTree = "<group>"; };
+		847005321FFC866400FFA2C4 /* Secretofmyheart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Secretofmyheart.mp3; sourceTree = "<group>"; };
+		847005361FFCA92C00FFA2C4 /* WZExtendedAudioFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZExtendedAudioFile.h; sourceTree = "<group>"; };
+		847005371FFCA92C00FFA2C4 /* WZExtendedAudioFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZExtendedAudioFile.m; sourceTree = "<group>"; };
+		847005381FFCA92C00FFA2C4 /* WZExtendedAudioFile.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZExtendedAudioFile.xib; sourceTree = "<group>"; };
+		847005401FFCB87C00FFA2C4 /* 01.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 01.caf; sourceTree = "<group>"; };
 		8476D55F1FF4A47A004CE578 /* Vibraphone.aupreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Vibraphone.aupreset; sourceTree = "<group>"; };
 		8476D5651FF4B0B9004CE578 /* Trombone.aupreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Trombone.aupreset; sourceTree = "<group>"; };
 		8476D57E1FF4C037004CE578 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
@@ -1100,9 +1112,6 @@
 		84A1AB9F1FFB512700AF9472 /* WZIOPassThroughViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZIOPassThroughViewController.h; sourceTree = "<group>"; };
 		84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZIOPassThroughViewController.m; sourceTree = "<group>"; };
 		84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZIOPassThroughViewController.xib; sourceTree = "<group>"; };
-		84A1ABA21FFB512700AF9472 /* WZIORecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZIORecordController.h; sourceTree = "<group>"; };
-		84A1ABA31FFB512700AF9472 /* WZIORecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZIORecordController.m; sourceTree = "<group>"; };
-		84A1ABA41FFB512700AF9472 /* WZIORecordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZIORecordController.xib; sourceTree = "<group>"; };
 		84A1ABA51FFB512700AF9472 /* WZIORenderCallController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZIORenderCallController.h; sourceTree = "<group>"; };
 		84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZIORenderCallController.m; sourceTree = "<group>"; };
 		84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WZIORenderCallController.xib; sourceTree = "<group>"; };
@@ -1241,6 +1250,7 @@
 		406331F81FEFEFD5009B262B /* 音频处理 */ = {
 			isa = PBXGroup;
 			children = (
+				847005341FFCA90400FFA2C4 /* AudioToolbox */,
 				84A1AB931FFB512700AF9472 /* AuidoUnit */,
 				8476D54B1FF48D37004CE578 /* 苹果的通用文件 */,
 				8476D5471FF48D37004CE578 /* 素材 */,
@@ -2756,9 +2766,87 @@
 			path = WZMediaFetcher;
 			sourceTree = "<group>";
 		};
+		847005341FFCA90400FFA2C4 /* AudioToolbox */ = {
+			isa = PBXGroup;
+			children = (
+				8470053B1FFCA99100FFA2C4 /* AudioFile */,
+				847005351FFCA91200FFA2C4 /* ExtendedAudioFile */,
+			);
+			path = AudioToolbox;
+			sourceTree = "<group>";
+		};
+		847005351FFCA91200FFA2C4 /* ExtendedAudioFile */ = {
+			isa = PBXGroup;
+			children = (
+				847005401FFCB87C00FFA2C4 /* 01.caf */,
+				847005361FFCA92C00FFA2C4 /* WZExtendedAudioFile.h */,
+				847005371FFCA92C00FFA2C4 /* WZExtendedAudioFile.m */,
+				847005381FFCA92C00FFA2C4 /* WZExtendedAudioFile.xib */,
+			);
+			path = ExtendedAudioFile;
+			sourceTree = "<group>";
+		};
+		8470053B1FFCA99100FFA2C4 /* AudioFile */ = {
+			isa = PBXGroup;
+			children = (
+				8470052D1FFC7C5300FFA2C4 /* WZAudioFileServicesController.h */,
+				8470052E1FFC7C5300FFA2C4 /* WZAudioFileServicesController.m */,
+				8470052F1FFC7C5300FFA2C4 /* WZAudioFileServicesController.xib */,
+			);
+			path = AudioFile;
+			sourceTree = "<group>";
+		};
+		8470053C1FFCA9E900FFA2C4 /* 播放PCM */ = {
+			isa = PBXGroup;
+			children = (
+				84A1AB941FFB512700AF9472 /* abc.pcm */,
+				84A1ABA81FFB512700AF9472 /* WZPCMPlayerController.h */,
+				84A1ABA91FFB512700AF9472 /* WZPCMPlayerController.m */,
+				84A1AB951FFB512700AF9472 /* PCMPlayer.h */,
+				84A1AB961FFB512700AF9472 /* PCMPlayer.m */,
+			);
+			path = "播放PCM";
+			sourceTree = "<group>";
+		};
+		8470053D1FFCA9F700FFA2C4 /* 直通流 */ = {
+			isa = PBXGroup;
+			children = (
+				84A1AB9F1FFB512700AF9472 /* WZIOPassThroughViewController.h */,
+				84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */,
+				84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */,
+				84A1ABA51FFB512700AF9472 /* WZIORenderCallController.h */,
+				84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */,
+				84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */,
+			);
+			path = "直通流";
+			sourceTree = "<group>";
+		};
+		8470053E1FFCAA1200FFA2C4 /* AVCaptureSession录音 */ = {
+			isa = PBXGroup;
+			children = (
+				84A1AB971FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.h */,
+				84A1AB981FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm */,
+				84A1AB991FFB512700AF9472 /* WZAVCaptureToAudioUnitController.h */,
+				84A1AB9A1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm */,
+				84A1AB9B1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib */,
+			);
+			path = "AVCaptureSession录音";
+			sourceTree = "<group>";
+		};
+		8470053F1FFCAA4400FFA2C4 /* MIDI */ = {
+			isa = PBXGroup;
+			children = (
+				84A1AB9C1FFB512700AF9472 /* WZGraphWithSamplerIOController.h */,
+				84A1AB9D1FFB512700AF9472 /* WZGraphWithSamplerIOController.m */,
+				84A1AB9E1FFB512700AF9472 /* WZGraphWithSamplerIOController.xib */,
+			);
+			path = MIDI;
+			sourceTree = "<group>";
+		};
 		8476D5471FF48D37004CE578 /* 素材 */ = {
 			isa = PBXGroup;
 			children = (
+				847005321FFC866400FFA2C4 /* Secretofmyheart.mp3 */,
 				8476D5481FF48D37004CE578 /* AUPreset */,
 			);
 			path = "素材";
@@ -2858,28 +2946,10 @@
 		84A1AB931FFB512700AF9472 /* AuidoUnit */ = {
 			isa = PBXGroup;
 			children = (
-				84A1AB941FFB512700AF9472 /* abc.pcm */,
-				84A1AB951FFB512700AF9472 /* PCMPlayer.h */,
-				84A1AB961FFB512700AF9472 /* PCMPlayer.m */,
-				84A1AB971FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.h */,
-				84A1AB981FFB512700AF9472 /* WZAVCaptureAudioUnitEngine.mm */,
-				84A1AB991FFB512700AF9472 /* WZAVCaptureToAudioUnitController.h */,
-				84A1AB9A1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.mm */,
-				84A1AB9B1FFB512700AF9472 /* WZAVCaptureToAudioUnitController.xib */,
-				84A1AB9C1FFB512700AF9472 /* WZGraphWithSamplerIOController.h */,
-				84A1AB9D1FFB512700AF9472 /* WZGraphWithSamplerIOController.m */,
-				84A1AB9E1FFB512700AF9472 /* WZGraphWithSamplerIOController.xib */,
-				84A1AB9F1FFB512700AF9472 /* WZIOPassThroughViewController.h */,
-				84A1ABA01FFB512700AF9472 /* WZIOPassThroughViewController.m */,
-				84A1ABA11FFB512700AF9472 /* WZIOPassThroughViewController.xib */,
-				84A1ABA21FFB512700AF9472 /* WZIORecordController.h */,
-				84A1ABA31FFB512700AF9472 /* WZIORecordController.m */,
-				84A1ABA41FFB512700AF9472 /* WZIORecordController.xib */,
-				84A1ABA51FFB512700AF9472 /* WZIORenderCallController.h */,
-				84A1ABA61FFB512700AF9472 /* WZIORenderCallController.m */,
-				84A1ABA71FFB512700AF9472 /* WZIORenderCallController.xib */,
-				84A1ABA81FFB512700AF9472 /* WZPCMPlayerController.h */,
-				84A1ABA91FFB512700AF9472 /* WZPCMPlayerController.m */,
+				8470053F1FFCAA4400FFA2C4 /* MIDI */,
+				8470053E1FFCAA1200FFA2C4 /* AVCaptureSession录音 */,
+				8470053D1FFCA9F700FFA2C4 /* 直通流 */,
+				8470053C1FFCA9E900FFA2C4 /* 播放PCM */,
 			);
 			path = AuidoUnit;
 			sourceTree = "<group>";
@@ -3143,6 +3213,7 @@
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
 				4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */,
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
+				8470053A1FFCA92C00FFA2C4 /* WZExtendedAudioFile.xib in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
 				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
@@ -3151,6 +3222,7 @@
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
+				847005331FFC866400FFA2C4 /* Secretofmyheart.mp3 in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
 				84A1ABB01FFB512700AF9472 /* WZGraphWithSamplerIOController.xib in Resources */,
 				846A31001FD0E686003CECAE /* asset_selectedOrigion_selected@3x.png in Resources */,
@@ -3167,8 +3239,8 @@
 				84A1ABB61FFB512700AF9472 /* WZIORenderCallController.xib in Resources */,
 				846A30FE1FD0E686003CECAE /* asset_selectedOrigion_normal@3x.png in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
+				847005411FFCB87D00FFA2C4 /* 01.caf in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
-				84A1ABB41FFB512700AF9472 /* WZIORecordController.xib in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
@@ -3177,6 +3249,7 @@
 				8476D5661FF4B0BA004CE578 /* Trombone.aupreset in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
+				847005311FFC7C5300FFA2C4 /* WZAudioFileServicesController.xib in Resources */,
 				84A1ABB21FFB512700AF9472 /* WZIOPassThroughViewController.xib in Resources */,
 				845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */,
 			);
@@ -3295,7 +3368,6 @@
 				846A31331FD16337003CECAE /* WZImageScrollView.m in Sources */,
 				84514D5E1E9DCE7A00F07EF8 /* UINavigationItem+JKMargin.m in Sources */,
 				84514D771E9DCE7A00F07EF8 /* UIView+JKDraggable.m in Sources */,
-				84A1ABB31FFB512700AF9472 /* WZIORecordController.m in Sources */,
 				8453F5DE1FB03AC700E0ABAE /* WZMediaConfigCell.m in Sources */,
 				84A1ABAF1FFB512700AF9472 /* WZGraphWithSamplerIOController.m in Sources */,
 				84514D7B1E9DCE7A00F07EF8 /* UIView+JKRecursion.m in Sources */,
@@ -3341,6 +3413,7 @@
 				84514D181E9DCE7A00F07EF8 /* CALayer+JKBorderColor.m in Sources */,
 				84514D2A1E9DCE7A00F07EF8 /* UIButton+JKBlock.m in Sources */,
 				84514D0F1E9DCE7A00F07EF8 /* NSMutableURLRequest+JKUpload.m in Sources */,
+				847005391FFCA92C00FFA2C4 /* WZExtendedAudioFile.m in Sources */,
 				84514CF41E9DCE7A00F07EF8 /* NSObject+JKRuntime.m in Sources */,
 				84514CF81E9DCE7A00F07EF8 /* NSString+JKContains.m in Sources */,
 				84514CC51E9DCE7A00F07EF8 /* NSArray+JKSafeAccess.m in Sources */,
@@ -3570,6 +3643,7 @@
 				84514D491E9DCE7A00F07EF8 /* UIImage+JKRemoteSize.m in Sources */,
 				84514D621E9DCE7A00F07EF8 /* UIScreen+JKFrame.m in Sources */,
 				846D16031FBBC03000E78FFF /* GPUImageBeautifyFilter.m in Sources */,
+				847005301FFC7C5300FFA2C4 /* WZAudioFileServicesController.m in Sources */,
 				84514D4E1E9DCE7A00F07EF8 /* UIImageView+JKAddition.m in Sources */,
 				84514D681E9DCE7A00F07EF8 /* UITableViewCell+JKDelaysContentTouches.m in Sources */,
 				84514CC01E9DCE7A00F07EF8 /* NSManagedObjectContext+JKFetching.m in Sources */,
