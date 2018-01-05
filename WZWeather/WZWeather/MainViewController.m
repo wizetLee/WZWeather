@@ -22,14 +22,8 @@
 #import "WZVideoPickerController.h"
 #import "WZAudioCodecController.h"
 #import "WZVideoCodecController.h"
-#import "WZPCMPlayerController.h"
-#import "WZIOPassThroughViewController.h"
-#import "WZIORenderCallController.h"
-#import "WZGraphWithSamplerIOController.h"
-#import "WZAVCaptureToAudioUnitController.h"
-#import "WZAudioFileServicesController.h"
-#import "WZExtendedAudioFile.h"
-#import "WZMultichannelMixerController.h"
+
+
 
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
@@ -219,40 +213,40 @@
             cell.textLabel.text = [NSString stringWithFormat:@"本地视频选取、合并、删除"];
         } break;
         case 5: {
-            cell.textLabel.text = [NSString stringWithFormat:@"播放PCM文件"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~~"];
         } break;
         case 6: {
-            cell.textLabel.text = [NSString stringWithFormat:@"IO直通"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 7: {
-            cell.textLabel.text = [NSString stringWithFormat:@"IOwithRenderCall"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 8: {
-            cell.textLabel.text = [NSString stringWithFormat:@"GraphWithSamplerIO"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 9: {
-            cell.textLabel.text = [NSString stringWithFormat:@"CaptureToAudioUnit"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 10: {
-            cell.textLabel.text = [NSString stringWithFormat:@"AudioFileServices"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 11: {
-            cell.textLabel.text = [NSString stringWithFormat:@"WZExtendedAudioFile"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 12: {
-            cell.textLabel.text = [NSString stringWithFormat:@"AudioFileServices"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 13: {
-            cell.textLabel.text = [NSString stringWithFormat:@"AudioFileServices"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 14: {
-            cell.textLabel.text = [NSString stringWithFormat:@"AudioFileServices"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 15: {
-            cell.textLabel.text = [NSString stringWithFormat:@"AudioFileServices"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
         case 16: {
-            cell.textLabel.text = [NSString stringWithFormat:@"AudioFileServices"];
+            cell.textLabel.text = [NSString stringWithFormat:@"~"];
         } break;
             
 
@@ -309,57 +303,32 @@
            [WZVideoPickerController showPickerWithPresentedController:self];
         } break;
         case 5: {
-            WZPCMPlayerController *VC = [[WZPCMPlayerController alloc] init];
-//            UIViewController *VC = [[WZAudioCodecController alloc] initWithNibName:@"WZAudioCodecController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 6: {
-           UIViewController *VC = [[WZIOPassThroughViewController alloc] initWithNibName:@"WZIOPassThroughViewController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 7: {
-            UIViewController *VC = [[WZIORenderCallController alloc] initWithNibName:@"WZIORenderCallController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 8: {
-            UIViewController *VC = [[WZGraphWithSamplerIOController alloc] initWithNibName:@"WZGraphWithSamplerIOController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 9: {
-            UIViewController *VC = [[WZAVCaptureToAudioUnitController alloc] initWithNibName:@"WZAVCaptureToAudioUnitController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 10: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 11: {
-            UIViewController *VC = [[WZExtendedAudioFile alloc] initWithNibName:@"WZExtendedAudioFile" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 12: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 13: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
+           
         } break;
         case 14: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
+        
         } break;
         case 15: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 16: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
         case 17: {
-            UIViewController *VC = [[WZAudioFileServicesController alloc] initWithNibName:@"WZAudioFileServicesController" bundle:NSBundle.mainBundle];
-            [self.navigationController pushViewController:VC animated:true];
         } break;
             
         default:
