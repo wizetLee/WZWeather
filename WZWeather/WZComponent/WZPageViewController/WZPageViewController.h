@@ -26,7 +26,7 @@
 
 @property (nonatomic,   weak) id<WZPageViewControllerProtocol> pageViewControllerDelegate;
 @property (nonatomic, strong) NSArray <WZPageViewAssistController *> *reusableVCArray;
-@property (nonatomic, strong) WZPageViewAssistController *currentVC;
+@property (nonatomic, strong, readonly) WZPageViewAssistController *currentVC;
 
 //初始化展示的目标
 - (void)showVCWithIndex:(NSInteger)index animated:(BOOL)animated;

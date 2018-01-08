@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-//看微博
+
 typedef void(^WZCustomAnimatedHandler)(float transitionDuration, UIView * containerView, UIView * fromView, UIView * toView, void (^completeTransition)());
 
 @interface WZAnimatedTransitionsBase : NSObject

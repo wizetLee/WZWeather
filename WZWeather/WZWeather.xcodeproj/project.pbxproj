@@ -1215,10 +1215,10 @@
 				8402EB221ECD64A40030CCE1 /* WZVariousTable.m */,
 				8402EB191ECD64A40030CCE1 /* WZVariousBaseCell.h */,
 				8402EB1A1ECD64A40030CCE1 /* WZVariousBaseCell.m */,
-				8402EB1B1ECD64A40030CCE1 /* WZVariousBaseMethodObject.h */,
-				8402EB1C1ECD64A40030CCE1 /* WZVariousBaseMethodObject.m */,
 				8402EB1D1ECD64A40030CCE1 /* WZVariousBaseObject.h */,
 				8402EB1E1ECD64A40030CCE1 /* WZVariousBaseObject.m */,
+				8402EB1B1ECD64A40030CCE1 /* WZVariousBaseMethodObject.h */,
+				8402EB1C1ECD64A40030CCE1 /* WZVariousBaseMethodObject.m */,
 				8402EB1F1ECD64A40030CCE1 /* WZVariousSectionsTable.h */,
 				8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */,
 			);

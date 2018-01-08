@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  持有数据  持有loactedVC  可做执行事件
+ *  持有数据  持有loactedVC  可做执行事件 提供给VariousTable的事件处理Object
  */
 
 typedef NS_ENUM(NSUInteger, WZVariousMethod) {

@@ -173,6 +173,8 @@
                     }];
                 }
             }
+//每次add视频上去需要更新状态
+            
 //            AVMutableComposition *c =  [[self class] compositionWithSegments:tmpMArr];
 //            NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject;
 //

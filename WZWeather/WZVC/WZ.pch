@@ -71,15 +71,11 @@
 
 
 /***
-  关于适配     改用masonry吧。。。
- 因为self.view.safeAreaInsets在viewdidload中为Zero ,只有在viewSafeAreaInsetsDidChange调用后才会更新值
- 或者如果确实需要使用frame
- 可以在viewWillLayoutSubviews 重新处理图层的布局
- 
- 
- 关于iPhoneX的安全域
- 竖直 {88, 0, 34, 0}
- 横  {32, 44, 21, 44}
+    关于适配iPhoneX
+    建议直接在可以在viewWillLayoutSubviews 重新处理图层的布局
+     关于iPhoneX的安全域
+     竖直 {88, 0, 34, 0}
+     横  {32, 44, 21, 44}
  ****/
 
 
@@ -133,23 +129,6 @@
 #define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
 
 
-//来源http://blog.csdn.net/xiejx618/article/details/9790709
-static OSStatus CheckError(OSStatus error,const char *operaton){
-    if (error==noErr) {
-        return noErr;
-    }
-    char errorString[20]={};
-    *(UInt32 *)(errorString+1)=CFSwapInt32HostToBig(error);
-    if (isprint(errorString[1])&&isprint(errorString[2])&&isprint(errorString[3])&&isprint(errorString[4])) {
-        errorString[0]=errorString[5]='\'';
-        errorString[6]='\0';
-    }else{
-        sprintf(errorString, "%d",(int)error);
-    }
-    fprintf(stderr, "Error:%s (%s) \n", operaton, errorString);
-//    exit(1);
-    return error;
-}
 
 #endif
 #endif /* WZ_pch */

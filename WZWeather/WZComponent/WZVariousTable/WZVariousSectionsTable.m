@@ -8,21 +8,20 @@
 
 #import "WZVariousSectionsTable.h"
 
-
 @implementation WZVariousSectionsTable
-@synthesize sectionsDatas = _sectionsDatas;
+@synthesize datas = _datas;
 
 //类型(隐藏式)纠正
 - (WZVariousBaseObject *)getVariousObjectByIndexPath:(NSIndexPath *)indexPath {
     @try {
        
-        if ([self.sectionsDatas[indexPath.section] isKindOfClass:[NSArray class]]) {
-            NSArray * arr = self.sectionsDatas[indexPath.section];
+        if ([self.datas[indexPath.section] isKindOfClass:[NSArray class]]) {
+            NSArray * arr = self.datas[indexPath.section];
            
             if ([arr[indexPath.row] isKindOfClass:[WZVariousBaseObject class]]) {
-                BOOL last = (self.sectionsDatas[indexPath.section][indexPath.row] == self.sectionsDatas[indexPath.section].lastObject);
-                ((WZVariousBaseObject *)self.sectionsDatas[indexPath.section][indexPath.row]).isLastElement = last;
-                 return self.sectionsDatas[indexPath.section][indexPath.row];
+                BOOL last = (self.datas[indexPath.section][indexPath.row] == self.datas[indexPath.section].lastObject);
+                ((WZVariousBaseObject *)self.datas[indexPath.section][indexPath.row]).isLastElement = last;
+                 return self.datas[indexPath.section][indexPath.row];
             } else {
                 return [[WZVariousBaseObject alloc] init];
             }
@@ -69,22 +68,22 @@
 #pragma mark - UITableViewDataSource
 //数据个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.sectionsDatas.count > 0) {
-         return self.sectionsDatas[section].count;
+    if (self.datas.count > 0) {
+         return self.datas[section].count;
     }
     return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.sectionsDatas.count;
+    return self.datas.count;
 }
 
 #pragma mark - Accessor
-- (NSMutableArray *)sectionsDatas {
-    if (!_sectionsDatas) {
-        _sectionsDatas = [NSMutableArray array];
+- (NSMutableArray *)datas {
+    if (!_datas) {
+        _datas = [NSMutableArray array];
     }
-    return _sectionsDatas;
+    return _datas;
 }
 
 //数据过滤
@@ -96,7 +95,7 @@
                 [tmpMArr addObject:obj];
             }
         }
-        _sectionsDatas = [NSMutableArray arrayWithArray:tmpMArr];
+        _datas = [NSMutableArray arrayWithArray:tmpMArr];
         [self reloadData];
     }
 }

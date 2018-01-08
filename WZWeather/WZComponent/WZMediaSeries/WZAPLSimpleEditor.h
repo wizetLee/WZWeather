@@ -52,7 +52,8 @@
 
 //MARK: - 自定义动画枚举
 typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
-    APLSimpleEditorTransitionType_Fades             = 0,//或者叫 Dissolve
+    APLSimpleEditorTransitionType_None              = 0,
+    APLSimpleEditorTransitionType_Fades,//或者叫 Dissolve
     APLSimpleEditorTransitionType_Push,
     APLSimpleEditorTransitionType_Wipe,
 };
@@ -61,7 +62,12 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 @protocol WZAPLSimpleEditorProtocol<NSObject>
 
 @optional;
+//合成进度
 - (void)wzAPLSimpleEditor:(WZAPLSimpleEditor *)editor currentProgress:(CGFloat)progress;
+//合成完成
+- (void)wzAPLSimpleEditor:(WZAPLSimpleEditor *)editor exportCompleted:(NSError *)error;
+//抛出状态当前选中的视频中的状态 （是否可过渡，选中的过渡类型）
+- (void)wzAPLSimpleEditor:(WZAPLSimpleEditor *)editor didUpdateTypeList:(NSArray <NSNumber *>*)transitionTypeList enabeList:(NSArray <NSNumber *>*)transitionsEnabledList;
 
 @end
 /*********
@@ -77,36 +83,29 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 
 //资源时间(asset.duration)
 @property (nonatomic, readonly, retain) NSArray <NSValue *>*clipTimeRanges; // array of CMTimeRanges stored in NSValues.
+
+@property (nonatomic, readonly, retain) AVMutableComposition *composition;
+@property (nonatomic, readonly, retain) AVMutableVideoComposition *videoComposition;
+@property (nonatomic, readonly, retain) AVMutableAudioMix *audioMix;
+
 ///外部设置过渡时间(单一)
 @property (nonatomic) CMTime transitionDuration;
 
-
-///合成到最后的目标资源集合体
-@property (nonatomic, readonly, retain) AVMutableComposition *composition;
-///配置过渡的类
-@property (nonatomic, readonly, retain) AVMutableVideoComposition *videoComposition;
-///混音的类
-@property (nonatomic, readonly, retain) AVMutableAudioMix *audioMix;
-
-///过渡的类型
-@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionTypeMArr;
-///过渡数组(用于判定该段是否用于过渡)
-@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionsEnabledMArr;
-///导出尺寸
+///节点过渡的类型
+@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionTypeMArr;//APLSimpleEditorTransitionType
+///判断节点是否可过渡
+@property (nonatomic, strong) NSMutableArray <NSNumber *>*transitionsEnabledMArr;//0 1 0 1
+///导出尺寸的视频的尺寸（选中视频的尺寸）
 @property (nonatomic, assign, readonly) CGSize targetSize;
 ///代理
 @property (nonatomic, weak) id<WZAPLSimpleEditorProtocol> delegate;
 
 
-/// Builds the composition and videoComposition
-/**
- 播放 或者 重播
- */
+/// Builds the composition and videoComposition(播放 或者 重播)
 - (void)buildCompositionObjectsForPlayback;
 
 ///得到PlayerItem
 - (AVPlayerItem *)playerItem;
-
 
 @end
 

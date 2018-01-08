@@ -17,9 +17,9 @@
 @interface WZVariousBaseObject : NSObject
 
 @property (nonatomic, assign) BOOL isLastElement;
-@property (nonatomic, assign) CGFloat cellHeight;
 @property (nonatomic, assign) BOOL cellHeightVariable;  //考虑需求需要更改cell高度的情况
-@property (nonatomic, copy) NSString *cellType;
+@property (nonatomic, assign) CGFloat cellHeight;
+@property (nonatomic,   copy) NSString *cellType;
 
 + (NSDictionary *)modelCustomPropertyMapper;//yymodel
 

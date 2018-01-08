@@ -9,9 +9,7 @@
 #import "WZPageViewController.h"
 #import "WZPageViewAssistController.h"
 
-@interface WZPageViewController ()
-<UIPageViewControllerDataSource,
-UIPageViewControllerDelegate>
+@interface WZPageViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (nonatomic, assign) NSInteger numberOfIndexs;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -85,7 +83,7 @@ UIPageViewControllerDelegate>
         return nil;
     }
    
-    WZPageViewAssistController *VC =  self.reusableVCArray[index % self.reusableVCArray.count];
+    WZPageViewAssistController *VC = self.reusableVCArray[index % self.reusableVCArray.count];
     VC.index = index;
     
     return VC;
@@ -95,7 +93,7 @@ UIPageViewControllerDelegate>
 #pragma mark - UIPageViewControllerDelegate
 //将要切换控制器
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers NS_AVAILABLE_IOS(6_0) {
-    WZPageViewAssistController *VC = pageViewController.viewControllers.firstObject;
+//    WZPageViewAssistController *VC = pageViewController.viewControllers.firstObject;
 }
 
 //切换控制器完成
@@ -151,11 +149,12 @@ UIPageViewControllerDelegate>
     }
     return _reusableVCArray;
 }
-
+ 
 - (void)setReusableVCArray:(NSArray<WZPageViewAssistController *> *)reusableVCArray {
   
     //过滤操作 且 必须含有数据
-    if ([reusableVCArray isKindOfClass:[NSArray class]] && reusableVCArray.count) {
+    if ([reusableVCArray isKindOfClass:[NSArray class]]
+        && reusableVCArray.count) {
         NSMutableArray *tmpMArray = [NSMutableArray array];
         
         for (id VC in reusableVCArray) {

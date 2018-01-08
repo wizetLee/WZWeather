@@ -9,64 +9,50 @@
 #import "WZVariousBaseCell.h"
 #import "WZVariousBaseObject.h"
 
-
 @implementation WZVariousBaseCell
 
-- (void)isLastElement:(BOOL)boolean {
-    
-}
+- (void)isLastElement:(BOOL)boolean {}
 
-+ (CGFloat)heightForData:(WZVariousBaseObject *)obj {
-    return 0.0;
-}
++ (CGFloat)heightForData:(WZVariousBaseObject *)obj {return 0.0;}
 
-- (void)singleClicked {
-    NSLog(@"被单击了:%@",[self class]);
-}
+- (void)singleClicked {NSLog(@"被单击了:%@",[self class]);}
 
-//for code
+- (void)longPressedUseable:(BOOL)boolean {self.gesture.enabled = boolean;}
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPress {}
+
+- (void)content {}
+
+//code
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-//        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        //        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self content];
     }
     return self;
 }
 
-- (void)longPressedUseable:(BOOL)boolean {
-    if (boolean) {
-        if (_gesture) {
-            _gesture.enabled = true;
-        } else {
-            _gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                     action:@selector(longPress:)];
-            _gesture.minimumPressDuration = 0.5f;
-            [self addGestureRecognizer:_gesture];
-        }
-    } else {
-        _gesture.enabled = false;
-    }
-}
-
-- (void)longPress:(UILongPressGestureRecognizer *)longPress {
-    
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    [self content];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 #pragma mark - Accessor 
 - (void)setLocatedController:(UIViewController *)locatedController {
     if ([locatedController isKindOfClass:[UIViewController class]]) {
         _locatedController = locatedController;
     }
+}
+
+- (UILongPressGestureRecognizer *)gesture {
+    if (_gesture) {
+        _gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                      action:@selector(longPress:)];
+        _gesture.minimumPressDuration = 0.5f;
+        [self addGestureRecognizer:_gesture];
+    }
+    return _gesture;
 }
 
 @end

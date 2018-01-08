@@ -7,18 +7,18 @@
 //
 
 #import "WZVariousTable.h"
+#import "WZVariousBaseCell.h"
+#import "WZVariousBaseObject.h"
 
 #define WZTABLE_DEFAULTCELLID NSStringFromClass([WZVariousBaseCell class])
 
 @interface WZVariousTable()<UITableViewDelegate, UITableViewDataSource>
-
 
 @end
 
 @implementation WZVariousTable
 @synthesize registerCellDic = _registerCellDic;
 @synthesize datas = _datas;
-
 
 //初始化
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -42,7 +42,14 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self prepareForTable];
+}
+
 - (void)prepareForTable {
+#ifndef PREPAREFORTABEL
+#define PREPAREFORTABEL
     self.datas = [NSMutableArray array];//初始化
     self.separatorStyle = UITableViewCellSeparatorStyleNone;//无分割线
     
@@ -54,6 +61,7 @@
     self.delegate = self;
     self.dataSource = self;
     [self registerClass:[WZVariousBaseCell class] forCellReuseIdentifier:WZTABLE_DEFAULTCELLID];//内部注册
+#endif
 }
 
 #pragma mark - UITableViewDelegate
@@ -76,33 +84,27 @@
 
 //类型(隐藏式)纠正  考虑到 外部突然插入数据到self.datas 因此没在set方法中过滤
 - (WZVariousBaseObject *)getVariousObjectByIndexPath:(NSIndexPath *)indexPath {
-    @try {
-        if ([self.datas[indexPath.row] isKindOfClass:[WZVariousBaseObject class]]) {
-            BOOL last = (self.datas[indexPath.row] == self.datas.lastObject);
-            ((WZVariousBaseObject *)self.datas[indexPath.row]).isLastElement = last;
+    if (self.datas.count > indexPath.row
+        && [self.datas[indexPath.row] isKindOfClass:[WZVariousBaseObject class]]) {
+            //判断为最后一个元素
+            ((WZVariousBaseObject *)self.datas[indexPath.row]).isLastElement = (self.datas[indexPath.row] == self.datas.lastObject);
             return self.datas[indexPath.row];
-        } else {
-            return [[WZVariousBaseObject alloc] init];
-        }
-    } @catch (NSException *exception) {
-        NSLog(@"%@",exception.description);
     }
     
     return [[WZVariousBaseObject alloc] init];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    @try {
-        [tableView deselectRowAtIndexPath:indexPath animated:false];//不留下选中痕迹
-        
-        WZVariousBaseCell *cell =  [tableView cellForRowAtIndexPath:indexPath];
-        
-        if ([cell isKindOfClass:[WZVariousBaseCell class]]) {
-            [cell singleClicked];
-        }
-    } @catch (NSException *exception) {
-        NSLog(@"%@",exception.description);
+    if (self.datas.count <= indexPath.row) { return;};
+  
+    [tableView deselectRowAtIndexPath:indexPath animated:false];//不留下选中痕迹
+    
+    WZVariousBaseCell *cell =  [tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[WZVariousBaseCell class]]) {
+        [cell singleClicked];
     }
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -135,7 +137,7 @@
     //代理等
     cell.variousViewDelegate = (id<WZVariousViewDelegate>)self;
     cell.locatedController = self.locatedController;
-    cell.data = variousObj;
+    cell.data = variousObj; 
     
     [cell isLastElement:variousObj.isLastElement];
     

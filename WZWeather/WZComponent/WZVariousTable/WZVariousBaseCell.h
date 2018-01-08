@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 @class WZVariousBaseObject;
 @class WZVariousBaseCell;
-#define VARIOUS_ORIGINDATA @"WZVarious_originData"
-
 
 @protocol  WZVariousViewDelegate<NSObject>
 
@@ -20,8 +18,8 @@
 
 @interface WZVariousBaseCell : UITableViewCell
 
-@property (nonatomic, weak) id<WZVariousViewDelegate> variousViewDelegate;
-@property (nonatomic, weak) UIViewController *locatedController;
+@property (nonatomic,   weak) id<WZVariousViewDelegate> variousViewDelegate;
+@property (nonatomic,   weak) UIViewController *locatedController;
 @property (nonatomic, strong) WZVariousBaseObject *data;
 @property (nonatomic, strong) UILongPressGestureRecognizer *gesture;
 
@@ -32,4 +30,6 @@
 
 - (void)longPressedUseable:(BOOL)boolean;
 - (void)longPress:(UILongPressGestureRecognizer *)longPress;
+
+- (void)content;
 @end
