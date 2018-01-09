@@ -16,9 +16,10 @@
 @end
 
 @implementation WZTimeSuperviser
+
 - (instancetype)init {
     if (self = [super init]) {
-   
+      
     }
     return self;
 }
@@ -50,7 +51,7 @@
         }
         
         if (self.terminalTime) {
-            if ((self.terminalTime - self.duration) > 0.00001 ) {
+            if ((self.terminalTime - self.duration) > 0.00001) {
                 //持续时间增加
                 //            NSLog(@"\n self.terminalTime :%lf \n self.duration:%lf \n countDown:%lf"
                 //                  , self.terminalTime, self.duration, countDown);
@@ -79,6 +80,9 @@
     if (_timer) {
         if (_pause) {
             //恢复启动
+            if ([_delegate respondsToSelector:@selector(timeSuperviserResume)]) {
+                [_delegate timeSuperviserResume];
+            }
         } else {
             //首次启动
             _duration = 0.0;
@@ -93,12 +97,18 @@
 - (void)timeSuperviserPause {
     _pause = true;
     [self invalidate];
+    if ([_delegate respondsToSelector:@selector(timeSuperviserPause)]) {
+        [_delegate timeSuperviserPause];
+    }
 }
 
 /**
  *  停止定时器
  */
 - (void)timeSuperviserStop {
+    if ([_delegate respondsToSelector:@selector(timeSuperviser:didStopWithCancel:)]) {
+        [_delegate timeSuperviser:self didStopWithCancel:((self.terminalTime - self.duration) > 0.00001)];
+    }
     self.duration = 0;
     [self invalidate];
 }

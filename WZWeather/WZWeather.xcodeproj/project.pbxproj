@@ -289,6 +289,8 @@
 		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
 		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
 		845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */; };
+		845ED843200440E90031894C /* WZAnimatePageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ED842200440E90031894C /* WZAnimatePageControl.m */; };
+		845ED8462004468F0031894C /* WZAnimatePageControlThrobItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */; };
 		8462274A1FD62A0200D37FAE /* wallpaper5.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227451FD62A0100D37FAE /* wallpaper5.jpeg */; };
 		8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227461FD62A0100D37FAE /* wallpaper3.jpeg */; };
 		8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227471FD62A0200D37FAE /* wallpaper1.jpeg */; };
@@ -962,6 +964,10 @@
 		845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZCTTelephonyNetworkInfo.m; sourceTree = "<group>"; };
 		845BD8FD1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTCarrier+WZCTCarrierInfo.h"; sourceTree = "<group>"; };
 		845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CTCarrier+WZCTCarrierInfo.m"; sourceTree = "<group>"; };
+		845ED841200440E90031894C /* WZAnimatePageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAnimatePageControl.h; sourceTree = "<group>"; };
+		845ED842200440E90031894C /* WZAnimatePageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAnimatePageControl.m; sourceTree = "<group>"; };
+		845ED8442004468F0031894C /* WZAnimatePageControlThrobItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAnimatePageControlThrobItem.h; sourceTree = "<group>"; };
+		845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAnimatePageControlThrobItem.m; sourceTree = "<group>"; };
 		846227451FD62A0100D37FAE /* wallpaper5.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper5.jpeg; sourceTree = "<group>"; };
 		846227461FD62A0100D37FAE /* wallpaper3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper3.jpeg; sourceTree = "<group>"; };
 		846227471FD62A0200D37FAE /* wallpaper1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper1.jpeg; sourceTree = "<group>"; };
@@ -1182,6 +1188,7 @@
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
+				845ED84720048E460031894C /* WZAnimatePageControl */,
 				846227611FD6ACCE00D37FAE /* WZSilder */,
 				8483E7C21FC265DF00C559EF /* WZStarRatingView */,
 				8483E7C11FC2659A00C559EF /* WZTriangleView.h */,
@@ -1258,6 +1265,15 @@
 				840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */,
 			);
 			path = WZHardwareCodec;
+			sourceTree = "<group>";
+		};
+		841E4B582004C13800886F80 /* 视频合成 */ = {
+			isa = PBXGroup;
+			children = (
+				845664641FC82E8C0004BAC1 /* WZAPLSimpleEditor.h */,
+				845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */,
+			);
+			path = "视频合成";
 			sourceTree = "<group>";
 		};
 		8440FE641EC2A454002A893E /* WZNetwork */ = {
@@ -2390,9 +2406,8 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
 			isa = PBXGroup;
 			children = (
+				841E4B582004C13800886F80 /* 视频合成 */,
 				840E3E991FE3BF2600A5D559 /* WZHardwareCodec */,
-				845664641FC82E8C0004BAC1 /* WZAPLSimpleEditor.h */,
-				845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */,
 				84ECD3121FCBA7E400282C9A /* Resources */,
 				846A31291FD16336003CECAE /* WZMediaFetcher */,
 				846A310F1FD16336003CECAE /* WZPhotoBrowser */,
@@ -2435,6 +2450,17 @@
 				845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */,
 			);
 			path = WZTelephoneNetworkInfo;
+			sourceTree = "<group>";
+		};
+		845ED84720048E460031894C /* WZAnimatePageControl */ = {
+			isa = PBXGroup;
+			children = (
+				845ED841200440E90031894C /* WZAnimatePageControl.h */,
+				845ED842200440E90031894C /* WZAnimatePageControl.m */,
+				845ED8442004468F0031894C /* WZAnimatePageControlThrobItem.h */,
+				845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */,
+			);
+			path = WZAnimatePageControl;
 			sourceTree = "<group>";
 		};
 		846227611FD6ACCE00D37FAE /* WZSilder */ = {
@@ -3137,6 +3163,7 @@
 				84514D7B1E9DCE7A00F07EF8 /* UIView+JKRecursion.m in Sources */,
 				846A31391FD16337003CECAE /* NSObject+WZCommon.m in Sources */,
 				84514D2C1E9DCE7A00F07EF8 /* UIButton+JKImagePosition.m in Sources */,
+				845ED843200440E90031894C /* WZAnimatePageControl.m in Sources */,
 				84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */,
 				84514D5A1E9DCE7A00F07EF8 /* UINavigationController+JKStackManager.m in Sources */,
 				84514D831E9DCE7A00F07EF8 /* UIViewController+JKRecursiveDescription.m in Sources */,
@@ -3311,6 +3338,7 @@
 				84514D021E9DCE7A00F07EF8 /* NSString+JKRemoveEmoji.m in Sources */,
 				402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */,
 				84514D331E9DCE7A00F07EF8 /* UIColor+JKModify.m in Sources */,
+				845ED8462004468F0031894C /* WZAnimatePageControlThrobItem.m in Sources */,
 				84514D751E9DCE7A00F07EF8 /* UIView+JKConstraints.m in Sources */,
 				84514CCA1E9DCE7A00F07EF8 /* NSData+JKEncrypt.m in Sources */,
 				84514CFB1E9DCE7A00F07EF8 /* NSString+JKEncrypt.m in Sources */,

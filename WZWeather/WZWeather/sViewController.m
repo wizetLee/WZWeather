@@ -13,6 +13,7 @@
 #import "WZDownloadRequest.h"
 #import "WZDownloadProgressCell.h"
 
+
 @interface sViewController ()
 @property (nonatomic, strong) WZVariousCollectionView *cv;
 @property (nonatomic, strong) WZVariousCollectionReusableContent *c;

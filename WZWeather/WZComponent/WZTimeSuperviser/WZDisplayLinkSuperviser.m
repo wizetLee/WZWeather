@@ -11,7 +11,6 @@
 @interface WZDisplayLinkSuperviser()
 
 @property (nonatomic, assign) NSTimeInterval duration;
-
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
 @end
@@ -43,6 +42,9 @@
     if (_displayLink) {
         if (_pause) {
             //恢复启动
+            if ([_delegate respondsToSelector:@selector(timeSuperviserResume)]) {
+                [_delegate timeSuperviserResume];
+            }
         } else {
             //首次启动
             _duration = 0.0;

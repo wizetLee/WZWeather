@@ -37,6 +37,9 @@
     if (_timer) {
         if (_pause) {
             //恢复启动
+            if ([_delegate respondsToSelector:@selector(timeSuperviserResume)]) {
+                [_delegate timeSuperviserResume];
+            }
         } else {
             //首次启动
             _duration = 0.0;

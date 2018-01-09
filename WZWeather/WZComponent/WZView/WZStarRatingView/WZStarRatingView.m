@@ -52,7 +52,7 @@
  */
 
 
-
+#pragma mark - Public
 - (instancetype)initWithFrame:(CGRect)frame
                     starCount:(NSUInteger)starCount
                      starSize:(CGSize)starSize
@@ -73,6 +73,33 @@
     return self;
 }
 
+- (void)vitalizeStarImage:(UIImage *)image {
+    if ([image isKindOfClass:[UIImage class]]) {
+        if (self.starArr.count > 0) {
+            for (id obj in self.starArr) {
+                if ([obj isKindOfClass:[UIImageView class]]) {
+                    UIImageView *tmpImageView = (UIImageView *)obj;
+                    tmpImageView.image = image;
+                }
+            }
+        }
+    }
+}
+
+- (void)vitalizeDarkStarImage:(UIImage *)image {
+    if ([image isKindOfClass:[UIImage class]]) {
+        if (self.darkStarArr.count > 0) {
+            for (id obj in self.darkStarArr) {
+                if ([obj isKindOfClass:[UIImageView class]]) {
+                    UIImageView *tmpImageView = (UIImageView *)obj;
+                    tmpImageView.image = image;
+                }
+            }
+        }
+    }
+}
+
+#pragma mark - Private
 - (void)setupSubviews {
     _camouflageView = [[UIView alloc] initWithFrame:self.bounds];
     _maskLayer = [CALayer layer];
@@ -110,29 +137,40 @@
     [self addSubview:_camouflageView];//放在最前位置
 }
 
-- (void)vitalizeStarImage:(UIImage *)image {
-    if ([image isKindOfClass:[UIImage class]]) {
-        if (self.starArr.count > 0) {
-            for (id obj in self.starArr) {
-                if ([obj isKindOfClass:[UIImageView class]]) {
-                    UIImageView *tmpImageView = (UIImageView *)obj;
-                    tmpImageView.image = image;
-                }
+- (void)innerStarWithFrame:(CGRect)frame index:(int)i{
+    switch (_type) {
+        case WZStarRatingViewTypeWholeStar:
+        {
+            _maskLayer.frame = CGRectMake(0
+                                          , 0
+                                          , frame.origin.x + CGRectGetWidth(frame)
+                                          , self.bounds.size.height);
+            
+            _currentRange = (NSUInteger)(frame.size.width * (i + 1));
+        }
+            break;
+        case WZStarRatingViewTypeHalfStar:
+        {
+            if ((CGRectGetWidth(_maskLayer.frame) - frame.origin.x) > CGRectGetWidth(frame) / 2.0) {
+                _maskLayer.frame = CGRectMake(0
+                                              , 0
+                                              , frame.origin.x + CGRectGetWidth(frame)
+                                              , self.bounds.size.height);
+                _currentRange = (NSUInteger)(frame.size.width * (i + 1));
+            } else {
+                _maskLayer.frame = CGRectMake(0
+                                              , 0
+                                              , frame.origin.x + CGRectGetWidth(frame) / 2.0
+                                              , self.bounds.size.height);
+                _currentRange = (NSUInteger)(frame.size.width * (i + 0.5));
             }
         }
-    }
-}
-
-- (void)vitalizeDarkStarImage:(UIImage *)image {
-    if ([image isKindOfClass:[UIImage class]]) {
-        if (self.darkStarArr.count > 0) {
-            for (id obj in self.darkStarArr) {
-                if ([obj isKindOfClass:[UIImageView class]]) {
-                    UIImageView *tmpImageView = (UIImageView *)obj;
-                    tmpImageView.image = image;
-                }
-            }
+            break;
+        default:
+        {
+            _currentRange = (NSUInteger)(CGRectGetWidth(frame) * i + (CGRectGetWidth(_maskLayer.frame) - frame.origin.x));
         }
+            break;
     }
 }
 
@@ -181,45 +219,6 @@
     [CATransaction commit];
 }
 
-
-- (void)innerStarWithFrame:(CGRect)frame index:(int)i{
-    switch (_type) {
-        case WZStarRatingViewTypeWholeStar:
-        {
-            _maskLayer.frame = CGRectMake(0
-                                          , 0
-                                          , frame.origin.x + CGRectGetWidth(frame)
-                                          , self.bounds.size.height);
-            
-            _currentRange = (NSUInteger)(frame.size.width * (i + 1));
-        }
-            break;
-        case WZStarRatingViewTypeHalfStar:
-        {
-            if ((CGRectGetWidth(_maskLayer.frame) - frame.origin.x) > CGRectGetWidth(frame) / 2.0) {
-                _maskLayer.frame = CGRectMake(0
-                                             , 0
-                                             , frame.origin.x + CGRectGetWidth(frame)
-                                             , self.bounds.size.height);
-                _currentRange = (NSUInteger)(frame.size.width * (i + 1));
-            } else {
-                _maskLayer.frame = CGRectMake(0
-                                             , 0
-                                             , frame.origin.x + CGRectGetWidth(frame) / 2.0
-                                             , self.bounds.size.height);
-                _currentRange = (NSUInteger)(frame.size.width * (i + 0.5));
-            }
-        }
-            break;
-        default:
-        {
-            _currentRange = (NSUInteger)(CGRectGetWidth(frame) * i + (CGRectGetWidth(_maskLayer.frame) - frame.origin.x));
-        }
-            break;
-    }
-}
-
-
 - (UITapGestureRecognizer *)tap {
     if (!_tap) {
         _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesture:)];
@@ -251,7 +250,7 @@
     return _darkStarArr;
 }
 
-//利用值计算位置
+//利用值计算位置 这里写得不够好
 - (void)setPercentageValue:(double)percentageValue {
     if (percentageValue > 1.0) {
         _percentageValue = 1.0;

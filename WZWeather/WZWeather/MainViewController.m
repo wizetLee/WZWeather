@@ -23,7 +23,7 @@
 #import "WZAudioCodecController.h"
 #import "WZVideoCodecController.h"
 
-
+#import "WZAnimatePageControl.h"
 
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
@@ -150,6 +150,25 @@
            _table = table;
            self.table.frame = CGRectMake(0.0, top, screenW, height);
     }
+    
+    WZAnimatePageControl *page = [WZAnimatePageControl.alloc initWithFrame:CGRectMake(0.0, 200, [UIScreen mainScreen].bounds.size.width, 60.0)
+                                             itemContentList: @[@{@"headline": @"1"}
+                                                                ,@{@"headline": @"2"}
+                                                                ,@{@"headline": @"3"}
+                                                                ,@{@"headline": @"4"}
+                                                                ,@{@"headline": @"5"}
+                                                                ]
+                                                    itemSize:CGSizeMake(22.0, 22.0)];
+    
+    page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
+    [self.view addSubview:page];
+    page.delegate = (id<WZAnimatePageControlProtocol>)self;
+    [page selectedInIndex:100];
+    
+}
+
+- (void)pageControl:(WZAnimatePageControl *)pageControl didSelectInIndex:(NSInteger)index; {
+        NSLog(@"选中 的 index : %ld", index);
 }
 
 //不用masonry 就使用下面的代码
