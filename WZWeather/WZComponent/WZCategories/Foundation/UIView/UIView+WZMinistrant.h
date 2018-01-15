@@ -15,18 +15,10 @@
  */
 @property (nonatomic, assign) CGFloat wz_cornerRadius;//圆角设置
 
-/**
- *  设置View layer的cornerRadius
- *
- *  @param cornerRadius
- */
+//设置圆角（layer）
 - (void)setWz_cornerRadius:(CGFloat)cornerRadius;
 
-/**
- *  返回View layer的cornerRadius
- *
- *  @return cornerRadius
- */
+//会的圆角
 - (CGFloat)wz_cornerRadius;
 
 

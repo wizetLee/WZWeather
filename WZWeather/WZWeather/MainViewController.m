@@ -163,9 +163,11 @@
     page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
     [self.view addSubview:page];
     page.delegate = (id<WZAnimatePageControlProtocol>)self;
-    [page selectedInIndex:100];
+    [page selectedInIndex:100 withAnimation:false];
+    
     
 }
+
 
 - (void)pageControl:(WZAnimatePageControl *)pageControl didSelectInIndex:(NSInteger)index; {
         NSLog(@"选中 的 index : %ld", index);

@@ -338,6 +338,10 @@
 		846D16031FBBC03000E78FFF /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */; };
 		846D16081FBC0C5E00E78FFF /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D16071FBC0C5D00E78FFF /* face.png */; };
 		846F1DF41EC95D730013F078 /* WZDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F1DF31EC95D730013F078 /* WZDownloadRequest.m */; };
+		848280CF200CA490003AD79F /* bigDarkStar@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CB200CA48F003AD79F /* bigDarkStar@2X.png */; };
+		848280D0200CA490003AD79F /* bigStar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CC200CA48F003AD79F /* bigStar@2x.png */; };
+		848280D1200CA490003AD79F /* bigStar@3X.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CD200CA48F003AD79F /* bigStar@3X.png */; };
+		848280D2200CA490003AD79F /* bigDarkStar@3X.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CE200CA490003AD79F /* bigDarkStar@3X.png */; };
 		848633311F95CCD20086C96E /* WZMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633301F95CCD20086C96E /* WZMediaController.m */; };
 		848633471F95EBA60086C96E /* WZAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 848633461F95EBA60086C96E /* WZAppManager.m */; };
 		848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 848979861ECC3A97008B07D2 /* WZDownloadTarget.m */; };
@@ -1047,6 +1051,10 @@
 		846D16071FBC0C5D00E78FFF /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		846F1DF21EC95D730013F078 /* WZDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDownloadRequest.h; sourceTree = "<group>"; };
 		846F1DF31EC95D730013F078 /* WZDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDownloadRequest.m; sourceTree = "<group>"; };
+		848280CB200CA48F003AD79F /* bigDarkStar@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigDarkStar@2X.png"; sourceTree = "<group>"; };
+		848280CC200CA48F003AD79F /* bigStar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigStar@2x.png"; sourceTree = "<group>"; };
+		848280CD200CA48F003AD79F /* bigStar@3X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigStar@3X.png"; sourceTree = "<group>"; };
+		848280CE200CA490003AD79F /* bigDarkStar@3X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigDarkStar@3X.png"; sourceTree = "<group>"; };
 		8483E7BB1FC2658500C559EF /* WZSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZSearchBar.h; sourceTree = "<group>"; };
 		8483E7BC1FC2658500C559EF /* WZSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZSearchBar.m; sourceTree = "<group>"; };
 		8483E7BE1FC2658C00C559EF /* WZTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTextView.h; sourceTree = "<group>"; };
@@ -2733,6 +2741,10 @@
 		8483E7C21FC265DF00C559EF /* WZStarRatingView */ = {
 			isa = PBXGroup;
 			children = (
+				848280CB200CA48F003AD79F /* bigDarkStar@2X.png */,
+				848280CE200CA490003AD79F /* bigDarkStar@3X.png */,
+				848280CC200CA48F003AD79F /* bigStar@2x.png */,
+				848280CD200CA48F003AD79F /* bigStar@3X.png */,
 				8483E7C31FC265DF00C559EF /* WZStarRatingView.h */,
 				8483E7C41FC265DF00C559EF /* WZStarRatingView.m */,
 			);
@@ -3017,10 +3029,14 @@
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
 				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
+				848280D2200CA490003AD79F /* bigDarkStar@3X.png in Resources */,
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
+				848280D1200CA490003AD79F /* bigStar@3X.png in Resources */,
+				848280CF200CA490003AD79F /* bigDarkStar@2X.png in Resources */,
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
+				848280D0200CA490003AD79F /* bigStar@2x.png in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
 				846A31001FD0E686003CECAE /* asset_selectedOrigion_selected@3x.png in Resources */,

@@ -93,7 +93,7 @@
 }
 
 ///配置不被系统回收，也不保存到iClound的文件属性
-+ (BOOL)addBackupAttributeToItemAtURL:(NSURL *)URL {
++ (BOOL)wz_addBackupAttributeToItemAtURL:(NSURL *)URL {
 //    [NSURL fileURLWithPath:@""]
     if ([[NSFileManager defaultManager] fileExistsAtPath:[URL path]]) {
         NSError *error = nil;

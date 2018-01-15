@@ -43,7 +43,7 @@
  *  currentRange    当前评分的范围（选中范围）
  *  currentValue    当前评分值
  *  totalValue      评分总值
- *  minValue        设置最小分值
+ *  minValue        设置最小分值  默认为0
  *  maskView        遮罩view
  *  camouflageView  顶层的view(名字取好点.)
  *  pan,tap         self的手势
@@ -105,9 +105,9 @@
     _maskLayer = [CALayer layer];
     _maskLayer.backgroundColor = [UIColor whiteColor].CGColor;
     _maskLayer.frame = CGRectMake(0
-                                                                  , 0
-                                                                  , 0/*变量*/
-                                                                  , self.bounds.size.height);
+                                  , 0
+                                  , 0/*变量*/
+                                  , self.bounds.size.height);
     _camouflageView.layer.mask = _maskLayer;
     
     _totalRange = _starSize.width * _starCount;
@@ -175,17 +175,17 @@
 }
 
 - (void)gesture:(UIGestureRecognizer *)gesture {
-    CGPoint point = [gesture locationInView:self];
+    
     [CATransaction begin];// 去除隐式动画
     [CATransaction setDisableActions:YES];
     
+    CGPoint point = [gesture locationInView:self];
     _maskLayer.frame = CGRectMake(0
                                  , 0
                                  , point.x
                                  , self.bounds.size.height);
  
     //利用位置计算值
-    
     for (int i = 0; i < self.frameMArr.count; i++) {
         NSValue *frameValue = self.frameMArr[i];
         CGRect frame = frameValue.CGRectValue;
@@ -206,16 +206,15 @@
         
         _percentageValue = _currentRange / _totalRange * 1.0;
         
-        if (_minValue != 0.0) {
-            if (_minValue >= self.currentValue) {
-                self.percentageValue = _minValue / (_totalValue * 1.0);
-            }
+        if (_minValue != 0.0 && _minValue >= self.currentValue) {
+            self.percentageValue = _minValue / (_totalValue * 1.0);
         }
         
         if (self.starRatingCurrentValueBlock) {
             self.starRatingCurrentValueBlock(_percentageValue * _totalValue);
         }
     }
+    
     [CATransaction commit];
 }
 

@@ -25,7 +25,8 @@
 - (instancetype)initWithFrame:(CGRect)frame
               itemContentList:(NSArray <NSDictionary <NSString *, NSString *>*> *) itemContentList
                      itemSize:(CGSize)tmpItemSize;
-//选中第几个点
-- (void)selectedInIndex:(NSInteger)index;
+
+//带动画接口
+- (void)selectedInIndex:(NSInteger)index withAnimation:(BOOL)boolean;
 
 @end

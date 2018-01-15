@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
  *  @param path 文件路径
  */
 + (BOOL)wz_createFolderAtPath:(NSString *)path;
+
 /**
  *  检查文件
  *  @param direction 文件路径
@@ -55,7 +56,7 @@ typedef NS_ENUM(NSUInteger, WZSearchPathDirectory) {
 + (NSString *)wz_filePath:(WZSearchPathDirectory)direction fileName:(NSString *)fileName;
 
 ///配置不被系统回收，也不保存到iClound的文件属性
-+ (BOOL)addBackupAttributeToItemAtURL:(NSURL *)URL;
++ (BOOL)wz_addBackupAttributeToItemAtURL:(NSURL *)URL;
 
 /*iOS 数据存储指导方针：https://developer.apple.com/icloud/documentation/data-storage/index.html
  

@@ -92,7 +92,7 @@
             } else {
                 if (currentAngle > M_PI_2 && currentAngle <= M_PI) {
                     _status = 3;
-                    if ((curPoint.x - centerRelativeToFatherView.x) == 0) {
+                    if ((curPoint.x - centerRelativeToFatherView.x) == 0) {//特殊情况 x ＝ 0
                         renderAngle = M_PI;
                     } else {
                         renderAngle = currentAngle + M_PI_2;

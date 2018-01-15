@@ -10,10 +10,10 @@
 #import "UIView+WZMinistrant.h"
 
 @interface UIButton (WZMinistrant)
-
+//附图
 - (void)wz_setNormalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage;
 
-
+//设置圆角（layer、imageView.layer）
 - (void)wz_setCornerRadius:(CGFloat)cornerRadius;
 
 @end

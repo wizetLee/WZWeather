@@ -18,12 +18,12 @@
     CGSize handleViewSize;
     CGFloat itemOrigionY;
     
-    
     BOOL plusSeparation;
     CGFloat animationTargetX;
     NSInteger animtionCounter;
     CGFloat positionSeparation;
     CGFloat animationTimes;
+    CGFloat nonAnimationTimes;
 }
 
 @property (nonatomic, strong) NSMutableArray <WZAnimatePageControlThrobItem *>*itemList;
@@ -49,13 +49,9 @@
     return self;
 }
 
-- (void)selectedInIndex:(NSInteger)index {
-    //    [CATransaction begin];
-    //    [CATransaction setDisableActions:true];
-    
+- (void)selectedInIndex:(NSInteger)index withAnimation:(BOOL)boolean {
+    animationTimes = boolean?15.0:nonAnimationTimes;//设定：boolean 为false 时动画时间为1/60，人眼几乎观察不到动画
     [self locationHandleViewWithCenterX:[self calculateOrigionXWithIndex:index]];
-    //    [CATransaction commit];
-    
 }
 
 #pragma mark - Private
@@ -73,6 +69,7 @@
 
 - (void)creatViews {
     animationTimes = 15; // 0.25 * 60
+    nonAnimationTimes = 1;
     itemOrigionY = 5.0;
     [_displayLink invalidate];
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink:)];
@@ -114,7 +111,7 @@
     [self addGestureRecognizer:_tap];
     
     //默认滑动到第0个点
-    [self selectedInIndex:0];
+    [self selectedInIndex:0 withAnimation:false];
 }
 
 #pragma mark - Gesture Logic Calculated
@@ -161,6 +158,7 @@
                 [_delegate pageControl:self didSelectInIndex: [self calculateIndexWithCenterX:animationTargetX]];
             }
             link.paused = true;
+            animationTimes = 15.0;//此举为处理带动画接口（恢复动画时间）
         }
         if (plusSeparation) {
             _handleView.center = CGPointMake(_handleView.center.x + positionSeparation, _handleView.center.y);
@@ -179,7 +177,7 @@
         WZAnimatePageControlThrobItem *item = _itemList[i];
         CGFloat distance = fabs(item.center.x - value);
         if (leastValue < 0 ||
-            leastValue > distance) {//相等的情况：取上一个点
+            leastValue > distance) {//距离相等的情况：取上一个点
             leastValue = distance;
             tragetIndex = i;
         }
@@ -189,6 +187,7 @@
     }
 }
 
+//动画部分
 - (void)calculateItemScale {
     CGFloat denominator = innerGap + itemSize.width;
     CGFloat curX =  _handleView.center.x;
