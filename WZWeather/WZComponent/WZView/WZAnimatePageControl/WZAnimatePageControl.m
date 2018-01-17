@@ -19,11 +19,10 @@
     CGFloat itemOrigionY;
     
     BOOL plusSeparation;
-    CGFloat animationTargetX;
-    NSInteger animtionCounter;
-    CGFloat positionSeparation;
-    CGFloat animationTimes;
-    CGFloat nonAnimationTimes;
+    CGFloat animationTargetX;       //间接计算index的变量
+    NSInteger animtionCounter;      //动画次数统计
+    CGFloat positionSeparation;     //动画偏移分量
+    CGFloat animationTimes;         //动画的频率（定值）
 }
 
 @property (nonatomic, strong) NSMutableArray <WZAnimatePageControlThrobItem *>*itemList;
@@ -50,8 +49,22 @@
 }
 
 - (void)selectedInIndex:(NSInteger)index withAnimation:(BOOL)boolean {
-    animationTimes = boolean?15.0:nonAnimationTimes;//设定：boolean 为false 时动画时间为1/60，人眼几乎观察不到动画
-    [self locationHandleViewWithCenterX:[self calculateOrigionXWithIndex:index]];
+    if (boolean) {
+        [self locationHandleViewWithTargetX:[self calculateCenterXWithIndex:index]];
+    } else {
+        animationTargetX = [self calculateCenterXWithIndex:index];
+        _handleView.center = CGPointMake(animationTargetX, _handleView.center.y);
+        [self calculateItemScale];
+        [self didSelectDelegate];
+        NSLog(@"current%ld", [self currentIndex]);
+    }
+}
+
+//当前所在的角标
+- (NSUInteger)currentIndex {
+    
+//    return [self calculateIndexWithCenterX:self.handleView.center.x];//逻辑上应当使用self.handleView.center.x，使用animationTargetX替代self.handleView.center.x是因为self.handleView.center.x在做动画的过程会不断得改变
+    return [self calculateIndexWithCenterX:animationTargetX];
 }
 
 #pragma mark - Private
@@ -69,7 +82,6 @@
 
 - (void)creatViews {
     animationTimes = 15; // 0.25 * 60
-    nonAnimationTimes = 1;
     itemOrigionY = 5.0;
     [_displayLink invalidate];
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink:)];
@@ -125,40 +137,39 @@
     [self calculateItemScale];
     
     if (pan.state == UIGestureRecognizerStateEnded) {
-        [self locationHandleViewWithCenterX:x];
+        [self locationHandleViewWithTargetX:x];
     }
 }
 
 - (void)tap:(UITapGestureRecognizer *)tap {
     @synchronized(self) {
-        [self locationHandleViewWithCenterX:[self calculateTraceXRestrict:[tap locationInView:self].x]];
+        [self locationHandleViewWithTargetX:[self calculateTraceXRestrict:[tap locationInView:self].x]];
     }
 }
 
-- (void)locationHandleViewWithCenterX:(CGFloat)origionX {
+//根据给出的X坐标算出动画分量
+- (void)locationHandleViewWithTargetX:(CGFloat)origionX {
     _displayLink.paused = true;
     {
         animtionCounter = 0;
         __block CGFloat x = origionX;
         [self calculateLeastWithTargetX:x result:^(NSInteger index, CGFloat leastValue) {
-            x = _itemList[index].center.x;
+            x = _itemList[index].center.x;//取出相近的item的角标后，获取item的中心水平分量
         }];
-        animationTargetX = x;
+        animationTargetX = x;//最终动画需要到达的分量
         plusSeparation = (self.handleView.center.x - x) >= 0? 0: 1;
         positionSeparation = fabs(self.handleView.center.x - x) / animationTimes;
     }
     _displayLink.paused = false;
 }
 
+//动画计时器事件
 - (void)displayLink:(CADisplayLink *)link {
     @synchronized(self) {
         animtionCounter++;
         if (animtionCounter >= animationTimes) {
-            if ([_delegate respondsToSelector:@selector(pageControl:didSelectInIndex:)]) {
-                [_delegate pageControl:self didSelectInIndex: [self calculateIndexWithCenterX:animationTargetX]];
-            }
+            [self didSelectDelegate];
             link.paused = true;
-            animationTimes = 15.0;//此举为处理带动画接口（恢复动画时间）
         }
         if (plusSeparation) {
             _handleView.center = CGPointMake(_handleView.center.x + positionSeparation, _handleView.center.y);
@@ -169,10 +180,17 @@
     }
 }
 
-//计算靠最近的点
+- (void)didSelectDelegate {
+    if ([_delegate respondsToSelector:@selector(pageControl:didSelectInIndex:)]) {
+        [_delegate pageControl:self didSelectInIndex: [self calculateIndexWithCenterX:animationTargetX]];
+    }
+}
+
+
+//计算靠得最近的点
 - (void)calculateLeastWithTargetX:(CGFloat)value result:(void (^)(NSInteger index, CGFloat leastValue))result {
     NSInteger tragetIndex = 0;
-    CGFloat leastValue = -1;
+    CGFloat leastValue = -1;//得到最相近的值
     for (NSInteger i = 0; i < _itemList.count; i++) {
         WZAnimatePageControlThrobItem *item = _itemList[i];
         CGFloat distance = fabs(item.center.x - value);
@@ -186,7 +204,6 @@
         result(tragetIndex , leastValue);
     }
 }
-
 //动画部分
 - (void)calculateItemScale {
     CGFloat denominator = innerGap + itemSize.width;
@@ -198,7 +215,7 @@
         [item setScale:numerator / denominator];
     }
 }
-
+//滑动块X坐标的过滤
 - (CGFloat)calculateTraceXRestrict:(CGFloat)curX {
     if (curX < _itemList.firstObject.center.x) {
         curX = _itemList.firstObject.center.x;
@@ -211,8 +228,7 @@
 }
 
 ///index ————> centerX
-///ocenterX ————> index
-
+///centerX ————> index
 - (NSUInteger)calculateIndexWithCenterX:(CGFloat)centerX {
     NSUInteger index = 0;
     CGFloat length = 0;
@@ -227,14 +243,16 @@
     return index;
 }
 
-- (CGFloat)calculateOrigionXWithIndex:(NSInteger)index {
+//根据角标得到item的center.x
+- (CGFloat)calculateCenterXWithIndex:(NSInteger)index {
     if (index < 0) {
         index = 0;
     } else if (index >= count) {
         index = count - 1;
     }
-    CGFloat targetCenterX = lrGap + index * itemSize.width + index * innerGap;
-    return targetCenterX;
+    //左边间距+item.w * (index - 1) + item之间的边距 * (index - 1) +  item.w  / 2.0
+    CGFloat targetX = lrGap + index * itemSize.width + index * innerGap + itemSize.width / 2.0;
+    return targetX;
 }
 
 @end

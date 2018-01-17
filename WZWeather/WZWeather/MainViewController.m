@@ -163,14 +163,15 @@
     page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
     [self.view addSubview:page];
     page.delegate = (id<WZAnimatePageControlProtocol>)self;
-    [page selectedInIndex:100 withAnimation:false];
+    [page selectedInIndex:2 withAnimation:false];
     
     
 }
 
 
 - (void)pageControl:(WZAnimatePageControl *)pageControl didSelectInIndex:(NSInteger)index; {
-        NSLog(@"选中 的 index : %ld", index);
+    
+    NSLog(@"选中 的 index : %ld~~~~currendIndex : %ld", index, [pageControl currentIndex]);
 }
 
 //不用masonry 就使用下面的代码

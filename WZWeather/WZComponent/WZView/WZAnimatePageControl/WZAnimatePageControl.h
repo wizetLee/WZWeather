@@ -26,6 +26,9 @@
               itemContentList:(NSArray <NSDictionary <NSString *, NSString *>*> *) itemContentList
                      itemSize:(CGSize)tmpItemSize;
 
+//当前所在的角标
+- (NSUInteger)currentIndex;
+
 //带动画接口
 - (void)selectedInIndex:(NSInteger)index withAnimation:(BOOL)boolean;
 
