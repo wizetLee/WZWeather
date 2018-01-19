@@ -142,9 +142,7 @@
 }
 
 - (void)tap:(UITapGestureRecognizer *)tap {
-    @synchronized(self) {
-        [self locationHandleViewWithTargetX:[self calculateTraceXRestrict:[tap locationInView:self].x]];
-    }
+   [self locationHandleViewWithTargetX:[self calculateTraceXRestrict:[tap locationInView:self].x]];
 }
 
 //根据给出的X坐标算出动画分量
@@ -166,26 +164,32 @@
 //动画计时器事件
 - (void)displayLink:(CADisplayLink *)link {
     @synchronized(self) {
-        animtionCounter++;
-        if (animtionCounter >= animationTimes) {
-            [self didSelectDelegate];
-            link.paused = true;
-        }
         if (plusSeparation) {
             _handleView.center = CGPointMake(_handleView.center.x + positionSeparation, _handleView.center.y);
         } else {
             _handleView.center = CGPointMake(_handleView.center.x - positionSeparation, _handleView.center.y);
         }
         [self calculateItemScale];
+        
+        animtionCounter++;
+        if (animtionCounter >= animationTimes) {
+            link.paused = true;
+            //存在的问题：在代理中处理大量数据时，动画卡顿。修改方案为并发但是代理在辅助线程中执行
+            if (_delegate) {
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    [self didSelectDelegate];
+                });
+            }
+        }
     }
 }
 
+//注意线程在辅助线程中执行
 - (void)didSelectDelegate {
     if ([_delegate respondsToSelector:@selector(pageControl:didSelectInIndex:)]) {
         [_delegate pageControl:self didSelectInIndex: [self calculateIndexWithCenterX:animationTargetX]];
     }
 }
-
 
 //计算靠得最近的点
 - (void)calculateLeastWithTargetX:(CGFloat)value result:(void (^)(NSInteger index, CGFloat leastValue))result {
@@ -204,6 +208,7 @@
         result(tragetIndex , leastValue);
     }
 }
+
 //动画部分
 - (void)calculateItemScale {
     CGFloat denominator = innerGap + itemSize.width;
@@ -215,6 +220,7 @@
         [item setScale:numerator / denominator];
     }
 }
+
 //滑动块X坐标的过滤
 - (CGFloat)calculateTraceXRestrict:(CGFloat)curX {
     if (curX < _itemList.firstObject.center.x) {

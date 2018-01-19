@@ -199,7 +199,7 @@
 	NSMutableArray *trackMixArray = [NSMutableArray array];
 	
 	// Cycle between "pass through A", "transition from A to B", "pass through B"
-   
+
 ///层指令设置
     for (i = 0; i < clipsCount; i++ ) {
         NSInteger alternatingIndex = i % 2; // alternating targets

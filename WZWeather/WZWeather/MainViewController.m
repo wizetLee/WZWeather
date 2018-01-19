@@ -162,10 +162,8 @@
     
     page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
     [self.view addSubview:page];
-    page.delegate = (id<WZAnimatePageControlProtocol>)self;
     [page selectedInIndex:2 withAnimation:false];
-    
-    
+     page.delegate = (id<WZAnimatePageControlProtocol>)self;
 }
 
 

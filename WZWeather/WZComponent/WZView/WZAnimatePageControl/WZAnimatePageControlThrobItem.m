@@ -53,7 +53,6 @@
     } else if (scale > 1) {
         scale = 1;
     }
-    
     //比例
     _imageView.transform = CGAffineTransformMakeScale(scale, scale);
     //颜色
@@ -62,6 +61,7 @@
     _headlineLable.font = [UIFont boldSystemFontOfSize:15.0 + (1 - scale) * 5];
     //position
     _headlineLable.transform = CGAffineTransformMakeTranslation(0.0, (1 - scale) * 20.0);
+   
 }
 
 @end
