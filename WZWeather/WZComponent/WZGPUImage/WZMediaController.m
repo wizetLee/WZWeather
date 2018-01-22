@@ -176,7 +176,7 @@
 //MARK:拍照事件
 - (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender {
 #warning 连拍会产生崩溃
-    
+    self.view.userInteractionEnabled = false;
     [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
         if (image) {
             NSLog(@"%@", NSStringFromCGSize(image.size));
@@ -187,7 +187,7 @@
                 tmpImageView.contentMode = UIViewContentModeScaleAspectFit;
                 tmpImageView.center = self.view.center;
                 [self.view addSubview:tmpImageView];
-                self.view.userInteractionEnabled = false;
+                
                 [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
                     tmpImageView.alpha = 0.0;
                 } completion:^(BOOL finished) {
