@@ -71,7 +71,7 @@ typedef NS_ENUM(NSUInteger, APLSimpleEditorTransitionType) {
 
 @end
 /*********
- 此类用于自定义视频的合成以及以及过度效果
+ 此类用于自定义视频的合成以及过度效果
  *************/
 
 @interface WZAPLSimpleEditor : NSObject

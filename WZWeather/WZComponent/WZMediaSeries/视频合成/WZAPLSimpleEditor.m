@@ -83,9 +83,8 @@
 	compositionVideoTracks[0] = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
 	compositionVideoTracks[1] = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
     
-	
-	CMTimeRange *passThroughTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);
-	CMTimeRange *transitionTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);
+	CMTimeRange *passThroughTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);  //在stack上分配内存
+	CMTimeRange *transitionTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);   //无需手动释放
 
     BOOL useAudioTrack = true;
     
@@ -110,7 +109,7 @@
 		AVAsset *asset = [self.clips objectAtIndex:i];
 		NSValue *clipTimeRange = [self.clipTimeRanges objectAtIndex:i];
 		CMTimeRange timeRangeInAsset = clipTimeRange ? [clipTimeRange CMTimeRangeValue] : CMTimeRangeMake(kCMTimeZero, [asset duration]);
-       
+//      CMTimeRange timeRangeInAsset = CMTimeRangeMake(kCMTimeZero, clipVideoTrack.asset.duration)
 //        NSLog(@"时长 %@", [NSValue valueWithCMTimeRange:timeRangeInAsset]);
         if ([asset tracksWithMediaType:AVMediaTypeVideo].count == 0) {
             NSAssert(0, @"视频视轨缺失，请检查");
@@ -120,6 +119,11 @@
 		AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
         
         //插入到视轨
+        /**
+         1、视频的选择范围
+         2、数据源轨道
+         3、轨道指定的时间点
+         */
 		[compositionVideoTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipVideoTrack atTime:nextClipStartTime error:nil];
         
 //        NSLog(@"视频的插入时间:%@", [NSValue valueWithCMTime:nextClipStartTime]);
@@ -136,8 +140,8 @@
 		// First clip ends with a transition.
 		// Exclude those transitions from the pass through time ranges.
 		passThroughTimeRanges[i] = CMTimeRangeMake(nextClipStartTime, timeRangeInAsset.duration);
-   
-//MRAK: - transitionDuration的判断
+
+//MARK: - transitionDuration的判断
         if (CMTIME_COMPARE_INLINE(self.transitionDuration, ==, kCMTimeZero)) {//过渡时间为0
             transitionDuration = kCMTimeZero;
         } else if (CMTIME_COMPARE_INLINE(asset.duration, <=, CMTimeAdd(transitionDuration, transitionDuration))) {//个人设定：如果视频的时间小于等过渡时间的2倍则不使用过渡效果(其实等于也是可行的)
@@ -166,6 +170,7 @@
                 } else {
                     _lastDuration = transitionDuration;
                 }
+                
                 if (i > 0) {
                     //根据transitionDuration判断是否要延迟开场的时间
                     passThroughTimeRanges[i].start = CMTimeAdd(passThroughTimeRanges[i].start, transitionDuration);
@@ -181,7 +186,8 @@
                 }
             }
         }
-		
+//MARK: - transitionDuration的判断
+
 		// The end of this clip will overlap the start of the next by transitionDuration.
 		// (Note: this arithmetic falls apart if timeRangeInAsset.duration < 2 * transitionDuration.)
 		nextClipStartTime = CMTimeAdd(nextClipStartTime, timeRangeInAsset.duration);
@@ -225,7 +231,7 @@
             [instructions addObject:passThroughInstruction];
         }
         
-
+        //少了一次的计算量 因为最后一段是不用过渡的
         if (i+1 < clipsCount) {
 ///视频过渡部分
             {
@@ -353,6 +359,7 @@
     {//如果没有自定义targetSize视频尺寸则使用第一个视频资源的尺寸作为输出尺寸 且处理好正确的视屏尺寸
         if (CGSizeEqualToSize(self.targetSize, CGSizeZero)) {
             self.targetSize = [[self.clips objectAtIndex:0] naturalSize];
+//            [[self.clips objectAtIndex:0] tracksWithMediaType:AVMediaTypeVideo].firstObject.naturalSize
             //正常方向
             AVAsset *asset = [self.clips objectAtIndex:0];
             BOOL needAdjust = false;

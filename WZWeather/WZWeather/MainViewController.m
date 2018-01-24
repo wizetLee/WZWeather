@@ -115,17 +115,17 @@
     if(!_table) {
         UITableView *table = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [self.view addSubview:table];
-//        [table mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo((self.view));
-//            make.right.mas_equalTo(self.view);
-//            if (@available(iOS 11.0, *)) {
-//                make.top.mas_equalTo(loop.mas_bottom);
-//                make.bottom.mas_equalTo(self.view.mas_safeAreaLayoutGuideBottom);
-//            } else {
-//                make.top.mas_equalTo(loop.mas_bottom);
-//                make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
-//            }
-//        }];
+        [table mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo((self.view));
+            make.right.mas_equalTo(self.view);
+            if (@available(iOS 11.0, *)) {
+                make.top.mas_equalTo(loop.mas_bottom);
+                make.bottom.mas_equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+            } else {
+                make.top.mas_equalTo(loop.mas_bottom);
+                make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
+            }
+        }];
         table.delegate = (id<UITableViewDelegate>)self;
         table.dataSource = (id<UITableViewDataSource>)self;
         table.backgroundColor = UIColor.yellowColor;
