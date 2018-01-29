@@ -89,8 +89,9 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     movieURL = newMovieURL;
     fileType = newFileType;
     startTime = kCMTimeInvalid;
+    ///根据键谁是否实时编码
     _encodingLiveVideo = [[outputSettings objectForKey:@"EncodingLiveVideo"] isKindOfClass:[NSNumber class]] ? [[outputSettings objectForKey:@"EncodingLiveVideo"] boolValue] : YES;
-    previousFrameTime = kCMTimeNegativeInfinity;
+    previousFrameTime = kCMTimeNegativeInfinity;//负无穷...
     previousAudioTime = kCMTimeNegativeInfinity;
     inputRotation = kGPUImageNoRotation;
     
