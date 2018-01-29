@@ -446,6 +446,7 @@ static int stride = 0;
     
 }
 
+///开启镜头
 - (void)launchCamera {
     _cameraCurrent.delegate = (id<GPUImageVideoCameraDelegate>)self;
     [_cameraCurrent configMetadataOutputWithDelegete];
@@ -529,7 +530,7 @@ static int stride = 0;
         
         CMTime duration = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
         if (CMTimeCompare(_recordStartTime, kCMTimeZero) == 0) {
-            _recordStartTime = CMTimeMake(duration.value, duration.timescale);//获得拍摄的时间
+            _recordStartTime = CMTimeMake(duration.value, duration.timescale);
         }
         CMTime progressTime = CMTimeSubtract(duration , _recordStartTime);//有点误差， 需要录制完之后再校对一次吧
         progressTime = CMTimeAdd(_recordTotalTime, progressTime);//加上之前拍照的总时间数目
@@ -603,11 +604,13 @@ static int stride = 0;
 //    _movieWriter.paused = false;
 //}
 
+///文件的录取
 - (NSString *)newMovieName {
     NSString *movieName = [NSString stringWithFormat:@"recordMovie%ld.m4v", _moviesNameMarr.count];
     return movieName;
 }
 
+///取消录制
 - (void)cancelRecord {
     _recording = false;
     if (_movieWriter) {
@@ -618,6 +621,7 @@ static int stride = 0;
     }
 }
 
+///结束录制
 - (void)endRecord {
     _recording = false;
     if (_movieWriter && _curRecordingName) {

@@ -566,8 +566,10 @@ NSString *const kGPUImagePassthroughFragmentShaderString = SHADER_STRING
         1.0f,  1.0f,
     };
     
+    //渲染到纹理到目标顶点坐标
     [self renderToTextureWithVertices:imageVertices textureCoordinates:[[self class] textureCoordinatesForRotation:inputRotation]];
 
+    //更新链中的buffer信息
     [self informTargetsAboutNewFrameAtTime:frameTime];
 }
 

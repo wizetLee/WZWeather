@@ -151,19 +151,19 @@
            self.table.frame = CGRectMake(0.0, top, screenW, height);
     }
     
-    WZAnimatePageControl *page = [WZAnimatePageControl.alloc initWithFrame:CGRectMake(0.0, 200, [UIScreen mainScreen].bounds.size.width, 60.0)
-                                             itemContentList: @[@{@"headline": @"1"}
-                                                                ,@{@"headline": @"2"}
-                                                                ,@{@"headline": @"3"}
-                                                                ,@{@"headline": @"4"}
-                                                                ,@{@"headline": @"5"}
-                                                                ]
-                                                    itemSize:CGSizeMake(22.0, 22.0)];
-    
-    page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
-    [self.view addSubview:page];
-    [page selectedInIndex:2 withAnimation:false];
-     page.delegate = (id<WZAnimatePageControlProtocol>)self;
+//    WZAnimatePageControl *page = [WZAnimatePageControl.alloc initWithFrame:CGRectMake(0.0, 200, [UIScreen mainScreen].bounds.size.width, 60.0)
+//                                             itemContentList: @[@{@"headline": @"1"}
+//                                                                ,@{@"headline": @"2"}
+//                                                                ,@{@"headline": @"3"}
+//                                                                ,@{@"headline": @"4"}
+//                                                                ,@{@"headline": @"5"}
+//                                                                ]
+//                                                    itemSize:CGSizeMake(22.0, 22.0)];
+//    
+//    page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
+//    [self.view addSubview:page];
+//    [page selectedInIndex:2 withAnimation:false];
+//     page.delegate = (id<WZAnimatePageControlProtocol>)self;
 }
 
 

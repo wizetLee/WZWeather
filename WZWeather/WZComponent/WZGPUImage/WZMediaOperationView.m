@@ -15,11 +15,11 @@
 
 @interface WZMediaOperationView ()<WZMediaConfigViewProtocol, WZMediaEffectShowProtocol, WZMediaRateTypeViewProtocol>
 
-@property (nonatomic, strong) WZMediaConfigView *configView;//左手势
-@property (nonatomic, strong) WZMediaEffectShow *effectView;//右手势
-@property (nonatomic, strong) UIImageView *catalogueImageView;//切换相册或者是视频的目录
-@property (nonatomic, strong) WZMediaGestureView *gestureView;
-@property (nonatomic, strong) WZMediaRateTypeView *videoRateTypeView;
+@property (nonatomic, strong) WZMediaConfigView *configView;            //左手势
+@property (nonatomic, strong) WZMediaEffectShow *effectView;            //右手势
+@property (nonatomic, strong) UIImageView *catalogueImageView;          //切换相册或者是视频的目录
+@property (nonatomic, strong) WZMediaGestureView *gestureView;          //手势层
+@property (nonatomic, strong) WZMediaRateTypeView *videoRateTypeView;   //控制录制速率（考虑配置播放速率）
 //---------------------------------------通用
 ///退出拍摄 录影
 @property (nonatomic, strong) UIButton *closeBtn;
@@ -134,18 +134,18 @@
 //    [self addGestureRecognizer:_edgePan];
 //    [self addGestureRecognizer:_edgePanR];
     
-    _videoRateTypeView = [[WZMediaRateTypeView alloc] initWithFrame:CGRectMake(0.0, 0.0, 44.0 * 5, 44.0)];
-    _videoRateTypeView.layer.backgroundColor = [UIColor yellowColor].CGColor;
-    _videoRateTypeView.layer.cornerRadius = 22.0;
-    [self addSubview:_videoRateTypeView];
-    _videoRateTypeView.center = self.center;
-    _videoRateTypeView.delegate = self;
+    {//速率
+//        _videoRateTypeView = [[WZMediaRateTypeView alloc] initWithFrame:CGRectMake(0.0, 0.0, 44.0 * 5, 44.0)];
+//        _videoRateTypeView.layer.backgroundColor = [UIColor yellowColor].CGColor;
+//        _videoRateTypeView.layer.cornerRadius = 22.0;
+//        [self addSubview:_videoRateTypeView];
+//        _videoRateTypeView.center = self.center;
+//        _videoRateTypeView.delegate = self;
+    }
     
     _recordTimeBar = [[WZMediaRecordTimeBar alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, 10.0)];
     [self addSubview:_recordTimeBar];
     
-    
-  
     [self addSubview:self.configView];//最顶层
 }
 

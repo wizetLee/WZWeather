@@ -21,7 +21,7 @@ extern NSString *const kGPUImageColorSwizzlingFragmentShaderString;
 	AVAssetWriter *assetWriter;
 	AVAssetWriterInput *assetWriterAudioInput;
 	AVAssetWriterInput *assetWriterVideoInput;
-    AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferInput;
+    AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferInput;   //提供一个CVPixelBufferPool，这个池可分配像素缓冲区
     
     GPUImageContext *_movieWriterContext;
     CVPixelBufferRef renderTarget;

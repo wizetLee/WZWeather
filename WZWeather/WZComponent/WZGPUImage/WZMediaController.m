@@ -99,18 +99,16 @@
 - (void)dealloc {
     NSLog(@"%s",__func__);
 }
-
+#pragma mark -
 #pragma mark - WZMediaPreviewViewProtocol
 //MARK:完成录制的回调
 - (void)previewView:(WZMediaPreviewView *)view didCompleteTheRecordingWithFileURL:(NSURL *)fileURL {
 
     
     //偶尔会出现时间为0  但是确实又可以播放的 可能是文件还没有彻底配置完成
-    NSLock *lock = [[NSLock alloc] init];
-    [lock tryLock];
     AVAsset *asset = [AVAsset assetWithURL:fileURL];
-    NSLog(@"________________%lf", CMTimeGetSeconds(asset.duration));
-    [lock unlock];
+    NSLog(@"拍摄完成，本次拍摄拍摄时间为：%lf", CMTimeGetSeconds(asset.duration));
+
 //    if (CMTimeGetSeconds(asset.duration) == 0) {
 //        self.navigationController.navigationBarHidden = false;
 //        MPMoviePlayerViewController *VC = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
@@ -128,7 +126,7 @@
         }
     });
 }
-
+#pragma mark -
 #pragma mark - WZMediaGestureViewProtocol
 //MARK:更新焦点
 - (void)gestureView:(WZMediaGestureView *)view updateFocusAtPoint:(CGPoint)point; {
@@ -157,7 +155,7 @@
 - (void)gestureView:(WZMediaGestureView *)view screenEdgePan:(UIScreenEdgePanGestureRecognizer *)screenEdgePan {
     [self.mediaOperationView screenEdgePan:screenEdgePan];
 }
-
+#pragma mark -
 #pragma mark - WZMediaOperationViewProtocol
 //MARK:录像速率调节
 - (void)operationView:(WZMediaOperationView*)view didScrollToIndex:(NSUInteger)index {
@@ -175,7 +173,6 @@
 }
 //MARK:拍照事件
 - (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender {
-#warning 连拍会产生崩溃
     self.view.userInteractionEnabled = false;
     [_mediaPreviewView pickStillImageWithHandler:^(UIImage *image) {
         if (image) {
@@ -362,35 +359,29 @@
     
 }
 
-
 //MARK:增加速率变换的时间节点
 - (void)addNode {
     //每转一次就生成一个新的记录对象
     if (CMTimeCompare(_currentRecordTime, kCMTimeZero) != 0) {
-        NSLock *lock = [[NSLock alloc] init];
-        [lock tryLock];
-        {
-            CMTime leadingTime = kCMTimeZero;
-            CMTime trailintTime = _currentRecordTime;
-            //切换的起点
-            if (self.mediaPreviewView.timeScaleMArr.count != 0) {
-                NSDictionary *dic = self.mediaPreviewView.timeScaleMArr.lastObject;
-                leadingTime =  [dic[@"trailintTime"] CMTimeValue];//上一次的位置
-            } else {
-                self.mediaPreviewView.lastTimeScaleType = 2;
-            }
-            
-            //leading
-            NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
-            tmpDic[@"leadingTime"] = [NSValue valueWithCMTime:leadingTime]; //开始位置
-            tmpDic[@"trailintTime"] = [NSValue valueWithCMTime:trailintTime];//结束位置
-            tmpDic[@"type"] = [NSNumber numberWithUnsignedInteger:self.mediaPreviewView.lastTimeScaleType];//速率类型
-            [self.mediaPreviewView.timeScaleMArr addObject:tmpDic];
+        CMTime leadingTime = kCMTimeZero;
+        CMTime trailintTime = _currentRecordTime;
+        //切换的起点
+        if (self.mediaPreviewView.timeScaleMArr.count != 0) {
+            NSDictionary *dic = self.mediaPreviewView.timeScaleMArr.lastObject;
+            leadingTime =  [dic[@"trailintTime"] CMTimeValue];//上一次的位置
+        } else {
+            self.mediaPreviewView.lastTimeScaleType = 2;
         }
-        [lock unlock];
+        
+        //leading
+        NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
+        tmpDic[@"leadingTime"] = [NSValue valueWithCMTime:leadingTime]; //开始位置
+        tmpDic[@"trailintTime"] = [NSValue valueWithCMTime:trailintTime];//结束位置
+        tmpDic[@"type"] = [NSNumber numberWithUnsignedInteger:self.mediaPreviewView.lastTimeScaleType];//速率类型
+        [self.mediaPreviewView.timeScaleMArr addObject:tmpDic];
     }
 }
-
+#pragma mark -
 #pragma mark - SCRecorder 视频合成方案样例代码 稍有更改
 + (AVMutableComposition *)compositionWithSegments:(NSArray <AVAsset *>*)segments {
     //可变音视频组合
@@ -480,7 +471,7 @@
 }
 
 
-
+#pragma mark -
 #pragma mark - Private Method
 - (void)createViews {
     //适配iOS 11
@@ -501,6 +492,7 @@
         
     }
 }
+#pragma mark -
 #pragma mark - Public Method
 
 

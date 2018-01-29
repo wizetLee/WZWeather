@@ -285,6 +285,9 @@
 		8456645F1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8456645E1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m */; };
 		845664621FC813180004BAC1 /* NSObject+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */; };
 		845664871FC82E8C0004BAC1 /* WZAPLSimpleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */; };
+		845A4217201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */; };
+		845A421A201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */; };
+		845A421D201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */; };
 		845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */; };
 		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
 		845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F81EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m */; };
@@ -961,6 +964,12 @@
 		845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZMinistrant.m"; sourceTree = "<group>"; };
 		845664641FC82E8C0004BAC1 /* WZAPLSimpleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAPLSimpleEditor.h; sourceTree = "<group>"; };
 		845664651FC82E8C0004BAC1 /* WZAPLSimpleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAPLSimpleEditor.m; sourceTree = "<group>"; };
+		845A4215201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZConvertPhotosIntoVideoTool.h; sourceTree = "<group>"; };
+		845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZConvertPhotosIntoVideoTool.m; sourceTree = "<group>"; };
+		845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZConvertPhotosIntoVideoItem.h; sourceTree = "<group>"; };
+		845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZConvertPhotosIntoVideoItem.m; sourceTree = "<group>"; };
+		845A421B201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZConvertPhotosIntoVideoFilter.h; sourceTree = "<group>"; };
+		845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZConvertPhotosIntoVideoFilter.m; sourceTree = "<group>"; };
 		845BD8F11EB077F8004AC354 /* WZAFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZAFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -2414,6 +2423,7 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
 			isa = PBXGroup;
 			children = (
+				845A4214201EBB98002D7477 /* 图片转视频工具 */,
 				841E4B582004C13800886F80 /* 视频合成 */,
 				840E3E991FE3BF2600A5D559 /* WZHardwareCodec */,
 				84ECD3121FCBA7E400282C9A /* Resources */,
@@ -2437,6 +2447,19 @@
 				845664571FC8100E0004BAC1 /* WZCategories.h */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		845A4214201EBB98002D7477 /* 图片转视频工具 */ = {
+			isa = PBXGroup;
+			children = (
+				845A4215201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.h */,
+				845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */,
+				845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */,
+				845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */,
+				845A421B201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.h */,
+				845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */,
+			);
+			path = "图片转视频工具";
 			sourceTree = "<group>";
 		};
 		845BD8F01EB0509A004AC354 /* WZNetworkMonitor */ = {
@@ -3278,6 +3301,7 @@
 				8402EB261ECD64A40030CCE1 /* WZVariousBaseMethodObject.m in Sources */,
 				84514D861E9DCE7A00F07EF8 /* UIWebView+JKBlocks.m in Sources */,
 				846227641FD6ACCE00D37FAE /* WZSlider.m in Sources */,
+				845A421D201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m in Sources */,
 				84514D841E9DCE7A00F07EF8 /* UIViewController+JKStoreKit.m in Sources */,
 				844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */,
 				84514CF71E9DCE7A00F07EF8 /* NSString+JKBase64.m in Sources */,
@@ -3292,11 +3316,13 @@
 				846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */,
 				84514D481E9DCE7A00F07EF8 /* UIImage+JKOrientation.m in Sources */,
 				84514CBE1E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m in Sources */,
+				845A421A201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m in Sources */,
 				844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */,
 				84514D0C1E9DCE7A00F07EF8 /* NSURL+JKParam.m in Sources */,
 				84514CCF1E9DCE7A00F07EF8 /* NSDate+JKCupertinoYankee.m in Sources */,
 				84514CD41E9DCE7A00F07EF8 /* NSDate+JKUtilities.m in Sources */,
 				84514CED1E9DCE7A00F07EF8 /* NSObject+JKAutoCoding.m in Sources */,
+				845A4217201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m in Sources */,
 				845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */,
 				846A31381FD16337003CECAE /* WZPhotoPickerController.m in Sources */,
 				84514D0D1E9DCE7A00F07EF8 /* NSURL+JKQueryDictionary.m in Sources */,

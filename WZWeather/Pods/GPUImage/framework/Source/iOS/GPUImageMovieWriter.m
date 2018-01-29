@@ -245,10 +245,11 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
                                                            nil];
 //    NSDictionary *sourcePixelBufferAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:kCVPixelFormatType_32ARGB], kCVPixelBufferPixelFormatTypeKey,
 //                                                           nil];
-        
+    
+    //初始化、并且配置Video Input
     assetWriterPixelBufferInput = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:assetWriterVideoInput sourcePixelBufferAttributes:sourcePixelBufferAttributesDictionary];
     
-    [assetWriter addInput:assetWriterVideoInput];
+    [assetWriter addInput:assetWriterVideoInput];//写视频
 }
 
 - (void)setEncodingLiveVideo:(BOOL) value
@@ -360,6 +361,8 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     });
 }
 
+
+///处理buffe
 - (void)processAudioBuffer:(CMSampleBufferRef)audioBuffer;
 {
     if (!isRecording)
@@ -541,7 +544,6 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     {
         // Code originally sourced from http://allmybrain.com/2011/12/08/rendering-to-a-texture-with-ios-5-texture-cache-api/
         
-
         CVPixelBufferPoolCreatePixelBuffer (NULL, [assetWriterPixelBufferInput pixelBufferPool], &renderTarget);
 
         /* AVAssetWriter will use BT.601 conversion matrix for RGB to YCbCr conversion
@@ -744,6 +746,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
             }
             else if(self.assetWriter.status == AVAssetWriterStatusWriting)
             {
+                //加buffer到缓冲区
                 if (![assetWriterPixelBufferInput appendPixelBuffer:pixel_buffer withPresentationTime:frameTime])
                     NSLog(@"Problem appending pixel buffer at time: %@", CFBridgingRelease(CMTimeCopyDescription(kCFAllocatorDefault, frameTime)));
             }
@@ -890,7 +893,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
                                    [ NSData dataWithBytes: &acl length: sizeof( acl ) ], AVChannelLayoutKey,
                                    nil];*/
         }
-        
+        //加的声音
         assetWriterAudioInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings:audioOutputSettings];
         [assetWriter addInput:assetWriterAudioInput];
         assetWriterAudioInput.expectsMediaDataInRealTime = _encodingLiveVideo;
