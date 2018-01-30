@@ -419,6 +419,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
      if (_mediaAssetData.count > indexPath.row) {
          PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
+       
+         
+    
          WZVideoPickerCell *cell = (WZVideoPickerCell *)[collectionView cellForItemAtIndexPath:indexPath];
          
          if (_type == WZVideoPickerType_pick
@@ -484,10 +487,65 @@
                      _surfAlert.asset = asset;
                      [_surfAlert alertShow];
                  });
+                 
+                 
+                 //检查帧率 码率 分辨率
+                 AVAssetTrack * videoTrack = nil;
+                 NSArray * videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+                 
+                 CMFormatDescriptionRef formatDescription = NULL;
+                 NSArray * formatDescriptions = [videoTrack formatDescriptions];
+                 if([formatDescriptions count]> 0)
+                 formatDescription = (__bridge CMFormatDescriptionRef)[formatDescriptions objectAtIndex:0];
+                 
+                 if ([videoTracks count]> 0)
+                 videoTrack = [videoTracks objectAtIndex:0];
+                 
+                 CGSize trackDimensions = {
+                     .width = 0.0,
+                     .height = 0.0,
+                 };
+                 trackDimensions = [videoTrack naturalSize];
+                 
+                 int width = trackDimensions.width;
+                 int height = trackDimensions.height;
+                 NSLog(@"~~~~~~~~~~~~~~~~~~~~");
+//                 NSLog(@"width = %d,  height = %d", width, height);
+                 printf("width = %d,  height = %d \n", width, height);
+                 float frameRate = [videoTrack nominalFrameRate];
+                 float bps = [videoTrack estimatedDataRate];
+//                 NSLog(@"帧率 = %f", frameRate);
+                 
+                 printf("帧率 = %f \n", frameRate);
+//                 NSLog(@"bytes per second = %f", bps / 8);
+                 printf("视轨bytes per second = %f \n", bps / 8);
+//                 NSLog(@"视频时长 ：%f",  CMTimeGetSeconds([videoTrack timeRange].duration));
+                 
+                 NSArray * audioTruck = [asset tracksWithMediaType:AVMediaTypeAudio];
+                 
+                 //加上音频部分
+                 if (audioTruck.count) {
+                     float ABps = [audioTruck.firstObject estimatedDataRate] / 8;
+//                     NSLog(@"视频大小 ：%f",  CMTimeGetSeconds([videoTrack timeRange].duration) * ((bps / 8) + ABps));
+                     printf("音轨bytes per second = %f \n", ABps);
+                     printf("视频大小 ：%f \n",  CMTimeGetSeconds([videoTrack timeRange].duration) * ((bps / 8) + ABps));
+                 }
+                 printf("视频时长 ：%f \n",  CMTimeGetSeconds([videoTrack timeRange].duration));
+                 NSLog(@"~~~~~~~~~~~~~~~~~~~~");
+                 
              }];
-             
          }
      }
+}
+
+static NSString * FourCCString(FourCharCode code) {
+    NSString *result = [NSString stringWithFormat:@"%c%c%c%c",
+                        (code >> 24) & 0xff,
+                        (code >> 16) & 0xff,
+                        (code >> 8) & 0xff,
+                        code & 0xff];
+    NSCharacterSet *characterSet = [NSCharacterSet whitespaceCharacterSet];
+    return [result stringByTrimmingCharactersInSet:characterSet];
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver

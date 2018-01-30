@@ -142,6 +142,7 @@
     _playerItem = [[AVPlayerItem alloc] initWithAsset:_asset];
     _player = [AVPlayer playerWithPlayerItem:_playerItem];
     //处理视图
+    
 }
 
 //MARK: - WZSliderProtocol
@@ -203,7 +204,7 @@
 //MARK: - 视频进度监听和控制 循环播放等处理
 //MARK: 这个通知实现无线循环播放
 - (void)playerItemDidPlayToEndTimeNotification:(NSNotification *)notification {
-    NSLog(@"%s", __func__);
+//    NSLog(@"%s", __func__);
     //暂停
     [_player seekToTime:kCMTimeZero];
     [_player play];
