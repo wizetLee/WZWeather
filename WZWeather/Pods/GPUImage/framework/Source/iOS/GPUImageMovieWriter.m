@@ -4,11 +4,12 @@
 #import "GLProgram.h"
 #import "GPUImageFilter.h"
 
+///片元着色器
 NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
 (
- varying highp vec2 textureCoordinate;
+ varying highp vec2 textureCoordinate;  //坐标
  
- uniform sampler2D inputImageTexture;
+ uniform sampler2D inputImageTexture;   //采样
  
  void main()
  {
@@ -19,20 +20,22 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
 
 @interface GPUImageMovieWriter ()
 {
-    GLuint movieFramebuffer, movieRenderbuffer;
+    GLuint movieFramebuffer, movieRenderbuffer;                 //句柄
+   
+    GLProgram *colorSwizzlingProgram;                           //program 颜色转换着色器程序
+   
+    GLint colorSwizzlingPositionAttribute, colorSwizzlingTextureCoordinateAttribute; //VSHposition句柄， FSH纹理坐标句柄
     
-    GLProgram *colorSwizzlingProgram;
-    GLint colorSwizzlingPositionAttribute, colorSwizzlingTextureCoordinateAttribute;
-    GLint colorSwizzlingInputTextureUniform;
-
-    GPUImageFramebuffer *firstInputFramebuffer;
+    GLint colorSwizzlingInputTextureUniform;                    //纹理句柄
+  
+    GPUImageFramebuffer *firstInputFramebuffer;                 //一个帧的buffer（从摄像头采集一次就输入一次）
     
     CMTime startTime, previousFrameTime, previousAudioTime;
 
-    dispatch_queue_t audioQueue, videoQueue;
-    BOOL audioEncodingIsFinished, videoEncodingIsFinished;
+    dispatch_queue_t audioQueue, videoQueue;                    //音频队列，视频队列
+    BOOL audioEncodingIsFinished, videoEncodingIsFinished;      //编码完成标志
 
-    BOOL isRecording;
+    BOOL isRecording;                                           //录制状态
 }
 
 // Movie recording
@@ -89,7 +92,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     movieURL = newMovieURL;
     fileType = newFileType;
     startTime = kCMTimeInvalid;
-    ///根据键谁是否实时编码
+    ///根据键是否实时编码
     _encodingLiveVideo = [[outputSettings objectForKey:@"EncodingLiveVideo"] isKindOfClass:[NSNumber class]] ? [[outputSettings objectForKey:@"EncodingLiveVideo"] boolValue] : YES;
     previousFrameTime = kCMTimeNegativeInfinity;//负无穷...
     previousAudioTime = kCMTimeNegativeInfinity;
@@ -127,6 +130,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
                 NSAssert(NO, @"Filter shader link failed");
             }
         }        
+        
         
         colorSwizzlingPositionAttribute = [colorSwizzlingProgram attributeIndex:@"position"];
         colorSwizzlingTextureCoordinateAttribute = [colorSwizzlingProgram attributeIndex:@"inputTextureCoordinate"];

@@ -10,7 +10,7 @@
 
 #import "WZAnimatedTransitionsBase.h"
 #import "WZInteractiveTransitionsBase.h"
-#import "sViewController.h"
+
 
 
 @interface WZBaseViewController ()

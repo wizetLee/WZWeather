@@ -23,7 +23,9 @@
 #import "WZAudioCodecController.h"
 #import "WZVideoCodecController.h"
 
-#import "WZAnimatePageControl.h"
+
+
+#import "WZTestViewController.h"
 
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
@@ -150,33 +152,14 @@
            _table = table;
            self.table.frame = CGRectMake(0.0, top, screenW, height);
     }
-    
-//    WZAnimatePageControl *page = [WZAnimatePageControl.alloc initWithFrame:CGRectMake(0.0, 200, [UIScreen mainScreen].bounds.size.width, 60.0)
-//                                             itemContentList: @[@{@"headline": @"1"}
-//                                                                ,@{@"headline": @"2"}
-//                                                                ,@{@"headline": @"3"}
-//                                                                ,@{@"headline": @"4"}
-//                                                                ,@{@"headline": @"5"}
-//                                                                ]
-//                                                    itemSize:CGSizeMake(22.0, 22.0)];
-//    
-//    page.frame = CGRectMake(0.0, 300, [UIScreen mainScreen].bounds.size.width, 80.0);
-//    [self.view addSubview:page];
-//    [page selectedInIndex:2 withAnimation:false];
-//     page.delegate = (id<WZAnimatePageControlProtocol>)self;
+
 }
 
 
-- (void)pageControl:(WZAnimatePageControl *)pageControl didSelectInIndex:(NSInteger)index; {
-    
-    NSLog(@"选中 的 index : %ld~~~~currendIndex : %ld", index, [pageControl currentIndex]);
-}
 
 //不用masonry 就使用下面的代码
 //- (void)viewWillLayoutSubviews {
 //    [super viewWillLayoutSubviews];
-//
-//
 //
 //    ///
 //    CGFloat top = 0.0;
@@ -233,7 +216,7 @@
             cell.textLabel.text = [NSString stringWithFormat:@"本地视频选取、合并、删除"];
         } break;
         case 5: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~~"];
+            cell.textLabel.text = [NSString stringWithFormat:@"WZTestViewController"];
         } break;
         case 6: {
             cell.textLabel.text = [NSString stringWithFormat:@"~"];
@@ -323,6 +306,10 @@
            [WZVideoPickerController showPickerWithPresentedController:self];
         } break;
         case 5: {
+//            WZTestViewController *vc = [[WZTestViewController alloc] initWithNibName:@"WZTestViewController" bundle:nil];
+
+            WZTestViewController *vc = [[WZTestViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:true];
         } break;
         case 6: {
         } break;

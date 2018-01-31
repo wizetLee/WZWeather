@@ -43,8 +43,9 @@
 		840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */; };
 		840E3EA21FE3BFA300A5D559 /* WZVideoCodecController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */; };
 		840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */; };
+		84135BAD202145CA005B2905 /* WZTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84135BAB202145CA005B2905 /* WZTestViewController.m */; };
+		84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84135BAC202145CA005B2905 /* WZTestViewController.xib */; };
 		84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */; };
-		8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8444C8AC1EA0594600DD6259 /* sViewController.m */; };
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
 		844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */; };
 		84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84474A411EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m */; };
@@ -475,10 +476,11 @@
 		840E3E9F1FE3BFA300A5D559 /* WZVideoCodecController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoCodecController.h; sourceTree = "<group>"; };
 		840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoCodecController.m; sourceTree = "<group>"; };
 		840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZVideoCodecController.xib; sourceTree = "<group>"; };
+		84135BAA202145CA005B2905 /* WZTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTestViewController.h; sourceTree = "<group>"; };
+		84135BAB202145CA005B2905 /* WZTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTestViewController.m; sourceTree = "<group>"; };
+		84135BAC202145CA005B2905 /* WZTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZTestViewController.xib; sourceTree = "<group>"; };
 		84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDisplayLinkSuperviser.h; sourceTree = "<group>"; };
 		84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDisplayLinkSuperviser.m; sourceTree = "<group>"; };
-		8444C8AB1EA0594600DD6259 /* sViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sViewController.h; sourceTree = "<group>"; };
-		8444C8AC1EA0594600DD6259 /* sViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sViewController.m; sourceTree = "<group>"; };
 		8446650D1EC45DAE00E19241 /* WZHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHttpRequest.h; sourceTree = "<group>"; };
 		8446650E1EC45DAE00E19241 /* WZHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHttpRequest.m; sourceTree = "<group>"; };
 		844665151EC4655800E19241 /* WZHttpRequest+WZWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WZHttpRequest+WZWeather.h"; sourceTree = "<group>"; };
@@ -2566,8 +2568,9 @@
 				846920DF1E63D6920048BBDC /* MainViewController.m */,
 				84ECD32D1FCC1D3B00282C9A /* WZAVPlayerViewController.h */,
 				84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */,
-				8444C8AB1EA0594600DD6259 /* sViewController.h */,
-				8444C8AC1EA0594600DD6259 /* sViewController.m */,
+				84135BAA202145CA005B2905 /* WZTestViewController.h */,
+				84135BAB202145CA005B2905 /* WZTestViewController.m */,
+				84135BAC202145CA005B2905 /* WZTestViewController.xib */,
 				846920B21E63BB550048BBDC /* Assets.xcassets */,
 				846920B41E63BB550048BBDC /* LaunchScreen.storyboard */,
 				846920B71E63BB550048BBDC /* Info.plist */,
@@ -3083,6 +3086,7 @@
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
+				84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
@@ -3217,6 +3221,7 @@
 				84514D461E9DCE7A00F07EF8 /* UIImage+JKGIF.m in Sources */,
 				84514D151E9DCE7A00F07EF8 /* MKMapView+JKMoveLogo.m in Sources */,
 				846227511FD63C4E00D37FAE /* WZVideoSurfAlert.m in Sources */,
+				84135BAD202145CA005B2905 /* WZTestViewController.m in Sources */,
 				84514D451E9DCE7A00F07EF8 /* UIImage+JKFXImage.m in Sources */,
 				84514D711E9DCE7A00F07EF8 /* UITextView+JKPlaceHolder.m in Sources */,
 				84514D361E9DCE7A00F07EF8 /* UIControl+JKActionBlocks.m in Sources */,
@@ -3232,7 +3237,6 @@
 				84514CD91E9DCE7A00F07EF8 /* NSDictionary+JKMerge.m in Sources */,
 				84514CCE1E9DCE7A00F07EF8 /* NSData+JKzlib.m in Sources */,
 				84514D431E9DCE7A00F07EF8 /* UIImage+JKColor.m in Sources */,
-				8444C8AD1EA0594600DD6259 /* sViewController.m in Sources */,
 				84514D1C1E9DCE7A00F07EF8 /* UIAlertView+JKBlock.m in Sources */,
 				848633471F95EBA60086C96E /* WZAppManager.m in Sources */,
 				84514D311E9DCE7A00F07EF8 /* UIColor+JKGradient.m in Sources */,

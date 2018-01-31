@@ -41,8 +41,8 @@ extern NSString *const kGPUImageColorSwizzlingFragmentShaderString;
 @property(nonatomic, copy) BOOL(^videoInputReadyCallback)(void);                //
 @property(nonatomic, copy) BOOL(^audioInputReadyCallback)(void);                //
 @property(nonatomic, copy) void(^audioProcessingCallback)(SInt16 **samplesRef, CMItemCount numSamplesInBuffer);                                                        //处理回调
-@property(nonatomic) BOOL enabled;                                              //是否接通链
-@property(nonatomic, readonly) AVAssetWriter *assetWriter;                      //访问writer
+@property(nonatomic) BOOL enabled;                                              //是否接通链 ，由链上方
+@property(nonatomic, readonly) AVAssetWriter *assetWriter;                      //writer
 @property(nonatomic, readonly) CMTime duration;                                 //读取持续时间
 @property(nonatomic, assign) CGAffineTransform transform;                       //设置方向
 @property(nonatomic, copy) NSArray *metaData;                                   //元数据(AVMetadataItem)
