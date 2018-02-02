@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {
 
 @class BIVideoTransitionEffectTool;
 @protocol BIVideoTransitionEffectToolProtocol <NSObject>
-//图片转视频的进度
+///视频合成的进度
 - (void)videoTransitionEffectTool:(BIVideoTransitionEffectTool *)tool progress:(float)progress;
 
 ///完成情况成功

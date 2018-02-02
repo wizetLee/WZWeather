@@ -129,6 +129,208 @@
     });
 }
 
+///开始任务前的准备，每次开始任务前，都需要prepareTask（主要是需要吧status设置为ready状态）
+- (void)prepareTask {
+    _composition                    = [AVMutableComposition composition];
+    _videoComposition               = [AVMutableVideoComposition videoComposition];
+    _audioMix                       = [AVMutableAudioMix audioMix];
+    
+    ////计算输出的视频尺寸
+    CGSize videoSize                = _outputVideoSize;
+    _composition.naturalSize        = videoSize;
+    _videoComposition.renderSize    = videoSize;
+    //property
+    _videoComposition.frameDuration = CMTimeMake(1.0, 30.0); // 30 fps
+    _videoComposition.renderScale   = 1.0;
+    
+    //视频list中size的统一规则要自定义配置
+    
+    NSMutableArray <BIVideoTransitionItem *>* videoSourcesList = _videoSourcesList;
+    
+    if (videoSourcesList.count < 2) {
+        NSLog(@"小于2个资源，不应当有过渡入口：合成失败");
+        return;
+    }
+    
+    AVMutableComposition *composition               = _composition;
+    AVMutableVideoComposition *videoComposition     = _videoComposition;
+    AVMutableAudioMix *audioMix                     = _audioMix;
+    
+    AVMutableCompositionTrack *compositionVideoTracks[2];   //自定义的视轨
+    AVMutableCompositionTrack *compositionAudioTracks[2];   //自定义的音轨
+    
+    NSUInteger clipsCount = [videoSourcesList count];                                //资源总量
+    CMTimeRange *passThroughTimeRanges  = alloca(sizeof(CMTimeRange) * clipsCount);  //直通时间range
+    CMTimeRange *transitionTimeRanges   = alloca(sizeof(CMTimeRange) * clipsCount);  //过渡时间range 
+    /*alloca在stack上分配内存，无需手动释放*/
+    
+    CMTime nextClipStartTime = kCMTimeZero;     //将源插入到目标轨道的时间点
+    BOOL needAudioTrack = true;//使用音轨与否
+    BOOL hasAudioTrack = false;//使用过音轨与否
+    
+    {//自定义轨道配置
+        compositionVideoTracks[0] = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+        compositionVideoTracks[1] = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+        
+        if (needAudioTrack) {//需要用到音轨  考虑到有静音的    状态
+            compositionAudioTracks[0] = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+            compositionAudioTracks[1] = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+        }
+    }
+    
+    //--------------->视频音频插入准确的轨道、过渡时间的配置
+    for (NSInteger i = 0; i < clipsCount; i++ ) {
+        NSInteger alternatingIndex              = i % 2;                     //轨道切换角标
+        BIVideoTransitionItem *transitionItem   = [videoSourcesList objectAtIndex:i];
+        AVAsset *asset                          = transitionItem.asset;
+        
+        CMTimeRange timeRangeInAsset = kCMTimeRangeZero;//资源的有效范围
+        {//轨道使用策略
+            //视轨使用策略
+            if ([asset tracksWithMediaType:AVMediaTypeVideo].count == 0) {
+                //                NSAssert(0, @"视频视轨缺失，请检查");//采取忽略视轨缺失的集合的还是返回错误状态？
+                NSLog(@"某个视频的视轨缺失，请检查（这里应该采取别的策略）");
+                return ;
+            }
+            AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+            timeRangeInAsset = CMTimeRangeMake(kCMTimeZero, clipVideoTrack.asset.duration);
+            //1、视频的选择范围 2、数据源轨道  3、轨道指定的时间点
+            [compositionVideoTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipVideoTrack atTime:nextClipStartTime error:nil];
+            
+            //音频使用策略
+            if ([asset tracksWithMediaType:AVMediaTypeAudio].count
+                && needAudioTrack) {
+                AVAssetTrack *clipAudioTrack = [[asset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];
+                [compositionAudioTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipAudioTrack atTime:nextClipStartTime error:nil];
+                hasAudioTrack = true;
+            }
+        }
+        
+        //存储直通时间范围（原始范围）
+        passThroughTimeRanges[i] = CMTimeRangeMake(nextClipStartTime, timeRangeInAsset.duration);
+        
+        {//过渡时间处理策略
+            CMTime curTransitionTime = _stubbornTransitionTime;//预设过渡时间
+            
+            if (i + 1 < clipsCount) {
+                BIVideoTransitionItem *curItem  = [videoSourcesList objectAtIndex:i];
+                BIVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
+                curItem.endTransitionDuration   = nextItem.startTransitionDuration = curTransitionTime;
+                
+                if (curItem.transitionEffectType == BIVideoTransitionEffectType_None) {
+                    //无过渡
+                    curTransitionTime = curItem.endTransitionDuration = nextItem.startTransitionDuration = kCMTimeZero;
+                } else {
+                    //有过渡
+                    CMTime maxTransitionTime = [self maxTransitionTimeWithAsset1:curItem.asset asset2:nextItem.asset];
+                    if (CMTimeCompare(maxTransitionTime, curTransitionTime) < 0) {
+                        curTransitionTime = curItem.endTransitionDuration = nextItem.startTransitionDuration = maxTransitionTime;//预设与视频时长的冲突解决
+                    }
+                }
+            } //------------------------>得到最终的过渡时间
+            
+            {//根据过渡时间修改直通时间范围
+                if (i > 0) {//1 ~ n
+                    //根据transitionDuration判断是否要延迟开场的时间
+                    BIVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
+                    CMTime offsetTime                   = curItem.startTransitionDuration;
+                    passThroughTimeRanges[i].start      = CMTimeAdd(passThroughTimeRanges[i].start, offsetTime);
+                    passThroughTimeRanges[i].duration   = CMTimeSubtract(passThroughTimeRanges[i].duration, offsetTime);
+                }
+                
+                if (i+1 < clipsCount) {// 0 ~ n-1
+                    BIVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
+                    CMTime offsetTime                   = curItem.endTransitionDuration;
+                    passThroughTimeRanges[i].duration   = CMTimeSubtract(passThroughTimeRanges[i].duration, offsetTime);
+                }
+            }
+            
+            //时间偏移计算
+            nextClipStartTime = CMTimeAdd(nextClipStartTime, timeRangeInAsset.duration);
+            nextClipStartTime = CMTimeSubtract(nextClipStartTime, curTransitionTime);
+            
+            //存储过渡节点的时间
+            if (i + 1 < clipsCount) {
+                transitionTimeRanges[i] = CMTimeRangeMake(nextClipStartTime, curTransitionTime);
+            }
+        }
+    }
+    
+    //--------------->配置过渡效果
+    NSMutableArray *instructions = [NSMutableArray array];
+    NSMutableArray *trackMixArray = [NSMutableArray array];
+    for (NSInteger i = 0; i < clipsCount; i++) {
+        BIVideoTransitionItem *curItem = [videoSourcesList objectAtIndex:i];
+        AVAsset *asset = curItem.asset;
+        NSInteger alternatingIndex = i % 2;     //轨道切换角标
+        
+        {//非过渡部分
+            AVMutableVideoCompositionInstruction *passThroughInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+            
+            passThroughInstruction.timeRange = passThroughTimeRanges[i];//配置非过渡时间范围
+            
+            ///在这里可以更改视频的尺寸
+            AVMutableVideoCompositionLayerInstruction *passThroughLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[alternatingIndex]];
+            
+            {//视频方向纠正
+                CGAffineTransform transform = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform;
+                [passThroughLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:passThroughInstruction.timeRange];
+            }
+            
+            passThroughInstruction.layerInstructions = @[passThroughLayer];
+            [instructions addObject:passThroughInstruction];
+        }
+        
+        {//过渡部分
+            if (i + 1 < clipsCount) {
+                //                 BIVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
+                AVMutableVideoCompositionInstruction *transitionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+                transitionInstruction.timeRange = transitionTimeRanges[i];//配置过渡范围
+                
+                AVMutableVideoCompositionLayerInstruction *fromLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[alternatingIndex]];
+                AVMutableVideoCompositionLayerInstruction *toLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[1 - alternatingIndex]];
+                
+                {//处理正确的视频的方向
+                    CGAffineTransform transform = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform;
+                    [fromLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionInstruction.timeRange];
+                    [toLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionInstruction.timeRange];
+                }
+                
+                {//配置过渡效果
+                    //使用的溶解效果
+                    BOOL useTransitionEffect = true;
+                    BIVideoTransitionEffectType curType = curItem.transitionEffectType;
+                    if (useTransitionEffect) {
+                        [self animationWithFromLayer:fromLayer toLayer:toLayer targetSize:_outputVideoSize transitionTimeRange:transitionTimeRanges[i] targetType:curType];
+                    }
+                }
+                transitionInstruction.layerInstructions = @[toLayer, fromLayer];
+                [instructions addObject:transitionInstruction];
+                
+                {//过渡音效更改
+                    if ([asset tracksWithMediaType:AVMediaTypeAudio].count
+                        && needAudioTrack) {
+                        //降音
+                        AVMutableAudioMixInputParameters *trackMix1 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTracks[alternatingIndex]];
+                        [trackMix1 setVolumeRampFromStartVolume:1.0 toEndVolume:0.0 timeRange:transitionTimeRanges[i]];
+                        [trackMixArray addObject:trackMix1];
+                        //增音
+                        AVMutableAudioMixInputParameters *trackMix2 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTracks[1 - alternatingIndex]];
+                        [trackMix2 setVolumeRampFromStartVolume:0.0 toEndVolume:1.0 timeRange:transitionTimeRanges[i]];
+                        [trackMixArray addObject:trackMix2];
+                    }
+                }
+            }
+        }
+        
+        videoComposition.instructions = instructions;
+        audioMix.inputParameters = trackMixArray;
+    }
+    
+    //释放准备信号
+    _status = BIVideoTransitionEffectToolStatus_Ready;
+}
+
 ///视频过渡效果
 #pragma mark - 自定义的视频过渡效果
 - (void)animationWithFromLayer:(AVMutableVideoCompositionLayerInstruction *)fromLayer toLayer:(AVMutableVideoCompositionLayerInstruction *)toLayer targetSize:(CGSize)targetSize transitionTimeRange:(CMTimeRange)transitionTimeRange targetType:(BIVideoTransitionEffectType)targetType {
@@ -272,209 +474,6 @@
     } else {
         NSLog(@"状态错误，当前并非在导出视频");
     }
-}
-
-///开始任务前的准备，每次开始任务前，都需要prepareTask（主要是需要吧status设置为ready状态）
-- (void)prepareTask {
-    _composition                    = [AVMutableComposition composition];
-    _videoComposition               = [AVMutableVideoComposition videoComposition];
-    _audioMix                       = [AVMutableAudioMix audioMix];
-    
-    ////计算输出的视频尺寸
-    CGSize videoSize                = _outputVideoSize;
-    _composition.naturalSize        = videoSize;
-    _videoComposition.renderSize    = videoSize;
-    //property
-    _videoComposition.frameDuration = CMTimeMake(1.0, 30.0); // 30 fps
-    _videoComposition.renderScale   = 1.0;
-    
-    //视频list中size的统一规则要自定义配置
-    
-    NSMutableArray <BIVideoTransitionItem *>* videoSourcesList = _videoSourcesList;
-#warning
-#pragma mark - 需要修改的策略
-    if (videoSourcesList.count < 2) {
-        NSLog(@"小于2个资源，不应当有过渡入口：合成失败");
-        return;
-    }
-    
-    AVMutableComposition *composition               = _composition;
-    AVMutableVideoComposition *videoComposition     = _videoComposition;
-    AVMutableAudioMix *audioMix                     = _audioMix;
-    
-    AVMutableCompositionTrack *compositionVideoTracks[2];   //自定义的视轨
-    AVMutableCompositionTrack *compositionAudioTracks[2];   //自定义的音轨
-    
-    NSUInteger clipsCount = [videoSourcesList count];                                //资源总量
-    CMTimeRange *passThroughTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);  //直通时间range //在stack上分配内存
-    CMTimeRange *transitionTimeRanges = alloca(sizeof(CMTimeRange) * clipsCount);   //过渡时间range //无需手动释放
-    CMTime nextClipStartTime = kCMTimeZero;     //将源插入到目标轨道的时间点
-    BOOL needAudioTrack = true;//使用音轨与否
-    BOOL hasAudioTrack = false;//使用过音轨与否
-    
-    {//自定义轨道配置
-        compositionVideoTracks[0] = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-        compositionVideoTracks[1] = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-        
-        if (needAudioTrack) {//需要用到音轨  考虑到有静音的    状态
-            compositionAudioTracks[0] = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
-            compositionAudioTracks[1] = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
-        }
-    }
-    
-    //--------------->视频音频插入准确的轨道、过渡时间的配置
-    for (NSInteger i = 0; i < clipsCount; i++ ) {
-        NSInteger alternatingIndex              = i % 2;                     //轨道切换角标
-        BIVideoTransitionItem *transitionItem   = [videoSourcesList objectAtIndex:i];
-        AVAsset *asset                          = transitionItem.asset;
-        
-        CMTimeRange timeRangeInAsset = kCMTimeRangeZero;//资源的有效范围
-        {//轨道使用策略
-            //视轨使用策略
-            if ([asset tracksWithMediaType:AVMediaTypeVideo].count == 0) {
-                //                NSAssert(0, @"视频视轨缺失，请检查");//采取忽略视轨缺失的集合的还是返回错误状态？
-                NSLog(@"某个视频的视轨缺失，请检查（这里应该采取别的策略）");
-#warning
-#pragma mark  需要修改的策略
-                return ;
-            }
-            AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-            timeRangeInAsset = CMTimeRangeMake(kCMTimeZero, clipVideoTrack.asset.duration);
-            //1、视频的选择范围 2、数据源轨道  3、轨道指定的时间点
-            [compositionVideoTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipVideoTrack atTime:nextClipStartTime error:nil];
-            
-            //音频使用策略
-            if ([asset tracksWithMediaType:AVMediaTypeAudio].count
-                && needAudioTrack) {
-                AVAssetTrack *clipAudioTrack = [[asset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];
-                [compositionAudioTracks[alternatingIndex] insertTimeRange:timeRangeInAsset ofTrack:clipAudioTrack atTime:nextClipStartTime error:nil];
-                hasAudioTrack = true;
-            }
-        }
-        
-        //存储直通时间范围（原始范围）
-        passThroughTimeRanges[i] = CMTimeRangeMake(nextClipStartTime, timeRangeInAsset.duration);
-        
-        {//过渡时间处理策略
-            CMTime curTransitionTime = _stubbornTransitionTime;//预设过渡时间
-            
-            if (i + 1 < clipsCount) {
-                BIVideoTransitionItem *curItem  = [videoSourcesList objectAtIndex:i];
-                BIVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
-                curItem.endTransitionDuration   = nextItem.startTransitionDuration = curTransitionTime;
-                
-                if (curItem.transitionEffectType == BIVideoTransitionEffectType_None) {
-                    //无过渡
-                    curTransitionTime = curItem.endTransitionDuration = nextItem.startTransitionDuration = kCMTimeZero;
-                } else {
-                    //有过渡
-                    CMTime maxTransitionTime = [self maxTransitionTimeWithAsset1:curItem.asset asset2:nextItem.asset];
-                    if (CMTimeCompare(maxTransitionTime, curTransitionTime) < 0) {
-                        curTransitionTime = curItem.endTransitionDuration = nextItem.startTransitionDuration = maxTransitionTime;//预设与视频时长的冲突解决
-                    }
-                }
-            } //------------------------>得到最终的过渡时间
-            
-            {//根据过渡时间修改直通时间范围
-                if (i > 0) {//1 ~ n
-                    //根据transitionDuration判断是否要延迟开场的时间
-                    BIVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
-                    CMTime offsetTime                   = curItem.startTransitionDuration;
-                    passThroughTimeRanges[i].start      = CMTimeAdd(passThroughTimeRanges[i].start, offsetTime);
-                    passThroughTimeRanges[i].duration   = CMTimeSubtract(passThroughTimeRanges[i].duration, offsetTime);
-                }
-                
-                if (i+1 < clipsCount) {// 0 ~ n-1
-                    BIVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
-                    CMTime offsetTime                   = curItem.endTransitionDuration;
-                    passThroughTimeRanges[i].duration   = CMTimeSubtract(passThroughTimeRanges[i].duration, offsetTime);
-                }
-            }
-            
-            //时间偏移计算
-            nextClipStartTime = CMTimeAdd(nextClipStartTime, timeRangeInAsset.duration);
-            nextClipStartTime = CMTimeSubtract(nextClipStartTime, curTransitionTime);
-            
-            //存储过渡节点的时间
-            if (i + 1 < clipsCount) {
-                transitionTimeRanges[i] = CMTimeRangeMake(nextClipStartTime, curTransitionTime);
-            }
-        }
-    }
-    
-    //--------------->配置过渡效果
-    NSMutableArray *instructions = [NSMutableArray array];
-    NSMutableArray *trackMixArray = [NSMutableArray array];
-    for (NSInteger i = 0; i < clipsCount; i++) {
-        BIVideoTransitionItem *curItem = [videoSourcesList objectAtIndex:i];
-        AVAsset *asset = curItem.asset;
-        NSInteger alternatingIndex = i % 2;     //轨道切换角标
-        
-        {//非过渡部分
-            AVMutableVideoCompositionInstruction *passThroughInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
-            
-            passThroughInstruction.timeRange = passThroughTimeRanges[i];//配置非过渡时间范围
-            
-            ///在这里可以更改视频的尺寸
-            AVMutableVideoCompositionLayerInstruction *passThroughLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[alternatingIndex]];
-            
-            {//视频方向纠正
-                CGAffineTransform transform = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform;
-                [passThroughLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:passThroughInstruction.timeRange];
-            }
-            
-            passThroughInstruction.layerInstructions = @[passThroughLayer];
-            [instructions addObject:passThroughInstruction];
-        }
-        
-        {//过渡部分
-            if (i + 1 < clipsCount) {
-                //                 BIVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
-                AVMutableVideoCompositionInstruction *transitionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
-                transitionInstruction.timeRange = transitionTimeRanges[i];//配置过渡范围
-                
-                AVMutableVideoCompositionLayerInstruction *fromLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[alternatingIndex]];
-                AVMutableVideoCompositionLayerInstruction *toLayer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:compositionVideoTracks[1 - alternatingIndex]];
-                
-                {//处理正确的视频的方向
-                    CGAffineTransform transform = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject.preferredTransform;
-                    [fromLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionInstruction.timeRange];
-                    [toLayer setTransformRampFromStartTransform:transform toEndTransform:transform timeRange:transitionInstruction.timeRange];
-                }
-                
-                {//配置过渡效果
-                    //使用的溶解效果
-                    BOOL useTransitionEffect = true;
-                    BIVideoTransitionEffectType curType = curItem.transitionEffectType;
-                    if (useTransitionEffect) {
-                        [self animationWithFromLayer:fromLayer toLayer:toLayer targetSize:_outputVideoSize transitionTimeRange:transitionTimeRanges[i] targetType:curType];
-                    }
-                }
-                transitionInstruction.layerInstructions = @[toLayer, fromLayer];
-                [instructions addObject:transitionInstruction];
-                
-                {//过渡音效更改
-                    if ([asset tracksWithMediaType:AVMediaTypeAudio].count
-                        && needAudioTrack) {
-                        //降音
-                        AVMutableAudioMixInputParameters *trackMix1 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTracks[alternatingIndex]];
-                        [trackMix1 setVolumeRampFromStartVolume:1.0 toEndVolume:0.0 timeRange:transitionTimeRanges[i]];
-                        [trackMixArray addObject:trackMix1];
-                        //增音
-                        AVMutableAudioMixInputParameters *trackMix2 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:compositionAudioTracks[1 - alternatingIndex]];
-                        [trackMix2 setVolumeRampFromStartVolume:0.0 toEndVolume:1.0 timeRange:transitionTimeRanges[i]];
-                        [trackMixArray addObject:trackMix2];
-                    }
-                }
-            }
-        }
-        
-        videoComposition.instructions = instructions;
-        audioMix.inputParameters = trackMixArray;
-    }
-
-    //释放准备信号
-    _status = BIVideoTransitionEffectToolStatus_Ready;
 }
 
 - (void)prepareTaskWithAssetSources:(NSArray <AVAsset *> *)sources {

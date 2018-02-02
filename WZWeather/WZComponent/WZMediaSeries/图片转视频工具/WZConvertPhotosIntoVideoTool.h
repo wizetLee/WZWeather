@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 
 @class WZConvertPhotosIntoVideoTool;
 @protocol WZConvertPhotosIntoVideoToolProtocol <NSObject>
-
+///转换进度
 - (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress;
 
 //写入完成的回调
@@ -53,6 +53,10 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic, assign) CMTime frameRate;
 @property (nonatomic, assign) CGSize outputSize;
 
+
+#pragma mark 录制固定时长的视频需要的配置
+@property (nonatomic, assign) BOOL timeIsLimited;   //default：false  录制的时间是限定的，也就是固定了要录制多少帧。
+@property (nonatomic, assign) CMTime limitedTime;   //限制的录制时间 it is useful when (timeIsLimited==true)
 
 
 #pragma mark - 以下为未完成

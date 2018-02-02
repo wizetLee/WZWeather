@@ -19,6 +19,8 @@
     CMSampleBufferRef _sampleBufferRef;
     
     BOOL _finishWritingSignal;                              //需要停止输入的信号
+    
+    NSUInteger _frameCount;                                  //帧数 由limitedTime->frameRate得到
 }
 
 @property (nonatomic, assign) CMTime currentProgressTime;   //当前进度
@@ -30,10 +32,22 @@
 - (void)defaultConfig {
     _frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
     _finishWritingSignal = false;
+    _frameCount = 0;
     _queueID = @"wizet.serial.queue";
 }
 
-
+- (void)setFrameRate:(CMTime)frameRate {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        NSLog(@"设置失败，当前正在录制");
+        return;
+    }
+    _frameRate = frameRate;
+    if (_timeIsLimited) {
+        _frameCount = 0;
+        _frameCount = (NSUInteger)(CMTimeGetSeconds(_limitedTime) / CMTimeGetSeconds(_frameRate));
+//        NSUInteger count = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CMTimeGetSeconds(CMTimeMake(1, 25)));//如果10Sec
+    }
+}
 
 - (void)startTask {
     
