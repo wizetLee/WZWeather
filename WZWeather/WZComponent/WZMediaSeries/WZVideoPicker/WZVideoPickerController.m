@@ -12,6 +12,7 @@
 #import "WZMediaFetcher.h"
 #import "WZAPLSimpleEditor.h"
 #import "WZVideoSurfAlert.h"
+#import "BIVideoTransitionEffectTool.h"
 
 @interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource , PHPhotoLibraryChangeObserver>
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic, strong) NSMutableArray <PHAsset *> *mediaAssetData;
 @property (nonatomic, strong) WZAPLSimpleEditor *editor;
+@property (nonatomic, strong) BIVideoTransitionEffectTool *videoTransitionEffectTool;
 
 @property (nonatomic, assign) BOOL innerMode;//在选择的模式之中
 
@@ -161,59 +163,58 @@
         }];
     } else {
         if (_type == WZVideoPickerType_composition) {
-            __weak typeof(self) weakSelf = self;
-            _editor = [[WZAPLSimpleEditor alloc] init];
-            NSMutableArray <AVAsset *>*tmpMArr = [NSMutableArray array];
+#warning 过渡效果测试部分
+            NSMutableArray *itemMArr = NSMutableArray.array;
             for (NSIndexPath *indexPath in _selectiveSequentialList) {
                 if (_mediaAssetData.count > indexPath.row) {
                     PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
                     [WZMediaFetcher fetchVideoWith:tmpPHAsset synchronous:true handler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-                        [tmpMArr addObject:asset];
-                        NSLog(@"%@", indexPath);
+                        BIVideoTransitionItem *item = [[BIVideoTransitionItem alloc] init];
+                        item.asset = asset;
+                        [itemMArr addObject:item];
                     }];
                 }
             }
-//每次add视频上去需要更新状态
             
-//            AVMutableComposition *c =  [[self class] compositionWithSegments:tmpMArr];
-//            NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject;
-//
-//            NSString *pathWithComponent = [path stringByAppendingPathComponent:@"ssss.mp4"];
-//
-//            NSURL *outputURL = [NSURL fileURLWithPath:pathWithComponent];
-//            if ([[NSFileManager defaultManager] fileExistsAtPath:outputURL.path]) {
-//                NSError *error;
-//                [[NSFileManager defaultManager] removeItemAtPath:outputURL.path error:&error];
-//                if (error) {
-//                    NSLog(@"文件删除失败：%@",error.description);
+            _videoTransitionEffectTool = [[BIVideoTransitionEffectTool alloc] init];
+            _videoTransitionEffectTool.outputSize = CGSizeMake(720, 720);
+            [_videoTransitionEffectTool startTask];
+            _videoTransitionEffectTool.delegate = (id<BIVideoTransitionEffectToolProtocol>)self;
+//            __weak typeof(self) weakSelf = self;
+//            _editor = [[WZAPLSimpleEditor alloc] init];
+//            NSMutableArray <AVAsset *>*tmpMArr = [NSMutableArray array];
+//            for (NSIndexPath *indexPath in _selectiveSequentialList) {
+//                if (_mediaAssetData.count > indexPath.row) {
+//                    PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
+//                    [WZMediaFetcher fetchVideoWith:tmpPHAsset synchronous:true handler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+//                        [tmpMArr addObject:asset];
+//                        NSLog(@"%@", indexPath);
+//                    }];
 //                }
 //            }
-//            [[self class] exportWithComposition:c outputURL:outputURL withProgressHandler:^(CGFloat progress) {
-//                NSLog(@"progress : %lf", progress);
-//            } result:^(BOOL success) {
-//                NSLog(@"%ld", success);
-//            }];
-            ///带过渡效果的
-            [_editor updateEditorWithVideoAssets:tmpMArr];
-            if (tmpMArr.count) {
-                [_editor exportToSandboxDocumentWithFileName:@"my222y.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
-                    if (statue == AVAssetExportSessionStatusCompleted) {
-                        NSLog(@"导出成功");
-                        [WZToast toastWithContent:@"导出成功"];
-                        [WZAPLSimpleEditor saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
-                            if (success) {
-                                NSLog(@"保存成功");
-                            } else {
-                                NSLog(@"保存失败");
-                            }
-                        }];
-
-                    } else {
-                        NSLog(@"导出失败");
-                        [WZToast toastWithContent:@"导出失败 未知错误"];
-                    }
-                }];
-            }
+            
+            
+//            ///带过渡效果的
+//            [_editor updateEditorWithVideoAssets:tmpMArr];
+//            if (tmpMArr.count) {
+//                [_editor exportToSandboxDocumentWithFileName:@"my222y.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
+//                    if (statue == AVAssetExportSessionStatusCompleted) {
+//                        NSLog(@"导出成功");
+//                        [WZToast toastWithContent:@"导出成功"];
+//                        [WZAPLSimpleEditor saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
+//                            if (success) {
+//                                NSLog(@"保存成功");
+//                            } else {
+//                                NSLog(@"保存失败");
+//                            }
+//                        }];
+//
+//                    } else {
+//                        NSLog(@"导出失败");
+//                        [WZToast toastWithContent:@"导出失败 未知错误"];
+//                    }
+//                }];
+//            }
             
             
         } else if (_type == WZVideoPickerType_delete) {
@@ -471,6 +472,7 @@
              }];
              [CATransaction commit];
              
+             
              if (_selectiveSequentialList.count) {
                  _rightItem.enabled = true;
              } else {
@@ -490,63 +492,56 @@
                  
                  
                  //检查帧率 码率 分辨率
-                 AVAssetTrack * videoTrack = nil;
-                 NSArray * videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-                 
-                 CMFormatDescriptionRef formatDescription = NULL;
-                 NSArray * formatDescriptions = [videoTrack formatDescriptions];
-                 if([formatDescriptions count]> 0)
-                 formatDescription = (__bridge CMFormatDescriptionRef)[formatDescriptions objectAtIndex:0];
-                 
-                 if ([videoTracks count]> 0)
-                 videoTrack = [videoTracks objectAtIndex:0];
-                 
-                 CGSize trackDimensions = {
-                     .width = 0.0,
-                     .height = 0.0,
-                 };
-                 trackDimensions = [videoTrack naturalSize];
-                 
-                 int width = trackDimensions.width;
-                 int height = trackDimensions.height;
-                 NSLog(@"~~~~~~~~~~~~~~~~~~~~");
-//                 NSLog(@"width = %d,  height = %d", width, height);
-                 printf("width = %d,  height = %d \n", width, height);
-                 float frameRate = [videoTrack nominalFrameRate];
-                 float bps = [videoTrack estimatedDataRate];
-//                 NSLog(@"帧率 = %f", frameRate);
-                 
-                 printf("帧率 = %f \n", frameRate);
-//                 NSLog(@"bytes per second = %f", bps / 8);
-                 printf("视轨bytes per second = %f \n", bps / 8);
-//                 NSLog(@"视频时长 ：%f",  CMTimeGetSeconds([videoTrack timeRange].duration));
-                 
-                 NSArray * audioTruck = [asset tracksWithMediaType:AVMediaTypeAudio];
-                 
-                 //加上音频部分
-                 if (audioTruck.count) {
-                     float ABps = [audioTruck.firstObject estimatedDataRate] / 8;
-//                     NSLog(@"视频大小 ：%f",  CMTimeGetSeconds([videoTrack timeRange].duration) * ((bps / 8) + ABps));
-                     printf("音轨bytes per second = %f \n", ABps);
-                     printf("视频大小 ：%f \n",  CMTimeGetSeconds([videoTrack timeRange].duration) * ((bps / 8) + ABps));
+                 {
+                     AVAssetTrack * videoTrack = nil;
+                     NSArray * videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+                     CMFormatDescriptionRef formatDescription = NULL;
+                     NSArray * formatDescriptions = [videoTrack formatDescriptions];
+                     if([formatDescriptions count]> 0)
+                         formatDescription = (__bridge CMFormatDescriptionRef)[formatDescriptions objectAtIndex:0];
+                     
+                     if ([videoTracks count]> 0)
+                         videoTrack = [videoTracks objectAtIndex:0];
+                     
+                     CGSize trackDimensions = {
+                         .width = 0.0,
+                         .height = 0.0,
+                     };
+                     trackDimensions = [videoTrack naturalSize];
+                     
+                     int width = trackDimensions.width;
+                     int height = trackDimensions.height;
+                     NSLog(@"~~~~~~~~~~~~~~~~~~~~");
+                     //                 NSLog(@"width = %d,  height = %d", width, height);
+                     printf("width = %d,  height = %d \n", width, height);
+                     float frameRate = [videoTrack nominalFrameRate];
+                     float bps = [videoTrack estimatedDataRate];
+                     //                 NSLog(@"帧率 = %f", frameRate);
+                     
+                     printf("帧率 = %f \n", frameRate);
+                     //                 NSLog(@"bytes per second = %f", bps / 8);
+                     printf("视轨bytes per second = %f \n", bps / 8);
+                     //                 NSLog(@"视频时长 ：%f",  CMTimeGetSeconds([videoTrack timeRange].duration));
+                     
+                     NSArray * audioTruck = [asset tracksWithMediaType:AVMediaTypeAudio];
+                     
+                     //加上音频部分
+                     if (audioTruck.count) {
+                         float ABps = [audioTruck.firstObject estimatedDataRate] / 8;
+                         //                     NSLog(@"视频大小 ：%f",  CMTimeGetSeconds([videoTrack timeRange].duration) * ((bps / 8) + ABps));
+                         printf("音轨bytes per second = %f \n", ABps);
+                         printf("视频大小 ：%f \n",  CMTimeGetSeconds([videoTrack timeRange].duration) * ((bps / 8) + ABps));
+                     }
+                     printf("视频时长 ：%f \n",  CMTimeGetSeconds([videoTrack timeRange].duration));
+                     NSLog(@"~~~~~~~~~~~~~~~~~~~~");
+                     
                  }
-                 printf("视频时长 ：%f \n",  CMTimeGetSeconds([videoTrack timeRange].duration));
-                 NSLog(@"~~~~~~~~~~~~~~~~~~~~");
-                 
              }];
          }
      }
 }
 
-static NSString * FourCCString(FourCharCode code) {
-    NSString *result = [NSString stringWithFormat:@"%c%c%c%c",
-                        (code >> 24) & 0xff,
-                        (code >> 16) & 0xff,
-                        (code >> 8) & 0xff,
-                        code & 0xff];
-    NSCharacterSet *characterSet = [NSCharacterSet whitespaceCharacterSet];
-    return [result stringByTrimmingCharactersInSet:characterSet];
-}
+
 
 #pragma mark - PHPhotoLibraryChangeObserver
 - (void)photoLibraryDidChange:(PHChange *)changeInstance; {

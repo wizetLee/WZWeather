@@ -56,7 +56,6 @@
         _handleView.center = CGPointMake(animationTargetX, _handleView.center.y);
         [self calculateItemScale];
         [self didSelectDelegate];
-        NSLog(@"current%ld", [self currentIndex]);
     }
 }
 

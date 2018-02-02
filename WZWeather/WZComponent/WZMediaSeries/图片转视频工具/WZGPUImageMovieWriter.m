@@ -79,7 +79,7 @@
         return;
     }
     
-    AVMediaType type = AVFileTypeQuickTimeMovie;
+    AVFileType type = AVFileTypeQuickTimeMovie;
     
     NSURL *outputURL = [NSURL fileURLWithPath:@""];
     NSError *error = nil;
