@@ -60,8 +60,8 @@ typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {
 @property (nonatomic,   weak) id <BIVideoTransitionEffectToolProtocol>delegate;
 @property (nonatomic, assign) BIVideoTransitionEffectToolStatus status;
 @property (nonatomic, strong) NSURL *outputURL;   //保存的位置  注意:内置的是mp4的文件类型
-@property (nonatomic, strong, readonly) NSMutableArray <BIVideoTransitionItem *>*videoSourcesList;
-@property (nonatomic, assign) CGSize outputSize; //一定要设置 如果为Zero，会崩溃
+@property (nonatomic, strong, readonly) NSMutableArray <BIVideoTransitionItem *>*videoSourcesList;//配置过渡效果
+@property (nonatomic, assign) CGSize outputSize; //内置为{720,1024}
 
 - (void)startTask;      //开始任务
 - (void)cancelTask;     //取消任务
@@ -70,7 +70,6 @@ typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {
 //- (void)prepareTask;
 - (void)prepareTaskWithAssetSources:(NSArray <AVAsset *> *)sources; //更换数据源之后
 - (void)prepareTaskWithItemSources:(NSArray <BIVideoTransitionItem *> *)sources;
-
 
 
 @end

@@ -308,6 +308,14 @@
 		84648A7A1EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84648A791EF7B6F900B9DF41 /* WZAnimatedTransitionsBase.m */; };
 		8464AFED202298AD00F7621E /* BIVideoTransitionEffectTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8464AFEA202298AD00F7621E /* BIVideoTransitionEffectTool.m */; };
 		8464AFEE202298AD00F7621E /* BIVideoTransitionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8464AFEC202298AD00F7621E /* BIVideoTransitionItem.m */; };
+		84687CBC202552C00098A596 /* testImage4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB4202552BF0098A596 /* testImage4.jpg */; };
+		84687CBD202552C00098A596 /* testImage7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB5202552BF0098A596 /* testImage7.jpg */; };
+		84687CBE202552C00098A596 /* testImage6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB6202552BF0098A596 /* testImage6.jpg */; };
+		84687CBF202552C00098A596 /* testImage2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB7202552BF0098A596 /* testImage2.jpg */; };
+		84687CC0202552C00098A596 /* testImage3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB8202552C00098A596 /* testImage3.jpg */; };
+		84687CC1202552C00098A596 /* testImage0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB9202552C00098A596 /* testImage0.jpg */; };
+		84687CC2202552C00098A596 /* testImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CBA202552C00098A596 /* testImage1.jpg */; };
+		84687CC3202552C00098A596 /* testImage5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CBB202552C00098A596 /* testImage5.jpg */; };
 		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
@@ -1008,6 +1016,14 @@
 		8464AFEA202298AD00F7621E /* BIVideoTransitionEffectTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIVideoTransitionEffectTool.m; sourceTree = "<group>"; };
 		8464AFEB202298AD00F7621E /* BIVideoTransitionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIVideoTransitionItem.h; sourceTree = "<group>"; };
 		8464AFEC202298AD00F7621E /* BIVideoTransitionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIVideoTransitionItem.m; sourceTree = "<group>"; };
+		84687CB4202552BF0098A596 /* testImage4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage4.jpg; sourceTree = "<group>"; };
+		84687CB5202552BF0098A596 /* testImage7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage7.jpg; sourceTree = "<group>"; };
+		84687CB6202552BF0098A596 /* testImage6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage6.jpg; sourceTree = "<group>"; };
+		84687CB7202552BF0098A596 /* testImage2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage2.jpg; sourceTree = "<group>"; };
+		84687CB8202552C00098A596 /* testImage3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage3.jpg; sourceTree = "<group>"; };
+		84687CB9202552C00098A596 /* testImage0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage0.jpg; sourceTree = "<group>"; };
+		84687CBA202552C00098A596 /* testImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage1.jpg; sourceTree = "<group>"; };
+		84687CBB202552C00098A596 /* testImage5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage5.jpg; sourceTree = "<group>"; };
 		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
 		846904DF1EFD284F007AD117 /* WZLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZLoopView.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1200,13 +1216,6 @@
 				40287B341F09269900D9383B /* UIView+WZMinistrant.m */,
 			);
 			path = UIView;
-			sourceTree = "<group>";
-		};
-		40287B2F1F09266200D9383B /* UIImageView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UIImageView;
 			sourceTree = "<group>";
 		};
 		402AB18F1F0732D600136DB4 /* WZScrollOptions */ = {
@@ -2456,9 +2465,10 @@
 		84593D1B1ECAE602000508C7 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				84687CC4202559C10098A596 /* UIImage */,
+				84687CC5202559C10098A596 /* UIImageView */,
 				8456645C1FC811990004BAC1 /* UIViewController */,
 				845664581FC811330004BAC1 /* UIWindow */,
-				40287B2F1F09266200D9383B /* UIImageView */,
 				40287B231F09210800D9383B /* NSObject */,
 				40287B261F09210800D9383B /* UIButton */,
 				40287B271F09210800D9383B /* UIView */,
@@ -2470,6 +2480,14 @@
 		845A4214201EBB98002D7477 /* 图片转视频工具 */ = {
 			isa = PBXGroup;
 			children = (
+				84687CB9202552C00098A596 /* testImage0.jpg */,
+				84687CBA202552C00098A596 /* testImage1.jpg */,
+				84687CB7202552BF0098A596 /* testImage2.jpg */,
+				84687CB8202552C00098A596 /* testImage3.jpg */,
+				84687CB4202552BF0098A596 /* testImage4.jpg */,
+				84687CBB202552C00098A596 /* testImage5.jpg */,
+				84687CB6202552BF0098A596 /* testImage6.jpg */,
+				84687CB5202552BF0098A596 /* testImage7.jpg */,
 				845A4215201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.h */,
 				845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */,
 				845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */,
@@ -2543,6 +2561,20 @@
 				8464AFEC202298AD00F7621E /* BIVideoTransitionItem.m */,
 			);
 			path = "视频过渡工具";
+			sourceTree = "<group>";
+		};
+		84687CC4202559C10098A596 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIImage;
+			sourceTree = "<group>";
+		};
+		84687CC5202559C10098A596 /* UIImageView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIImageView;
 			sourceTree = "<group>";
 		};
 		846904DD1EFD284F007AD117 /* WZLoopView */ = {
@@ -3081,13 +3113,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8462274A1FD62A0200D37FAE /* wallpaper5.jpeg in Resources */,
+				84687CBE202552C00098A596 /* testImage6.jpg in Resources */,
 				84ECD3231FCBA7E400282C9A /* 02 Keep Going.m4a in Resources */,
 				846A30FF1FD0E686003CECAE /* asset_selectedOrigion_selected@2x.png in Resources */,
 				84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */,
 				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
 				84ECD32B1FCBA7E400282C9A /* sample_clip1.m4v in Resources */,
 				8405474D1FB97A280033EF9B /* mask.png in Resources */,
+				84687CBD202552C00098A596 /* testImage7.jpg in Resources */,
 				846A31041FD0E686003CECAE /* message_oeuvre_btn_normal@3x.png in Resources */,
+				84687CBF202552C00098A596 /* testImage2.jpg in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
 				4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */,
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
@@ -3098,6 +3133,7 @@
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
+				84687CC3202552C00098A596 /* testImage5.jpg in Resources */,
 				848280D1200CA490003AD79F /* bigStar@3X.png in Resources */,
 				8470280F2023E7D8005D7B5F /* README.markdown in Resources */,
 				848280CF200CA490003AD79F /* bigDarkStar@2X.png in Resources */,
@@ -3109,19 +3145,23 @@
 				846A31021FD0E686003CECAE /* imagesBrowse_back@3x.png in Resources */,
 				8405474E1FB97A280033EF9B /* squares.png in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
+				84687CC1202552C00098A596 /* testImage0.jpg in Resources */,
 				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
 				8462274D1FD62A0200D37FAE /* wallpaper2.jpeg in Resources */,
 				846D16081FBC0C5E00E78FFF /* face.png in Resources */,
 				84ECD3281FCBA7E400282C9A /* 03_nebula.mp4 in Resources */,
 				846227531FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png in Resources */,
 				846A30FE1FD0E686003CECAE /* asset_selectedOrigion_normal@3x.png in Resources */,
+				84687CC2202552C00098A596 /* testImage1.jpg in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
+				84687CC0202552C00098A596 /* testImage3.jpg in Resources */,
 				84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */,
+				84687CBC202552C00098A596 /* testImage4.jpg in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,

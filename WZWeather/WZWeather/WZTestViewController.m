@@ -8,10 +8,12 @@
 
 #import "WZTestViewController.h"
 #import "WZAnimatePageControl.h"
-
+#import "WZConvertPhotosIntoVideoTool.h"
 
 @interface WZTestViewController ()
-
+{
+    WZConvertPhotosIntoVideoTool *tool;
+}
 
 @end
 
@@ -46,8 +48,15 @@
 //
 //    }
    
-NSUInteger aa = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CMTimeGetSeconds(CMTimeMake(1, 25)));
-    NSLog(@"%lu", (unsigned long)aa);
+    tool = [[WZConvertPhotosIntoVideoTool alloc] init];
+    tool.delegate = (id<WZConvertPhotosIntoVideoToolProtocol>)self;
+    tool.outputSize = CGSizeMake(640, 1136);
+    [tool startRequestingFrames];
+    for (NSUInteger i = 0; i < 8; i++) {
+        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
+        [tool addFrameWithCGImage:tmp.CGImage];
+    }
+    [tool finishWriting];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -55,12 +64,23 @@ NSUInteger aa = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CM
 
 }
 
-
+#pragma mark - WZAnimatePageControlProtocol
 - (void)pageControl:(WZAnimatePageControl *)pageControl didSelectInIndex:(NSInteger)index; {
     
     NSLog(@"选中 的 index : %ld~~~~currendIndex : %ld", index, [pageControl currentIndex]);
 }
 
+
+#pragma mark - WZConvertPhotosIntoVideoToolProtocol
+- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress; {
+    NSLog(@"%s", __func__);
+}
+    
+
+//写入完成的回调
+- (void)convertPhotosInotViewToolFinishWriting; {
+    NSLog(@"%s", __func__);
+}
 
 
 

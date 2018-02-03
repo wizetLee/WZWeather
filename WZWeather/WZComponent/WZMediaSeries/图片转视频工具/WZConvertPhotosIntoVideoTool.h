@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreMedia/CoreMedia.h>
 
 typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
     WZConvertPhotosIntoVideoToolStatus_Idle             = 0,
@@ -22,7 +23,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress;
 
 //写入完成的回调
-- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool finishWritingWithCompletionHandler:(void (^)())CompletionHandler;
+- (void)convertPhotosInotViewToolFinishWriting;
 
 @end
 
@@ -49,15 +50,30 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic,   weak) id <WZConvertPhotosIntoVideoToolProtocol>delegate;
 @property (nonatomic, assign) WZConvertPhotosIntoVideoToolStatus status;
 
+///是否应该封闭这些接口
 @property (nonatomic, strong) NSURL *outputURL;
 @property (nonatomic, assign) CMTime frameRate;
 @property (nonatomic, assign) CGSize outputSize;
-
+//- (instancetype)initWithOutputURL:(NSURL *)outputURL outputSize:(CGSize)outputSize frameRate:(CMTime)frameRate;
 
 #pragma mark 录制固定时长的视频需要的配置
 @property (nonatomic, assign) BOOL timeIsLimited;   //default：false  录制的时间是限定的，也就是固定了要录制多少帧。
 @property (nonatomic, assign) CMTime limitedTime;   //限制的录制时间 it is useful when (timeIsLimited==true)
 
+
+
+- (void)startRequestingFrames;  //ready状态
+- (void)finishWriting;             //完成
+- (void)cancelWriting;             //取消
+
+
+//n种接口：image，pixelBuffer（sampleBuffer）                                     //contextRef
+- (void)addFrameWithUIImage:(UIImage *)image;
+- (void)addFrameWithCGImage:(CGImageRef)image;
+- (void)addFrameWithPixelBufferRef:(CVPixelBufferRef *)pixelBufferRef;
+
+//在同一个线程做数据处理啊
++ (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image;
 
 #pragma mark - 以下为未完成
 - (void)needAudioInput:(BOOL)boolean;       //是否用音频  在ready状态之前设置好

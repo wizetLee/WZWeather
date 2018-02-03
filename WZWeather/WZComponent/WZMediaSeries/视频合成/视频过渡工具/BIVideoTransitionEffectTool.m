@@ -48,6 +48,7 @@
     _status = BIVideoTransitionEffectToolStatus_Idle;
     _stubbornTransitionTime = CMTimeMakeWithSeconds(1, 600);
     [self addNotification];
+    _outputSize = CGSizeMake(720, 1024);
 }
 
 - (void)addNotification {

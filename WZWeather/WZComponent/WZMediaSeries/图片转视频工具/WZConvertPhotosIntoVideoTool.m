@@ -16,11 +16,13 @@
     AVAssetWriterInput *_audioInput;
     AVAssetWriterInput *_videoInput;
     NSString *_queueID;
-    CMSampleBufferRef _sampleBufferRef;
-    
+//    CVPixelBufferRef *_sampleBufferRef;
+    CMSampleBufferRef *_sampleBufferRef;
     BOOL _finishWritingSignal;                              //需要停止输入的信号
     
     NSUInteger _frameCount;                                  //帧数 由limitedTime->frameRate得到
+    
+    NSLock *_lock;                                           //mutex lock
 }
 
 @property (nonatomic, assign) CMTime currentProgressTime;   //当前进度
@@ -29,79 +31,52 @@
 
 @implementation WZConvertPhotosIntoVideoTool
 
+#pragma mark - Initialization
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self defaultConfig];
+    }
+    return self;
+}
+
+#pragma mark - Private
 - (void)defaultConfig {
     _frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
     _finishWritingSignal = false;
     _frameCount = 0;
     _queueID = @"wizet.serial.queue";
+    _lock = [[NSLock alloc] init];
 }
 
-- (void)setFrameRate:(CMTime)frameRate {
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
-        NSLog(@"设置失败，当前正在录制");
-        return;
-    }
-    _frameRate = frameRate;
-    if (_timeIsLimited) {
-        _frameCount = 0;
-        _frameCount = (NSUInteger)(CMTimeGetSeconds(_limitedTime) / CMTimeGetSeconds(_frameRate));
-//        NSUInteger count = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CMTimeGetSeconds(CMTimeMake(1, 25)));//如果10Sec
-    }
-}
-
-- (void)startTask {
-    
-}
-
-- (void)addPixel:(CVPixelBufferRef)pbr {
-//    _adaptor appendPixelBuffer:(nonnull CVPixelBufferRef) withPresentationTime:_currentProgressTime
-    if (_status != WZConvertPhotosIntoVideoToolStatus_Converting) {
-        NSLog(@"add 失败，状态错误");
-        return;
-    }
-    _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//时间递增
-    
-    dispatch_queue_t queue = dispatch_queue_create([_queueID UTF8String], NULL);
-    [_videoInput requestMediaDataWhenReadyOnQueue:queue usingBlock:^{
-        //队列中请求
-        while ([_videoInput isReadyForMoreMediaData]) {
-            CMSampleBufferRef nextSampleBuffer = *[self copyNextSampleBufferToWrite];
-            _sampleBufferRef = NULL;
-            if (nextSampleBuffer) {
-                [_videoInput appendSampleBuffer:nextSampleBuffer];
-                CFRelease(nextSampleBuffer);
-            } else if (_finishWritingSignal) {
-                [self finishWriting];
-                
-                
-                break;
-            } else {
-                //waiting 数据
-            }
-        }
-    }];
-}
-
-- (void)finishWriting {
-    [_videoInput markAsFinished];
-    [_writer finishWritingWithCompletionHandler:^{
-        
-    }];
-}
-
-- (CMSampleBufferRef *)copyNextSampleBufferToWrite {
+///中转
+- (CVPixelBufferRef)copyNextPixelBufferToWrite {
     //根据变量控制 buffer
-    return &_sampleBufferRef;
+    if (_sampleBufferRef == NULL) { return NULL; }
+    return *_sampleBufferRef;
 }
-
 
 //addBuffer
-- (void)addSampleBufferRef:(CMSampleBufferRef)sbf {
-    _sampleBufferRef = sbf;
+- (void)addSampleBufferRef:(CVPixelBufferRef *)sbf {
+    if ([_lock tryLock]) {
+        CVPixelBufferRef pixelBuffer = NULL;
+        OSStatus err = CVPixelBufferPoolCreatePixelBuffer (kCFAllocatorDefault, _adaptor.pixelBufferPool, &pixelBuffer);
+        
+        if (err) {
+            CVPixelBufferRelease(pixelBuffer);
+        }
+        
+        _sampleBufferRef = sbf;
+        [_lock unlock];
+    } else {
+        NSLog(@"lock 失败");
+    }
 }
 
+#pragma mark - Public
 - (void)prepareTask {
-//初始化一些工具
+    //初始化一些工具
     
     if (_status != WZConvertPhotosIntoVideoToolStatus_Idle) {
         NSLog(@"add 失败，状态错误");
@@ -114,7 +89,7 @@
     {//文件部分
         if (_outputURL && [_outputURL isFileURL]) {} else {
             //使用自定义的路径
-            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"wizet.mov"];
+            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
             _outputURL = [NSURL fileURLWithPath:filePath];
         }
         
@@ -126,7 +101,7 @@
     {//写入工具部分
         AVFileType fileType = AVFileTypeQuickTimeMovie;
         _writer = [[AVAssetWriter alloc] initWithURL:_outputURL fileType:fileType error:&error];
-//        _adaptor = []
+        //        _adaptor = []
         
         NSMutableDictionary *outputSettings = NSMutableDictionary.dictionary;
         CGSize outputSize = _outputSize;//   x % 2 = 0
@@ -147,12 +122,186 @@
         sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferPixelFormatTypeKey] = @(kCVPixelFormatType_32BGRA);
         sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferWidthKey] = @(outputSize.width);
         sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferHeightKey] = @(outputSize.height);
-//        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferCGBitmapContextCompatibilityKey] = @(true);
+        //        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferCGBitmapContextCompatibilityKey] = @(true);
         AVAssetWriterInputPixelBufferAdaptor *writerInputPixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc] initWithAssetWriterInput:_videoInput sourcePixelBufferAttributes:sourcePixelBufferAttributes];
         _adaptor = writerInputPixelBufferAdaptor;
         
-//
     }
+    
+    //信号指向ready状态
+    _status = WZConvertPhotosIntoVideoToolStatus_Ready;
+}
+
+- (void)finishWriting {
+    [_videoInput markAsFinished];
+    [_writer finishWritingWithCompletionHandler:^{
+        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolFinishWriting)]) {
+            [_delegate convertPhotosInotViewToolFinishWriting];
+        }
+    }];
+    
+    //恢复状态
+}
+- (void)cancelWriting {
+    [_videoInput markAsFinished];
+    [_writer cancelWriting];
+    
+    //恢复状态
+}
+
+- (void)startRequestingFrames {
+    [self prepareTask];
+    
+    if (_status != WZConvertPhotosIntoVideoToolStatus_Ready) {
+        NSLog(@"error，当前状态并非：ready");
+        return;
+    }
+    _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//时间递增
+    _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+    
+    [_writer startWriting];
+    [_writer startSessionAtSourceTime:kCMTimeZero];
+    
+    dispatch_queue_t queue = dispatch_queue_create([_queueID UTF8String], NULL);
+    [_videoInput requestMediaDataWhenReadyOnQueue:queue usingBlock:^{
+        //队列中请求
+        while ([_videoInput isReadyForMoreMediaData]) {
+            if ([_lock tryLock]) {
+                CVPixelBufferRef nextPixelBuffer = [self copyNextPixelBufferToWrite];
+                _sampleBufferRef = NULL;
+                if (nextPixelBuffer) {
+                    if ([_adaptor appendPixelBuffer:nextPixelBuffer withPresentationTime:_currentProgressTime]) {
+                        
+                    } else {
+                        
+                    }
+                    
+               
+                } else if (_finishWritingSignal) {
+                    [self finishWriting];
+                    
+                    break;//退出循环
+                } else {
+                    //waiting 数据
+                }
+                
+                CVPixelBufferRelease(nextPixelBuffer);
+                [_lock unlock];
+            }
+        }
+    }];
+}
+
+//考虑：转线程
+- (void)addFrameWithUIImage:(UIImage *)image {
+    if (![image isKindOfClass:[UIImage class]]) { return; }
+    [self addFrameWithCGImage:image.CGImage];
+}
+- (void)addFrameWithCGImage:(CGImageRef)image {
+    CVPixelBufferRef pixelBufferRef = [[self class] pixelBufferFromCGImage:image];
+    [self addFrameWithPixelBufferRef:&pixelBufferRef];
+}
+- (void)addFrameWithPixelBufferRef:(CVPixelBufferRef *)pixelBufferRef {
+    if (pixelBufferRef == NULL) return;
+    [self addSampleBufferRef:pixelBufferRef];
+}
+
+#pragma mark - Accessor
+- (void)setFrameRate:(CMTime)frameRate {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        NSLog(@"设置失败，当前正在录制");
+        return;
+    }
+    _frameRate = frameRate;
+    //重新配置需要录入的帧数
+    if (_timeIsLimited) {
+        _frameCount = 0;
+        _frameCount = (NSUInteger)(CMTimeGetSeconds(_limitedTime) / CMTimeGetSeconds(_frameRate));
+        //        NSUInteger count = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CMTimeGetSeconds(CMTimeMake(1, 25)));//如果10Sec
+    }
+}
+
+- (void)setOutputURL:(NSURL *)outputURL {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        NSLog(@"设置失败，当前正在录制");
+        return;
+    }
+    _outputURL = outputURL;
+}
+
+- (void)setLimitedTime:(CMTime)limitedTime {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        NSLog(@"设置失败，当前正在录制");
+        return;
+    }
+    _limitedTime = limitedTime;
+}
+
+- (void)setTimeIsLimited:(BOOL)timeIsLimited {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        NSLog(@"设置失败，当前正在录制");
+        return;
+    }
+    
+    [[NSDateFormatter new] dateFromString:@""];
+    _timeIsLimited = timeIsLimited;
+}
+
+
+
+
+
+// from：https://github.com/nancy-tar/OpencvCamera/blob/5bbd713ebab57bfad13f6b72829269d94529a722/OpencvCamera/ImageManager.mm
+//warning 是否需要计算设备支持的尺寸
++ (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image {
+    CVPixelBufferRef pxbuffer = NULL;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,
+                             nil];
+    
+    size_t width =  CGImageGetWidth(image);
+    size_t height = CGImageGetHeight(image);
+    size_t bytesPerRow = CGImageGetBytesPerRow(image);
+    
+    
+    CFDataRef  dataFromImageDataProvider = CGDataProviderCopyData(CGImageGetDataProvider(image));
+    GLubyte  *imageData = (GLubyte *)CFDataGetBytePtr(dataFromImageDataProvider);
+    
+    CVPixelBufferCreateWithBytes(kCFAllocatorDefault,
+                                 width,
+                                 height,
+                                 kCVPixelFormatType_32BGRA,
+                                 imageData,bytesPerRow,
+                                 NULL,
+                                 NULL,
+                                 (__bridge CFDictionaryRef)options,
+                                 &pxbuffer);
+    
+    CFRelease(dataFromImageDataProvider);
+    
+    return pxbuffer;
+}
+
+
++ (CMSampleBufferRef)sampleBufferFromPixelBuffer:(CVPixelBufferRef)pixelBuffer// withTime:(CMTime)time withDescription:(CMFormatDescriptionRef)description
+{
+    
+    CMSampleBufferRef newSampleBuffer = NULL;
+    CMSampleTimingInfo timimgInfo = kCMTimingInfoInvalid;
+    CMVideoFormatDescriptionRef videoInfo = NULL;
+    CMVideoFormatDescriptionCreateForImageBuffer(
+                                                 NULL, pixelBuffer, &videoInfo);
+    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault,
+                                       pixelBuffer,
+                                       true,
+                                       NULL,
+                                       NULL,
+                                       videoInfo,
+                                       &timimgInfo,
+                                       &newSampleBuffer);
+    
+    return newSampleBuffer;
 }
 
 @end
