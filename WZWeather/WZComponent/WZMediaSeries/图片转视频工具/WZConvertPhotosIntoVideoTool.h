@@ -60,7 +60,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic, assign) BOOL timeIsLimited;   //default：false  录制的时间是限定的，也就是固定了要录制多少帧。
 @property (nonatomic, assign) CMTime limitedTime;   //限制的录制时间 it is useful when (timeIsLimited==true)
 
-
+@property (nonatomic, strong) NSArray <UIImage *>*sources;
 
 - (void)startRequestingFrames;  //ready状态
 - (void)finishWriting;             //完成
@@ -72,10 +72,14 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)addFrameWithCGImage:(CGImageRef)image;
 - (void)addFrameWithPixelBufferRef:(CVPixelBufferRef *)pixelBufferRef;
 
+
+
 //在同一个线程做数据处理啊
 + (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image;
 
 #pragma mark - 以下为未完成
 - (void)needAudioInput:(BOOL)boolean;       //是否用音频  在ready状态之前设置好
 
+
+- (void) testCompressionSession;
 @end
