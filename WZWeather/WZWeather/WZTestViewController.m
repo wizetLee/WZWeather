@@ -9,12 +9,11 @@
 #import "WZTestViewController.h"
 #import "WZAnimatePageControl.h"
 #import "WZConvertPhotosIntoVideoTool.h"
-#import "MSImageMovieEncoder.h"
+#import "WZVideoSurfAlert.h"
 
 @interface WZTestViewController ()
 {
     WZConvertPhotosIntoVideoTool *tool;
-    MSImageMovieEncoder *encoder;
 }
 
 @end
@@ -51,22 +50,18 @@
 //    }
    
     tool = [[WZConvertPhotosIntoVideoTool alloc] init];
-//    tool.delegate = (id<WZConvertPhotosIntoVideoToolProtocol>)self;
-//    tool.outputSize = CGSizeMake(640, 1136);
-//
-//    NSMutableArray *sources = [NSMutableArray array];
-//
-//    for (NSUInteger i = 0; i < 8; i++) {
-//        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
-//        [sources addObject:tmp];
-//    }
-//    tool.sources = sources;
-//    [tool startRequestingFrames];
-//
-//
-//    [tool finishWriting];
+    tool.delegate = (id<WZConvertPhotosIntoVideoToolProtocol>)self;
+    tool.outputSize = CGSizeMake(640, 1136);
 
-    [tool testCompressionSession];
+    NSMutableArray *sources = [NSMutableArray array];
+
+    for (NSUInteger i = 0; i < 8; i++) {
+        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
+        [sources addObject:tmp];
+    }
+    tool.sources = sources;
+    [tool startRequestingFrames];
+
     
 }
 
@@ -91,6 +86,12 @@
 //写入完成的回调
 - (void)convertPhotosInotViewToolFinishWriting; {
     NSLog(@"%s", __func__);
+    if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
+        NSLog(@"111");
+        WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
+        alert.asset = [AVAsset assetWithURL:tool.outputURL];
+        [alert alertShow];
+    }
 }
 
 

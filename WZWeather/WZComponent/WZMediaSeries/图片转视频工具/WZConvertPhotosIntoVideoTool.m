@@ -93,7 +93,7 @@
     }
     
     NSError *error = nil;
-    _currentProgressTime = kCMTimeZero;
+    _currentProgressTime = CMTimeMake(0, 25);
     
     {//文件部分
         if (_outputURL && [_outputURL isFileURL]) {} else {
@@ -179,11 +179,12 @@
         NSUInteger count = self.sources.count;
         while ([_videoInput isReadyForMoreMediaData]) {
           
-            CVPixelBufferRef pbf = [[self class] pixelBufferFromCGImage:self.sources[curIndex].CGImage];
+//            CVPixelBufferRef pbf = [[self class] pixelBufferFromCGImage:self.sources[curIndex].CGImage];
+            CVPixelBufferRef pbf = [self pixelBufferFromCGImage:self.sources[curIndex].CGImage size:self.sources[curIndex].size];
             curIndex++;
             if (count <= curIndex) {
                 //继续
-//                [self finishWriting];
+                [self finishWriting];
                 break;
             } else {
                 
@@ -419,12 +420,7 @@
     
     // insert demo debugging code to write the same image repeated as a movie
     
-    
-    
-    CGImageRef theImage = [[UIImage imageNamed:@"114.png"] CGImage];
-    
-    
-    
+
     dispatch_queue_t    dispatchQueue = dispatch_queue_create("mediaInputQueue", NULL);
     
     int __block         frame = 0;
@@ -522,8 +518,6 @@
     CGContextRef context = CGBitmapContextCreate(pxdata, size.width, size.height, 8, 4*size.width, rgbColorSpace, kCGImageAlphaPremultipliedFirst);
     
     NSParameterAssert(context);
-    
-    
     
     CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
     
