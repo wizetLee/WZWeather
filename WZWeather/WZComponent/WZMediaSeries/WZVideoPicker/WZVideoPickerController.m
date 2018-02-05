@@ -177,9 +177,11 @@
             }
             
             _videoTransitionEffectTool = [[BIVideoTransitionEffectTool alloc] init];
-            _videoTransitionEffectTool.outputSize = CGSizeMake(720, 720);
+            _videoTransitionEffectTool.outputSize = CGSizeMake(720, 1280);
+            [_videoTransitionEffectTool prepareTaskWithItemSources:itemMArr];
             [_videoTransitionEffectTool startTask];
             _videoTransitionEffectTool.delegate = (id<BIVideoTransitionEffectToolProtocol>)self;
+            
 //            __weak typeof(self) weakSelf = self;
 //            _editor = [[WZAPLSimpleEditor alloc] init];
 //            NSMutableArray <AVAsset *>*tmpMArr = [NSMutableArray array];

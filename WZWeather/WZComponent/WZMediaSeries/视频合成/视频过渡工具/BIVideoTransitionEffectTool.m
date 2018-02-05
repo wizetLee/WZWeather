@@ -28,7 +28,7 @@
 }
 
 @property (nonatomic, strong) NSMutableArray <BIVideoTransitionItem *>*videoSourcesList;    //视频源
-@property (nonatomic, assign) CGSize outputVideoSize;   //输出的视频的尺寸
+//@property (nonatomic, assign) CGSize outputSize;   //输出的视频的尺寸
 
 @end
 
@@ -137,7 +137,7 @@
     _audioMix                       = [AVMutableAudioMix audioMix];
     
     ////计算输出的视频尺寸
-    CGSize videoSize                = _outputVideoSize;
+    CGSize videoSize                = _outputSize;
     _composition.naturalSize        = videoSize;
     _videoComposition.renderSize    = videoSize;
     //property
@@ -302,7 +302,7 @@
                     BOOL useTransitionEffect = true;
                     BIVideoTransitionEffectType curType = curItem.transitionEffectType;
                     if (useTransitionEffect) {
-                        [self animationWithFromLayer:fromLayer toLayer:toLayer targetSize:_outputVideoSize transitionTimeRange:transitionTimeRanges[i] targetType:curType];
+                        [self animationWithFromLayer:fromLayer toLayer:toLayer targetSize:_outputSize transitionTimeRange:transitionTimeRanges[i] targetType:curType];
                     }
                 }
                 transitionInstruction.layerInstructions = @[toLayer, fromLayer];
@@ -523,17 +523,17 @@
 #pragma mark - 废弃部分
 - (void)calculateVideoSize {
     //如没手动设置outputSize则取“第一个有size的视频”的size
-    if (!CGSizeEqualToSize(_outputVideoSize, CGSizeZero)
+    if (!CGSizeEqualToSize(_outputSize, CGSizeZero)
         && _videoSourcesList
         && _videoSourcesList.count > 0) {
         
         //       _outputVideoSize = [asset tracks].firstObject.naturalSize;
         for (AVAsset *tmpAsset in _videoSourcesList) {
-            _outputVideoSize = [tmpAsset naturalSize];          //或者用视轨的nauralSize
-            if (!CGSizeEqualToSize(CGSizeZero, _outputVideoSize)) {continue; };
+            _outputSize = [tmpAsset naturalSize];          //或者用视轨的nauralSize
+            if (!CGSizeEqualToSize(CGSizeZero, _outputSize)) {continue; };
             BOOL needAdjust = [self judgeNeedAdjustOrientationWithAsset:tmpAsset];;
             if (needAdjust) {//需要调整videoComposition.renderSize 的尺寸
-                _outputVideoSize = CGSizeMake(_outputVideoSize.height, _outputVideoSize.width);
+                _outputSize = CGSizeMake(_outputSize.height, _outputSize.width);
             }
             break;
         }

@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
     WZConvertPhotosIntoVideoToolStatus_Ready,
     WZConvertPhotosIntoVideoToolStatus_Completed,
     WZConvertPhotosIntoVideoToolStatus_Failed,
+    WZConvertPhotosIntoVideoToolStatus_Canceled,
     WZConvertPhotosIntoVideoToolStatus_Converting,
 };
 
@@ -66,7 +67,11 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)finishWriting;             //完成
 - (void)cancelWriting;             //取消
 
+- (void)prepareTask;
+- (void)renderWithImage:(UIImage *)image;
 
+#warning 非常需要解决内存不足的问题（也就是说代价太高昂）
+//每调用一次加入一帧
 //n种接口：image，pixelBuffer（sampleBuffer）                                     //contextRef
 - (void)addFrameWithUIImage:(UIImage *)image;
 - (void)addFrameWithCGImage:(CGImageRef)image;
@@ -81,5 +86,4 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)needAudioInput:(BOOL)boolean;       //是否用音频  在ready状态之前设置好
 
 
-- (void) testCompressionSession;
 @end

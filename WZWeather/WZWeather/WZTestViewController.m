@@ -14,6 +14,8 @@
 @interface WZTestViewController ()
 {
     WZConvertPhotosIntoVideoTool *tool;
+    CADisplayLink *link;
+    UIImage *targetImage;
 }
 
 @end
@@ -54,14 +56,51 @@
     tool.outputSize = CGSizeMake(640, 1136);
 
     NSMutableArray *sources = [NSMutableArray array];
+    [tool prepareTask];
+//    for (NSUInteger i = 0; i < 8; i++) {
+//        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
+//        [sources addObject:tmp];
+//        [tool renderWithImage:tmp];
+//    }
+//    [tool finishWriting];
+    
+    
+//    tool.sources = sources;
+//    [tool startRequestingFrames];
+    
+    
+    link = [CADisplayLink displayLinkWithTarget:self selector:@selector(test:)];
+    [link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    link.paused = false;
 
-    for (NSUInteger i = 0; i < 8; i++) {
-        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
-        [sources addObject:tmp];
+}
+
+
+static int count = 0;
+static int loop = 0;
+
+- (void)test:(CADisplayLink *)link {
+    if (count >= 8) {
+        [tool finishWriting];
+        link.paused = true;
+        [link invalidate];
+        loop = 0;
+        count = 0;
+    } else {
+        @autoreleasepool {
+            if (loop >= 30) {
+                count++;
+                loop = 0;
+                targetImage = [UIImage imageNamed:[NSString stringWithFormat:@"testImage%d.jpg", count]];
+            } else {
+                if (!targetImage) {
+                    targetImage = [UIImage imageNamed:[NSString stringWithFormat:@"testImage0.jpg"]];
+                }
+                [tool renderWithImage:targetImage];
+                loop++;
+            }
+        }
     }
-    tool.sources = sources;
-    [tool startRequestingFrames];
-
     
 }
 
@@ -88,9 +127,11 @@
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
         NSLog(@"111");
-        WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
-        alert.asset = [AVAsset assetWithURL:tool.outputURL];
-        [alert alertShow];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
+            alert.asset = [AVAsset assetWithURL:tool.outputURL];
+            [alert alertShow];
+        });
     }
 }
 

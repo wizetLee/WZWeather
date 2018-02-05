@@ -8,7 +8,8 @@
 
 #import "WZConvertPhotosIntoVideoTool.h"
 #import <AVFoundation/AVFoundation.h>
-
+//参考
+//http://blog.sina.com.cn/s/blog_a45145650102v8t0.html
 @interface WZConvertPhotosIntoVideoTool()
 {
     AVAssetWriter *_writer;
@@ -23,6 +24,8 @@
     NSUInteger _frameCount;                                  //帧数 由limitedTime->frameRate得到
     
 //    NSLock *_lock;                                           //mutex lock
+    
+    CVPixelBufferRef wrotePixelBuffer;
 }
 
 @property (nonatomic, assign) CMTime currentProgressTime;   //当前进度
@@ -48,20 +51,12 @@
     _frameCount = 0;
     _queueID = @"wizet.serial.queue";
     _pixelBufferRef = NULL;
-//    _lock = [[NSLock alloc] init];
+
 }
 
-///中转
-//- (CVPixelBufferRef *)copyNextPixelBufferToWrite {
-//    //根据变量控制 buffer
-//
-//     if (_pixelBufferRef == NULL) { return NULL; }
-//     NSLog(@"~~~~");
-////     _pixelBufferRef = NULL;
-//
-//     return _pixelBufferRef;
-//
-//}
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
 
 //addBuffer
 - (void)addPixelBufferRef:(CVPixelBufferRef *)sbf {
@@ -77,10 +72,6 @@
                 
             }
         }
-    
-    
-     
-  
 }
 
 #pragma mark - Public
@@ -110,8 +101,7 @@
     {//写入工具部分
         AVFileType fileType = AVFileTypeQuickTimeMovie;
         _writer = [[AVAssetWriter alloc] initWithURL:_outputURL fileType:fileType error:&error];
-        //        _adaptor = []
-        
+
         NSMutableDictionary *outputSettings = NSMutableDictionary.dictionary;
         CGSize outputSize = _outputSize;//   x % 2 = 0
         outputSettings[AVVideoWidthKey] = @(outputSize.width);
@@ -137,8 +127,16 @@
         
     }
     
-    //信号指向ready状态
-    _status = WZConvertPhotosIntoVideoToolStatus_Ready;
+    
+    {
+        //信号指向ready状态
+        _status = WZConvertPhotosIntoVideoToolStatus_Ready;
+        //首次add 的配置
+        [_writer startWriting];
+        [_writer startSessionAtSourceTime:kCMTimeZero];
+        _currentProgressTime = CMTimeMake(0, 30);
+        _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+    }
 }
 
 - (void)finishWriting {
@@ -154,8 +152,78 @@
 - (void)cancelWriting {
     [_videoInput markAsFinished];
     [_writer cancelWriting];
-    
+    _status = WZConvertPhotosIntoVideoToolStatus_Canceled;
     //恢复状态
+}
+
+- (CVPixelBufferRef)getPixelBufferRef {
+    CVPixelBufferRef pixelBuffer = NULL;
+    OSStatus err = CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, _adaptor.pixelBufferPool, &pixelBuffer);
+    if (err) {
+         CVPixelBufferRelease(pixelBuffer);
+        return NULL;
+    }
+    return pixelBuffer;
+}
+
+
+//先从pool中得到buffer
+- (void)renderWithImage:(UIImage *)image {
+    CVPixelBufferRef pbf = [self getPixelBufferRef];
+    if (pbf) {
+        //把image绘进pbf
+        CGImageRef imageRef = image.CGImage;
+        CVPixelBufferLockBaseAddress(pbf, 0);
+        void *pxdata = CVPixelBufferGetBaseAddress(pbf);
+        
+        NSParameterAssert(pxdata != NULL);
+        CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+        CGContextRef context = CGBitmapContextCreate(pxdata, _outputSize.width, _outputSize.height, 8, 4*_outputSize.width, rgbColorSpace, kCGImageAlphaPremultipliedFirst);
+    
+        CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
+        
+        CGColorSpaceRelease(rgbColorSpace);
+        
+        CGContextRelease(context);
+        
+        CVPixelBufferUnlockBaseAddress(pbf, 0);
+        
+        [self renderWithSample:pbf];
+    } else {
+        NSLog(@"丢帧啦");
+    }
+}
+
+- (void)renderWithSample:(CVPixelBufferRef)buffer {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
+        
+        //首次add 的配置
+        [_writer startWriting];
+        [_writer startSessionAtSourceTime:kCMTimeZero];
+        _currentProgressTime = CMTimeMake(0, 30);
+        _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+    } else if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+       
+        //计算时间
+    }
+    
+    if ([_videoInput isReadyForMoreMediaData]) {
+        if (buffer) {
+            CVPixelBufferLockBaseAddress(buffer, 0);
+            if (![_adaptor appendPixelBuffer:buffer withPresentationTime:_currentProgressTime]) {
+                NSLog(@"_adaptor append fail");
+            } else {
+                //时间根据帧率递增
+                _currentProgressTime = CMTimeAdd(_currentProgressTime, CMTimeMake(1, 30));//时间递增
+            }
+            CVPixelBufferUnlockBaseAddress(buffer, 0);
+            CVPixelBufferRelease(buffer);///初发现 有内存泄漏的情况，原来是buffer没有释放掉
+        } else {
+             NSLog(@"丢丢丢丢丢丢丢丢帧啦");
+        }
+    } else {
+        NSLog(@"丢丢丢丢丢丢丢丢帧啦");
+    }
 }
 
 - (void)startRequestingFrames {
@@ -165,13 +233,13 @@
         NSLog(@"error，当前状态并非：ready");
         return;
     }
-   
-    _status = WZConvertPhotosIntoVideoToolStatus_Converting;
-    
+
     [_writer startWriting];
     [_writer startSessionAtSourceTime:kCMTimeZero];
     
-    
+    _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+   
+
     dispatch_queue_t queue = dispatch_queue_create([_queueID UTF8String], NULL);
     [_videoInput requestMediaDataWhenReadyOnQueue:queue usingBlock:^{
         //队列中请求
@@ -189,9 +257,11 @@
             } else {
                 
             }
-            
+  
             if (pbf) {
+                CVPixelBufferLockBaseAddress(pbf, 0);
 //                    CVPixelBufferRef* nextPixelBuffer = [self copyNextPixelBufferToWrite];
+              
                 if (![_adaptor appendPixelBuffer:pbf withPresentationTime:_currentProgressTime]) {
                     //append  fail
                     NSLog(@"_adaptor append fail");
@@ -200,8 +270,10 @@
                     _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//时间递增
                 }
                 
+                CVPixelBufferUnlockBaseAddress(pbf, 0);
 //                    CVPixelBufferRelease(*_pixelBufferRef);
 //                    _pixelBufferRef = NULL;
+                
             } else if (_finishWritingSignal) {
                 [self finishWriting];
                 
@@ -209,7 +281,8 @@
             } else {
                 //waiting 数据
             }
-         
+       
+             //传出代理说明当前可接受下一个数据的传入
         }
     }];
 }
@@ -326,167 +399,8 @@
     return newSampleBuffer;
 }
 
-- (void) testCompressionSession
 
-{
-    
-  
-    NSMutableArray *sources = [NSMutableArray array];
-    for (NSUInteger i = 0; i < 8; i++) {
-        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
-        [sources addObject:tmp];
-    }
-    
-      NSArray *imageArr = sources;
-    
-    CGSize size = CGSizeMake(640, 1136);
-    
-    
-    NSString *betaCompressionDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Movie.m4v"];
-    
-    
-    
-    NSError *error = nil;
-    
-    
-    
-    unlink([betaCompressionDirectory UTF8String]);
-    
-    
-    
-    //----initialize compression engine
-    
-    AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:betaCompressionDirectory]
-                                  
-                                                           fileType:AVFileTypeQuickTimeMovie
-                                  
-                                                              error:&error];
-    
-    NSParameterAssert(videoWriter);
-    
-    if(error)
-        
-        NSLog(@"error = %@", [error localizedDescription]);
-    
-    
-    
-    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:AVVideoCodecH264, AVVideoCodecKey,
-                                   
-                                   [NSNumber numberWithInt:size.width], AVVideoWidthKey,
-                                   
-                                   [NSNumber numberWithInt:size.height], AVVideoHeightKey, nil];
-    
-    AVAssetWriterInput *writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
-    
-    
-    
-    NSDictionary *sourcePixelBufferAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                           
-                                                           [NSNumber numberWithInt:kCVPixelFormatType_32ARGB], kCVPixelBufferPixelFormatTypeKey, nil];
-    
-    
-    
-    AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput
-                                                     
-                                                                                                                     sourcePixelBufferAttributes:sourcePixelBufferAttributesDictionary];
-    
-    NSParameterAssert(writerInput);
-    
-    NSParameterAssert([videoWriter canAddInput:writerInput]);
-    
-    
-    
-    if ([videoWriter canAddInput:writerInput])
-        
-        NSLog(@"I can add this input");
-    
-    else
-        
-        NSLog(@"i can't add this input");
-    
-    
-    
-    [videoWriter addInput:writerInput];
-    
-    
-    
-    [videoWriter startWriting];
-    
-    [videoWriter startSessionAtSourceTime:kCMTimeZero];
-    
-    
-    
-    //---
-    
-    // insert demo debugging code to write the same image repeated as a movie
-    
-
-    dispatch_queue_t    dispatchQueue = dispatch_queue_create("mediaInputQueue", NULL);
-    
-    int __block         frame = 0;
-    
-    
-    
-    [writerInput requestMediaDataWhenReadyOnQueue:dispatchQueue usingBlock:^{
-        
-        while ([writerInput isReadyForMoreMediaData])
-            
-        {
-            
-            if(++frame >= imageArr.count * 40)
-                
-            {
-                
-                [writerInput markAsFinished];
-                
-                [videoWriter finishWriting];
-                
-                
-                
-                break;
-                
-            }
-            
-            int idx = frame/40;
-            
-            
-            
-            CVPixelBufferRef buffer = (CVPixelBufferRef)[self pixelBufferFromCGImage:(__bridge CGImageRef)([imageArr objectAtIndex:idx]) size:size];
-            
-            if (buffer)
-                
-            {
-                
-                if(![adaptor appendPixelBuffer:buffer withPresentationTime:CMTimeMake(frame, 20)])
-                    
-                    NSLog(@"FAIL");
-                
-                else
-                    
-                    NSLog(@"Success:%d", frame);
-                
-                CFRelease(buffer);
-                
-            }
-            
-        }
-        
-    }];
-    
-    
-    
-    NSLog(@"outside for loop");
-    
-}
-
-
-
-
-
-- (CVPixelBufferRef )pixelBufferFromCGImage:(CGImageRef)image size:(CGSize)size
-
-{
-    
+- (CVPixelBufferRef )pixelBufferFromCGImage:(CGImageRef)image size:(CGSize)size {
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              
                              [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
@@ -503,14 +417,11 @@
     
     NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
     
-    
-    
     CVPixelBufferLockBaseAddress(pxbuffer, 0);
     
     void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
     
     NSParameterAssert(pxdata != NULL);
-    
     
     
     CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
@@ -521,20 +432,25 @@
     
     CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
     
-    
-    
     CGColorSpaceRelease(rgbColorSpace);
     
     CGContextRelease(context);
     
-    
-    
     CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
-    
-    
     
     return pxbuffer;
     
 }
+
+- (void)renderAtTime:(CMTime)time {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
+        //首次render
+        
+    } else if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        //正在写入
+        
+    }
+}
+
 
 @end
