@@ -124,7 +124,6 @@
         //        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferCGBitmapContextCompatibilityKey] = @(true);
         AVAssetWriterInputPixelBufferAdaptor *writerInputPixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc] initWithAssetWriterInput:_videoInput sourcePixelBufferAttributes:sourcePixelBufferAttributes];
         _adaptor = writerInputPixelBufferAdaptor;
-        
     }
     
     
@@ -169,26 +168,50 @@
 
 //先从pool中得到buffer
 - (void)renderWithImage:(UIImage *)image {
-    CVPixelBufferRef pbf = [self getPixelBufferRef];
-    if (pbf) {
-        //把image绘进pbf
+    CGSize imageSize = image.size;
+    
+    CVPixelBufferRef pbr = [self getPixelBufferRef];
+    if (pbr == NULL) {
+        NSMutableDictionary *pixelBufferAttributes = NSMutableDictionary.alloc.init;
+        pixelBufferAttributes[(__bridge NSString *)kCVPixelBufferCGImageCompatibilityKey] = @(true);
+        pixelBufferAttributes[(__bridge NSString *)kCVPixelBufferCGBitmapContextCompatibilityKey] = @(true);
+        CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault
+                                              , imageSize.width
+                                              , imageSize.height
+                                              , kCVPixelFormatType_32ARGB
+                                              , (__bridge CFDictionaryRef)pixelBufferAttributes
+                                              , &pbr);
+        if (status == kCVReturnSuccess && pbr != NULL) {
+            NSLog(@"自创建PixelBuffer");
+        } else {
+            NSLog(@"自创建PixelBuffer失败");
+        }
+    }
+    
+    if (pbr) {
+        //把image绘进pbr
         CGImageRef imageRef = image.CGImage;
-        CVPixelBufferLockBaseAddress(pbf, 0);
-        void *pxdata = CVPixelBufferGetBaseAddress(pbf);
+        CVPixelBufferLockBaseAddress(pbr, 0);
+        void *pxdata = CVPixelBufferGetBaseAddress(pbr);
         
         NSParameterAssert(pxdata != NULL);
         CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-        CGContextRef context = CGBitmapContextCreate(pxdata, _outputSize.width, _outputSize.height, 8, 4*_outputSize.width, rgbColorSpace, kCGImageAlphaPremultipliedFirst);
-    
+        CGContextRef context = CGBitmapContextCreate(pxdata
+                                                     , _outputSize.width
+                                                     , _outputSize.height
+                                                     , 8
+                                                     , 4 * _outputSize.width
+                                                     , rgbColorSpace
+                                                     , kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little);
+        //(CGBitmapInfo)kCGImageAlphaPremultipliedFirst
         CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
         
         CGColorSpaceRelease(rgbColorSpace);
-        
         CGContextRelease(context);
         
-        CVPixelBufferUnlockBaseAddress(pbf, 0);
+        CVPixelBufferUnlockBaseAddress(pbr, 0);
         
-        [self renderWithSample:pbf];
+        [self renderWithSample:pbr];
     } else {
         NSLog(@"丢帧啦");
     }
@@ -452,5 +475,20 @@
     }
 }
 
+
+// from : https://zhuanlan.zhihu.com/p/24762605?utm_medium=social&utm_source=weibo
++ (UIImage*)uiImageFromPixelBuffer:(CVPixelBufferRef)pbr {
+    CIImage* ciImage = [CIImage imageWithCVPixelBuffer:pbr];
+    
+    CIContext *context = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @(true)}];
+    
+    CGRect rect = CGRectMake(0, 0, CVPixelBufferGetWidth(pbr), CVPixelBufferGetHeight(pbr));
+    CGImageRef videoImage = [context createCGImage:ciImage fromRect:rect];
+    
+    UIImage *image = [UIImage imageWithCGImage:videoImage];
+    CGImageRelease(videoImage);
+    
+    return image;
+}
 
 @end

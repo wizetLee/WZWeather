@@ -55,7 +55,12 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic, strong) NSURL *outputURL;
 @property (nonatomic, assign) CMTime frameRate;
 @property (nonatomic, assign) CGSize outputSize;
-//- (instancetype)initWithOutputURL:(NSURL *)outputURL outputSize:(CGSize)outputSize frameRate:(CMTime)frameRate;
+
+
+
+- (instancetype)initWithOutputURL:(NSURL *)outputURL
+                       outputSize:(CGSize)outputSize
+                        frameRate:(CMTime)frameRate;//帧率
 
 #pragma mark 录制固定时长的视频需要的配置
 @property (nonatomic, assign) BOOL timeIsLimited;   //default：false  录制的时间是限定的，也就是固定了要录制多少帧。
@@ -70,7 +75,9 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)prepareTask;
 - (void)renderWithImage:(UIImage *)image;
 
-#warning 非常需要解决内存不足的问题（也就是说代价太高昂）
+#warning 非常需要解决内存不足的问题（也就是说代价太高昂)，考虑一种低成本的运作方式
+
+
 //每调用一次加入一帧
 //n种接口：image，pixelBuffer（sampleBuffer）                                     //contextRef
 - (void)addFrameWithUIImage:(UIImage *)image;

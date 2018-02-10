@@ -81,6 +81,7 @@ static int loop = 0;
 
 - (void)test:(CADisplayLink *)link {
     if (count >= 8) {
+        //结束写入， 终止定时器
         [tool finishWriting];
         link.paused = true;
         [link invalidate];
