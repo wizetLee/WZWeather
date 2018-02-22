@@ -17,7 +17,7 @@
 
 @interface WZAssetBrowseToolView : UIView
 
-@property (nonatomic, weak) id<WZProtocolAssetBrowseTool> delegate;
+@property (nonatomic,   weak) id<WZProtocolAssetBrowseTool> delegate;
 @property (nonatomic, strong) void (^fetchClearInfo)(NSString *info);
 @property (nonatomic, strong) void (^restrictNumber)(NSUInteger restrictNumber);
 @property (nonatomic, strong) UIButton *selectedButtonClear;

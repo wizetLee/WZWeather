@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CoreMedia.h>
 #import "WZConvertPhotosIntoVideoItem.h"
+#import "WZConvertPhotosIntoVideoFilter.h"
 
 typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
     WZConvertPhotosIntoVideoToolStatus_Idle             = 0,

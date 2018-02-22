@@ -19,6 +19,7 @@
     int loop;
 }
 @property (weak, nonatomic) IBOutlet UILabel *addedFrameCountLabel;
+
 @end
 
 @implementation Demo_ConvertPhotosIntoVideoController

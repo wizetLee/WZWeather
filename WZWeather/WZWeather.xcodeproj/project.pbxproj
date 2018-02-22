@@ -2933,6 +2933,7 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				84BED565203ECCDF00A45A11 /* 控件 */,
 				84BED556203E747600A45A11 /* 图片转视频 */,
 			);
 			path = Demo;
@@ -2946,6 +2947,21 @@
 				84BED559203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib */,
 			);
 			path = "图片转视频";
+			sourceTree = "<group>";
+		};
+		84BED565203ECCDF00A45A11 /* 控件 */ = {
+			isa = PBXGroup;
+			children = (
+				84BED566203ECCF000A45A11 /* New Group */,
+			);
+			name = "控件";
+			sourceTree = "<group>";
+		};
+		84BED566203ECCF000A45A11 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		84ECD3121FCBA7E400282C9A /* Resources */ = {

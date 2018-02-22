@@ -44,6 +44,8 @@
 @property (nonatomic, strong) WZGPUImagePicture *pictureA;
 @property (nonatomic, strong) WZGPUImagePicture *pictureB;
 
+@property (nonatomic, strong) WZConvertPhotosIntoVideoFilter *convertPhotosIntoVideoFilter;
+
 @end
 
 @implementation WZConvertPhotosIntoVideoTool
@@ -162,9 +164,17 @@
 }
 
 - (void)retsetConfig {
+    
+    _convertPhotosIntoVideoFilter = [[WZConvertPhotosIntoVideoFilter alloc] init];
+    
     _pictureA = [[WZGPUImagePicture alloc] init];
     _pictureB = [[WZGPUImagePicture alloc] init];
-  
+    
+    [_pictureA processImage];//传递缓存  size是根据图片来output的.
+    [_pictureB processImage];//传递缓存
+    
+    [_pictureA addTarget:_convertPhotosIntoVideoFilter atTextureLocation:0];
+    [_pictureB addTarget:_convertPhotosIntoVideoFilter atTextureLocation:1];
 }
 
 - (void)prepareTask {
