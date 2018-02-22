@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
  
  */
 
-@interface WZConvertPhotosIntoVideoTool : NSObject
+@interface WZConvertPhotosIntoVideoTool : NSObject <GPUImageInput>
 
 @property (nonatomic,   weak) id <WZConvertPhotosIntoVideoToolProtocol> delegate;
 @property (nonatomic, assign, readonly) WZConvertPhotosIntoVideoToolStatus status;

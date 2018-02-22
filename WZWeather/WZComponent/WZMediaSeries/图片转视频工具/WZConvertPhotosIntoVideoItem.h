@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CoreMedia.h>
+#import "WZConvertPhotosIntoVideoFilter.h"
+#import "WZGPUImagePicture.h"
 
 @protocol WZConvertPhotosIntoVideoItemProtocol<NSObject>
 
@@ -74,5 +76,13 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoType) {
 @property (nonatomic, assign) NSUInteger frameCount;                        //此Item占据的帧数
 @property (nonatomic, assign, readonly) NSUInteger framePointer;            //当前扫到的位置
 @property (nonatomic, assign, readonly) float progress;                     //扫描进度
+
+
+//首次配置
+- (void)firstConfigWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer;
+
+//持续更新
+- (void)updateFrameWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer;
+
 
 @end

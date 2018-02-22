@@ -560,13 +560,14 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
         CVBufferSetAttachment(renderTarget, kCVImageBufferYCbCrMatrixKey, kCVImageBufferYCbCrMatrix_ITU_R_601_4, kCVAttachmentMode_ShouldPropagate);
         CVBufferSetAttachment(renderTarget, kCVImageBufferTransferFunctionKey, kCVImageBufferTransferFunction_ITU_R_709_2, kCVAttachmentMode_ShouldPropagate);
         
+        ///opengles texture cache创建 texture
         CVOpenGLESTextureCacheCreateTextureFromImage (kCFAllocatorDefault, [_movieWriterContext coreVideoTextureCache], renderTarget,
                                                       NULL, // texture attributes
                                                       GL_TEXTURE_2D,
                                                       GL_RGBA, // opengl format
                                                       (int)videoSize.width,
                                                       (int)videoSize.height,
-                                                      GL_BGRA, // native iOS format
+                                                      GL_BGRA, // native iOS format iOS的格式
                                                       GL_UNSIGNED_BYTE,
                                                       0,
                                                       &renderTexture);
@@ -671,6 +672,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
 #pragma mark -
 #pragma mark GPUImageInput protocol
 
+// 新的帧准备好了
 - (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex;
 {
     if (!isRecording)
@@ -724,6 +726,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
         }
         else
         {
+        
             CVReturn status = CVPixelBufferPoolCreatePixelBuffer (NULL, [assetWriterPixelBufferInput pixelBufferPool], &pixel_buffer);
             if ((pixel_buffer == NULL) || (status != kCVReturnSuccess))
             {

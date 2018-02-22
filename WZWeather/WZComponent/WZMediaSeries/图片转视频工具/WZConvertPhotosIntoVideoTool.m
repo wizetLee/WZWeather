@@ -19,9 +19,6 @@
     AVAssetWriterInput *_audioInput;
     AVAssetWriterInput *_videoInput;
  
-    CVPixelBufferRef *_pixelBufferRef;
-    BOOL _finishWritingSignal;                              //需要停止输入的信号
-    
     NSUInteger _frameCount;                                  //帧数 由limitedTime->frameRate得到
     
 //    NSLock *_lock;                                           //mutex lock
@@ -32,6 +29,10 @@
     NSUInteger _addedFrameCount;                         //已添加的帧数
     
     NSUInteger targetFrameCount;            //目标帧数
+    
+    
+    
+    GPUImageFramebuffer *firstInputFramebuffer;
 }
 
 
@@ -79,9 +80,7 @@
 #pragma mark - Private
 - (void)defaultConfig {
     _frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
-    _finishWritingSignal = false;
     _frameCount = 0;
-    _pixelBufferRef = NULL;
     _addedFrameCount = 0;
     
     _timeIsLimited = false; //默认为false
@@ -236,7 +235,6 @@
 }
 
 - (void)finishWriting {
-    
     _status = WZConvertPhotosIntoVideoToolStatus_Completed;
     [_videoInput markAsFinished];
     [_writer finishWritingWithCompletionHandler:^{
@@ -247,7 +245,6 @@
     
     [self cleanCache];
 }
-
 
 - (void)startWriting {
     if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
@@ -301,6 +298,11 @@
     }
 }
 
+- (void)dasdasd:(CVPixelBufferRef)pixelBufferRef {
+    //纹理绘制到pixelBufferRef中
+    
+}
+
 - (void)addFrameWithCGImage:(CGImageRef)cgImage {
     if (_status != WZConvertPhotosIntoVideoToolStatus_Converting) {
         return;
@@ -315,7 +317,7 @@
         CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault
                                               , imageSize.width
                                               , imageSize.height
-                                              , kCVPixelFormatType_32ARGB
+                                              , kCVPixelFormatType_32BGRA
                                               , (__bridge CFDictionaryRef)pixelBufferAttributes
                                               , &pbr);
         if (status == kCVReturnSuccess && pbr != NULL) {
@@ -533,4 +535,36 @@
 - (void)didBecomeActiveNotification:(NSNotification *)notification {
     NSLog(@"%s", __func__);
 }
+
+
+
+#pragma mark - GPUImageInput
+
+//获取新的buffer
+- (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex; {
+    //得到新的buffer..
+    NSLog(@"%s", __func__);
+}
+- (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex; {
+    NSLog(@"%s", __func__);
+    firstInputFramebuffer = newInputFramebuffer;
+}
+//- (NSInteger)nextAvailableTextureIndex;
+- (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex; {
+    NSLog(@"%s", __func__);
+}
+- (void)setInputRotation:(GPUImageRotationMode)newInputRotation atIndex:(NSInteger)textureIndex; {
+    NSLog(@"%s", __func__);
+}
+
+- (void)endProcessing; {
+    NSLog(@"%s", __func__);
+}
+
+
+
+- (void)setCurrentlyReceivingMonochromeInput:(BOOL)newValue; {
+    NSLog(@"%s", __func__);
+}
+
 @end
