@@ -23,16 +23,21 @@
 #import "WZAudioCodecController.h"
 #import "WZVideoCodecController.h"
 
-
+#import "WZVCModel.h"
 
 #import "WZTestViewController.h"
+
+#pragma mark - Demo
+#import "Demo_ConvertPhotosIntoVideoController.h"
 
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
-@property (nonatomic,strong) WZScrollOptions *menuView;
+
 
 @property (nonatomic, strong) UITableView *table;
+
+@property (nonatomic, strong) NSMutableArray <WZVCModel *>* sources;
 
 @end
 
@@ -114,6 +119,48 @@
     
 //    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, MACRO_VC_FLOAT_SAFEAREA_TOP, 20, MACRO_FLOAT_SCREEN_HEIGHT)];
     
+   
+    
+    _sources = NSMutableArray.array;
+    WZVCModel *VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZTestViewController.class;
+    VCModel.headline = @"WZTestViewController 临时测试专用";
+    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZMediaController.class;
+    VCModel.headline = @"跳转到：拍摄、录像";
+    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZAPLSimpleEditor.self;
+    VCModel.headline = @"视频合成测试";
+    [_sources addObject:VCModel];
+    
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZAVPlayerViewController.class;
+    VCModel.headline = @"播放和animationTool测试";
+    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZPhotoCatalogueController.class;
+    VCModel.headline = @"图片选取";
+    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZVideoPickerController.class;
+    VCModel.headline = @"视频选取、合并、删除";
+    [_sources addObject:VCModel];
+    
+    
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_ConvertPhotosIntoVideoController.class;
+    VCModel.headline = @"图片转视频demo";
+    [_sources addObject:VCModel];
+   
+
     if(!_table) {
         UITableView *table = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [self.view addSubview:table];
@@ -180,7 +227,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 100;
+    return _sources.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath; {
@@ -198,153 +245,76 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", indexPath];
-    switch (indexPath.row) {
-        case 0: {
-            cell.textLabel.text = [NSString stringWithFormat:@"跳转至：拍摄、录像"];
-        } break;
-        case 1: {
-            cell.textLabel.text = [NSString stringWithFormat:@"视频合成测试"];
-        } break;
-        case 2: {
-            cell.textLabel.text = [NSString stringWithFormat:@"播放、以及水印制作测试"];
-        } break;
-        case 3: {
-            cell.textLabel.text = [NSString stringWithFormat:@"本地图片选取"];
-        } break;
-        case 4: {
-            cell.textLabel.text = [NSString stringWithFormat:@"本地视频选取、合并、删除"];
-        } break;
-        case 5: {
-            cell.textLabel.text = [NSString stringWithFormat:@"WZTestViewController"];
-        } break;
-        case 6: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 7: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 8: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 9: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 10: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 11: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 12: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 13: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 14: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 15: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-        case 16: {
-            cell.textLabel.text = [NSString stringWithFormat:@"~"];
-        } break;
-            
-
-        default:
-            break;
+    if (_sources.count > indexPath.row) {
+       cell.textLabel.text = _sources[indexPath.row].headline;
+    } else {
+        cell.textLabel.text = @"";
     }
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 0: {
-            [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
-                if (videoAuthorization
-                    && audioAuthorization
-                    && libraryAuthorization) {
-                    ///下载页面
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
-                        //    WZDownloadController *vc = [[WZDownloadController alloc] init];
-                        WZMediaController *vc = [WZMediaController new];
-                        
-                        [self.navigationController pushViewController:vc animated:true];
-                        
-                    });
-                } else {
-                    [self showAlter];
-                }
-            }];
-        } break;
-        case 1: {
-            AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
-            AVURLAsset *asset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip2" ofType:@"mov"]]];
-            AVURLAsset *asset3 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"01_nebula" ofType:@"mp4"]]];
-            AVURLAsset *asset4 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"02_blackhole" ofType:@"mp4"]]];
-            AVURLAsset *asset5 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"03_nebula" ofType:@"mp4"]]];
-            AVURLAsset *asset6 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"04_quasar" ofType:@"mp4"]]];
-            AVURLAsset *asset7 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"05_blackhole" ofType:@"mp4"]]];
-            
-            WZAPLSimpleEditor *editor = [[WZAPLSimpleEditor alloc] init];
-            [editor updateEditorWithVideoAssets:@[asset4, asset3, asset2, asset1]];
-            
-        } break;
-        case 2: {
-            
-            WZAVPlayerViewController *vc = [WZAVPlayerViewController new];
-            self.navigationController.navigationBarHidden = false;
-            [self.navigationController pushViewController:vc animated:true];
-        } break;
-        case 3: {
-             [WZPhotoCatalogueController showPickerWithPresentedController:self];
-        } break;
-        case 4: {
-           [WZVideoPickerController showPickerWithPresentedController:self];
-        } break;
-        case 5: {
-//            WZTestViewController *vc = [[WZTestViewController alloc] initWithNibName:@"WZTestViewController" bundle:nil];
+     if (_sources.count > indexPath.row) {
 
-            WZTestViewController *vc = [[WZTestViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:true];
-        } break;
-        case 6: {
-        } break;
-        case 7: {
-        } break;
-        case 8: {
-        } break;
-        case 9: {
-        } break;
-        case 10: {
-        } break;
-        case 11: {
-        } break;
-        case 12: {
-        } break;
-        case 13: {
-           
-        } break;
-        case 14: {
-        
-        } break;
-        case 15: {
-        } break;
-        case 16: {
-        } break;
-        case 17: {
-        } break;
-            
-        default:
-            break;
-    }
-    
+         WZVCModel *model = _sources[indexPath.row];
+         if (model.VCClass == WZMediaController.class) {
+             [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
+                 if (videoAuthorization
+                     && audioAuthorization
+                     && libraryAuthorization) {
+                     ///下载页面
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
+                         //    WZDownloadController *vc = [[WZDownloadController alloc] init];
+                         WZMediaController *vc = [WZMediaController new];
+                         
+                         [self.navigationController pushViewController:vc animated:true];
+                         
+                     });
+                 } else {
+                     [self showAlter];
+                 }
+             }];
+         } else if (model.VCClass == WZAVPlayerViewController.class) {
+             WZAVPlayerViewController *vc = [WZAVPlayerViewController new];
+             self.navigationController.navigationBarHidden = false;
+             [self.navigationController pushViewController:vc animated:true];
+         } else if (model.VCClass == WZPhotoCatalogueController.class) {
+              [WZPhotoCatalogueController showPickerWithPresentedController:self];
+         } else if (model.VCClass == WZVideoPickerController.class) {
+             [WZVideoPickerController showPickerWithPresentedController:self];
+         } else if (model.VCClass == WZTestViewController.class) {
+             WZTestViewController *vc = [[WZTestViewController alloc] init];
+             [self.navigationController pushViewController:vc animated:true];
+         } else if (model.VCClass == Demo_ConvertPhotosIntoVideoController.class) {
+             
+             Demo_ConvertPhotosIntoVideoController *VC = [[Demo_ConvertPhotosIntoVideoController alloc] initWithNibName:@"Demo_ConvertPhotosIntoVideoController" bundle:nil];
+             [self.navigationController pushViewController:VC animated:true];
+             
+         } else if (model.VCClass == WZAVPlayerViewController.class) {
+             
+         } else if (model.VCClass == WZAVPlayerViewController.class) {
+             
+         } else if (model.VCClass == WZAPLSimpleEditor.class) {
+             AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
+             AVURLAsset *asset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip2" ofType:@"mov"]]];
+             AVURLAsset *asset3 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"01_nebula" ofType:@"mp4"]]];
+             AVURLAsset *asset4 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"02_blackhole" ofType:@"mp4"]]];
+             AVURLAsset *asset5 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"03_nebula" ofType:@"mp4"]]];
+             AVURLAsset *asset6 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"04_quasar" ofType:@"mp4"]]];
+             AVURLAsset *asset7 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"05_blackhole" ofType:@"mp4"]]];
+             
+             WZAPLSimpleEditor *editor = [[WZAPLSimpleEditor alloc] init];
+             [editor updateEditorWithVideoAssets:@[asset4, asset3, asset2, asset1]];
+             
+         }
+     }
+   
 }
 
-//iOS11以下 是不会调用这个消息的   横竖屏改变 VC present pop 等操作都会执行这个消息
+
+//iOS11以下 是不会调用以下方法的   横竖屏改变 VC present pop 等操作都会执行这个消息
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];
      NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));

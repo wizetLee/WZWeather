@@ -18,7 +18,7 @@
 - (id)initWithCGImage:(CGImageRef)newImageSource smoothlyScaleOutput:(BOOL)smoothlyScaleOutput;
 
 // Image rendering
-- (void)processImage;
+- (void)processImage;        //更新图片frameBuffer
 - (CGSize)outputImageSize;
 
 /**

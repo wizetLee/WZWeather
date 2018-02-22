@@ -8,6 +8,7 @@
 
 #import "WZConvertPhotosIntoVideoFilter.h"
 
+
 NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHADER_STRING
 (
  attribute vec4 position;                          //顶点坐标相同
@@ -129,7 +130,11 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     [firstInputFramebuffer unlock];
-    [secondInputFramebuffer unlock];
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if (![self singleTexture]) {
+        [secondInputFramebuffer unlock];
+    }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if (usingNextFrameForImageCapture)
     {
         dispatch_semaphore_signal(imageCaptureSemaphore);
@@ -138,9 +143,15 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 
 #pragma mark -
 #pragma mark GPUImageInput
-
+//始终按照0~~n的纹理句柄顺序配置
 - (NSInteger)nextAvailableTextureIndex;
 {
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if ([self singleTexture]) {
+        return 0;
+    }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
     if (hasSetFirstTexture)
     {
         return 1;
@@ -219,12 +230,50 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     // You can set up infinite update loops, so this helps to short circuit them
     
 //MARK: - 就在之这里修改了
+    //通知下一个链节点更新buffer
+    BOOL updatedMovieFrameOppositeStillImage = NO;//感觉不需要这个拦截变量啊~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if ([self singleTexture]) {
+        //单纹理直通
+        
+        if (textureIndex == 0)
+        {
+            hasReceivedFirstFrame = YES;
+            firstFrameTime = frameTime;
+            if (secondFrameCheckDisabled)
+            {
+                hasReceivedSecondFrame = YES;
+            }
+            
+            if (!CMTIME_IS_INDEFINITE(frameTime))//Returns true if the CMTime is indefinite, false if it is not.
+            {
+                if CMTIME_IS_INDEFINITE(secondFrameTime)
+                {
+                    updatedMovieFrameOppositeStillImage = YES;
+                }
+            }
+        }
+        
+        if ((hasReceivedFirstFrame) || updatedMovieFrameOppositeStillImage)
+        {
+            CMTime passOnFrameTime = firstFrameTime;
+            [super newFrameReadyAtTime:passOnFrameTime atIndex:0];
+            hasReceivedFirstFrame = NO;
+            hasReceivedSecondFrame = NO;
+        }
+        
+        
+        return;
+    }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    //双纹理直通
     if (hasReceivedFirstFrame && hasReceivedSecondFrame)//因为这个验证值是在此函数内验证的，如果两个验证值同时为true则说明逻辑出了问题
     {
         return;
     }
     
-    BOOL updatedMovieFrameOppositeStillImage = NO;//感觉不需要这个拦截变量啊~~~
+
     
     if (textureIndex == 0)
     {
@@ -271,4 +320,10 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         hasReceivedSecondFrame = NO;
     }
 }
+
+#pragma mark - 单双source的切换（根据type）
+- (BOOL)singleTexture {
+    return (_type == 0 || _type == 2 || _type == 3 || _type == 13 || _type == 24 );
+}
+
 @end

@@ -27,7 +27,6 @@
         _imageView.layer.masksToBounds = true;
         [self.contentView addSubview:_imageView];
         
-       
     }
     return self;
 }

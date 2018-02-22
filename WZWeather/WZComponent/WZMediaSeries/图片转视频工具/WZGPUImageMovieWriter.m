@@ -12,14 +12,12 @@
 @interface WZGPUImageMovieWriter()
 {
     AVAssetWriter *writer;
-    
 }
 
 
 @end
 
 @implementation WZGPUImageMovieWriter
-
 
 - (void)action {
     CGSize videoSize = CGSizeMake(400, 1164);
@@ -37,13 +35,14 @@
     bzero( &acl, sizeof(acl));
     acl.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;
     NSDictionary *audioOutputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [ NSNumber numberWithInt: kAudioFormatMPEG4AAC], AVFormatIDKey,
-                                         [ NSNumber numberWithInt: 1 ], AVNumberOfChannelsKey,
-                                         [ NSNumber numberWithFloat: [[AVAudioSession sharedInstance] sampleRate] ], AVSampleRateKey,
-                                         [ NSData dataWithBytes: &acl length: sizeof( acl ) ], AVChannelLayoutKey,
+                                         [NSNumber numberWithInt: kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                         [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
+                                         [ NSNumber numberWithFloat: [[AVAudioSession sharedInstance] sampleRate]], AVSampleRateKey,
+                                         [NSData dataWithBytes:&acl length: sizeof(acl)], AVChannelLayoutKey,
                                          //[ NSNumber numberWithInt:AVAudioQualityLow], AVEncoderAudioQualityKey,
-                                         [ NSNumber numberWithInt: 64000 ], AVEncoderBitRateKey,
+                                         [NSNumber numberWithInt:64000], AVEncoderBitRateKey,
                                          nil];
+    
     AVAssetWriterInput *assetWriterAudioInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings:audioOutputSettings];
     //    assetWriterAudioInput.expectsMediaDataInRealTime = true;//如果数据源是实时采集的则设置为true
     AVAssetWriterInput *assetWriterAudioInput1 = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings:audioOutputSettings];
@@ -61,7 +60,6 @@
     if ([assetWriter canAddInput:assetWriterAudioInput1]) {
         NSLog(@"assetWriterAudioInput1");
     }
-    
     
     //关于时间的计算
     NSUInteger frameRate = 25;
@@ -112,7 +110,6 @@
     }
     BOOL needVoice = false;
     if (needVoice) {
-        
         outputSettings = NSMutableDictionary.dictionary;
         
         AudioChannelLayout acl;

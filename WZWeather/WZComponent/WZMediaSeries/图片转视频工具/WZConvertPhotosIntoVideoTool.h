@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CoreMedia.h>
+#import "WZConvertPhotosIntoVideoItem.h"
 
 typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
     WZConvertPhotosIntoVideoToolStatus_Idle             = 0,
@@ -20,8 +21,12 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 
 @class WZConvertPhotosIntoVideoTool;
 @protocol WZConvertPhotosIntoVideoToolProtocol <NSObject>
-///转换进度
+
+//转换进度
 - (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress;
+
+//已添加的帧数
+- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount;
 
 //写入完成的回调
 - (void)convertPhotosInotViewToolFinishWriting;
@@ -46,17 +51,16 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
     提供录制固定时间的接口？
  
  */
+
 @interface WZConvertPhotosIntoVideoTool : NSObject
 
-@property (nonatomic,   weak) id <WZConvertPhotosIntoVideoToolProtocol>delegate;
-@property (nonatomic, assign) WZConvertPhotosIntoVideoToolStatus status;
+@property (nonatomic,   weak) id <WZConvertPhotosIntoVideoToolProtocol> delegate;
+@property (nonatomic, assign, readonly) WZConvertPhotosIntoVideoToolStatus status;
 
 ///是否应该封闭这些接口
 @property (nonatomic, strong) NSURL *outputURL;
-@property (nonatomic, assign) CMTime frameRate;
+@property (nonatomic, assign) CMTime frameRate;         //default 25 / sec
 @property (nonatomic, assign) CGSize outputSize;
-
-
 
 - (instancetype)initWithOutputURL:(NSURL *)outputURL
                        outputSize:(CGSize)outputSize
@@ -66,31 +70,30 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic, assign) BOOL timeIsLimited;   //default：false  录制的时间是限定的，也就是固定了要录制多少帧。
 @property (nonatomic, assign) CMTime limitedTime;   //限制的录制时间 it is useful when (timeIsLimited==true)
 
-@property (nonatomic, strong) NSArray <UIImage *>*sources;
+@property (nonatomic, strong, readonly) NSArray <UIImage *>*sources;  //数据源
+@property (nonatomic, strong, readonly) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;
 
-- (void)startRequestingFrames;  //ready状态
-- (void)finishWriting;             //完成
-- (void)cancelWriting;             //取消
+- (void)prepareTaskWithPictureSources:(NSArray <UIImage *>*)pictureSources;
 
-- (void)prepareTask;
-- (void)renderWithImage:(UIImage *)image;
+- (void)prepareTask;                //开始之前的准备工作
 
-#warning 非常需要解决内存不足的问题（也就是说代价太高昂)，考虑一种低成本的运作方式
+- (void)startWriting;               //开始
+- (void)finishWriting;              //完成
+- (void)cancelWriting;              //取消
 
+//add帧
+#warning 非常需要解决内存不足的问题（也就是说代价太高昂)，考虑一种低成本的运作方式（当前使用了一个简单的解决方案：对于相同的图片使用缓存加帧，具体方案根据需求变更）
+- (void)addFrameWithImage:(UIImage *)image;
+- (void)addFrameWithCGImage:(CGImageRef)cgImage;
+- (void)addFrameWithSample:(CVPixelBufferRef)buffer;
 
-//每调用一次加入一帧
-//n种接口：image，pixelBuffer（sampleBuffer）                                     //contextRef
-- (void)addFrameWithUIImage:(UIImage *)image;
-- (void)addFrameWithCGImage:(CGImageRef)image;
-- (void)addFrameWithPixelBufferRef:(CVPixelBufferRef *)pixelBufferRef;
+//利用缓存add帧
+- (BOOL)hasCache;
+- (void)addFrameWithCache;
 
-
-
-//在同一个线程做数据处理啊
-+ (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image;
 
 #pragma mark - 以下为未完成
-- (void)needAudioInput:(BOOL)boolean;       //是否用音频  在ready状态之前设置好
+//- (void)needAudioInput:(BOOL)boolean;       //是否用音频  在ready状态之前设置好
 
 
 @end

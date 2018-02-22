@@ -92,7 +92,7 @@
     return mmediaAssetArrayCollection;
 }
 
-+ ( NSMutableArray <WZMediaAssetCollection *>*)universalMediaAssetCollectionWith:(PHFetchResult *)result_smartAlbums {
++ (NSMutableArray <WZMediaAssetCollection *>*)universalMediaAssetCollectionWith:(PHFetchResult *)result_smartAlbums {
     NSMutableArray <WZMediaAssetCollection *>* mmediaAssetArrayCollection = [NSMutableArray array];
     
     for (PHAssetCollection *assetCollection in result_smartAlbums) {
@@ -463,9 +463,11 @@
 
 //MARK:获取拥有所有视频的集合
 + (NSArray <PHAsset *> *)allVideosAssets; {
+    
     PHFetchOptions *option = [[self class] configVideoOptions];
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
     NSMutableArray *videos = [NSMutableArray array];
+    
     for (NSUInteger i = 0; i < smartAlbums.count; i++) {
         PHAssetCollection *smartAlbum = [smartAlbums objectAtIndex:i];
         PHFetchResult<PHAsset *> *assetsFetchResults = [PHAsset fetchAssetsInAssetCollection:smartAlbum options:option];
@@ -473,6 +475,7 @@
             [videos addObject:tmpPHAsset];
         }
     }
+    
     return videos;
 }
 

@@ -27,7 +27,7 @@
 }
 
 - (void)defaultConfig {
-    _type = WZConvertPhotosIntoVideoItemType_Image;
+    _type = WZConvertPhotosIntoVideoType_Nontransition; 
     _pixelBufferRef = NULL;
     _contextRef = NULL;
 }

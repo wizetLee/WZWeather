@@ -54,9 +54,13 @@
     tool = [[WZConvertPhotosIntoVideoTool alloc] init];
     tool.delegate = (id<WZConvertPhotosIntoVideoToolProtocol>)self;
     tool.outputSize = CGSizeMake(640, 1136);
-
+    tool.frameRate = CMTimeMake(1.0, 30.0);
+    tool.timeIsLimited = true;
+    tool.limitedTime = CMTimeMake(5.0 * 600, 600);
+    
     NSMutableArray *sources = [NSMutableArray array];
     [tool prepareTask];
+ 
 //    for (NSUInteger i = 0; i < 8; i++) {
 //        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
 //        [sources addObject:tmp];
@@ -67,7 +71,6 @@
     
 //    tool.sources = sources;
 //    [tool startRequestingFrames];
-    
     
     link = [CADisplayLink displayLinkWithTarget:self selector:@selector(test:)];
     [link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -97,7 +100,12 @@ static int loop = 0;
                 if (!targetImage) {
                     targetImage = [UIImage imageNamed:[NSString stringWithFormat:@"testImage0.jpg"]];
                 }
-                [tool renderWithImage:targetImage];
+                if ([tool hasCache]) {
+                    [tool addFrameWithCache];
+                } else {
+                    [tool addFrameWithImage:targetImage];
+                }
+                
                 loop++;
             }
         }
@@ -127,10 +135,11 @@ static int loop = 0;
 - (void)convertPhotosInotViewToolFinishWriting; {
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
-        NSLog(@"111");
         dispatch_async(dispatch_get_main_queue(), ^{
             WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
             alert.asset = [AVAsset assetWithURL:tool.outputURL];
+//            NSArray<AVAssetTrack *> *tracks =  [alert.asset tracksWithMediaType:AVMediaTypeAudio];
+            //是没有音轨的
             [alert alertShow];
         });
     }

@@ -8,6 +8,7 @@
 
 #import <GPUImage/GPUImage.h>
 
+
 extern NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString;
 @interface WZConvertPhotosIntoVideoFilter : GPUImageFilter
 {
@@ -20,17 +21,22 @@ extern NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderStrin
     
     BOOL hasSetFirstTexture, hasReceivedFirstFrame, hasReceivedSecondFrame;
     BOOL firstFrameCheckDisabled, secondFrameCheckDisabled;
+    
+  
+    
 }
 
-@property (nonatomic, assign) NSUInteger frameRate;//帧率
-@property (nonatomic, assign) CMTime curFrameTime;
-/*
- if (_frameRate) {
-    CMTimeAdd(_curFrameTime, CMTimeMakeWithSeconds(1.0 / _frameRate, 1000));//帧率自增
- }
- */
 
-- (void)disableFirstFrameCheck;     //禁用第一帧检查    有什么用
-- (void)disableSecondFrameCheck;    //禁用第二帧检查
+
+
+
+- (void)disableFirstFrameCheck;     //禁用第一帧
+- (void)disableSecondFrameCheck;    //禁用第二帧
+
+
+//MARK:- custom
+
+//根据type修改纹理的数目
+@property (nonatomic, assign) int type; //过渡类型
 
 @end

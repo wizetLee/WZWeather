@@ -65,18 +65,18 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 #pragma mark - WZMediaAsset
 @interface WZMediaAsset : NSObject
 
-@property (nonatomic, assign) BOOL selected;//是否已被选中
-@property (nonatomic, assign) BOOL origion;//是否应显示原尺寸图片
+@property (nonatomic, assign) BOOL selected;                //是否已被选中
+@property (nonatomic, assign) BOOL origion;                 //是否应显示原尺寸图片
 
-@property (nonatomic, strong) PHAsset *asset;//元数据资源
-@property (nonatomic, assign) WZMediaType mediaType;//meida 类型 video image 等
+@property (nonatomic, strong) PHAsset *asset;               //元数据资源
+@property (nonatomic, assign) WZMediaType mediaType;        //meida 类型 video image 等
 
 ///大小由宏定义
-@property (nonatomic, strong) UIImage *imageClear;//清晰图（原尺寸图片或者是大图{2000, 200s0}）
-@property (nonatomic, strong) UIImage *imageThumbnail;//缩略图{250, 250}
+@property (nonatomic, strong) UIImage *imageClear;          //清晰图（原尺寸图片或者是大图{2000, 2000}）
+@property (nonatomic, strong) UIImage *imageThumbnail;      //缩略图{250, 250}
 
-@property (nonatomic, strong) NSURL *remoteMediaURL;//用于获取远程资源的URL
-@property (nonatomic, strong) NSString *clearPath;//保存到本地的清晰图的路径
+@property (nonatomic, strong) NSURL *remoteMediaURL;        //用于获取远程资源的URL
+@property (nonatomic, strong) NSString *clearPath;          //保存到本地的清晰图的路径
 
 /**
  *  获取缩略图
