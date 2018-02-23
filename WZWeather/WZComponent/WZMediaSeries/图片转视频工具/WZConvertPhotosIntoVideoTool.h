@@ -59,10 +59,11 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic, assign, readonly) WZConvertPhotosIntoVideoToolStatus status;
 
 ///是否应该封闭这些接口
-@property (nonatomic, strong) NSURL *outputURL;
+@property (nonatomic, strong, readonly) NSURL *outputURL;
 @property (nonatomic, assign) CMTime frameRate;         //default 25 / sec
 @property (nonatomic, assign) CGSize outputSize;
 
+- (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithOutputURL:(NSURL *)outputURL
                        outputSize:(CGSize)outputSize
                         frameRate:(CMTime)frameRate;//帧率

@@ -17,7 +17,7 @@
 
 @interface WZAnimatePageControl : UIView
 
-@property (nonatomic, weak) id <WZAnimatePageControlProtocol> delegate;
+@property (nonatomic,   weak) id <WZAnimatePageControlProtocol> delegate;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

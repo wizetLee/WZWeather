@@ -7,7 +7,8 @@
 //
 
 #import "WZConvertPhotosIntoVideoFilter.h"
-
+#define kMax_Undulated_Count 10
+#define kMax_UndulatedCouple_Count ((kMax_Undulated_Count * 2 + 1) * 2)
 
 NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHADER_STRING
 (
@@ -27,13 +28,39 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
  );
 
 
+@interface WZConvertPhotosIntoVideoFilter()
+{
+    
+    
+    
+    //百叶窗部分
+    float undulatedCouple[kMax_UndulatedCouple_Count];
+    float undulatedCoupleOrigion[kMax_UndulatedCouple_Count];//原始·存储值
+    int undulatedCount;
+    int undulatedCoupleCount;
+}
+
+@end
+
 @implementation WZConvertPhotosIntoVideoFilter
 
 #pragma mark -
 #pragma mark Initialization and teardown
 
-- (id)initWithFragmentShaderFromString:(NSString *)fragmentShaderString;
-{
+- (id)init {
+    NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZConvertPhotosIntoVideo" ofType:@"fsh"];
+    NSString *fragmentShaderString = [NSString stringWithContentsOfFile:fragmentShaderPathname encoding:NSUTF8StringEncoding error:nil];
+    NSString *vertexShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZConvertPhotosIntoVideo" ofType:@"vsh"];
+    NSString *vertexShaderString = [NSString stringWithContentsOfFile:vertexShaderPathname encoding:NSUTF8StringEncoding error:nil];
+    if (!(self = [self initWithVertexShaderFromString:vertexShaderString fragmentShaderFromString:fragmentShaderString]))
+    {
+        return nil;
+    }
+    
+    return self;
+}
+
+- (id)initWithFragmentShaderFromString:(NSString *)fragmentShaderString {
     if (!(self = [self initWithVertexShaderFromString:kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString fragmentShaderFromString:fragmentShaderString]))
     {
         return nil;
@@ -66,9 +93,12 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         [GPUImageContext useImageProcessingContext];
         
         //句柄关联
+        
+
         filterSecondTextureCoordinateAttribute = [filterProgram attributeIndex:@"inputTextureCoordinate2"];
-        filterInputTextureUniform2 = [filterProgram uniformIndex:@"inputImageTexture2"]; // This does assume a name of "inputImageTexture2" for second input texture in the fragment shader
+        filterInputTextureUniform2 = [filterProgram uniformIndex:@"inputImageTexture2"];
         glEnableVertexAttribArray(filterSecondTextureCoordinateAttribute);
+        
     });
     
     return self;
@@ -125,15 +155,27 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     
     glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, vertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, textureCoordinates);
+    
+#warning 这个坐标可能就要修改一下咯   新增加一个修改坐标的接口啊~~~~~~
+    glVertexAttribPointer([filterProgram attributeIndex:@"position2"]
+                          , 2               //每个顶点2个数据
+                          , GL_FLOAT        
+                          , 0               //GL_FALSE/*指定当被访问时，固定点数据值是否应该被归一化（GL_TRUE）或者直接转换为固定点值（GL_FALSE）。*/
+                          , 0               //指定连续顶点属性之间的偏移量。如果为0，那么顶点属性会被理解为：它们是紧密排列在一起的。初始值为0。
+                          , vertices
+                          );
     glVertexAttribPointer(filterSecondTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [[self class] textureCoordinatesForRotation:inputRotation2]);///可自由配置自定义方向
     
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDrawArrays(GL_TRIANGLE_STRIP
+                 , 0
+                 , 4//一共四个顶点
+                 );
     
     [firstInputFramebuffer unlock];
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    if (![self singleTexture]) {
+//    if (![self singleTexture]) {
         [secondInputFramebuffer unlock];
-    }
+//    }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if (usingNextFrameForImageCapture)
     {
@@ -141,16 +183,27 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     }
 }
 
+//修改顶点坐标啊坐标 和纹理坐标
+- (void)calculateTextureCoordinateWithFrame:(CGRect)frame {
+    const GLfloat *arr = [[self class] textureCoordinatesForRotation:inputRotation2];
+    arr[0];
+    arr[1];
+    arr[2];
+    arr[3];
+    arr[4];
+    arr[5];
+    arr[6];
+    arr[7];
+}
+
+
+
+
 #pragma mark -
 #pragma mark GPUImageInput
 //始终按照0~~n的纹理句柄顺序配置
 - (NSInteger)nextAvailableTextureIndex;
 {
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    if ([self singleTexture]) {
-        return 0;
-    }
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     if (hasSetFirstTexture)
     {
@@ -164,6 +217,19 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 
 - (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex;
 {
+    
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if ([self singleTexture]) {
+        //如果是单通道模式 只更新句柄为0的纹理
+        if (textureIndex == 0)
+        {
+            firstInputFramebuffer = newInputFramebuffer;
+            hasSetFirstTexture = YES;
+            [firstInputFramebuffer lock];
+        }
+        return;
+    }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if (textureIndex == 0)
     {
         firstInputFramebuffer = newInputFramebuffer;
@@ -219,7 +285,7 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     if (GPUImageRotationSwapsWidthAndHeight(rotationToCheck))
     {
         rotatedSize.width = sizeToRotate.height;
-        rotatedSize.height = sizeToRotate.width;
+        rotatedSize.height = sizeToRotate.width; 
     }
     
     return rotatedSize;
@@ -236,32 +302,30 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     if ([self singleTexture]) {
         //单纹理直通
         
-        if (textureIndex == 0)
-        {
-            hasReceivedFirstFrame = YES;
+        if (textureIndex == 0) {
+//            hasReceivedFirstFrame = YES;
             firstFrameTime = frameTime;
-            if (secondFrameCheckDisabled)
-            {
-                hasReceivedSecondFrame = YES;
-            }
-            
-            if (!CMTIME_IS_INDEFINITE(frameTime))//Returns true if the CMTime is indefinite, false if it is not.
-            {
-                if CMTIME_IS_INDEFINITE(secondFrameTime)
-                {
-                    updatedMovieFrameOppositeStillImage = YES;
-                }
-            }
-        }
         
-        if ((hasReceivedFirstFrame) || updatedMovieFrameOppositeStillImage)
-        {
+//            if (!CMTIME_IS_INDEFINITE(frameTime))//Returns true if the CMTime is indefinite, false if it is not.
+//            {
+//                if CMTIME_IS_INDEFINITE(secondFrameTime)
+//                {
+//                    updatedMovieFrameOppositeStillImage = YES;
+//                }
+//            }
             CMTime passOnFrameTime = firstFrameTime;
             [super newFrameReadyAtTime:passOnFrameTime atIndex:0];
             hasReceivedFirstFrame = NO;
             hasReceivedSecondFrame = NO;
         }
         
+//        if ((hasReceivedFirstFrame) || updatedMovieFrameOppositeStillImage)
+//        {
+//            CMTime passOnFrameTime = firstFrameTime;
+//            [super newFrameReadyAtTime:passOnFrameTime atIndex:0];
+//            hasReceivedFirstFrame = NO;
+//            hasReceivedSecondFrame = NO;
+//        }
         
         return;
     }
@@ -273,7 +337,6 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         return;
     }
     
-
     
     if (textureIndex == 0)
     {
@@ -322,8 +385,63 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 }
 
 #pragma mark - 单双source的切换（根据type）
+//根据类型切换单双纹理通道
 - (BOOL)singleTexture {
     return (_type == 0 || _type == 2 || _type == 3 || _type == 13 || _type == 24 );
+}
+
+-(void)setProgress:(float)progress {
+    _progress = progress;
+    if (_type == 14) { //百叶窗
+        float coordinateOffset = 1.0 / undulatedCount;
+        int odevity = 0;//偶数为扩散 奇数为缩小
+        for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
+            if ((odevity % 2) == 0) {
+                //扩散
+                undulatedCouple[i] = undulatedCoupleOrigion[i] - coordinateOffset * _progress;
+                undulatedCouple[i + 1] = undulatedCoupleOrigion[i + 1] + coordinateOffset * _progress;
+            } else {
+                //缩小
+                undulatedCouple[i] = undulatedCoupleOrigion[i] + coordinateOffset * _progress;
+                undulatedCouple[i + 1] = undulatedCoupleOrigion[i + 1] - coordinateOffset * _progress;
+            }
+            odevity++;
+        }
+        [self setFloatArray:undulatedCouple length:undulatedCoupleCount forUniform:[filterProgram uniformIndex:@"undulatedCouple"] program:filterProgram];
+        
+    } else if (_type == 15) {
+        //权重修改
+        float coordinateOffset = 1.0 / undulatedCount;
+        int odevity = 0;//偶数为扩散 奇数为缩小
+        
+        for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
+            
+            // 0 ~ 1.0
+            //权重与i相关、达到1.0的顺序不一致
+            //i越小 越快到达1.0
+            //_progress 使得权重右移
+            
+            CGFloat weightOffset = (_progress * undulatedCoupleCount);
+            CGFloat speed = ((undulatedCoupleCount - ((i + 2.0) - weightOffset) * 1.0) / undulatedCoupleCount);
+            speed = pow(speed, 8);
+            
+            CGFloat tragetProgress = _progress * speed;
+            if (tragetProgress < 0) { tragetProgress = 0; }
+            if (tragetProgress > 1.0) { tragetProgress = 1.0; }
+            
+            if ((odevity % 2) == 0) {
+                //扩散
+                undulatedCouple[i] = undulatedCoupleOrigion[i] - coordinateOffset * tragetProgress;
+                undulatedCouple[i + 1] = undulatedCoupleOrigion[i + 1] + coordinateOffset * tragetProgress;
+            } else {
+                //缩小
+                undulatedCouple[i] = undulatedCoupleOrigion[i] + coordinateOffset * tragetProgress;
+                undulatedCouple[i + 1] = undulatedCoupleOrigion[i + 1] - coordinateOffset * tragetProgress;
+            }
+            odevity++;
+        }
+        [self setFloatArray:undulatedCouple length:undulatedCoupleCount forUniform:[filterProgram uniformIndex:@"undulatedCouple"] program:filterProgram];
+    }
 }
 
 @end

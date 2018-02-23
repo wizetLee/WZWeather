@@ -21,13 +21,8 @@ extern NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderStrin
     
     BOOL hasSetFirstTexture, hasReceivedFirstFrame, hasReceivedSecondFrame;
     BOOL firstFrameCheckDisabled, secondFrameCheckDisabled;
-    
-  
-    
+     
 }
-
-
-
 
 
 - (void)disableFirstFrameCheck;     //禁用第一帧
@@ -38,5 +33,9 @@ extern NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderStrin
 
 //根据type修改纹理的数目
 @property (nonatomic, assign) int type; //过渡类型
+
+@property (nonatomic, assign) float progress;//0~1 default:0
+
+
 
 @end

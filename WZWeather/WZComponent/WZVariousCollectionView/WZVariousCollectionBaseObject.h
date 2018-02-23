@@ -14,7 +14,7 @@
 
 @interface WZVariousCollectionBaseObject : NSObject
 
-@property (nonatomic,   copy) NSString * cellType;
+@property (nonatomic,   copy) NSString *cellType;
 @property (nonatomic, assign) BOOL isLastElement;
 
 + (NSDictionary *)modelCustomPropertyMapper;//yymodel

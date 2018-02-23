@@ -290,7 +290,7 @@ static void *openGLESContextQueueKey;
     if (_coreVideoTextureCache == NULL)
     {
 #if defined(__IPHONE_6_0)
-        CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, [self context], NULL, &_coreVideoTextureCache);
+        CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, [self context], NULL, &_coreVideoTextureCache);//根据EAGLContext生成的CVOpenGLESTextureCacheRef
 #else
         CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, (__bridge void *)[self context], NULL, &_coreVideoTextureCache);
 #endif

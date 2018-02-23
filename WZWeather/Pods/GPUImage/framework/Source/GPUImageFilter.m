@@ -344,10 +344,11 @@ NSString *const kGPUImagePassthroughFragmentShaderString = SHADER_STRING
         if (currentTarget != self.targetToIgnoreForUpdates)
         {
             NSInteger indexOfObject = [targets indexOfObject:currentTarget];
+            //纹理角标 --》纹理句柄
             NSInteger textureIndex = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
 
-            [self setInputFramebufferForTarget:currentTarget atIndex:textureIndex];
-            [currentTarget setInputSize:[self outputFrameSize] atIndex:textureIndex];
+            [self setInputFramebufferForTarget:currentTarget atIndex:textureIndex];//推buffer
+            [currentTarget setInputSize:[self outputFrameSize] atIndex:textureIndex];//推size
         }
     }
     

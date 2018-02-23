@@ -12,8 +12,8 @@
 @class WZPageViewController;
 
 /**
-    有一个BUG 多只手指滑动不停顿  滑动到另外一个控制器时，有多个代理是不会动的
-    解决方案为，控制手势仅能使用一只手指滑动。
+    UIPageViewController、有一个BUG 多只手指滑动不停顿  滑动到另外一个控制器时，有多个代理是不会动的
+    目前的解决方案为:控制手势仅能使用一只手指滑动。
  **/
 @protocol WZPageViewControllerProtocol <UIPageViewControllerDelegate>
 

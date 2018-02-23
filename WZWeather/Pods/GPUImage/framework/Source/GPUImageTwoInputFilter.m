@@ -131,6 +131,7 @@ NSString *const kGPUImageTwoInputTextureVertexShaderString = SHADER_STRING
 #pragma mark -
 #pragma mark GPUImageInput
 
+// addTarget时候用到的
 - (NSInteger)nextAvailableTextureIndex;
 {
     if (hasSetFirstTexture)

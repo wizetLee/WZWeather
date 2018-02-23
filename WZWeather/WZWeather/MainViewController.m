@@ -29,7 +29,7 @@
 
 #pragma mark - Demo
 #import "Demo_ConvertPhotosIntoVideoController.h"
-
+#import "Demo_AnimatePageControlViewController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -160,7 +160,12 @@
     VCModel.headline = @"图片转视频demo";
     [_sources addObject:VCModel];
    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
+    VCModel.headline = @"AnimatePageControlDemo";
+    [_sources addObject:VCModel];
 
+    
     if(!_table) {
         UITableView *table = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [self.view addSubview:table];
@@ -292,8 +297,9 @@
              Demo_ConvertPhotosIntoVideoController *VC = [[Demo_ConvertPhotosIntoVideoController alloc] initWithNibName:@"Demo_ConvertPhotosIntoVideoController" bundle:nil];
              [self.navigationController pushViewController:VC animated:true];
              
-         } else if (model.VCClass == WZAVPlayerViewController.class) {
-             
+         } else if (model.VCClass == Demo_AnimatePageControlViewController.class) {
+             Demo_AnimatePageControlViewController *VC = [[Demo_AnimatePageControlViewController alloc] initWithNibName:@"Demo_AnimatePageControlViewController" bundle:nil];
+             [self.navigationController pushViewController:VC animated:true];
          } else if (model.VCClass == WZAVPlayerViewController.class) {
              
          } else if (model.VCClass == WZAPLSimpleEditor.class) {

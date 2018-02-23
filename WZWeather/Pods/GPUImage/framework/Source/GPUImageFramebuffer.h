@@ -25,9 +25,9 @@ typedef struct GPUTextureOptions {
 
 @interface GPUImageFramebuffer : NSObject
 
-@property(readonly) CGSize size;
-@property(readonly) GPUTextureOptions textureOptions;
-@property(readonly) GLuint texture;
+@property(readonly) CGSize size;                            //纹理尺寸
+@property(readonly) GPUTextureOptions textureOptions;       //纹理配置
+@property(readonly) GLuint texture;                         //纹理句柄
 @property(readonly) BOOL missingFramebuffer;
 
 // Initialization and teardown

@@ -196,6 +196,7 @@ void reportAvailableMemoryForGPUImage(NSString *tag)
 - (void)addTarget:(id<GPUImageInput>)newTarget;
 {
     NSInteger nextAvailableTextureIndex = [newTarget nextAvailableTextureIndex];
+    //函数nextAvailableTextureIndex作用：分别记录n个input的纹理的角标
     [self addTarget:newTarget atTextureLocation:nextAvailableTextureIndex];
     
     if ([newTarget shouldIgnoreUpdatesToThisTarget])

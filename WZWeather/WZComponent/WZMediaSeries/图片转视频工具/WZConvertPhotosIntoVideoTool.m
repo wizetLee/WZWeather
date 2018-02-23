@@ -42,10 +42,17 @@
 @property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*itemMArr;  //数据源
 @property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;  //数据源
 
+@property (nonatomic, strong) CADisplayLink *displayLink;
+
+
 @property (nonatomic, strong) WZGPUImagePicture *pictureA;
 @property (nonatomic, strong) WZGPUImagePicture *pictureB;
 
 @property (nonatomic, strong) WZConvertPhotosIntoVideoFilter *convertPhotosIntoVideoFilter;
+
+@property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
+
+@property (nonatomic, strong) NSURL *outputURL;
 
 @end
 
@@ -62,20 +69,12 @@
         _outputSize = outputSize;
         _frameRate = frameRate;
         
+        [self retsetConfig];
 
     }
     return self;
 }
 
-
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        [self defaultConfig];
-    }
-    return self;
-}
 
 #pragma mark - Private
 - (void)defaultConfig {
@@ -85,7 +84,7 @@
     
     _timeIsLimited = false; //默认为false
     _limitedTime = CMTimeMake(10 * 600, 600);//默认10sec
-    
+  
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
@@ -97,7 +96,12 @@
         _tmpPBR = NULL;
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [_displayLink invalidate];
+    _displayLink = nil;
+    
 }
+
 
 - (BOOL)configurable {
     if (_status == WZConvertPhotosIntoVideoToolStatus_Idle
@@ -106,6 +110,13 @@
     }
     NSLog(@"状态出错，设置属性失败");
     return false;
+}
+
+//
+- (void)displayLink:(CADisplayLink *)displayLink {
+    //开始渲染
+    
+    
 }
 
 #pragma mark - Public
@@ -164,16 +175,45 @@
 
 - (void)retsetConfig {
     
+    _displayLink.paused = true;
+    [_displayLink invalidate];
+    _displayLink = nil;
+    
+    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink:)];
+    _displayLink.paused = true;
+    
+    
+    //原始 sourceA&sourceB -> filter -> writer
     _convertPhotosIntoVideoFilter = [[WZConvertPhotosIntoVideoFilter alloc] init];
     
     _pictureA = [[WZGPUImagePicture alloc] init];
     _pictureB = [[WZGPUImagePicture alloc] init];
-    
+    _pictureA.sourceImage = [UIImage imageNamed:@"testImage0.jpg"];
+    _pictureB.sourceImage = [UIImage imageNamed:@"testImage0.jpg"];
     [_pictureA processImage];//传递缓存  size是根据图片来output的.
     [_pictureB processImage];//传递缓存
     
     [_pictureA addTarget:_convertPhotosIntoVideoFilter atTextureLocation:0];
     [_pictureB addTarget:_convertPhotosIntoVideoFilter atTextureLocation:1];
+    
+    
+    if (!_outputURL) {
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
+        _outputURL = [NSURL fileURLWithPath:path];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+        }
+    }
+    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
+    
+    [_convertPhotosIntoVideoFilter addTarget:_movieWriter];
+}
+
+- (void)cleanGPUImageChain {
+    [_pictureA removeAllTargets];
+    [_pictureB removeAllTargets];
+    
+    [_convertPhotosIntoVideoFilter removeAllTargets];
 }
 
 - (void)prepareTask {

@@ -105,7 +105,7 @@ typedef struct GPUMatrix3x3 GPUMatrix3x3;
 /// @name Rendering
 + (const GLfloat *)textureCoordinatesForRotation:(GPUImageRotationMode)rotationMode;
 - (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates;
-- (void)informTargetsAboutNewFrameAtTime:(CMTime)frameTime;
+- (void)informTargetsAboutNewFrameAtTime:(CMTime)frameTime; //通知targets 有新的帧更新
 - (CGSize)outputFrameSize;
 
 /// @name Input parameters

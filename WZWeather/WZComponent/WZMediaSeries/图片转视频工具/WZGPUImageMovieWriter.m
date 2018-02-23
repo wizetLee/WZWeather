@@ -12,6 +12,24 @@
 @interface WZGPUImageMovieWriter()
 {
     AVAssetWriter *writer;
+    
+    
+    GLuint movieFramebuffer, movieRenderbuffer;                 //句柄
+    
+    GLProgram *colorSwizzlingProgram;                           //program 颜色转换着色器程序
+    
+    GLint colorSwizzlingPositionAttribute, colorSwizzlingTextureCoordinateAttribute; //VSHposition句柄， FSH纹理坐标句柄
+    
+    GLint colorSwizzlingInputTextureUniform;                    //纹理句柄
+    
+    GPUImageFramebuffer *firstInputFramebuffer;                 //一个帧的buffer（从摄像头采集一次就输入一次）
+    
+    CMTime startTime, previousFrameTime, previousAudioTime;
+    
+    dispatch_queue_t audioQueue, videoQueue;                    //音频队列，视频队列
+    BOOL audioEncodingIsFinished, videoEncodingIsFinished;      //编码完成标志
+    
+    BOOL isRecording;                                           //录制状态
 }
 
 
@@ -135,16 +153,18 @@
 
 #pragma mark -
 #pragma mark GPUImageInput protocol
-- (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex;
-{
 
+- (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex; {
     
+}
+
+- (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex; {
+    
+}
+
+- (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex; {
     
 }
 
 
-- (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex;
-{
-    
-}
 @end

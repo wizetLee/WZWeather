@@ -156,9 +156,9 @@
     }
     _isSeeking = true;
     
-    NSLog(@"%lf", CACurrentMediaTime());
+//    NSLog(@"%lf", CACurrentMediaTime());
     CMTime time = CMTimeMakeWithSeconds(CMTimeGetSeconds(_asset.duration) * progress, _asset.duration.timescale);
-    NSLog(@"!!!!!!%lf", CACurrentMediaTime());
+//    NSLog(@"!!!!!!%lf", CACurrentMediaTime());
     
     [_player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:^(BOOL finished) {
         _isSeeking = false;

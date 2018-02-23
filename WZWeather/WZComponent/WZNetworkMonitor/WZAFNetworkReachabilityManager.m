@@ -32,11 +32,12 @@
             NSLog(@"网络不可用");
              //抛出回调
             [WZToast toastWithContent:@"请打开网络设置：\n设置->蜂窝移动网络->使用无线局域网与蜂窝移动的应用->选择任意一个应用->切换它的数据使用类型->回到当前App就会出现使用数据的选项" duration:15];//换成Alert
+            
         } else if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
             NSLog(@"蜂窝网络变更");
             #ifdef __IPHONE_7_0
             //不使用[WZAFNetworkReachabilityManager sharedManager].networkInfo
-            //因为当从app回到主界面再回到app会得不到 currentRadioAccessTechnology
+            //因为当从app回到主界面再回到app会得不到currentRadioAccessTechnology
 
             WZCTTelephonyNetworkInfo *networkInfo = [[WZCTTelephonyNetworkInfo alloc] init];
             NSString *currentRadioAccessTechnology = networkInfo.currentRadioAccessTechnology;

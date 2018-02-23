@@ -128,6 +128,7 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size);
     // TODO: Handle mipmaps
 }
 
+//生成FBO
 - (void)generateFramebuffer;
 {
     runSynchronouslyOnVideoProcessingQueue(^{
@@ -140,6 +141,7 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size);
         if ([GPUImageContext supportsFastTextureUpload])
         {
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+//创建CVOpenGLESTextureCacheRef
             CVOpenGLESTextureCacheRef coreVideoTextureCache = [[GPUImageContext sharedImageProcessingContext] coreVideoTextureCache];
             // Code originally sourced from http://allmybrain.com/2011/12/08/rendering-to-a-texture-with-ios-5-texture-cache-api/
             
@@ -156,6 +158,7 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size);
                 NSAssert(NO, @"Error at CVPixelBufferCreate %d", err);
             }
             
+//创建CVOpenGLESTextureRef
             err = CVOpenGLESTextureCacheCreateTextureFromImage (kCFAllocatorDefault, coreVideoTextureCache, renderTarget,
                                                                 NULL, // texture attributes
                                                                 GL_TEXTURE_2D,
@@ -174,11 +177,15 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size);
             CFRelease(attrs);
             CFRelease(empty);
             
-            glBindTexture(CVOpenGLESTextureGetTarget(renderTexture), CVOpenGLESTextureGetName(renderTexture));
+            //绑定当前的纹理 并开始渲染
+            glBindTexture(CVOpenGLESTextureGetTarget(renderTexture)//GL_TEXTURE_2D
+                          , CVOpenGLESTextureGetName(renderTexture));//得到句柄
+            
             _texture = CVOpenGLESTextureGetName(renderTexture);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureOptions.wrapS);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureOptions.wrapT);
             
+            //关联纹理句柄（CVOpenGLESTextureGetName(renderTexture)）到帧缓存（GL_FRAMEBUFFER）中
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, CVOpenGLESTextureGetName(renderTexture), 0);
 #endif
         }

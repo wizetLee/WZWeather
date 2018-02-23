@@ -44,17 +44,17 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoType) {
     WZConvertPhotosIntoVideoType_Extrusion_BToT,        //下向上呈现  12
     
     WZConvertPhotosIntoVideoType_RollingOver,           //翻转       13
-    WZConvertPhotosIntoVideoType_V_Blinds,              //（垂直）百叶窗      15
+    WZConvertPhotosIntoVideoType_V_Blinds,              //（垂直）百叶窗      14
     WZConvertPhotosIntoVideoType_H_Blinds,              //（水平）百叶窗      15
-    WZConvertPhotosIntoVideoType_LToR_Blinds_Gradually, //（左向右）逐次百叶窗   16~20
+    WZConvertPhotosIntoVideoType_LToR_Blinds_Gradually, //（左向右）逐次百叶窗   16~29
     WZConvertPhotosIntoVideoType_RToL_Blinds_Gradually,
     WZConvertPhotosIntoVideoType_TToB_Blinds_Gradually,
     WZConvertPhotosIntoVideoType_BToT_Blinds_Gradually,
     
-    WZConvertPhotosIntoVideoType_Lockwise,              //顺时针      21
-    WZConvertPhotosIntoVideoType_Anticlockwise,         //逆时针      22
-    WZConvertPhotosIntoVideoType_Star,                  //星形        23
-    WZConvertPhotosIntoVideoType_Glow,                  //辉光        24
+    WZConvertPhotosIntoVideoType_Lockwise,              //顺时针      20
+    WZConvertPhotosIntoVideoType_Anticlockwise,         //逆时针      21
+    WZConvertPhotosIntoVideoType_Star,                  //星形        22
+    WZConvertPhotosIntoVideoType_Glow,                  //辉光        23
     //以上为过渡效果类型
     //以下为非过渡类型
     WZConvertPhotosIntoVideoType_Nontransition  = 1000,    //内部非过渡类型 不建议为过渡类型节点使用此类型
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoType) {
 
 @property (nonatomic, weak) id<WZConvertPhotosIntoVideoItemProtocol> delegate;
 
-@property (nonatomic, assign) WZConvertPhotosIntoVideoType type;//default:WZConvertPhotosIntoVideoType_Nontransition 非过渡类型
+@property (nonatomic, assign) WZConvertPhotosIntoVideoType transitionType;//default:WZConvertPhotosIntoVideoType_Nontransition 非过渡类型
 
 @property (nonatomic, strong) UIImage *leadingImage;        //source  -->texture -->pixelBufferRef
 @property (nonatomic, strong) UIImage *trailingImage;       //source
@@ -84,5 +84,5 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoType) {
 //持续更新
 - (void)updateFrameWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer;
 
-
+- (void)resetItemStatus;
 @end
