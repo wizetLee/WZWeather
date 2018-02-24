@@ -159,9 +159,11 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 #warning 这个坐标可能就要修改一下咯   新增加一个修改坐标的接口啊~~~~~~
     glVertexAttribPointer([filterProgram attributeIndex:@"position2"]
                           , 2               //每个顶点2个数据
-                          , GL_FLOAT        
+                          , GL_FLOAT
                           , 0               //GL_FALSE/*指定当被访问时，固定点数据值是否应该被归一化（GL_TRUE）或者直接转换为固定点值（GL_FALSE）。*/
                           , 0               //指定连续顶点属性之间的偏移量。如果为0，那么顶点属性会被理解为：它们是紧密排列在一起的。初始值为0。
+                          
+#warning 想要得到旋转，放大缩小等效果，估计就要改顶点坐标的位置了
                           , vertices
                           );
     glVertexAttribPointer(filterSecondTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [[self class] textureCoordinatesForRotation:inputRotation2]);///可自由配置自定义方向

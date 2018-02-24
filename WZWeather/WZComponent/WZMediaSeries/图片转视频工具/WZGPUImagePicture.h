@@ -8,12 +8,14 @@
 
 #import <GPUImage/GPUImage.h>
 
-@interface WZGPUImagePicture : GPUImagePicture
-{
+@interface WZGPUImagePicture : GPUImagePicture {
     
 }
 
 //修改frameBuffer
 @property (nonatomic, strong) UIImage *sourceImage;
+
+//带时间的buffer处理
+- (void)processImageWithTime:(CMTime)time;
 
 @end

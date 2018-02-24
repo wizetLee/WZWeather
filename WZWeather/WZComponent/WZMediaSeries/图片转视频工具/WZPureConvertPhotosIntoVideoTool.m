@@ -199,7 +199,7 @@
         CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault
                                               , imageSize.width
                                               , imageSize.height
-                                              , kCVPixelFormatType_32ARGB
+                                              , kCVPixelFormatType_32BGRA
                                               , (__bridge CFDictionaryRef)pixelBufferAttributes
                                               , &pbr);
         if (status == kCVReturnSuccess && pbr != NULL) {

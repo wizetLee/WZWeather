@@ -34,7 +34,7 @@
 
 
 //首次配置
-- (void)firstConfigWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer; {
+- (void)firstConfigWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer time:(CMTime)time; {
     //换链部分
     
     filter.type = (int)_transitionType;
@@ -43,19 +43,18 @@
 }
 
 //持续更新
-- (void)updateFrameWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer; {
+- (void)updateFrameWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer time:(CMTime)time; {
     //更新进度
     [self updateProgress];
-  
     //根据进度配置filter
-    //
+   
+    [sourceA processImageWithTime:time];
+    [sourceB processImageWithTime:time];
     
     switch (_transitionType) {
         case WZConvertPhotosIntoVideoType_None: {
             
         } break;
-
-            
         case WZConvertPhotosIntoVideoType_Dissolve: {
             
         } break;

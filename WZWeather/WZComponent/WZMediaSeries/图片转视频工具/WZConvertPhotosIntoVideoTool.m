@@ -40,7 +40,7 @@
 @property (nonatomic, assign) WZConvertPhotosIntoVideoToolStatus status;  //状态
 @property (nonatomic, strong) NSArray <UIImage *>*sources;  //数据源
 @property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*itemMArr;  //数据源
-@property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;  //数据源
+@property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;  //节点
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
@@ -53,6 +53,8 @@
 @property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
 
 @property (nonatomic, strong) NSURL *outputURL;
+
+@property (nonatomic,   weak) WZConvertPhotosIntoVideoItem *curItem;    //临时的item
 
 @end
 
@@ -114,9 +116,34 @@
 
 //
 - (void)displayLink:(CADisplayLink *)displayLink {
-    //开始渲染
-    
-    
+    //先是代理判断当前进度 决定继续添加buffer 还是停止录制
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        //录制
+        [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+        _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//帧位时间偏移更新
+    } else if (_status == WZConvertPhotosIntoVideoToolStatus_Completed) {
+        //完成
+        [self finishWriting];
+    }
+}
+
+- (void)switchRole {
+    if (_curItem == nil && _itemMArr.count) {
+        //首次切换某个item
+        _curItem = _itemMArr.firstObject;
+        [_curItem firstConfigWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+        
+    } else {
+        if (_curItem == _itemMArr.lastObject) {
+            //已经全部配置完成。
+            //发出完成视频的消息
+            _status = WZConvertPhotosIntoVideoToolStatus_Completed;
+        } else {
+            //切换到下一个item
+            _curItem = _itemMArr[[_itemMArr indexOfObject:_curItem] + 1];
+             [_curItem firstConfigWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+        }
+    }
 }
 
 #pragma mark - Public
@@ -156,7 +183,7 @@
             item.delegate = self;
             item.leadingImage = pictureSources[i];
             item.trailingImage = pictureSources[i + 1];
-//            item.transitionType = BIConvertPhotosIntoVideoType_None;    //默认转换类型
+            item.transitionType = WZConvertPhotosIntoVideoType_None;    //配置为none类型
             item.frameCount = transitionFrameCount;
             sumFrameCount -= transitionFrameCount;
             
@@ -170,7 +197,6 @@
             }
         }
     }
-    
 }
 
 - (void)retsetConfig {
@@ -190,12 +216,18 @@
     _pictureB = [[WZGPUImagePicture alloc] init];
     _pictureA.sourceImage = [UIImage imageNamed:@"testImage0.jpg"];
     _pictureB.sourceImage = [UIImage imageNamed:@"testImage0.jpg"];
-    [_pictureA processImage];//传递缓存  size是根据图片来output的.
-    [_pictureB processImage];//传递缓存
+//    [_pictureA processImage];//传递缓存  size是根据图片来output的.
+//    [_pictureB processImage];//传递缓存
+
+    //使用新接口自定义time 外部控制速率（也就是速率要自己定）
+    [_pictureA processImageWithTime:kCMTimeIndefinite];
+    [_pictureB processImageWithTime:kCMTimeIndefinite];
     
-    [_pictureA addTarget:_convertPhotosIntoVideoFilter atTextureLocation:0];
-    [_pictureB addTarget:_convertPhotosIntoVideoFilter atTextureLocation:1];
+//    [_pictureA addTarget:_convertPhotosIntoVideoFilter atTextureLocation:0];
+//    [_pictureB addTarget:_convertPhotosIntoVideoFilter atTextureLocation:1];
     
+    [_pictureA addTarget:_convertPhotosIntoVideoFilter];
+    [_pictureB addTarget:_convertPhotosIntoVideoFilter];
     
     if (!_outputURL) {
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
@@ -204,9 +236,12 @@
             [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
         }
     }
-    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
     
+    //默认是mov格式
+    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
     [_convertPhotosIntoVideoFilter addTarget:_movieWriter];
+  
+    
 }
 
 - (void)cleanGPUImageChain {
@@ -286,12 +321,36 @@
     [self cleanCache];
 }
 
+//--------------------------------------------------------------------------
+- (void)testStartWriting {
+    if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
+        //首次add 的配置
+        [_movieWriter startRecording];
+        _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+        [self switchRole];//初次配置就先设置一次
+        //开始进入计时状态
+    } else { NSLog(@"状态出错"); }
+}
+
+- (void)testFinishWriting {
+    _status = WZConvertPhotosIntoVideoToolStatus_Completed;
+    [_movieWriter finishRecordingWithCompletionHandler:^{
+        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolFinishWriting)]) {
+            [_delegate convertPhotosInotViewToolFinishWriting];
+        }
+    }];
+    [self cleanCache];
+}
+//--------------------------------------------------------------------------
+
 - (void)startWriting {
     if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
         //首次add 的配置
+//        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
         [_writer startWriting];
         [_writer startSessionAtSourceTime:kCMTimeZero];
         _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+        [self switchRole];//初次配置就先设置一次
     } else {
         NSLog(@"状态出错");
     }
@@ -472,6 +531,7 @@
 
 #pragma mark - WZConvertPhotosIntoVideoItemProtocol
 - (void)itemDidCompleteConversion {
+    [self switchRole];
     [self cleanCache];
     //准备下一个item的配置
 }

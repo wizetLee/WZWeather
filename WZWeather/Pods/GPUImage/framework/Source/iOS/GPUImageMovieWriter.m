@@ -671,8 +671,8 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
 
 #pragma mark -
 #pragma mark GPUImageInput protocol
-
-// 新的帧准备好了
+#warning buffer处理思想
+//新的帧准备好了，通过[assetWriterPixelBufferInput pixelBufferPool]创建pixelBufferRef，然后绘制内容到PBR中，然后 通过[assetWriterPixelBufferInput appendPixelBuffer:pixel_buffer withPresentationTime:frameTime]
 - (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex;
 {
     if (!isRecording)
@@ -784,6 +784,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     return 0;
 }
 
+//从链的上源获得buffer 接下来就是将这个buffer处理（或者等待传递到链的下源，当然此处就是消费者也就是链的末端了）
 - (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex;
 {
     [newInputFramebuffer lock];
@@ -797,6 +798,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
     inputRotation = newInputRotation;
 }
 
+//因为这个size在初始化时已经由用户配置了，所以这个size不需要再处理
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex;
 {
 }

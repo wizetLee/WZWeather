@@ -83,6 +83,9 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)finishWriting;              //完成
 - (void)cancelWriting;              //取消
 
+- (void)testStartWriting;
+- (void)testFinishWriting;
+
 //add帧
 #warning 非常需要解决内存不足的问题（也就是说代价太高昂)，考虑一种低成本的运作方式（当前使用了一个简单的解决方案：对于相同的图片使用缓存加帧，具体方案根据需求变更）
 - (void)addFrameWithImage:(UIImage *)image;

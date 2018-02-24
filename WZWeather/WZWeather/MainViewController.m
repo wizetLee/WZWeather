@@ -316,7 +316,6 @@
              
          }
      }
-   
 }
 
 
@@ -325,7 +324,6 @@
     [super viewSafeAreaInsetsDidChange];
      NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
 }
-
 
 - (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index {
     NSLog(@"%ld", index);
@@ -341,6 +339,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = false;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

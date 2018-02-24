@@ -10,8 +10,6 @@
 
 @interface WZVCModel : NSObject
 
-
-
 @property (nonatomic, strong) NSString *headline;
 
 @property (nonatomic, strong) Class VCClass;
