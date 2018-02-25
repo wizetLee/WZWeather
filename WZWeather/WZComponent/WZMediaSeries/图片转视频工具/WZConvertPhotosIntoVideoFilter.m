@@ -108,6 +108,8 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 {
     [super initializeAttributes];
     [filterProgram addAttribute:@"inputTextureCoordinate2"];
+#warning 新增属性
+    [filterProgram addAttribute:@"position2"];
 }
 
 - (void)disableFirstFrameCheck;
@@ -149,25 +151,32 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     glBindTexture(GL_TEXTURE_2D, [firstInputFramebuffer texture]);
     glUniform1i(filterInputTextureUniform, 2);
     
-    glActiveTexture(GL_TEXTURE3);
-    glBindTexture(GL_TEXTURE_2D, [secondInputFramebuffer texture]);
-    glUniform1i(filterInputTextureUniform2, 3);
-    
+    if (![self singleTexture]) {
+        glActiveTexture(GL_TEXTURE3);
+        glBindTexture(GL_TEXTURE_2D, [secondInputFramebuffer texture]);
+        glUniform1i(filterInputTextureUniform2, 3);
+    }
+
     glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, vertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, textureCoordinates);
     
+
+//    if (![self singleTexture]) {
 #warning 这个坐标可能就要修改一下咯   新增加一个修改坐标的接口啊~~~~~~
-    glVertexAttribPointer([filterProgram attributeIndex:@"position2"]
-                          , 2               //每个顶点2个数据
-                          , GL_FLOAT
-                          , 0               //GL_FALSE/*指定当被访问时，固定点数据值是否应该被归一化（GL_TRUE）或者直接转换为固定点值（GL_FALSE）。*/
-                          , 0               //指定连续顶点属性之间的偏移量。如果为0，那么顶点属性会被理解为：它们是紧密排列在一起的。初始值为0。
-                          
+        glVertexAttribPointer([filterProgram attributeIndex:@"position2"]
+                              , 2               //每个顶点2个数据
+                              , GL_FLOAT
+                              , 0               //GL_FALSE/*指定当被访问时，固定点数据值是否应该被归一化（GL_TRUE）或者直接转换为固定点值（GL_FALSE）。*/
+                              , 0               //指定连续顶点属性之间的偏移量。如果为0，那么顶点属性会被理解为：它们是紧密排列在一起的。初始值为0。
+                              
 #warning 想要得到旋转，放大缩小等效果，估计就要改顶点坐标的位置了
-                          , vertices
-                          );
-    glVertexAttribPointer(filterSecondTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [[self class] textureCoordinatesForRotation:inputRotation2]);///可自由配置自定义方向
-    
+                              , vertices
+                              );
+        glVertexAttribPointer(filterSecondTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [[self class] textureCoordinatesForRotation:inputRotation2]);///可自由配置自定义方向
+        
+        
+        
+//    }
     glDrawArrays(GL_TRIANGLE_STRIP
                  , 0
                  , 4//一共四个顶点
@@ -175,9 +184,9 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     
     [firstInputFramebuffer unlock];
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//    if (![self singleTexture]) {
+    if (![self singleTexture]) {
         [secondInputFramebuffer unlock];
-//    }
+    }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if (usingNextFrameForImageCapture)
     {
@@ -206,7 +215,6 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 //始终按照0~~n的纹理句柄顺序配置
 - (NSInteger)nextAvailableTextureIndex;
 {
-    
     if (hasSetFirstTexture)
     {
         return 1;
@@ -222,16 +230,19 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if ([self singleTexture]) {
-        //如果是单通道模式 只更新句柄为0的纹理
-        if (textureIndex == 0)
-        {
+//如果是单通道模式 只更新句柄为0的纹理（也就是所有接收到的buffer都是更新第一个）
+//        if (textureIndex == 0)
+//        {
             firstInputFramebuffer = newInputFramebuffer;
             hasSetFirstTexture = YES;
             [firstInputFramebuffer lock];
-        }
+//        }
         return;
     }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    
+    //链的上源更具nextAvailableTextureIndex分配buffer
     if (textureIndex == 0)
     {
         firstInputFramebuffer = newInputFramebuffer;
@@ -299,15 +310,13 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     
 //MARK: - 就在之这里修改了
     //通知下一个链节点更新buffer
-    BOOL updatedMovieFrameOppositeStillImage = NO;//感觉不需要这个拦截变量啊~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if ([self singleTexture]) {
-        //单纹理直通
+        //如果是单纹理直通，全
         
-        if (textureIndex == 0) {
 //            hasReceivedFirstFrame = YES;
             firstFrameTime = frameTime;
-        
+
 //            if (!CMTIME_IS_INDEFINITE(frameTime))//Returns true if the CMTime is indefinite, false if it is not.
 //            {
 //                if CMTIME_IS_INDEFINITE(secondFrameTime)
@@ -316,11 +325,11 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 //                }
 //            }
             CMTime passOnFrameTime = firstFrameTime;
-            [super newFrameReadyAtTime:passOnFrameTime atIndex:0];
+            [super newFrameReadyAtTime:passOnFrameTime atIndex:0];//跳转到renderToTextureWithVertices 合并纹理
             hasReceivedFirstFrame = NO;
             hasReceivedSecondFrame = NO;
-        }
-        
+
+
 //        if ((hasReceivedFirstFrame) || updatedMovieFrameOppositeStillImage)
 //        {
 //            CMTime passOnFrameTime = firstFrameTime;
@@ -328,11 +337,11 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 //            hasReceivedFirstFrame = NO;
 //            hasReceivedSecondFrame = NO;
 //        }
-        
+
         return;
     }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+    BOOL updatedMovieFrameOppositeStillImage = NO;//感觉不需要这个拦截变量啊~~~
     //双纹理直通
     if (hasReceivedFirstFrame && hasReceivedSecondFrame)//因为这个验证值是在此函数内验证的，如果两个验证值同时为true则说明逻辑出了问题
     {
@@ -389,11 +398,20 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 #pragma mark - 单双source的切换（根据type）
 //根据类型切换单双纹理通道
 - (BOOL)singleTexture {
-    return (_type == 0 || _type == 2 || _type == 3 || _type == 13 || _type == 24 );
+    return (_type == 0 || _type == 2 || _type == 3 || _type == 13 || _type == 24 || _type == 1000 );
+}
+
+- (void)setType:(int)type {
+    if (_type != type) {
+        _type = type;
+        [self setInteger:type forUniformName:@"type"];
+    }
 }
 
 -(void)setProgress:(float)progress {
     _progress = progress;
+    [self setFloat:progress forUniformName:@"progress"];
+    
     if (_type == 14) { //百叶窗
         float coordinateOffset = 1.0 / undulatedCount;
         int odevity = 0;//偶数为扩散 奇数为缩小

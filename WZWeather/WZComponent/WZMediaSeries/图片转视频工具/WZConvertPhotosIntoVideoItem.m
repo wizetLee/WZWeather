@@ -47,23 +47,24 @@
     //更新进度
     [self updateProgress];
     //根据进度配置filter
-   
-    [sourceA processImageWithTime:time];
-    [sourceB processImageWithTime:time];
-    
+//    [sourceA processImageWithTime:time];
+//     [sourceB processImageWithTime:time];
     switch (_transitionType) {
         case WZConvertPhotosIntoVideoType_None: {
-            
+            [sourceA processImageWithTime:time];
         } break;
-        case WZConvertPhotosIntoVideoType_Dissolve: {
             
-        } break;
-        case WZConvertPhotosIntoVideoType_Black: {
-            
-        } break;
+        case WZConvertPhotosIntoVideoType_Dissolve:
+        case WZConvertPhotosIntoVideoType_Black:
         case WZConvertPhotosIntoVideoType_White: {
-            
+            filter.progress = ((_progress * 2) >= 1)?((1 - (_progress)) * 2) : (_progress * 2);
+            if (_progress <= 0.5) {
+                [sourceA processImageWithTime:time];
+            } else {
+                [sourceB processImageWithTime:time];
+            }
         } break;
+            
         case WZConvertPhotosIntoVideoType_Blur: {
             
         } break;
@@ -122,8 +123,10 @@
         } break;
             
             
-        default:
-            break;
+        default: {
+            //nontransition或其他的情况只传句柄为0的buffer
+             [sourceA processImageWithTime:time];
+        } break;
     }
     
     //之后是告知外界、这个item的信息已全部被读取了

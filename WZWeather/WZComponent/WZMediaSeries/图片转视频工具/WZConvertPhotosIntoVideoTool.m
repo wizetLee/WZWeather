@@ -123,11 +123,13 @@
         _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//帧位时间偏移更新
     } else if (_status == WZConvertPhotosIntoVideoToolStatus_Completed) {
         //完成
-        [self finishWriting];
+//        [self finishWriting];
+        [self testFinishWriting];
     }
 }
 
 - (void)switchRole {
+    
     if (_curItem == nil && _itemMArr.count) {
         //首次切换某个item
         _curItem = _itemMArr.firstObject;
@@ -162,8 +164,8 @@
     _transitionNodeMarr = NSMutableArray.array;
     
     NSUInteger pictureCount = pictureSources.count;          //图片总量
-    NSUInteger transitionFrameCount = 15;                    //过渡效果的帧数
-    targetFrameCount = 250;                                  //任务目标总帧数
+    NSUInteger transitionFrameCount = 30;                    //过渡效果的帧数
+    targetFrameCount = pictureSources.count * 30;           //任务目标总帧数
     
     NSUInteger nontransitionFrameCount = (targetFrameCount - ((pictureCount -1) * transitionFrameCount)) / pictureCount;                                                //非过渡帧数
     NSUInteger sumFrameCount = targetFrameCount;              //临时计算量
@@ -183,7 +185,7 @@
             item.delegate = self;
             item.leadingImage = pictureSources[i];
             item.trailingImage = pictureSources[i + 1];
-            item.transitionType = WZConvertPhotosIntoVideoType_None;    //配置为none类型
+            item.transitionType = WZConvertPhotosIntoVideoType_Black;    //配置为none类型
             item.frameCount = transitionFrameCount;
             sumFrameCount -= transitionFrameCount;
             
@@ -206,6 +208,7 @@
     _displayLink = nil;
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink:)];
+    [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     _displayLink.paused = true;
     
     
@@ -241,7 +244,6 @@
     _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
     [_convertPhotosIntoVideoFilter addTarget:_movieWriter];
   
-    
 }
 
 - (void)cleanGPUImageChain {
@@ -305,11 +307,13 @@
     {
         //信号指向ready状态
         _status = WZConvertPhotosIntoVideoToolStatus_Ready;
-        [self startWriting];
+//        [self startWriting];
+        [self testStartWriting];
     }
 }
 
 - (void)finishWriting {
+    
     _status = WZConvertPhotosIntoVideoToolStatus_Completed;
     [_videoInput markAsFinished];
     [_writer finishWritingWithCompletionHandler:^{
@@ -329,6 +333,8 @@
         _status = WZConvertPhotosIntoVideoToolStatus_Converting;
         [self switchRole];//初次配置就先设置一次
         //开始进入计时状态
+        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
+        _displayLink.paused = false;
     } else { NSLog(@"状态出错"); }
 }
 
@@ -340,13 +346,17 @@
         }
     }];
     [self cleanCache];
+    _displayLink.paused = true;
+    [_displayLink invalidate];
+    _displayLink = nil;
+    
 }
 //--------------------------------------------------------------------------
 
 - (void)startWriting {
     if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
         //首次add 的配置
-//        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
+        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
         [_writer startWriting];
         [_writer startSessionAtSourceTime:kCMTimeZero];
         _status = WZConvertPhotosIntoVideoToolStatus_Converting;
@@ -397,10 +407,6 @@
     }
 }
 
-- (void)dasdasd:(CVPixelBufferRef)pixelBufferRef {
-    //纹理绘制到pixelBufferRef中
-    
-}
 
 - (void)addFrameWithCGImage:(CGImageRef)cgImage {
     if (_status != WZConvertPhotosIntoVideoToolStatus_Converting) {

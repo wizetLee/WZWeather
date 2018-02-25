@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoItemType) {
 };
 
 ///过渡效果list
-typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoType) {
+typedef NS_ENUM(int, WZConvertPhotosIntoVideoType) {
     //效果系列
     WZConvertPhotosIntoVideoType_None           = 0,    //效果就是 无
     WZConvertPhotosIntoVideoType_Dissolve,              //溶解、交叉叠化

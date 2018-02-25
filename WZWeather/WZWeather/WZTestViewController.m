@@ -39,15 +39,18 @@
 //    tool.limitedTime = CMTimeMake(5.0 * 600, 600);
     
     NSMutableArray *sources = [NSMutableArray array];
-    [tool prepareTask];
- 
-//    for (NSUInteger i = 0; i < 8; i++) {
-//        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
-//        [sources addObject:tmp];
+
+//    [tool testStartWriting];
+    
+    for (NSUInteger i = 0; i < 8; i++) {
+        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
+        [sources addObject:tmp];
 //        [tool renderWithImage:tmp];
-//    }
+    }
 //    [tool finishWriting];
     
+    [tool prepareTaskWithPictureSources:sources];
+    [tool prepareTask];
     
 //    tool.sources = sources;
 //    [tool startRequestingFrames];

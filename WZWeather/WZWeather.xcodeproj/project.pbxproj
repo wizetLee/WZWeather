@@ -16,6 +16,8 @@
 		402898111FAD6FA000F36DA3 /* WZMediaOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */; };
 		402898141FAD6FB700F36DA3 /* WZMediaPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */; };
 		402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 402AB1911F0732EE00136DB4 /* WZScrollOptions.m */; };
+		404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404507F52042714E003A5209 /* Demo_WrapViewController.m */; };
+		404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404507F62042714E003A5209 /* Demo_WrapViewController.xib */; };
 		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */; };
@@ -451,6 +453,9 @@
 		402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaPreviewView.m; sourceTree = "<group>"; };
 		402AB1901F0732EE00136DB4 /* WZScrollOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZScrollOptions.h; sourceTree = "<group>"; };
 		402AB1911F0732EE00136DB4 /* WZScrollOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZScrollOptions.m; sourceTree = "<group>"; };
+		404507F42042714E003A5209 /* Demo_WrapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_WrapViewController.h; sourceTree = "<group>"; };
+		404507F52042714E003A5209 /* Demo_WrapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_WrapViewController.m; sourceTree = "<group>"; };
+		404507F62042714E003A5209 /* Demo_WrapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_WrapViewController.xib; sourceTree = "<group>"; };
 		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
 		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
@@ -1249,6 +1254,16 @@
 				402AB1911F0732EE00136DB4 /* WZScrollOptions.m */,
 			);
 			path = WZScrollOptions;
+			sourceTree = "<group>";
+		};
+		404507F320427135003A5209 /* 弯曲模型 */ = {
+			isa = PBXGroup;
+			children = (
+				404507F42042714E003A5209 /* Demo_WrapViewController.h */,
+				404507F52042714E003A5209 /* Demo_WrapViewController.m */,
+				404507F62042714E003A5209 /* Demo_WrapViewController.xib */,
+			);
+			path = "弯曲模型";
 			sourceTree = "<group>";
 		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
@@ -2964,6 +2979,7 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				404507F320427135003A5209 /* 弯曲模型 */,
 				846F270F203FF6B7008E57C1 /* 控件 */,
 				84BED556203E747600A45A11 /* 图片转视频 */,
 			);
@@ -3230,6 +3246,7 @@
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
+				404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
 				84687CC0202552C00098A596 /* testImage3.jpg in Resources */,
@@ -3496,6 +3513,7 @@
 				84514D031E9DCE7A00F07EF8 /* NSString+JKScore.m in Sources */,
 				8402EB251ECD64A40030CCE1 /* WZVariousBaseCell.m in Sources */,
 				845BD8F91EB082EE004AC354 /* WZCTTelephonyNetworkInfo.m in Sources */,
+				404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */,
 				84514D811E9DCE7A00F07EF8 /* UIViewController+JKBackButtonTouched.m in Sources */,
 				84514D241E9DCE7A00F07EF8 /* UIBezierPath+JKLength.m in Sources */,
 				84514D561E9DCE7A00F07EF8 /* UILabel+JKAutoSize.m in Sources */,

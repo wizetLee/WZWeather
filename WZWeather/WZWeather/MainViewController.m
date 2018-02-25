@@ -30,6 +30,7 @@
 #pragma mark - Demo
 #import "Demo_ConvertPhotosIntoVideoController.h"
 #import "Demo_AnimatePageControlViewController.h"
+#import "Demo_WrapViewController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
@@ -165,6 +166,11 @@
     VCModel.headline = @"AnimatePageControlDemo";
     [_sources addObject:VCModel];
 
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_WrapViewController.class;
+    VCModel.headline = @"弯曲模型";
+    [_sources addObject:VCModel];
+    
     
     if(!_table) {
         UITableView *table = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
@@ -300,8 +306,9 @@
          } else if (model.VCClass == Demo_AnimatePageControlViewController.class) {
              Demo_AnimatePageControlViewController *VC = [[Demo_AnimatePageControlViewController alloc] initWithNibName:@"Demo_AnimatePageControlViewController" bundle:nil];
              [self.navigationController pushViewController:VC animated:true];
-         } else if (model.VCClass == WZAVPlayerViewController.class) {
-             
+         } else if (model.VCClass == Demo_WrapViewController.class) {
+             Demo_WrapViewController *VC = [[Demo_WrapViewController alloc] initWithNibName:@"Demo_WrapViewController" bundle:nil];
+             [self.navigationController pushViewController:VC animated:true];
          } else if (model.VCClass == WZAPLSimpleEditor.class) {
              AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
              AVURLAsset *asset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip2" ofType:@"mov"]]];
