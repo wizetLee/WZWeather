@@ -27,8 +27,10 @@ void main()
 
     if (type == 1) {                //溶解
         lowp vec4 textureColor2 = texture2D(inputImageTexture2, textureCoordinate2);
-        if (progress < 0.0 || progress > 1.0) {
-            textureColor.rgb = mix(textureColor.rgb, textureColor2.rgb, (1.0 - textureColor.a));
+        if (progress < 0.0) {
+//            textureColor.rgb = mix(textureColor.rgb, textureColor2.rgb, (1.0 - textureColor.a));
+        } else if (progress > 1.0) {
+            textureColor.rgb = textureColor2.rgb;
         } else {
             textureColor.rgb = mix(textureColor.rgb, textureColor2.rgb, progress);
         }

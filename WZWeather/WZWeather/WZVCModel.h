@@ -8,14 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, WZVCModelTransitionType) {
+    WZVCModelTransitionType_Custom,
+    WZVCModelTransitionType_Push,
+    WZVCModelTransitionType_Push_FromNib,
+    WZVCModelTransitionType_Present,
+    WZVCModelTransitionType_Present_FromNib,
+};
+
 @interface WZVCModel : NSObject
 
 @property (nonatomic, strong) NSString *headline;
 
 @property (nonatomic, strong) Class VCClass;
 
-@property (nonatomic, assign) BOOL fromNib;
-@property (nonatomic, assign) BOOL pushDirectly;        //直接push  
-@property (nonatomic, assign) BOOL presentDirectly;     //直接present
+@property (nonatomic, assign) WZVCModelTransitionType type;
+
 
 @end

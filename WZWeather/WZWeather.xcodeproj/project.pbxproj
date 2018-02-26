@@ -361,6 +361,17 @@
 		846F2715203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846F2713203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib */; };
 		846F271820401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */; };
 		846F271B204019F6008E57C1 /* WZDiffuseTwoInputFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F271A204019F6008E57C1 /* WZDiffuseTwoInputFilter.m */; };
+		84810BF620438B6500403FD8 /* lightCross.png in Resources */ = {isa = PBXBuildFile; fileRef = 84810BF520438B6500403FD8 /* lightCross.png */; };
+		84810BF820438B8A00403FD8 /* trees-2920264.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84810BF720438B8A00403FD8 /* trees-2920264.jpg */; };
+		84810C0120438BAD00403FD8 /* shader2SampleDefaultF.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810BF920438BAC00403FD8 /* shader2SampleDefaultF.fsh */; };
+		84810C0220438BAD00403FD8 /* shader2SampleDefaultV.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810BFA20438BAC00403FD8 /* shader2SampleDefaultV.vsh */; };
+		84810C0320438BAD00403FD8 /* WrapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84810BFC20438BAD00403FD8 /* WrapView.m */; };
+		84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810BFD20438BAD00403FD8 /* shaderColourModulationF.fsh */; };
+		84810C0520438BAD00403FD8 /* shaderDefaultV.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810BFE20438BAD00403FD8 /* shaderDefaultV.vsh */; };
+		84810C0620438BAD00403FD8 /* shaderColourModulationV.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810BFF20438BAD00403FD8 /* shaderColourModulationV.vsh */; };
+		84810C0720438BAD00403FD8 /* shaderDefaultF.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810C0020438BAD00403FD8 /* shaderDefaultF.fsh */; };
+		84810C0B204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84810C09204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m */; };
+		84810C0C204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84810C0A204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib */; };
 		848280CF200CA490003AD79F /* bigDarkStar@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CB200CA48F003AD79F /* bigDarkStar@2X.png */; };
 		848280D0200CA490003AD79F /* bigStar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CC200CA48F003AD79F /* bigStar@2x.png */; };
 		848280D1200CA490003AD79F /* bigStar@3X.png in Resources */ = {isa = PBXBuildFile; fileRef = 848280CD200CA48F003AD79F /* bigStar@3X.png */; };
@@ -1112,6 +1123,19 @@
 		846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZBlackWhiteMaskTwoInputFilter.m; sourceTree = "<group>"; };
 		846F2719204019F6008E57C1 /* WZDiffuseTwoInputFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZDiffuseTwoInputFilter.h; sourceTree = "<group>"; };
 		846F271A204019F6008E57C1 /* WZDiffuseTwoInputFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZDiffuseTwoInputFilter.m; sourceTree = "<group>"; };
+		84810BF520438B6500403FD8 /* lightCross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightCross.png; sourceTree = "<group>"; };
+		84810BF720438B8A00403FD8 /* trees-2920264.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "trees-2920264.jpg"; sourceTree = "<group>"; };
+		84810BF920438BAC00403FD8 /* shader2SampleDefaultF.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader2SampleDefaultF.fsh; sourceTree = "<group>"; };
+		84810BFA20438BAC00403FD8 /* shader2SampleDefaultV.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader2SampleDefaultV.vsh; sourceTree = "<group>"; };
+		84810BFB20438BAC00403FD8 /* WrapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrapView.h; sourceTree = "<group>"; };
+		84810BFC20438BAD00403FD8 /* WrapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapView.m; sourceTree = "<group>"; };
+		84810BFD20438BAD00403FD8 /* shaderColourModulationF.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderColourModulationF.fsh; sourceTree = "<group>"; };
+		84810BFE20438BAD00403FD8 /* shaderDefaultV.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderDefaultV.vsh; sourceTree = "<group>"; };
+		84810BFF20438BAD00403FD8 /* shaderColourModulationV.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderColourModulationV.vsh; sourceTree = "<group>"; };
+		84810C0020438BAD00403FD8 /* shaderDefaultF.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderDefaultF.fsh; sourceTree = "<group>"; };
+		84810C08204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h; sourceTree = "<group>"; };
+		84810C09204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m; sourceTree = "<group>"; };
+		84810C0A204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib; sourceTree = "<group>"; };
 		848280CB200CA48F003AD79F /* bigDarkStar@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigDarkStar@2X.png"; sourceTree = "<group>"; };
 		848280CC200CA48F003AD79F /* bigStar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigStar@2x.png"; sourceTree = "<group>"; };
 		848280CD200CA48F003AD79F /* bigStar@3X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigStar@3X.png"; sourceTree = "<group>"; };
@@ -1259,6 +1283,16 @@
 		404507F320427135003A5209 /* 弯曲模型 */ = {
 			isa = PBXGroup;
 			children = (
+				84810BF920438BAC00403FD8 /* shader2SampleDefaultF.fsh */,
+				84810BFA20438BAC00403FD8 /* shader2SampleDefaultV.vsh */,
+				84810BFD20438BAD00403FD8 /* shaderColourModulationF.fsh */,
+				84810BFF20438BAD00403FD8 /* shaderColourModulationV.vsh */,
+				84810C0020438BAD00403FD8 /* shaderDefaultF.fsh */,
+				84810BFE20438BAD00403FD8 /* shaderDefaultV.vsh */,
+				84810BFB20438BAC00403FD8 /* WrapView.h */,
+				84810BFC20438BAD00403FD8 /* WrapView.m */,
+				84810BF520438B6500403FD8 /* lightCross.png */,
+				84810BF720438B8A00403FD8 /* trees-2920264.jpg */,
 				404507F42042714E003A5209 /* Demo_WrapViewController.h */,
 				404507F52042714E003A5209 /* Demo_WrapViewController.m */,
 				404507F62042714E003A5209 /* Demo_WrapViewController.xib */,
@@ -2992,6 +3026,9 @@
 				84BED557203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.h */,
 				84BED558203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.m */,
 				84BED559203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib */,
+				84810C08204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h */,
+				84810C09204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m */,
+				84810C0A204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib */,
 			);
 			path = "图片转视频";
 			sourceTree = "<group>";
@@ -3212,6 +3249,7 @@
 				84687CBF202552C00098A596 /* testImage2.jpg in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
 				4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */,
+				84810C0120438BAD00403FD8 /* shader2SampleDefaultF.fsh in Resources */,
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
@@ -3228,11 +3266,14 @@
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
 				848280D0200CA490003AD79F /* bigStar@2x.png in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
+				84810C0620438BAD00403FD8 /* shaderColourModulationV.vsh in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
 				846A31001FD0E686003CECAE /* asset_selectedOrigion_selected@3x.png in Resources */,
 				846A31021FD0E686003CECAE /* imagesBrowse_back@3x.png in Resources */,
 				846F2715203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib in Resources */,
 				8405474E1FB97A280033EF9B /* squares.png in Resources */,
+				84810C0520438BAD00403FD8 /* shaderDefaultV.vsh in Resources */,
+				84810C0C204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib in Resources */,
 				846920B61E63BB550048BBDC /* LaunchScreen.storyboard in Resources */,
 				84687CC1202552C00098A596 /* testImage0.jpg in Resources */,
 				845034E61FB59F0800D3A285 /* OICameraSwitchFilter.vsh in Resources */,
@@ -3243,18 +3284,23 @@
 				846A30FE1FD0E686003CECAE /* asset_selectedOrigion_normal@3x.png in Resources */,
 				84687CC2202552C00098A596 /* testImage1.jpg in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
+				84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
+				84810C0720438BAD00403FD8 /* shaderDefaultF.fsh in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
 				846920B31E63BB550048BBDC /* Assets.xcassets in Resources */,
+				84810BF620438B6500403FD8 /* lightCross.png in Resources */,
 				404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */,
 				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
 				84687CC0202552C00098A596 /* testImage3.jpg in Resources */,
 				84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */,
+				84810C0220438BAD00403FD8 /* shader2SampleDefaultV.vsh in Resources */,
 				84687CBC202552C00098A596 /* testImage4.jpg in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
 				84BED55B203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib in Resources */,
+				84810BF820438B8A00403FD8 /* trees-2920264.jpg in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
 				845034E51FB59F0800D3A285 /* OICameraSwitchFilter.fsh in Resources */,
 			);
@@ -3419,6 +3465,7 @@
 				84514D2A1E9DCE7A00F07EF8 /* UIButton+JKBlock.m in Sources */,
 				84514D0F1E9DCE7A00F07EF8 /* NSMutableURLRequest+JKUpload.m in Sources */,
 				84BED55E203E750E00A45A11 /* WZPureConvertPhotosIntoVideoTool.m in Sources */,
+				84810C0B204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m in Sources */,
 				84514CF41E9DCE7A00F07EF8 /* NSObject+JKRuntime.m in Sources */,
 				84514CF81E9DCE7A00F07EF8 /* NSString+JKContains.m in Sources */,
 				84514CC51E9DCE7A00F07EF8 /* NSArray+JKSafeAccess.m in Sources */,
@@ -3429,6 +3476,7 @@
 				84514D201E9DCE7A00F07EF8 /* UIApplication+JKPermissions.m in Sources */,
 				840547561FB9A9380033EF9B /* WZToast.m in Sources */,
 				40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */,
+				84810C0320438BAD00403FD8 /* WrapView.m in Sources */,
 				84514D191E9DCE7A00F07EF8 /* CAMediaTimingFunction+JKAdditionalEquations.m in Sources */,
 				84514CCB1E9DCE7A00F07EF8 /* NSData+JKGzip.m in Sources */,
 				844A48491E9F657B0002829A /* WZVariousCollectionBaseCell.m in Sources */,

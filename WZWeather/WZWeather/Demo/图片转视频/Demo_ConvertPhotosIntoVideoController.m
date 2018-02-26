@@ -24,9 +24,15 @@
 
 @implementation Demo_ConvertPhotosIntoVideoController
 
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
     [tool cancelWriting];
+   
     link.paused = true;
     [link invalidate];
     link = nil;

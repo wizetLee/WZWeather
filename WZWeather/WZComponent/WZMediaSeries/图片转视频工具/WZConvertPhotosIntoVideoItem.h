@@ -26,13 +26,13 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoItemType) {
 
 ///过渡效果list
 typedef NS_ENUM(int, WZConvertPhotosIntoVideoType) {
-    //效果系列
+
     WZConvertPhotosIntoVideoType_None           = 0,    //效果就是 无
     WZConvertPhotosIntoVideoType_Dissolve,              //溶解、交叉叠化
     WZConvertPhotosIntoVideoType_Black,                 //闪黑2
     WZConvertPhotosIntoVideoType_White,                 //闪白3
     WZConvertPhotosIntoVideoType_Blur,                  //模糊4
-    ///移动效果系列
+
     WZConvertPhotosIntoVideoType_Wipe_LToR,             //左向右呈现  抹
     WZConvertPhotosIntoVideoType_Wipe_RToL,             //右向左呈现
     WZConvertPhotosIntoVideoType_Wipe_TToB,             //上向下呈现
@@ -63,7 +63,7 @@ typedef NS_ENUM(int, WZConvertPhotosIntoVideoType) {
 
 @interface WZConvertPhotosIntoVideoItem : NSObject
 
-@property (nonatomic, weak) id<WZConvertPhotosIntoVideoItemProtocol> delegate;
+@property (nonatomic,   weak) id<WZConvertPhotosIntoVideoItemProtocol> delegate;
 
 @property (nonatomic, assign) WZConvertPhotosIntoVideoType transitionType;//default:WZConvertPhotosIntoVideoType_Nontransition 非过渡类型
 

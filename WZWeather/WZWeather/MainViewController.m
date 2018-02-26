@@ -29,6 +29,7 @@
 
 #pragma mark - Demo
 #import "Demo_ConvertPhotosIntoVideoController.h"
+#import "Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h"
 #import "Demo_AnimatePageControlViewController.h"
 #import "Demo_WrapViewController.h"
 
@@ -161,6 +162,11 @@
     VCModel.headline = @"图片转视频demo";
     [_sources addObject:VCModel];
    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.class;
+    VCModel.headline = @"图片转视频(GPUImage)demo";
+    [_sources addObject:VCModel];
+    
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_AnimatePageControlViewController.class;
     VCModel.headline = @"AnimatePageControlDemo";
@@ -303,6 +309,9 @@
              Demo_ConvertPhotosIntoVideoController *VC = [[Demo_ConvertPhotosIntoVideoController alloc] initWithNibName:@"Demo_ConvertPhotosIntoVideoController" bundle:nil];
              [self.navigationController pushViewController:VC animated:true];
              
+         } else if (model.VCClass == Demo_ConvertPhotosIntoVideoUseGPUImageViewController.class){
+             Demo_ConvertPhotosIntoVideoUseGPUImageViewController *VC = [[Demo_ConvertPhotosIntoVideoUseGPUImageViewController alloc] initWithNibName:@"Demo_ConvertPhotosIntoVideoUseGPUImageViewController" bundle:nil];
+             [self.navigationController pushViewController:VC animated:true];
          } else if (model.VCClass == Demo_AnimatePageControlViewController.class) {
              Demo_AnimatePageControlViewController *VC = [[Demo_AnimatePageControlViewController alloc] initWithNibName:@"Demo_AnimatePageControlViewController" bundle:nil];
              [self.navigationController pushViewController:VC animated:true];

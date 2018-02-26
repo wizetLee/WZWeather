@@ -47,6 +47,10 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 #pragma mark -
 #pragma mark Initialization and teardown
 
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
+
 - (id)init {
     NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZConvertPhotosIntoVideo" ofType:@"fsh"];
     NSString *fragmentShaderString = [NSString stringWithContentsOfFile:fragmentShaderPathname encoding:NSUTF8StringEncoding error:nil];
@@ -173,9 +177,7 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
                               , vertices
                               );
         glVertexAttribPointer(filterSecondTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [[self class] textureCoordinatesForRotation:inputRotation2]);///可自由配置自定义方向
-        
-        
-        
+    
 //    }
     glDrawArrays(GL_TRIANGLE_STRIP
                  , 0

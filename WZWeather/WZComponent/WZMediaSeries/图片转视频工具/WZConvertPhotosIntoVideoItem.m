@@ -10,12 +10,13 @@
 
 @interface WZConvertPhotosIntoVideoItem()
 
-
-
-
 @end
 
 @implementation WZConvertPhotosIntoVideoItem
+
+//- (void)dealloc {
+//    NSLog(@"%s", __func__);
+//}
 
 - (instancetype)init
 {
@@ -36,8 +37,24 @@
 //首次配置
 - (void)firstConfigWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer time:(CMTime)time; {
     //换链部分
-    
+    [sourceA removeAllTargets];
+    [sourceB removeAllTargets];
+    [filter removeAllTargets];
+
     filter.type = (int)_transitionType;
+    if (_transitionType == WZConvertPhotosIntoVideoType_Glow) {
+
+
+    } else if (_transitionType == WZConvertPhotosIntoVideoType_Star) {
+
+
+    } else {
+        [sourceA addTarget:filter];
+        [sourceB addTarget:filter];
+        [filter addTarget:consumer];
+    }
+
+    
     sourceA.sourceImage = self.leadingImage;
     sourceB.sourceImage = self.trailingImage;
 }
@@ -54,7 +71,12 @@
             [sourceA processImageWithTime:time];
         } break;
             
-        case WZConvertPhotosIntoVideoType_Dissolve:
+        case WZConvertPhotosIntoVideoType_Dissolve: {
+            filter.progress = _progress;
+            [sourceA processImageWithTime:time];
+            [sourceB processImageWithTime:time];
+        } break;
+            
         case WZConvertPhotosIntoVideoType_Black:
         case WZConvertPhotosIntoVideoType_White: {
             filter.progress = ((_progress * 2) >= 1)?((1 - (_progress)) * 2) : (_progress * 2);
@@ -144,6 +166,11 @@
     } else {
         _progress = 0.0;
     }
+}
+
+#pragma mark - Public
+- (void)resetItemStatus {
+    
 }
 
 @end

@@ -14,45 +14,29 @@
 //http://blog.sina.com.cn/s/blog_a45145650102v8t0.html
 @interface WZConvertPhotosIntoVideoTool()<WZConvertPhotosIntoVideoItemProtocol>
 {
-    AVAssetWriter *_writer;
-    AVAssetWriterInputPixelBufferAdaptor *_adaptor;
-    AVAssetWriterInput *_audioInput;
-    AVAssetWriterInput *_videoInput;
- 
-    NSUInteger _frameCount;                                  //帧数 由limitedTime->frameRate得到
-    
-//    NSLock *_lock;                                           //mutex lock
-    
    
-    CVPixelBufferRef _tmpPBR;
-    
-    NSUInteger _addedFrameCount;                         //已添加的帧数
-    
-    NSUInteger targetFrameCount;            //目标帧数
-    
-    
-    
-    GPUImageFramebuffer *firstInputFramebuffer;
+ 
+    NSUInteger _frameCount;                //帧数 由limitedTime->frameRate得到
+    NSUInteger _addedFrameCount;           //已添加的帧数
+    NSUInteger targetFrameCount;           //目标帧数
 }
 
 
 @property (nonatomic, assign) CMTime currentProgressTime;   //当前进度
 @property (nonatomic, assign) WZConvertPhotosIntoVideoToolStatus status;  //状态
-@property (nonatomic, strong) NSArray <UIImage *>*sources;  //数据源
 @property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*itemMArr;  //数据源
 @property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;  //节点
 
-@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, strong) NSURL *outputURL;
 
+@property (nonatomic, strong) dispatch_source_t timerSource;
 
 @property (nonatomic, strong) WZGPUImagePicture *pictureA;
 @property (nonatomic, strong) WZGPUImagePicture *pictureB;
-
 @property (nonatomic, strong) WZConvertPhotosIntoVideoFilter *convertPhotosIntoVideoFilter;
 
+//GPUImageMovieWriter存在内存泄漏，处理方案：https://stackoverflow.com/questions/27857330/memory-leak-occurs-when-use-gpuimagemoviewriter-multiple-times
 @property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
-
-@property (nonatomic, strong) NSURL *outputURL;
 
 @property (nonatomic,   weak) WZConvertPhotosIntoVideoItem *curItem;    //临时的item
 
@@ -69,10 +53,8 @@
         [self defaultConfig];
         
         _outputSize = outputSize;
-        _frameRate = frameRate;
+        self.frameRate = frameRate;
         
-        [self retsetConfig];
-
     }
     return self;
 }
@@ -80,7 +62,7 @@
 
 #pragma mark - Private
 - (void)defaultConfig {
-    _frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
+    self.frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
     _frameCount = 0;
     _addedFrameCount = 0;
     
@@ -93,15 +75,24 @@
 
 - (void)dealloc {
     NSLog(@"%s", __func__);
-    if (_tmpPBR) {
-        CVPixelBufferRelease(_tmpPBR);
-        _tmpPBR = NULL;
+
+    for (WZConvertPhotosIntoVideoItem *tmpObj in _itemMArr) {
+        tmpObj.leadingImage = nil;
+        tmpObj.trailingImage = nil;
     }
+    for (WZConvertPhotosIntoVideoItem *tmpObj in _transitionNodeMarr) {
+        tmpObj.leadingImage = nil;
+        tmpObj.trailingImage = nil;
+    }
+    
+    [_itemMArr removeAllObjects];
+    [_transitionNodeMarr removeAllObjects];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [_displayLink invalidate];
-    _displayLink = nil;
-    
+
+    [self cleanChain];
+    [self cleanTimer];
 }
 
 
@@ -115,21 +106,35 @@
 }
 
 //
-- (void)displayLink:(CADisplayLink *)displayLink {
+- (void)addFrameAction {
     //先是代理判断当前进度 决定继续添加buffer 还是停止录制
+    
     if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+        if (_timeIsLimited
+            && _frameCount <= _addedFrameCount) {
+            //达到了限制
+            return;
+        }
+        if (targetFrameCount == _addedFrameCount) {
+            NSLog(@"超出上限");
+            return;
+        }
         //录制
         [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
         _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//帧位时间偏移更新
+        _addedFrameCount++;
+        NSLog(@"目标帧数：%ld，已添加帧数 %ld", targetFrameCount, _addedFrameCount);
+        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewTool:progress:)]) {
+            [_delegate convertPhotosInotViewTool:self progress:(_addedFrameCount * 1.0) / targetFrameCount];
+        }
+      
     } else if (_status == WZConvertPhotosIntoVideoToolStatus_Completed) {
         //完成
-//        [self finishWriting];
-        [self testFinishWriting];
+        [self finishWriting];
     }
 }
 
 - (void)switchRole {
-    
     if (_curItem == nil && _itemMArr.count) {
         //首次切换某个item
         _curItem = _itemMArr.firstObject;
@@ -156,19 +161,29 @@
         return;
     }
     _status = WZConvertPhotosIntoVideoToolStatus_Idle;
-    _sources = pictureSources.copy;
+
     //预设重配
-    [self retsetConfig];
+    [_itemMArr removeAllObjects];
+    [_transitionNodeMarr removeAllObjects];
+    for (WZConvertPhotosIntoVideoItem *tmpObj in _itemMArr) {
+        tmpObj.leadingImage = nil;
+        tmpObj.trailingImage = nil;
+    }
+    for (WZConvertPhotosIntoVideoItem *tmpObj in _transitionNodeMarr) {
+        tmpObj.leadingImage = nil;
+        tmpObj.trailingImage = nil;
+    }
+    [_transitionNodeMarr removeAllObjects];
     
     _itemMArr = NSMutableArray.array;
     _transitionNodeMarr = NSMutableArray.array;
     
     NSUInteger pictureCount = pictureSources.count;          //图片总量
-    NSUInteger transitionFrameCount = 30;                    //过渡效果的帧数
-    targetFrameCount = pictureSources.count * 30;           //任务目标总帧数
+    NSUInteger transitionFrameCount = 15;                    //过渡效果的帧数
+    targetFrameCount = pictureSources.count * 30 * 2;        //任务目标总帧数
     
-    NSUInteger nontransitionFrameCount = (targetFrameCount - ((pictureCount -1) * transitionFrameCount)) / pictureCount;                                                //非过渡帧数
-    NSUInteger sumFrameCount = targetFrameCount;              //临时计算量
+    NSUInteger nontransitionFrameCount = (targetFrameCount - ((pictureCount -1) * transitionFrameCount)) / pictureCount;                                        //非过渡帧数
+    NSUInteger sumFrameCount = targetFrameCount;             //临时计算量
     //由于分割的问题 多出来的 几帧会加载最后的图片上
     for (NSUInteger i = 0; i < pictureCount; i++) {
         //平滑点
@@ -185,7 +200,7 @@
             item.delegate = self;
             item.leadingImage = pictureSources[i];
             item.trailingImage = pictureSources[i + 1];
-            item.transitionType = WZConvertPhotosIntoVideoType_Black;    //配置为none类型
+            item.transitionType = WZConvertPhotosIntoVideoType_Dissolve;    //配置为none类型
             item.frameCount = transitionFrameCount;
             sumFrameCount -= transitionFrameCount;
             
@@ -201,57 +216,8 @@
     }
 }
 
-- (void)retsetConfig {
-    
-    _displayLink.paused = true;
-    [_displayLink invalidate];
-    _displayLink = nil;
-    
-    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink:)];
-    [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-    _displayLink.paused = true;
-    
-    
-    //原始 sourceA&sourceB -> filter -> writer
-    _convertPhotosIntoVideoFilter = [[WZConvertPhotosIntoVideoFilter alloc] init];
-    
-    _pictureA = [[WZGPUImagePicture alloc] init];
-    _pictureB = [[WZGPUImagePicture alloc] init];
-    _pictureA.sourceImage = [UIImage imageNamed:@"testImage0.jpg"];
-    _pictureB.sourceImage = [UIImage imageNamed:@"testImage0.jpg"];
-//    [_pictureA processImage];//传递缓存  size是根据图片来output的.
-//    [_pictureB processImage];//传递缓存
 
-    //使用新接口自定义time 外部控制速率（也就是速率要自己定）
-    [_pictureA processImageWithTime:kCMTimeIndefinite];
-    [_pictureB processImageWithTime:kCMTimeIndefinite];
-    
-//    [_pictureA addTarget:_convertPhotosIntoVideoFilter atTextureLocation:0];
-//    [_pictureB addTarget:_convertPhotosIntoVideoFilter atTextureLocation:1];
-    
-    [_pictureA addTarget:_convertPhotosIntoVideoFilter];
-    [_pictureB addTarget:_convertPhotosIntoVideoFilter];
-    
-    if (!_outputURL) {
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
-        _outputURL = [NSURL fileURLWithPath:path];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-        }
-    }
-    
-    //默认是mov格式
-    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
-    [_convertPhotosIntoVideoFilter addTarget:_movieWriter];
-  
-}
 
-- (void)cleanGPUImageChain {
-    [_pictureA removeAllTargets];
-    [_pictureB removeAllTargets];
-    
-    [_convertPhotosIntoVideoFilter removeAllTargets];
-}
 
 - (void)prepareTask {
     //初始化一些工具
@@ -259,7 +225,7 @@
         NSLog(@"%s，状态错误", __func__);
         return;
     }
-    
+
     NSError *error = nil;
     {//文件部分
         if (_outputURL && [_outputURL isFileURL]) {} else {
@@ -267,7 +233,7 @@
             NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
             _outputURL = [NSURL fileURLWithPath:filePath];
         }
-        
+
         if (_outputURL && [[NSFileManager defaultManager] fileExistsAtPath:_outputURL.path]) {
             [[NSFileManager defaultManager] removeItemAtURL:_outputURL error:&error];
         }
@@ -275,232 +241,90 @@
             NSLog(@"文件移除出错，%@", error.debugDescription);
         }
     }
-    
-    {//写入工具部分
-        AVFileType fileType = AVFileTypeQuickTimeMovie;
-        _writer = [[AVAssetWriter alloc] initWithURL:_outputURL fileType:fileType error:&error];
 
-        NSMutableDictionary *outputSettings = NSMutableDictionary.dictionary;
-        CGSize outputSize = _outputSize;//   x % 2 = 0 （尺寸最好是2的倍数）
-        outputSettings[AVVideoWidthKey] = @(outputSize.width);
-        outputSettings[AVVideoHeightKey] = @(outputSize.height);
-        outputSettings[AVVideoCodecKey] = AVVideoCodecH264;
-        _videoInput = [[AVAssetWriterInput alloc] initWithMediaType:AVMediaTypeVideo outputSettings:outputSettings];
-        _videoInput.expectsMediaDataInRealTime = false;//实时（看需求）
-        
-        if ([_writer canAddInput:_videoInput]) {
-            [_writer addInput:_videoInput];
-        } else {
-            NSLog(@"配置失败");
-            return;
-        }
-        
-        NSMutableDictionary *sourcePixelBufferAttributes = NSMutableDictionary.dictionary;
-        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferPixelFormatTypeKey] = @(kCVPixelFormatType_32BGRA);
-        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferWidthKey] = @(outputSize.width);
-        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferHeightKey] = @(outputSize.height);
-        //        sourcePixelBufferAttributes[(__bridge id)kCVPixelBufferCGBitmapContextCompatibilityKey] = @(true);
-        AVAssetWriterInputPixelBufferAdaptor *writerInputPixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc] initWithAssetWriterInput:_videoInput sourcePixelBufferAttributes:sourcePixelBufferAttributes];
-        _adaptor = writerInputPixelBufferAdaptor;
-    }
-    
     {
         //信号指向ready状态
         _status = WZConvertPhotosIntoVideoToolStatus_Ready;
-//        [self startWriting];
-        [self testStartWriting];
+        [self startWriting];
     }
 }
 
 - (void)finishWriting {
-    
     _status = WZConvertPhotosIntoVideoToolStatus_Completed;
-    [_videoInput markAsFinished];
-    [_writer finishWritingWithCompletionHandler:^{
-        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolFinishWriting)]) {
-            [_delegate convertPhotosInotViewToolFinishWriting];
-        }
-    }];
-    
-    [self cleanCache];
-}
-
-//--------------------------------------------------------------------------
-- (void)testStartWriting {
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
-        //首次add 的配置
-        [_movieWriter startRecording];
-        _status = WZConvertPhotosIntoVideoToolStatus_Converting;
-        [self switchRole];//初次配置就先设置一次
-        //开始进入计时状态
-        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
-        _displayLink.paused = false;
-    } else { NSLog(@"状态出错"); }
-}
-
-- (void)testFinishWriting {
-    _status = WZConvertPhotosIntoVideoToolStatus_Completed;
+    [self cleanTimer];
     [_movieWriter finishRecordingWithCompletionHandler:^{
         if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolFinishWriting)]) {
             [_delegate convertPhotosInotViewToolFinishWriting];
         }
+        
+        [self cleanChain];
     }];
-    [self cleanCache];
-    _displayLink.paused = true;
-    [_displayLink invalidate];
-    _displayLink = nil;
-    
 }
-//--------------------------------------------------------------------------
 
 - (void)startWriting {
     if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
-        //首次add 的配置
-        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
-        [_writer startWriting];
-        [_writer startSessionAtSourceTime:kCMTimeZero];
+        //重配时间
+        [self cleanTimer];
+        [self cleanChain];
+        
+        
         _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+        
+        //原始 sourceA&sourceB -> filter -> writer
+        _convertPhotosIntoVideoFilter = [[WZConvertPhotosIntoVideoFilter alloc] init];
+        
+        _pictureA = [[WZGPUImagePicture alloc] init];
+        _pictureB = [[WZGPUImagePicture alloc] init];
+        //默认是mov格式
+        _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
+        
+        //链装配
+        [_pictureA addTarget:_convertPhotosIntoVideoFilter];
+        [_pictureB addTarget:_convertPhotosIntoVideoFilter];
+        [_convertPhotosIntoVideoFilter addTarget:_movieWriter];
+        
+        //首次add 的配置
+        [_movieWriter startRecording];
+        
         [self switchRole];//初次配置就先设置一次
-    } else {
-        NSLog(@"状态出错");
-    }
+        //开始进入计时状态
+        _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
+        
+        _timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+        dispatch_source_set_timer(_timerSource, DISPATCH_TIME_NOW, 1.0 / 60.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);
+
+        dispatch_source_set_event_handler(_timerSource, ^{
+            [self addFrameAction];
+        });
+        dispatch_resume(_timerSource);
+        
+    } else { NSLog(@"状态出错"); }
 }
 
 - (void)cancelWriting {
-    [_videoInput markAsFinished];
-    [_writer cancelWriting];
-    _status = WZConvertPhotosIntoVideoToolStatus_Canceled;
+    [self cleanTimer];
+    [_movieWriter cancelRecording];
+    [self cleanChain];
+}
+
+- (void)cleanChain {
+    [_pictureA removeAllTargets];
+    [_pictureB removeAllTargets];
+   
+    [_convertPhotosIntoVideoFilter removeAllTargets];
+    _movieWriter.delegate = nil;
     
-    [self cleanCache];
-}
-
-//从buffer池中获取pixelBufferRef
-- (CVPixelBufferRef)getPixelBufferRef {
-    CVPixelBufferRef pixelBuffer = NULL;
-    OSStatus err = CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, _adaptor.pixelBufferPool, &pixelBuffer);
-    if (err) {
-         CVPixelBufferRelease(pixelBuffer);
-        return NULL;
-    }
-    return pixelBuffer;
-}
-
-- (BOOL)hasCache {
-    if (_tmpPBR) {
-        return true;
-    }
-    return false;
-}
-
-- (void)cleanCache {
-    if (_tmpPBR) {
-        CVPixelBufferRelease(_tmpPBR);
-        _tmpPBR = NULL;
-    }
-}
-
-- (void)addFrameWithCache {
-    if (_tmpPBR) {
-        [self addFrameWithSample:_tmpPBR];
-    } else {
-        NSLog(@"并无缓存");
-    }
+    _pictureA = nil;
+    _pictureB = nil;
+    _convertPhotosIntoVideoFilter = nil;
+    _movieWriter = nil;
 }
 
 
-- (void)addFrameWithCGImage:(CGImageRef)cgImage {
-    if (_status != WZConvertPhotosIntoVideoToolStatus_Converting) {
-        return;
-    }
-    
-    CGSize imageSize = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
-    CVPixelBufferRef pbr = [self getPixelBufferRef];
-    if (pbr == NULL) {
-        NSMutableDictionary *pixelBufferAttributes = NSMutableDictionary.alloc.init;
-        pixelBufferAttributes[(__bridge NSString *)kCVPixelBufferCGImageCompatibilityKey] = @(true);
-        pixelBufferAttributes[(__bridge NSString *)kCVPixelBufferCGBitmapContextCompatibilityKey] = @(true);
-        CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault
-                                              , imageSize.width
-                                              , imageSize.height
-                                              , kCVPixelFormatType_32BGRA
-                                              , (__bridge CFDictionaryRef)pixelBufferAttributes
-                                              , &pbr);
-        if (status == kCVReturnSuccess && pbr != NULL) {
-            NSLog(@"自创建PixelBuffer");
-        } else {
-            NSLog(@"自创建PixelBuffer失败");
-        }
-    }
-    
-    if (pbr) {
-        //把image绘进pbr
-        CGImageRef imageRef = cgImage;
-        CVPixelBufferLockBaseAddress(pbr, 0);
-        void *pxdata = CVPixelBufferGetBaseAddress(pbr);
-        
-        NSParameterAssert(pxdata != NULL);
-        CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-        CGContextRef context = CGBitmapContextCreate(pxdata
-                                                     , _outputSize.width
-                                                     , _outputSize.height
-                                                     , 8
-                                                     , 4 * _outputSize.width
-                                                     , rgbColorSpace
-                                                     , kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Little);
-        //(CGBitmapInfo)kCGImageAlphaPremultipliedFirst
-        CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
-        
-        CGColorSpaceRelease(rgbColorSpace);
-        CGContextRelease(context);
-        
-        CVPixelBufferUnlockBaseAddress(pbr, 0);
-        [self addFrameWithSample:pbr];
-        
-        //刷新_tmpPBR
-        [self cleanCache];
-        _tmpPBR = pbr;
-        
-    } else {
-        NSLog(@"丢帧啦");
-    }
-}
-
-//先从pool中得到buffer
-- (void)addFrameWithImage:(UIImage *)image {
-    [self addFrameWithCGImage:image.CGImage];
-}
-
-- (void)addFrameWithSample:(CVPixelBufferRef)buffer {
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
-        //计算时间
-        
-        if (_timeIsLimited
-            && _frameCount <= _addedFrameCount) {
-            //有时间限制 此时达到时间的最大值，之后添加的帧都会丢掉
-            NSLog(@"已达到录制时间的最大值");
-            return;
-        }
-        if ([_videoInput isReadyForMoreMediaData]) {
-            if (buffer) {
-                CVPixelBufferLockBaseAddress(buffer, 0);
-                if (![_adaptor appendPixelBuffer:buffer withPresentationTime:_currentProgressTime]) {
-                    NSLog(@"_adaptor append fail");
-                } else {
-                    _addedFrameCount++;
-                    NSLog(@"已添加%ld帧", _addedFrameCount);
-                    //时间根据帧率递增，调整当前的进度时间
-                    _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//时间递增
-                }
-                CVPixelBufferUnlockBaseAddress(buffer, 0);
-                //            CVPixelBufferRelease(buffer);///初发现 有内存泄漏的情况，原来是buffer没有释放掉(在适当的时候释放).
-            } else {
-                NSLog(@"丢丢丢丢丢丢丢丢帧啦");
-            }
-        } else {
-            NSLog(@"丢丢丢丢丢丢丢丢帧啦");
-        }
-    } else {
-        NSLog(@"%s, 状态出错", __func__);
+- (void)cleanTimer {
+    if (_timerSource) {
+        dispatch_source_cancel(_timerSource);
+        _timerSource = nil;
     }
 }
 
@@ -538,7 +362,6 @@
 #pragma mark - WZConvertPhotosIntoVideoItemProtocol
 - (void)itemDidCompleteConversion {
     [self switchRole];
-    [self cleanCache];
     //准备下一个item的配置
 }
 
@@ -644,33 +467,5 @@
 
 
 
-#pragma mark - GPUImageInput
-
-//获取新的buffer
-- (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex; {
-    //得到新的buffer..
-    NSLog(@"%s", __func__);
-}
-- (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex; {
-    NSLog(@"%s", __func__);
-    firstInputFramebuffer = newInputFramebuffer;
-}
-//- (NSInteger)nextAvailableTextureIndex;
-- (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex; {
-    NSLog(@"%s", __func__);
-}
-- (void)setInputRotation:(GPUImageRotationMode)newInputRotation atIndex:(NSInteger)textureIndex; {
-    NSLog(@"%s", __func__);
-}
-
-- (void)endProcessing; {
-    NSLog(@"%s", __func__);
-}
-
-
-
-- (void)setCurrentlyReceivingMonochromeInput:(BOOL)newValue; {
-    NSLog(@"%s", __func__);
-}
 
 @end

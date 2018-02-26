@@ -128,6 +128,8 @@
 
 - (void)dealloc {
     [_player pause];
+    [_previewLayer removeFromSuperlayer];
+    _previewLayer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"%s", __func__);
 }

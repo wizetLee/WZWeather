@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,8 +19,45 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCG-yF-Ww0">
+                    <rect key="frame" x="20" y="586" width="157.5" height="44"/>
+                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="grL-hK-hGe"/>
+                    </constraints>
+                    <state key="normal" title="导出混合图">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="mixture:" destination="-1" eventType="touchUpInside" id="SHI-Ly-X4B"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LJf-PJ-gAz">
+                    <rect key="frame" x="197.5" y="586" width="157.5" height="44"/>
+                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="hL7-ak-mhh"/>
+                    </constraints>
+                    <state key="normal" title="导出素材图">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="material:" destination="-1" eventType="touchUpInside" id="E9W-If-Td8"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="LJf-PJ-gAz" firstAttribute="width" secondItem="SCG-yF-Ww0" secondAttribute="width" id="5m3-up-hVS"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="LJf-PJ-gAz" secondAttribute="trailing" constant="20" id="EQC-Pj-QHE"/>
+                <constraint firstItem="SCG-yF-Ww0" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="WMc-62-2cx"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="LJf-PJ-gAz" secondAttribute="bottom" constant="37" id="eM6-R8-WfZ"/>
+                <constraint firstItem="LJf-PJ-gAz" firstAttribute="leading" secondItem="SCG-yF-Ww0" secondAttribute="trailing" constant="20" id="iC9-eK-ZeI"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="SCG-yF-Ww0" secondAttribute="bottom" constant="37" id="ji1-za-fKW"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="-83" y="-85"/>
         </view>
     </objects>
 </document>

@@ -185,7 +185,7 @@
                 tmpImageView.center = self.view.center;
                 [self.view addSubview:tmpImageView];
                 
-                [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+                [UIView animateWithDuration:1.5 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
                     tmpImageView.alpha = 0.0;
                 } completion:^(BOOL finished) {
                     [tmpImageView removeFromSuperview];

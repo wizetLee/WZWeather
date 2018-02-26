@@ -77,6 +77,8 @@
 
 - (void)dealloc {
     [_displayLink invalidate];
+    _displayLink = nil;
+    NSLog(@"%s", __func__);
 }
 
 - (void)creatViews {
