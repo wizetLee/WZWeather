@@ -19,6 +19,12 @@
 		404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404507F52042714E003A5209 /* Demo_WrapViewController.m */; };
 		404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404507F62042714E003A5209 /* Demo_WrapViewController.xib */; };
 		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
+		407EC73F204591E1001C065E /* input.mov in Resources */ = {isa = PBXBuildFile; fileRef = 407EC739204591E0001C065E /* input.mov */; };
+		407EC740204591E1001C065E /* Demo_VideoReversalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73A204591E0001C065E /* Demo_VideoReversalController.m */; };
+		407EC741204591E1001C065E /* AVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73B204591E0001C065E /* AVUtilities.m */; };
+		407EC742204591E1001C065E /* Demo_VideoReversalController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */; };
+		407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74720459529001C065E /* WZVideoReversalTool.m */; };
+		407EC74C20459B45001C065E /* CSVideoReverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74A20459B45001C065E /* CSVideoReverse.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
@@ -469,6 +475,16 @@
 		404507F62042714E003A5209 /* Demo_WrapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_WrapViewController.xib; sourceTree = "<group>"; };
 		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
 		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
+		407EC739204591E0001C065E /* input.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = input.mov; sourceTree = "<group>"; };
+		407EC73A204591E0001C065E /* Demo_VideoReversalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo_VideoReversalController.m; sourceTree = "<group>"; };
+		407EC73B204591E0001C065E /* AVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVUtilities.m; sourceTree = "<group>"; };
+		407EC73C204591E0001C065E /* Demo_VideoReversalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo_VideoReversalController.h; sourceTree = "<group>"; };
+		407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Demo_VideoReversalController.xib; sourceTree = "<group>"; };
+		407EC73E204591E0001C065E /* AVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVUtilities.h; sourceTree = "<group>"; };
+		407EC74620459529001C065E /* WZVideoReversalTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoReversalTool.h; sourceTree = "<group>"; };
+		407EC74720459529001C065E /* WZVideoReversalTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoReversalTool.m; sourceTree = "<group>"; };
+		407EC74A20459B45001C065E /* CSVideoReverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSVideoReverse.m; sourceTree = "<group>"; };
+		407EC74B20459B45001C065E /* CSVideoReverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVideoReverse.h; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageEnlargedFilter.h; sourceTree = "<group>"; };
@@ -1298,6 +1314,31 @@
 				404507F62042714E003A5209 /* Demo_WrapViewController.xib */,
 			);
 			path = "弯曲模型";
+			sourceTree = "<group>";
+		};
+		407EC738204591E0001C065E /* 视频倒放 */ = {
+			isa = PBXGroup;
+			children = (
+				407EC74920459B45001C065E /* src */,
+				407EC739204591E0001C065E /* input.mov */,
+				407EC73A204591E0001C065E /* Demo_VideoReversalController.m */,
+				407EC74620459529001C065E /* WZVideoReversalTool.h */,
+				407EC74720459529001C065E /* WZVideoReversalTool.m */,
+				407EC73C204591E0001C065E /* Demo_VideoReversalController.h */,
+				407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */,
+				407EC73E204591E0001C065E /* AVUtilities.h */,
+				407EC73B204591E0001C065E /* AVUtilities.m */,
+			);
+			path = "视频倒放";
+			sourceTree = "<group>";
+		};
+		407EC74920459B45001C065E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				407EC74B20459B45001C065E /* CSVideoReverse.h */,
+				407EC74A20459B45001C065E /* CSVideoReverse.m */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
@@ -3013,6 +3054,7 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				407EC738204591E0001C065E /* 视频倒放 */,
 				404507F320427135003A5209 /* 弯曲模型 */,
 				846F270F203FF6B7008E57C1 /* 控件 */,
 				84BED556203E747600A45A11 /* 图片转视频 */,
@@ -3269,6 +3311,7 @@
 				84810C0620438BAD00403FD8 /* shaderColourModulationV.vsh in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
 				846A31001FD0E686003CECAE /* asset_selectedOrigion_selected@3x.png in Resources */,
+				407EC742204591E1001C065E /* Demo_VideoReversalController.xib in Resources */,
 				846A31021FD0E686003CECAE /* imagesBrowse_back@3x.png in Resources */,
 				846F2715203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib in Resources */,
 				8405474E1FB97A280033EF9B /* squares.png in Resources */,
@@ -3285,6 +3328,7 @@
 				84687CC2202552C00098A596 /* testImage1.jpg in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */,
+				407EC73F204591E1001C065E /* input.mov in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84810C0720438BAD00403FD8 /* shaderDefaultF.fsh in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
@@ -3470,6 +3514,7 @@
 				84514CF81E9DCE7A00F07EF8 /* NSString+JKContains.m in Sources */,
 				84514CC51E9DCE7A00F07EF8 /* NSArray+JKSafeAccess.m in Sources */,
 				84514D821E9DCE7A00F07EF8 /* UIViewController+JKBlockSegue.m in Sources */,
+				407EC740204591E1001C065E /* Demo_VideoReversalController.m in Sources */,
 				846A313A1FD16337003CECAE /* WZMediaFetcher.m in Sources */,
 				84514CC61E9DCE7A00F07EF8 /* NSBundle+JKAppIcon.m in Sources */,
 				84514CC81E9DCE7A00F07EF8 /* NSData+JKBase64.m in Sources */,
@@ -3498,6 +3543,7 @@
 				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
 				845B8FB42020134400242363 /* WZGPUImageMovieWriter.m in Sources */,
+				407EC741204591E1001C065E /* AVUtilities.m in Sources */,
 				84514CD61E9DCE7A00F07EF8 /* NSDateFormatter+JKMake.m in Sources */,
 				84514CDF1E9DCE7A00F07EF8 /* NSFileManager+JKPaths.m in Sources */,
 				84514D141E9DCE7A00F07EF8 /* MKMapView+JKBetterMaps.m in Sources */,
@@ -3517,6 +3563,7 @@
 				84514D761E9DCE7A00F07EF8 /* UIView+JKCustomBorder.m in Sources */,
 				840A43A21FB18AFC00F6D449 /* WZCameraAssist.m in Sources */,
 				84514CFC1E9DCE7A00F07EF8 /* NSString+JKHash.m in Sources */,
+				407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */,
 				84514CBC1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m in Sources */,
 				84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */,
 				84514D1F1E9DCE7A00F07EF8 /* UIApplication+JKNetworkActivityIndicator.m in Sources */,
@@ -3631,6 +3678,7 @@
 				84514CF11E9DCE7A00F07EF8 /* NSObject+JKGCD.m in Sources */,
 				8402EB101ECD34B00030CCE1 /* WZDownloadProgressCell.m in Sources */,
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
+				407EC74C20459B45001C065E /* CSVideoReverse.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
 				8453F5E71FB071D100E0ABAE /* WZMediaEffectShow.m in Sources */,

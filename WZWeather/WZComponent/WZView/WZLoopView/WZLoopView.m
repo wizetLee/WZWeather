@@ -27,6 +27,7 @@
 
 @implementation WZLoopView
 
+//图片是异步接口
 - (instancetype)initWithFrame:(CGRect)frame images:(NSArray *)images loop:(BOOL)loop delay:(NSTimeInterval)timeInterval {
     if (self = [super initWithFrame:frame]) {
         _loop = loop;

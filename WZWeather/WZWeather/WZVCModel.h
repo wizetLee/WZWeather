@@ -7,6 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WZDownloadController.h"
+#import "WZPageViewController.h"
+#import "WZPageViewAssistController.h"
+#import "WZAVPlayerViewController.h"
+#import "WZPhotoCatalogueController.h"
+#import "WZVideoPickerController.h"
+#import "WZAudioCodecController.h"
+#import "WZVideoCodecController.h"
+#import "WZMediaController.h"
+#import "WZTestViewController.h"
+
+#pragma mark - Demo
+#import "Demo_ConvertPhotosIntoVideoController.h"
+#import "Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h"
+#import "Demo_AnimatePageControlViewController.h"
+#import "Demo_WrapViewController.h"
+#import "Demo_VideoReversalController.h"
 
 typedef NS_ENUM(NSUInteger, WZVCModelTransitionType) {
     WZVCModelTransitionType_Custom,
@@ -24,5 +41,7 @@ typedef NS_ENUM(NSUInteger, WZVCModelTransitionType) {
 
 @property (nonatomic, assign) WZVCModelTransitionType type;
 
+
++ (NSArray *)source;
 
 @end

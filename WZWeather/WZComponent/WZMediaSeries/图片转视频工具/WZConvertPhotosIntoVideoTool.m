@@ -123,7 +123,7 @@
         [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
         _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//帧位时间偏移更新
         _addedFrameCount++;
-        NSLog(@"目标帧数：%ld，已添加帧数 %ld", targetFrameCount, _addedFrameCount);
+//        NSLog(@"目标帧数：%ld，已添加帧数 %ld", targetFrameCount, _addedFrameCount);
         if ([_delegate respondsToSelector:@selector(convertPhotosInotViewTool:progress:)]) {
             [_delegate convertPhotosInotViewTool:self progress:(_addedFrameCount * 1.0) / targetFrameCount];
         }
@@ -179,8 +179,8 @@
     _transitionNodeMarr = NSMutableArray.array;
     
     NSUInteger pictureCount = pictureSources.count;          //图片总量
-    NSUInteger transitionFrameCount = 15;                    //过渡效果的帧数
-    targetFrameCount = pictureSources.count * 30 * 2;        //任务目标总帧数
+    NSUInteger transitionFrameCount = 40;                    //过渡效果的帧数
+    targetFrameCount = (pictureSources.count * 2 - 1) * 30;        //任务目标总帧数
     
     NSUInteger nontransitionFrameCount = (targetFrameCount - ((pictureCount -1) * transitionFrameCount)) / pictureCount;                                        //非过渡帧数
     NSUInteger sumFrameCount = targetFrameCount;             //临时计算量
@@ -200,7 +200,7 @@
             item.delegate = self;
             item.leadingImage = pictureSources[i];
             item.trailingImage = pictureSources[i + 1];
-            item.transitionType = WZConvertPhotosIntoVideoType_Dissolve;    //配置为none类型
+            item.transitionType = WZConvertPhotosIntoVideoType_V_Blinds;    //配置为none类型
             item.frameCount = transitionFrameCount;
             sumFrameCount -= transitionFrameCount;
             
@@ -267,7 +267,6 @@
         [self cleanTimer];
         [self cleanChain];
         
-        
         _status = WZConvertPhotosIntoVideoToolStatus_Converting;
         
         //原始 sourceA&sourceB -> filter -> writer
@@ -290,9 +289,9 @@
         //开始进入计时状态
         _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
         
+        //可能要改为displayLink
         _timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-        dispatch_source_set_timer(_timerSource, DISPATCH_TIME_NOW, 1.0 / 60.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);
-
+        dispatch_source_set_timer(_timerSource, DISPATCH_TIME_NOW, 1.0 / 30.0 * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(_timerSource, ^{
             [self addFrameAction];
         });

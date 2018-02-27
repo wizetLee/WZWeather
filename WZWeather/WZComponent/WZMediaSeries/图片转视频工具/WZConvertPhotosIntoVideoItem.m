@@ -109,33 +109,31 @@
         case WZConvertPhotosIntoVideoType_RollingOver: {
             
         } break;
-        case WZConvertPhotosIntoVideoType_V_Blinds: {
-            
-        } break;
+        case WZConvertPhotosIntoVideoType_V_Blinds:
         case WZConvertPhotosIntoVideoType_H_Blinds: {
-            
+            filter.progress = _progress;
+            [sourceA processImageWithTime:time];
+            [sourceB processImageWithTime:time];
         } break;
             
             
-        case WZConvertPhotosIntoVideoType_LToR_Blinds_Gradually: {
-            
-        } break;
-        case WZConvertPhotosIntoVideoType_RToL_Blinds_Gradually: {
-            
-        } break;
-        case WZConvertPhotosIntoVideoType_TToB_Blinds_Gradually: {
-            
-        } break;
+        case WZConvertPhotosIntoVideoType_LToR_Blinds_Gradually:
+        case WZConvertPhotosIntoVideoType_RToL_Blinds_Gradually:
+        case WZConvertPhotosIntoVideoType_TToB_Blinds_Gradually:
         case WZConvertPhotosIntoVideoType_BToT_Blinds_Gradually: {
-            
+            filter.progress = _progress;
+            [sourceA processImageWithTime:time];
+            [sourceB processImageWithTime:time];
         } break;
             
             
         case WZConvertPhotosIntoVideoType_Lockwise: {
-            
+            filter.progress = _progress;
+            [sourceA processImageWithTime:time];
+            [sourceB processImageWithTime:time];
         } break;
         case WZConvertPhotosIntoVideoType_Anticlockwise: {
-            
+          
         } break;
         case WZConvertPhotosIntoVideoType_Star: {
             
@@ -163,6 +161,7 @@
     _framePointer++;
     if (_frameCount) {
         _progress = (_framePointer * 1.0) / _frameCount;
+      
     } else {
         _progress = 0.0;
     }

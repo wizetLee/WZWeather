@@ -87,13 +87,18 @@ void main()
         }
     } else if (type == 13) {        //翻转
        
-    } else if (type == 14 || type == 15) {        //百叶窗
+    } else if (type == 14 || type == 15) { //垂直百叶窗  水平百叶窗
+        
+        highp float targetValue = textureCoordinate.y;
+        if (type == 15) {
+            targetValue = textureCoordinate.x;
+        }
         int odevity = 0;
         for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
             if (odevity == 0) {
                 //底层
-                if (undulatedCouple[i]  < textureCoordinate.y
-                    && undulatedCouple[i + 1] > textureCoordinate.y) {
+                if (undulatedCouple[i]  < targetValue
+                    && undulatedCouple[i + 1] > targetValue) {
                     textureColor = texture2D(inputImageTexture2, textureCoordinate2);
                     odevity = 0;
                     break;
@@ -101,8 +106,8 @@ void main()
                 odevity++;
             } else {
                 //表层
-                if (undulatedCouple[i]  < textureCoordinate.y
-                    && undulatedCouple[i + 1] > textureCoordinate.y) {
+                if (undulatedCouple[i]  < targetValue
+                    && undulatedCouple[i + 1] > targetValue) {
                     textureColor = texture2D(inputImageTexture, textureCoordinate);
                     odevity = 0;
                     break;
@@ -110,15 +115,34 @@ void main()
                 odevity--;
             }
         }
-    } else if (type == 15) {
+    } else if (type == 16) {            //L -> R
+        int odevity = 0;
+        for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
+            if (odevity == 0) {
+                //底层
+                if (undulatedCouple[i]  < textureCoordinate.x
+                    && undulatedCouple[i + 1] > textureCoordinate.x) {
+                    textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+                    odevity = 0;
+                    break;
+                }
+                odevity++;
+            } else {
+                //表层
+                if (undulatedCouple[i]  < textureCoordinate.x
+                    && undulatedCouple[i + 1] > textureCoordinate.x) {
+                    textureColor = texture2D(inputImageTexture, textureCoordinate);
+                    odevity = 0;
+                    break;
+                }
+                odevity--;
+            }
+        }
+    } else if (type == 17) {        //R -> L
         
-    } else if (type == 16) {
+    } else if (type == 18) {        //T -> B
         
-    } else if (type == 17) {
-        
-    } else if (type == 18) {
-        
-    } else if (type == 19) {
+    } else if (type == 19) {        //B -> T
         
     } else if (type == 20) {
 /**

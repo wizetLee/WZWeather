@@ -104,6 +104,7 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         glEnableVertexAttribArray(filterSecondTextureCoordinateAttribute);
         
     });
+    [self setBlindsLeavesCount:10];
     
     return self;
 }
@@ -331,7 +332,6 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
             hasReceivedFirstFrame = NO;
             hasReceivedSecondFrame = NO;
 
-
 //        if ((hasReceivedFirstFrame) || updatedMovieFrameOppositeStillImage)
 //        {
 //            CMTime passOnFrameTime = firstFrameTime;
@@ -410,11 +410,13 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     }
 }
 
+
+
 -(void)setProgress:(float)progress {
     _progress = progress;
     [self setFloat:progress forUniformName:@"progress"];
     
-    if (_type == 14) { //百叶窗
+    if (_type == 14 || _type == 15) { //百叶窗
         float coordinateOffset = 1.0 / undulatedCount;
         int odevity = 0;//偶数为扩散 奇数为缩小
         for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
@@ -431,13 +433,12 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         }
         [self setFloatArray:undulatedCouple length:undulatedCoupleCount forUniform:[filterProgram uniformIndex:@"undulatedCouple"] program:filterProgram];
         
-    } else if (_type == 15) {
+    } else if (_type == 16 || _type == 17 || _type == 18 || _type == 19) {
         //权重修改
         float coordinateOffset = 1.0 / undulatedCount;
         int odevity = 0;//偶数为扩散 奇数为缩小
         
         for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
-            
             // 0 ~ 1.0
             //权重与i相关、达到1.0的顺序不一致
             //i越小 越快到达1.0
@@ -466,4 +467,50 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     }
 }
 
+//设置叶子数目
+- (void)setBlindsLeavesCount:(int)count {
+    if (count > kMax_Undulated_Count) {
+        count = 10;
+    } else if (count < 0) {
+        count = 0;
+    }
+    undulatedCount = count;/////修改叶子的数目  目前为10片叶子
+    undulatedCoupleCount = ((undulatedCount * 2 + 1) * 2);
+    float coordinateOffset = 1.0 / undulatedCount;
+    float coordinateValue = 0.0;
+    int odevity = 0;
+    for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
+        if (odevity % 2 == 0) {
+            undulatedCoupleOrigion[i] = coordinateValue;
+            undulatedCoupleOrigion[(i + 1)] = coordinateValue;
+        } else {
+            undulatedCoupleOrigion[i] = coordinateValue;
+            undulatedCoupleOrigion[(i + 1)] = coordinateValue + coordinateOffset;
+            coordinateValue = coordinateValue + coordinateOffset;
+        }
+        odevity++;
+    }
+    
+    odevity = 0;//偶数为扩散 奇数为缩小
+    for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
+        if ((odevity % 2) == 0) {
+            //扩散
+            undulatedCouple[i] = undulatedCoupleOrigion[i] - coordinateOffset * _progress;
+            undulatedCouple[i + 1] = undulatedCoupleOrigion[i + 1] + coordinateOffset * _progress;
+        } else {
+            //缩小
+            undulatedCouple[i] = undulatedCoupleOrigion[i] + coordinateOffset * _progress;
+            undulatedCouple[i + 1] = undulatedCoupleOrigion[i + 1] - coordinateOffset * _progress;
+        }
+        odevity++;
+    }
+    
+    runSynchronouslyOnVideoProcessingQueue(^{
+        [GPUImageContext useImageProcessingContext];
+        [self setFloat:coordinateOffset forUniformName:@"undulatedCoordinateOffset"];
+        [self setInteger:undulatedCount forUniformName:@"undulatedCount"];
+        [self setInteger:undulatedCoupleCount forUniformName:@"undulatedCoupleCount"];
+        [self setFloatArray:undulatedCouple length:undulatedCoupleCount forUniform:@"undulatedCouple"];
+    });
+}
 @end

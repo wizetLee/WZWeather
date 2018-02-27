@@ -7,38 +7,18 @@
 //
 
 #import "MainViewController.h"
-#import "WZDownloadController.h"
-#import "WZPageViewController.h"
-#import "WZPageViewAssistController.h"
 #import "WZLoopView.h"
 #import "WZScrollOptions.h"
 #import "UIButton+WZMinistrant.h"
 #import "WZSystemDetails.h"
-#import "WZMediaController.h"
 #import "WZCameraAssist.h"
-#import "WZAPLSimpleEditor.h"
-#import "WZAVPlayerViewController.h"
-#import "WZPhotoCatalogueController.h"
-#import "WZVideoPickerController.h"
-#import "WZAudioCodecController.h"
-#import "WZVideoCodecController.h"
 
 #import "WZVCModel.h"
 
-#import "WZTestViewController.h"
-
-#pragma mark - Demo
-#import "Demo_ConvertPhotosIntoVideoController.h"
-#import "Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h"
-#import "Demo_AnimatePageControlViewController.h"
-#import "Demo_WrapViewController.h"
 
 @interface MainViewController () <WZVideoPickerControllerProtocol, WZMediaAssetProtocol>
 
-
-
 @property (nonatomic, strong) UITableView *table;
-
 @property (nonatomic, strong) NSMutableArray <WZVCModel *>* sources;
 
 @end
@@ -86,28 +66,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"导航栏";
-    NSMutableArray *tmpArr = [NSMutableArray array];
-    for (int i = 0; i <  20; i++) {
-        [tmpArr addObject:[NSString stringWithFormat:@"%d", i]];
-    }
     WZLoopView *loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT, MACRO_FLOAT_SCREEN_WIDTH, 100) images:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", ] loop:true delay:2];
     [self.view addSubview:loop];
-    UIButton *button                = [[UIButton alloc] init];
-    button.frame                    = CGRectMake(0.0, 300, 100, 50);
-    button.layer.backgroundColor    = [UIColor orangeColor].CGColor;
-    button.wz_cornerRadius          = button.frame.size.height / 2.0;
-    button.layer.shadowColor        = [UIColor blackColor].CGColor;
-    button.layer.shadowOffset       = CGSizeMake(5, 5);
-    button.layer.shadowOpacity      = 1;
-    [button setTitle:@"sssss" forState:UIControlStateNormal];
-    [self.view addSubview:button];
-    [button setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal] ;
-    [button setImage:[UIImage imageNamed:@"5"] forState:UIControlStateHighlighted];
+
 //    NSLog(@"%lf", button.cornerRadius);
     
-    appBuild();
-    appVersion();
-    appBundleID();
+//    appBuild();
+//    appVersion();
+//    appBundleID();
     
 //    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
 //    imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -119,63 +85,9 @@
 //    }];//异步加载必应墙纸
     
     
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, MACRO_VC_FLOAT_SAFEAREA_TOP, 20, MACRO_FLOAT_SCREEN_HEIGHT)];
     
+    _sources = [WZVCModel source];
    
-    
-    _sources = NSMutableArray.array;
-    WZVCModel *VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZTestViewController.class;
-    VCModel.headline = @"WZTestViewController 临时测试专用";
-    [_sources addObject:VCModel];
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZMediaController.class;
-    VCModel.headline = @"跳转到：拍摄、录像";
-    [_sources addObject:VCModel];
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZAPLSimpleEditor.self;
-    VCModel.headline = @"视频合成测试";
-    [_sources addObject:VCModel];
-    
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZAVPlayerViewController.class;
-    VCModel.headline = @"播放和animationTool测试";
-    [_sources addObject:VCModel];
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZPhotoCatalogueController.class;
-    VCModel.headline = @"图片选取";
-    [_sources addObject:VCModel];
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZVideoPickerController.class;
-    VCModel.headline = @"视频选取、合并、删除";
-    [_sources addObject:VCModel];
-    
-    
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = Demo_ConvertPhotosIntoVideoController.class;
-    VCModel.headline = @"图片转视频demo";
-    [_sources addObject:VCModel];
-   
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.class;
-    VCModel.headline = @"图片转视频(GPUImage)demo";
-    [_sources addObject:VCModel];
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
-    VCModel.headline = @"AnimatePageControlDemo";
-    [_sources addObject:VCModel];
-
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = Demo_WrapViewController.class;
-    VCModel.headline = @"弯曲模型";
-    [_sources addObject:VCModel];
     
     
     if(!_table) {
@@ -216,7 +128,6 @@
            _table = table;
            self.table.frame = CGRectMake(0.0, top, screenW, height);
     }
-
 }
 
 
@@ -275,24 +186,13 @@
      if (_sources.count > indexPath.row) {
 
          WZVCModel *model = _sources[indexPath.row];
+         if (model.type == WZVCModelTransitionType_Push_FromNib) {
+             UIViewController *VC = [[model.VCClass alloc] initWithNibName:NSStringFromClass(model.VCClass) bundle:nil];
+             [self.navigationController pushViewController:VC animated:true];
+         }
+         
          if (model.VCClass == WZMediaController.class) {
-             [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
-                 if (videoAuthorization
-                     && audioAuthorization
-                     && libraryAuthorization) {
-                     ///下载页面
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
-                         //    WZDownloadController *vc = [[WZDownloadController alloc] init];
-                         WZMediaController *vc = [WZMediaController new];
-                         
-                         [self.navigationController pushViewController:vc animated:true];
-                         
-                     });
-                 } else {
-                     [self showAlter];
-                 }
-             }];
+             [self pushToMediaVC];
          } else if (model.VCClass == WZAVPlayerViewController.class) {
              WZAVPlayerViewController *vc = [WZAVPlayerViewController new];
              self.navigationController.navigationBarHidden = false;
@@ -304,71 +204,44 @@
          } else if (model.VCClass == WZTestViewController.class) {
              WZTestViewController *vc = [[WZTestViewController alloc] init];
              [self.navigationController pushViewController:vc animated:true];
-         } else if (model.VCClass == Demo_ConvertPhotosIntoVideoController.class) {
-             
-             Demo_ConvertPhotosIntoVideoController *VC = [[Demo_ConvertPhotosIntoVideoController alloc] initWithNibName:@"Demo_ConvertPhotosIntoVideoController" bundle:nil];
-             [self.navigationController pushViewController:VC animated:true];
-             
-         } else if (model.VCClass == Demo_ConvertPhotosIntoVideoUseGPUImageViewController.class){
-             Demo_ConvertPhotosIntoVideoUseGPUImageViewController *VC = [[Demo_ConvertPhotosIntoVideoUseGPUImageViewController alloc] initWithNibName:@"Demo_ConvertPhotosIntoVideoUseGPUImageViewController" bundle:nil];
-             [self.navigationController pushViewController:VC animated:true];
-         } else if (model.VCClass == Demo_AnimatePageControlViewController.class) {
-             Demo_AnimatePageControlViewController *VC = [[Demo_AnimatePageControlViewController alloc] initWithNibName:@"Demo_AnimatePageControlViewController" bundle:nil];
-             [self.navigationController pushViewController:VC animated:true];
-         } else if (model.VCClass == Demo_WrapViewController.class) {
-             Demo_WrapViewController *VC = [[Demo_WrapViewController alloc] initWithNibName:@"Demo_WrapViewController" bundle:nil];
-             [self.navigationController pushViewController:VC animated:true];
-         } else if (model.VCClass == WZAPLSimpleEditor.class) {
-             AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
-             AVURLAsset *asset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip2" ofType:@"mov"]]];
-             AVURLAsset *asset3 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"01_nebula" ofType:@"mp4"]]];
-             AVURLAsset *asset4 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"02_blackhole" ofType:@"mp4"]]];
-             AVURLAsset *asset5 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"03_nebula" ofType:@"mp4"]]];
-             AVURLAsset *asset6 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"04_quasar" ofType:@"mp4"]]];
-             AVURLAsset *asset7 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"05_blackhole" ofType:@"mp4"]]];
-             
-             WZAPLSimpleEditor *editor = [[WZAPLSimpleEditor alloc] init];
-             [editor updateEditorWithVideoAssets:@[asset4, asset3, asset2, asset1]];
-             
          }
+         
      }
 }
 
 
+- (void)pushToMediaVC {
+    [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
+        if (videoAuthorization
+            && audioAuthorization
+            && libraryAuthorization) {
+            ///下载页面
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
+                //    WZDownloadController *vc = [[WZDownloadController alloc] init];
+                WZMediaController *vc = [WZMediaController new];
+                [self.navigationController pushViewController:vc animated:true];
+                
+            });
+        } else {
+            [self showAlter];
+        }
+    }];
+}
+
 //iOS11以下 是不会调用以下方法的   横竖屏改变 VC present pop 等操作都会执行这个消息
-- (void)viewSafeAreaInsetsDidChange {
-    [super viewSafeAreaInsetsDidChange];
-     NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
-}
+//- (void)viewSafeAreaInsetsDidChange {
+//    [super viewSafeAreaInsetsDidChange];
+//     NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
+//}
 
-- (void)scrollOptions:(WZScrollOptions *)scrollOptions clickedAtIndex:(NSInteger)index {
-    NSLog(@"%ld", index);
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = false;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
 
 - (void)showAlter {
     UIAlertController *alter = [UIAlertController alertControllerWithTitle:@"视频、音频、相册权限受阻" message:@"是否要到设置处进行权限设置" preferredStyle:UIAlertControllerStyleAlert];
