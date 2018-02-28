@@ -55,11 +55,11 @@
     VCModel.headline = @"图片转视频(GPUImage)demo";
     [_sources addObject:VCModel];
     
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
-    VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"AnimatePageControlDemo";
-    [_sources addObject:VCModel];
+//    VCModel = WZVCModel.alloc.init;
+//    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
+//    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+//    VCModel.headline = @"AnimatePageControlDemo";
+//    [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_WrapViewController.class;
@@ -73,6 +73,11 @@
     VCModel.headline = @"视频倒放";
     [_sources addObject:VCModel];
     
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_VideoRateAdjustmentController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    VCModel.headline = @"视频速率";
+    [_sources addObject:VCModel];
     return _sources;
 }
 

@@ -131,15 +131,14 @@
             [sourceA processImageWithTime:time];
             [sourceB processImageWithTime:time];
         } break;
-            
+        
+        case WZConvertPhotosIntoVideoType_Anticlockwise:
         case WZConvertPhotosIntoVideoType_Lockwise: {
             filter.progress = _progress;
             [sourceA processImageWithTime:time];
             [sourceB processImageWithTime:time];
         } break;
-        case WZConvertPhotosIntoVideoType_Anticlockwise: {
-          
-        } break;
+       
         case WZConvertPhotosIntoVideoType_Star: {
             
         } break;

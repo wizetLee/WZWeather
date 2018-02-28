@@ -207,7 +207,7 @@
             item.delegate           = self;
             item.leadingImage       = pictureSources[i];
             item.trailingImage      = pictureSources[i + 1];
-            item.transitionType     = WZConvertPhotosIntoVideoType_RollingOver;    //配置为none类型
+            item.transitionType     = WZConvertPhotosIntoVideoType_Anticlockwise;    //配置为none类型
             item.frameCount         = transitionFrameCount;
             sumFrameCount           -= transitionFrameCount;
             

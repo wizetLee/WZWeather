@@ -213,14 +213,73 @@ void main()
             }
         }
     } else if (type == 21) {
-        
+        highp float mappingX = textureCoordinate.x - 0.500000;//这里有一个坑就是不要用lowp类型，不然精度不够.....
+        highp float mappingY = -(textureCoordinate.y - 0.500000);//Y轴上，openGL的坐标系和屏幕坐标系是相反的。
+        if (progress < 0.25) {
+            if (mappingX <= 0.0 && mappingY >= 0.0) {
+                
+                highp float tmpProgress = progress * 4.0;
+                highp float tmpX1 = -tmpProgress;
+                highp float tmpY1 = tmpX1 + 1.0;
+                
+                if (mappingX * tmpY1 < mappingY * tmpX1 ) {
+                    textureColor = texture2D(inputImageTexture, textureCoordinate);
+                } else {
+                    textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+                }
+            }
+            
+        } else if (progress < 0.50) {
+            if (mappingX <= 0.0 && mappingY >= 0.0) {
+                textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+            } else if (mappingX <= 0.0 && mappingY <= 0.0) {
+                highp float tmpProgress = 1.0 - (progress - 0.25) * 4.0;
+                highp float tmpX1 = -tmpProgress;
+                highp float tmpY1 = -tmpX1 - 1.0;
+                if (mappingX * tmpY1 < mappingY * tmpX1 ) {
+                    textureColor = texture2D(inputImageTexture, textureCoordinate);
+                } else {
+                    textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+                }
+
+            }
+        } else if (progress < 0.75) {
+            if (mappingX <= 0.0) {
+                textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+            } else if(mappingY <= 0.0) {
+                highp float tmpProgress = (progress - 0.50) * 4.0;
+                highp float tmpX1 = tmpProgress;
+                highp float tmpY1 = tmpX1 - 1.0;
+
+                if (mappingX * tmpY1 < mappingY * tmpX1 ) {
+                    textureColor = texture2D(inputImageTexture, textureCoordinate);
+                } else {
+                    textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+                }
+            }
+        } else {
+            if (mappingX <= 0.0) {
+                textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+            } else if(mappingY <= 0.0) {
+                textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+            } else {
+                highp float tmpProgress = 1.0 - (progress - 0.75) * 4.0;
+                highp float tmpX1 = tmpProgress;
+                highp float tmpY1 = -tmpX1 + 1.0;
+
+                if (mappingX * tmpY1 < mappingY * tmpX1) {
+                    textureColor = texture2D(inputImageTexture, textureCoordinate);
+                } else {
+                    textureColor = texture2D(inputImageTexture2, textureCoordinate2);
+                }
+            }
+        }
     } else if (type == 22) {
         
     } else if (type == 23) {
         
     }
 //    gl_FragColor = mix(textureColor, textureColor2, 0);
-    
     
     
     gl_FragColor = textureColor;

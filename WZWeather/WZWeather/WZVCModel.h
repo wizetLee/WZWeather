@@ -24,6 +24,7 @@
 #import "Demo_AnimatePageControlViewController.h"
 #import "Demo_WrapViewController.h"
 #import "Demo_VideoReversalController.h"
+#import "Demo_VideoRateAdjustmentController.h"
 
 typedef NS_ENUM(NSUInteger, WZVCModelTransitionType) {
     WZVCModelTransitionType_Custom,

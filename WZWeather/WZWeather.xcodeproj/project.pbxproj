@@ -19,6 +19,10 @@
 		404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404507F52042714E003A5209 /* Demo_WrapViewController.m */; };
 		404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404507F62042714E003A5209 /* Demo_WrapViewController.xib */; };
 		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
+		4061405C2046F2630071F636 /* glow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4061405B2046F2620071F636 /* glow.jpg */; };
+		406140602046FC480071F636 /* WZVideoRateAdjustmentTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */; };
+		406140652046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406140632046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m */; };
+		406140662046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 406140642046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib */; };
 		407EC740204591E1001C065E /* Demo_VideoReversalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73A204591E0001C065E /* Demo_VideoReversalController.m */; };
 		407EC742204591E1001C065E /* Demo_VideoReversalController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */; };
 		407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74720459529001C065E /* WZVideoReversalTool.m */; };
@@ -473,6 +477,12 @@
 		404507F62042714E003A5209 /* Demo_WrapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_WrapViewController.xib; sourceTree = "<group>"; };
 		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
 		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
+		4061405B2046F2620071F636 /* glow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = glow.jpg; sourceTree = "<group>"; };
+		4061405E2046FC480071F636 /* WZVideoRateAdjustmentTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoRateAdjustmentTool.h; sourceTree = "<group>"; };
+		4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoRateAdjustmentTool.m; sourceTree = "<group>"; };
+		406140622046FE3D0071F636 /* Demo_VideoRateAdjustmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_VideoRateAdjustmentController.h; sourceTree = "<group>"; };
+		406140632046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_VideoRateAdjustmentController.m; sourceTree = "<group>"; };
+		406140642046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_VideoRateAdjustmentController.xib; sourceTree = "<group>"; };
 		407EC73A204591E0001C065E /* Demo_VideoReversalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo_VideoReversalController.m; sourceTree = "<group>"; };
 		407EC73C204591E0001C065E /* Demo_VideoReversalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo_VideoReversalController.h; sourceTree = "<group>"; };
 		407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Demo_VideoReversalController.xib; sourceTree = "<group>"; };
@@ -1309,6 +1319,25 @@
 				404507F62042714E003A5209 /* Demo_WrapViewController.xib */,
 			);
 			path = "弯曲模型";
+			sourceTree = "<group>";
+		};
+		4061405D2046F80A0071F636 /* 视频调速工具 */ = {
+			isa = PBXGroup;
+			children = (
+				4061405E2046FC480071F636 /* WZVideoRateAdjustmentTool.h */,
+				4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */,
+			);
+			path = "视频调速工具";
+			sourceTree = "<group>";
+		};
+		406140612046FE190071F636 /* 视频速率 */ = {
+			isa = PBXGroup;
+			children = (
+				406140622046FE3D0071F636 /* Demo_VideoRateAdjustmentController.h */,
+				406140632046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m */,
+				406140642046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib */,
+			);
+			path = "视频速率";
 			sourceTree = "<group>";
 		};
 		407EC738204591E0001C065E /* 视频倒放 */ = {
@@ -2561,6 +2590,7 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
 			isa = PBXGroup;
 			children = (
+				4061405D2046F80A0071F636 /* 视频调速工具 */,
 				842EC81120469A29008FC567 /* 合成倒放视频 */,
 				845A4214201EBB98002D7477 /* 图片转视频工具 */,
 				841E4B582004C13800886F80 /* 多视频合成以及过度效果 */,
@@ -2602,6 +2632,7 @@
 				84687CBB202552C00098A596 /* testImage5.jpg */,
 				84687CB6202552BF0098A596 /* testImage6.jpg */,
 				84687CB5202552BF0098A596 /* testImage7.jpg */,
+				4061405B2046F2620071F636 /* glow.jpg */,
 				845A4215201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.h */,
 				845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */,
 				845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */,
@@ -3054,6 +3085,7 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				406140612046FE190071F636 /* 视频速率 */,
 				407EC738204591E0001C065E /* 视频倒放 */,
 				404507F320427135003A5209 /* 弯曲模型 */,
 				846F270F203FF6B7008E57C1 /* 控件 */,
@@ -3281,6 +3313,7 @@
 				8462274A1FD62A0200D37FAE /* wallpaper5.jpeg in Resources */,
 				84687CBE202552C00098A596 /* testImage6.jpg in Resources */,
 				84ECD3231FCBA7E400282C9A /* 02 Keep Going.m4a in Resources */,
+				406140662046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib in Resources */,
 				846A30FF1FD0E686003CECAE /* asset_selectedOrigion_selected@2x.png in Resources */,
 				84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */,
 				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
@@ -3327,6 +3360,7 @@
 				846A30FE1FD0E686003CECAE /* asset_selectedOrigion_normal@3x.png in Resources */,
 				84687CC2202552C00098A596 /* testImage1.jpg in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
+				4061405C2046F2630071F636 /* glow.jpg in Resources */,
 				84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84810C0720438BAD00403FD8 /* shaderDefaultF.fsh in Resources */,
@@ -3448,6 +3482,7 @@
 				84514D2D1E9DCE7A00F07EF8 /* UIButton+JKIndicator.m in Sources */,
 				84514D4D1E9DCE7A00F07EF8 /* UIImage+JKVector.m in Sources */,
 				84514D4C1E9DCE7A00F07EF8 /* UIImage+JKSuperCompress.m in Sources */,
+				406140602046FC480071F636 /* WZVideoRateAdjustmentTool.m in Sources */,
 				40DB89151FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m in Sources */,
 				842EC8162046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m in Sources */,
 				84514D301E9DCE7A00F07EF8 /* UIButton+JKTouchAreaInsets.m in Sources */,
@@ -3484,6 +3519,7 @@
 				84514D361E9DCE7A00F07EF8 /* UIControl+JKActionBlocks.m in Sources */,
 				84514CFF1E9DCE7A00F07EF8 /* NSString+JKMIME.m in Sources */,
 				846A31321FD16337003CECAE /* WZImageContainerController.m in Sources */,
+				406140652046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m in Sources */,
 				40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */,
 				84514D8B1E9DCE7A00F07EF8 /* UIWebView+JKMetaParser.m in Sources */,
 				84514D851E9DCE7A00F07EF8 /* UIViewController+JKVisible.m in Sources */,

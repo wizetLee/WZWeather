@@ -16,7 +16,6 @@
     AVAssetReaderTrackOutput *assetReaderOutput;
     AVAssetWriterInput *assetWriterInput;
     AVAssetWriterInputPixelBufferAdaptor *assetWriterInputAdaptor;
-
 }
 
 @property (nonatomic, strong) NSMutableDictionary *outputSetting;
