@@ -13,7 +13,6 @@
 @implementation WZLoopViewItem
 
 
-
 @end
 
 
@@ -96,7 +95,6 @@
     [self addSubview:bgView];
 }
 
-
 - (void)nextPage {
     if (_loop) {
         if ([NSRunLoop currentRunLoop] == [NSRunLoop mainRunLoop]) {
@@ -126,17 +124,17 @@
 - (void)refreshImages {
     if (self.scrollView) {
         NSArray *subViews = self.scrollView.subviews;
-        for (int i = 0; i < subViews.count; i++) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (int i = 0; i < subViews.count; i++) {
                 UIImageView *imageView = (UIImageView *)subViews[i];
                 imageView.clipsToBounds = true;
                 if ([imageView isKindOfClass:[UIImageView class]]) {
                     imageView.image = [UIImage imageNamed:self.currentImages[i]];
                 }
-            });
-        }
-        //返回self.frame.size.width 的位置
-        [self.scrollView setContentOffset:CGPointMake(self.frame.size.width, 0)];
+            }
+            //返回self.frame.size.width 的位置
+            [self.scrollView setContentOffset:CGPointMake(self.frame.size.width, 0) animated:false];
+        });
     }
 }
 

@@ -1,13 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Demo_VideoReversalController">
             <connections>
+                <outlet property="progressLabel" destination="Ng8-k0-PFK" id="fu7-aj-dhF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,8 +21,70 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合成进度：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zqJ-S0-nKe">
+                    <rect key="frame" x="20" y="603" width="105" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="ZOU-BK-x91"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLx-fk-o3P">
+                    <rect key="frame" x="20" y="529" width="92" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="OKb-c1-5vS"/>
+                    </constraints>
+                    <state key="normal" title="合成倒放视频"/>
+                    <connections>
+                        <action selector="videoReversalAction:" destination="-1" eventType="touchUpInside" id="woL-rB-at1"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ng8-k0-PFK">
+                    <rect key="frame" x="145" y="603" width="210" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="ydA-4J-eBQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y5M-a1-mhW">
+                    <rect key="frame" x="20" y="455" width="77" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="7fk-IN-bOA"/>
+                    </constraints>
+                    <state key="normal" title="播放原视频"/>
+                    <connections>
+                        <action selector="playOrigion:" destination="-1" eventType="touchUpInside" id="BMh-ba-JhL"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J18-t5-OKE">
+                    <rect key="frame" x="142" y="536" width="123" height="30"/>
+                    <state key="normal" title="取消合成倒放视频"/>
+                    <connections>
+                        <action selector="cancelVideoReversalAction:" destination="-1" eventType="touchUpInside" id="8zC-Ak-cfo"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="zqJ-S0-nKe" firstAttribute="width" secondItem="Ng8-k0-PFK" secondAttribute="width" multiplier="0.5" id="2lP-EA-slc"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="Ng8-k0-PFK" secondAttribute="bottom" constant="20" id="8BO-Zj-BRj"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="zqJ-S0-nKe" secondAttribute="bottom" constant="20" id="9bQ-e6-rRy"/>
+                <constraint firstItem="XLx-fk-o3P" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="BAM-oN-dBD"/>
+                <constraint firstItem="J18-t5-OKE" firstAttribute="leading" secondItem="XLx-fk-o3P" secondAttribute="trailing" constant="30" id="DzX-b0-z9l"/>
+                <constraint firstItem="Ng8-k0-PFK" firstAttribute="leading" secondItem="zqJ-S0-nKe" secondAttribute="trailing" constant="20" id="H24-S9-vC9"/>
+                <constraint firstItem="zqJ-S0-nKe" firstAttribute="top" secondItem="XLx-fk-o3P" secondAttribute="bottom" constant="30" id="Jer-Yy-FHo"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Ng8-k0-PFK" secondAttribute="trailing" constant="20" id="OP9-qI-2iu"/>
+                <constraint firstItem="XLx-fk-o3P" firstAttribute="top" secondItem="Y5M-a1-mhW" secondAttribute="bottom" constant="30" id="ObS-TW-eI0"/>
+                <constraint firstItem="Y5M-a1-mhW" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="SZp-EM-TrO"/>
+                <constraint firstItem="J18-t5-OKE" firstAttribute="centerY" secondItem="XLx-fk-o3P" secondAttribute="centerY" id="YRn-bj-HK2"/>
+                <constraint firstItem="zqJ-S0-nKe" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="zPJ-81-mN9"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
         </view>
     </objects>
 </document>

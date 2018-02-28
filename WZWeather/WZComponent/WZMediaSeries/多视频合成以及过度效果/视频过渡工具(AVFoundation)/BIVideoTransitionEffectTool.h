@@ -3,7 +3,7 @@
 //  PuzzleVideoProject
 //
 //  Created by wizet on 23/1/18.
-//  Copyright © 2018年 Melody. All rights reserved.
+//  Copyright © 2018年 wizet. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,7 +27,7 @@
     5、音频（origion only、music only 、mix 、none）
     6、循环播放效果
     7、全屏__非全屏
-    8、播放速率：非过渡范围播放速率是可变的 + 过渡范围的播放速率是不变的
+    8、播放速率：
  */
 
 typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {

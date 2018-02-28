@@ -42,21 +42,21 @@
 @property (nonatomic, strong) GLProgram *programNormal;
 @property (nonatomic, strong) GLProgram *programWrap;
 
-@property (nonatomic, assign) GLuint displayRenderbuffer;//图片的渲染缓存
-@property (nonatomic, assign) GLuint displayFramebuffer;//图片的帧缓存
+@property (nonatomic, assign) GLuint displayRenderbuffer;           //图片的渲染缓存
+@property (nonatomic, assign) GLuint displayFramebuffer;            //图片的帧缓存
 
-@property (nonatomic, assign) GLuint outputFrameBuffer;//需要渲染的目标帧缓存
-@property (nonatomic, assign) GLuint outputFrameBufferTexture;  //需要渲染的目标纹理句柄
+@property (nonatomic, assign) GLuint outputFrameBuffer;             //需要渲染的目标帧缓存
+@property (nonatomic, assign) GLuint outputFrameBufferTexture;      //需要渲染的目标纹理句柄
 
-@property (nonatomic, assign) GLuint sourceImageTexture0;   //渲染图片的纹理句柄
-@property (nonatomic, assign) GLuint sourceImageTexture1;   //渲染图片的纹理句柄
+@property (nonatomic, assign) GLuint sourceImageTexture0;           //渲染图片的纹理句柄
+@property (nonatomic, assign) GLuint sourceImageTexture1;           //渲染图片的纹理句柄
 
-@property (nonatomic, assign) CGSize bgPixelSize;///最终得到的多图片合成的尺寸
-@property (nonatomic, assign) CGSize wrapPixelSize;//放置在帧缓存的图片的尺寸
+@property (nonatomic, assign) CGSize bgPixelSize;                   //最终得到的多图片合成的尺寸
+@property (nonatomic, assign) CGSize wrapPixelSize;                 //放置在帧缓存的图片的尺寸
 
 ///最终导出的结果
-@property (nonatomic, assign) GLuint mixFrameBuffer;//混合后的目标帧缓存
-@property (nonatomic, assign) GLuint mixFrameBufferTexture;  //混合后的目标纹理句柄
+@property (nonatomic, assign) GLuint mixFrameBuffer;                //混合后的目标帧缓存
+@property (nonatomic, assign) GLuint mixFrameBufferTexture;         //混合后的目标纹理句柄
 
 
 ///输出图片的VBO
@@ -78,9 +78,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         _bgPixelSize = [UIImage imageNamed:backgroundImageName].size;
-        _wrapPixelSize = [UIImage imageNamed:wrapImageName].size;//与视口有关联
+        _wrapPixelSize = [UIImage imageNamed:wrapImageName].size;           //与视口有关联
         CGSize size = [self fitSizeComparisonWithScreenBound:_bgPixelSize];
         
         self.frame = CGRectMake(0.0, 0.0, size.width, size.height);
@@ -107,159 +106,7 @@
     glDeleteTextures(1, &_sourceImageTexture0);
 }
 
-#pragma mark - 数据计算部分
-//数据初始化
-- (void)normalData {
-    targetY = 0.0;
-    incrementX = 0.0;
-    updating = false;
-    lastLocationX = 0.0;
-    
-    {
-        int tmpIndex = 0;
-        int stride = 4;//只保存顶点坐标xy 纹理坐标xy
-        CGFloat yfloat = (Column * 1.0);
-        CGFloat multiple = 2.0;
-        float *arr = (float *)new_arrBuffer;
-        ///顶点坐标 纹理坐标
-        for (int j = 0; j < Column + 1; j++) {
-            for (int i = 0; i < 2; i++) {//2个点为顶点坐标 另外两个点为纹理坐标
-                CGFloat positionX = i;
-                CGFloat positionY =  j / yfloat;
-                
-                CGFloat textureX = i;
-                CGFloat textureY = j / yfloat;
-                
-                arr[tmpIndex + 0] = positionX * multiple - 1.0;
-                arr[tmpIndex + 1] = positionY * multiple - 1.0;
-                
-                arr[tmpIndex + 2] = textureX;
-                //                arr[tmpIndex + 3] = 1.0 - textureY;//textureY; //纹理坐标跟position坐标Y翻转
-                arr[tmpIndex + 3] = textureY;//不用翻转了 上一个zhuo'se'q
-                tmpIndex += stride;
-            }
-        }
-        stride = 6;
-        tmpIndex = 0;
-        ///索引
-        for (int i = 0; i < Column; i++) {
-            new_indices[tmpIndex + 0] = 1 + i*2;
-            new_indices[tmpIndex + 1] = 3 + i*2;
-            new_indices[tmpIndex + 2] = 2 + i*2;
-            new_indices[tmpIndex + 3] = 2 + i*2;
-            new_indices[tmpIndex + 4] = 0 + i*2;
-            new_indices[tmpIndex + 5] = 1 + i*2;
-            tmpIndex += stride;
-        }
-    }
-    [self gestures];
-}
 
-- (void)gestures {
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-    [self addGestureRecognizer:pan];
-}
-
-///平移手势
-- (void)pan:(UIPanGestureRecognizer *)pan {
-    if (updating) { return;}
-    updating = true;
-    ///区分方向
-    if (pan.state == UIGestureRecognizerStateBegan) {
-        lastLocationX = [pan translationInView:pan.view].x;//拾获最初的角标
-    } else if (pan.state == UIGestureRecognizerStateChanged) {
-        CGFloat result = [pan translationInView:pan.view].x - lastLocationX;//方向判别
-        //        NSLog(@"%lf", result);
-        lastLocationX = [pan translationInView:pan.view].x;//更新位置
-        
-//        CGFloat restrictValue = 11.0;
-//        if (result > restrictValue) {
-//            result = restrictValue;
-//        } else if (result < -restrictValue) {
-//            result = -restrictValue;
-//        }
-//
-        incrementX = result / pan.view.bounds.size.width;
-        /**
-         translation.x < 0    向左
-         translation.y < 0    向上
-         **/
-        CGPoint curPoint = [pan locationInView:pan.view];
-        targetY = curPoint.y / self.bounds.size.height;//iOS 设备坐标下的0~1.0
-        targetX = curPoint.x / self.bounds.size.width;//
-        //数据范围
-        if (targetY < 0) {targetY = 0.0;}
-        if (targetY > 1) {targetY = 1.0;}
-        
-    } else if (pan.state == UIGestureRecognizerStateEnded) {
-        
-    }
-    if (incrementX != 0.0) {
-        [self render];
-    }
-    
-    updating = false;
-}
-
-///手势驱动的时候顶点数据的更改
-- (void)dataChangeAndDraw {
-    {//--------------point : 计算偏移量
-        //        CGFloat tmpTargetY = 1.0 - targetY;//取反得到纹理坐标系中的点
-        CGFloat tmpTargetY = targetY;
-        ///手势对坐标的压缩量
-        float xCompreess = 0.0;
-        //计算偏移值
-        int tmpIndex = 0;
-        int stride = 4;//只保存顶点坐标xy 纹理坐标xy
-        for (int j = 0; j < Column + 1; j++) {
-            //            for (int i = 0; i < 2; i++) {//2个点为顶点坐标 另外两个点为纹理坐标
-            //将[0.0, 1.0]区间映射到[-PI, PI]区间上
-            xCompreess = j / (Column * 1.0);//0~1.0
-            xCompreess = xCompreess * 2 * M_PI ;//0~2PI
-            xCompreess = xCompreess - M_PI;//-PI~PI
-            
-            CGFloat tmpY = tmpTargetY;
-            tmpY = tmpY * 2 * M_PI;//映射到[-PI, PI]区间上
-            tmpY = tmpY - M_PI;
-            
-            //作差 得到 图形偏移
-            //NSLog(@"图形偏移~%f", cos(xCompreess - tmpY) + 1);
-            
-            CGFloat degree = xCompreess - tmpY;
-            if (degree > M_PI) {
-                degree = M_PI;
-            } else if (degree < -M_PI) {
-                degree = -M_PI;
-            }
-            
-            //                CGFloat tmpComPress = sqrt((cos(degree) + 1)) * incrementX;
-            CGFloat tmpComPress =  (pow((cos(degree)), 1) + 1) * incrementX;//更加尖锐
-            //
-            new_arrBuffer[tmpIndex + 0] = new_arrBuffer[tmpIndex + 0] + tmpComPress;//只修改X坐标  根据j代入相应的非线性方程中 得到偏移量
-            tmpIndex += stride;//另一个方向
-            new_arrBuffer[tmpIndex + 0] = new_arrBuffer[tmpIndex + 0] + tmpComPress;//只修改X坐标  根据j代入相应的非线性方程中 得到偏移量
-            tmpIndex += stride;
-            //            }
-        }
-    }
-    
-    ///打印数据
-    //        for(int i = 0 ; i < SizeOfVectorTextureCoordinate ; i++) {if (i % 4 == 0) {printf("\n"); }
-    //            printf("%f ", new_arrBuffer[i]);
-    //        }//    printf("\n--------------\n");
-    //        for(int i = 0 ; i < Column * 3/*位置*/ * 2/*个数*/ ; i++) {if (i % 3 == 0) { printf("\n"); }
-    //            printf("%d ", new_indices[i]);
-    //        }printf("\n--------------\n");
-    
-    //修改VBO PS：倒不如直接赋值到pointer处理 分开两个数组分别处理屏幕坐标和纹理坐标
-    glBindBuffer(GL_ARRAY_BUFFER, _VBO1);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * (SizeOfVectorTextureCoordinate) , new_arrBuffer, GL_DYNAMIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index1);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint)*SizeOfIndices, new_indices, GL_STATIC_DRAW);
-    glDrawElements(GL_TRIANGLES, SizeOfIndices, GL_UNSIGNED_INT, 0);//索引绘制
-    
-}
 
 #pragma mark - Private  需要单独配置
 
@@ -480,7 +327,7 @@
     }
 }
 
-
+#pragma mark - Public
 - (UIImage *)material {
     {//需要渲染的帧缓存的图片
         glBindFramebuffer(GL_FRAMEBUFFER, _outputFrameBuffer);
@@ -535,7 +382,159 @@
         return image;
     }
 }
+#pragma mark - 数据计算部分
+//数据初始化
+- (void)normalData {
+    targetY = 0.0;
+    incrementX = 0.0;
+    updating = false;
+    lastLocationX = 0.0;
+    
+    {
+        int tmpIndex = 0;
+        int stride = 4;//只保存顶点坐标xy 纹理坐标xy
+        CGFloat yfloat = (Column * 1.0);
+        CGFloat multiple = 2.0;
+        float *arr = (float *)new_arrBuffer;
+        ///顶点坐标 纹理坐标
+        for (int j = 0; j < Column + 1; j++) {
+            for (int i = 0; i < 2; i++) {//2个点为顶点坐标 另外两个点为纹理坐标
+                CGFloat positionX = i;
+                CGFloat positionY =  j / yfloat;
+                
+                CGFloat textureX = i;
+                CGFloat textureY = j / yfloat;
+                
+                arr[tmpIndex + 0] = positionX * multiple - 1.0;
+                arr[tmpIndex + 1] = positionY * multiple - 1.0;
+                
+                arr[tmpIndex + 2] = textureX;
+                //                arr[tmpIndex + 3] = 1.0 - textureY;//textureY; //纹理坐标跟position坐标Y翻转
+                arr[tmpIndex + 3] = textureY;//不用翻转了 上一个zhuo'se'q
+                tmpIndex += stride;
+            }
+        }
+        stride = 6;
+        tmpIndex = 0;
+        ///索引
+        for (int i = 0; i < Column; i++) {
+            new_indices[tmpIndex + 0] = 1 + i*2;
+            new_indices[tmpIndex + 1] = 3 + i*2;
+            new_indices[tmpIndex + 2] = 2 + i*2;
+            new_indices[tmpIndex + 3] = 2 + i*2;
+            new_indices[tmpIndex + 4] = 0 + i*2;
+            new_indices[tmpIndex + 5] = 1 + i*2;
+            tmpIndex += stride;
+        }
+    }
+    [self gestures];
+}
 
+- (void)gestures {
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [self addGestureRecognizer:pan];
+}
+
+///平移手势
+- (void)pan:(UIPanGestureRecognizer *)pan {
+    if (updating) { return;}
+    updating = true;
+    ///区分方向
+    if (pan.state == UIGestureRecognizerStateBegan) {
+        lastLocationX = [pan translationInView:pan.view].x;//拾获最初的角标
+    } else if (pan.state == UIGestureRecognizerStateChanged) {
+        CGFloat result = [pan translationInView:pan.view].x - lastLocationX;//方向判别
+        //        NSLog(@"%lf", result);
+        lastLocationX = [pan translationInView:pan.view].x;//更新位置
+        
+        //        CGFloat restrictValue = 11.0;
+        //        if (result > restrictValue) {
+        //            result = restrictValue;
+        //        } else if (result < -restrictValue) {
+        //            result = -restrictValue;
+        //        }
+        //
+        incrementX = result / pan.view.bounds.size.width;
+        /**
+         translation.x < 0    向左
+         translation.y < 0    向上
+         **/
+        CGPoint curPoint = [pan locationInView:pan.view];
+        targetY = curPoint.y / self.bounds.size.height;//iOS 设备坐标下的0~1.0
+        targetX = curPoint.x / self.bounds.size.width;//
+        //数据范围
+        if (targetY < 0) {targetY = 0.0;}
+        if (targetY > 1) {targetY = 1.0;}
+        
+    } else if (pan.state == UIGestureRecognizerStateEnded) {
+        
+    }
+    if (incrementX != 0.0) {
+        [self render];
+    }
+    
+    updating = false;
+}
+
+///手势驱动的时候顶点数据的更改
+- (void)dataChangeAndDraw {
+    {//--------------point : 计算偏移量
+        //        CGFloat tmpTargetY = 1.0 - targetY;//取反得到纹理坐标系中的点
+        CGFloat tmpTargetY = targetY;
+        ///手势对坐标的压缩量
+        float xCompreess = 0.0;
+        //计算偏移值
+        int tmpIndex = 0;
+        int stride = 4;//只保存顶点坐标xy 纹理坐标xy
+        for (int j = 0; j < Column + 1; j++) {
+            //            for (int i = 0; i < 2; i++) {//2个点为顶点坐标 另外两个点为纹理坐标
+            //将[0.0, 1.0]区间映射到[-PI, PI]区间上
+            xCompreess = j / (Column * 1.0);//0~1.0
+            xCompreess = xCompreess * 2 * M_PI ;//0~2PI
+            xCompreess = xCompreess - M_PI;//-PI~PI
+            
+            CGFloat tmpY = tmpTargetY;
+            tmpY = tmpY * 2 * M_PI;//映射到[-PI, PI]区间上
+            tmpY = tmpY - M_PI;
+            
+            //作差 得到 图形偏移
+            //NSLog(@"图形偏移~%f", cos(xCompreess - tmpY) + 1);
+            
+            CGFloat degree = xCompreess - tmpY;
+            if (degree > M_PI) {
+                degree = M_PI;
+            } else if (degree < -M_PI) {
+                degree = -M_PI;
+            }
+            
+            //                CGFloat tmpComPress = sqrt((cos(degree) + 1)) * incrementX;
+            CGFloat tmpComPress =  (pow((cos(degree)), 1) + 1) * incrementX;//更加尖锐
+            //
+            new_arrBuffer[tmpIndex + 0] = new_arrBuffer[tmpIndex + 0] + tmpComPress;//只修改X坐标  根据j代入相应的非线性方程中 得到偏移量
+            tmpIndex += stride;//另一个方向
+            new_arrBuffer[tmpIndex + 0] = new_arrBuffer[tmpIndex + 0] + tmpComPress;//只修改X坐标  根据j代入相应的非线性方程中 得到偏移量
+            tmpIndex += stride;
+            //            }
+        }
+    }
+    
+    ///打印数据
+    //        for(int i = 0 ; i < SizeOfVectorTextureCoordinate ; i++) {if (i % 4 == 0) {printf("\n"); }
+    //            printf("%f ", new_arrBuffer[i]);
+    //        }//    printf("\n--------------\n");
+    //        for(int i = 0 ; i < Column * 3/*位置*/ * 2/*个数*/ ; i++) {if (i % 3 == 0) { printf("\n"); }
+    //            printf("%d ", new_indices[i]);
+    //        }printf("\n--------------\n");
+    
+    //修改VBO PS：倒不如直接赋值到pointer处理 分开两个数组分别处理屏幕坐标和纹理坐标
+    glBindBuffer(GL_ARRAY_BUFFER, _VBO1);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * (SizeOfVectorTextureCoordinate) , new_arrBuffer, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index1);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint)*SizeOfIndices, new_indices, GL_STATIC_DRAW);
+    glDrawElements(GL_TRIANGLES, SizeOfIndices, GL_UNSIGNED_INT, 0);//索引绘制
+    
+}
 #pragma mark - 固定的函数  不必检查
 //设备尺寸校验
 - (CGSize)compareWithEquipmentSupportWithSize:(CGSize)targetSize {

@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
-@property (nonatomic, strong) AVPlayerLayer *previewLayer;
+@property (nonatomic,   weak) AVPlayerLayer *previewLayer;
 
 @property (nonatomic, strong) WZVideoSurfSlider *wz_slider;
 @property (nonatomic, strong) UIView *layerContainerView;
@@ -41,6 +41,7 @@
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidPlayToEndTimeNotification:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     if (_playerItem && CMTimeCompare(_playerItem.duration, kCMTimeZero) > 0 ) {
         [_previewLayer removeFromSuperlayer];
+        _previewLayer = nil;
         _previewLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
 //        NSLog(@"资源尺寸 ： %@", NSStringFromCGSize(_playerItem.asset.naturalSize));
 //        CGSize size = [NSObject wz_fitSizeComparisonWithScreenBound:_playerItem.asset.naturalSize];
@@ -102,10 +103,19 @@
 
 - (void)alertDismissWithAnimated:(BOOL)animated; {
     [self playerRemoveTimeObserver];
-    [_previewLayer removeFromSuperlayer];
-    _previewLayer = nil;
     [_player pause];
+    [_previewLayer removeFromSuperlayer];
+    [_previewLayer removeAllAnimations];
+    [_player.currentItem cancelPendingSeeks];
+    [_player.currentItem.asset cancelLoading];
+    
+    [_layerContainerView removeFromSuperview];
+    
+    _previewLayer = nil;
     _player = nil;
+    _asset = nil;
+    _playerItem = nil;
+ 
     [super alertDismissWithAnimated:animated];
 }
 
@@ -129,6 +139,7 @@
 - (void)dealloc {
     [_player pause];
     [_previewLayer removeFromSuperlayer];
+    
     _previewLayer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"%s", __func__);

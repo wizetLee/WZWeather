@@ -30,7 +30,13 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount;
 
 //写入完成的回调
-- (void)convertPhotosInotViewToolFinishWriting;
+- (void)convertPhotosInotViewToolTaskFinished;
+
+//canceled
+- (void)convertPhotosInotViewToolTaskCanceled;
+
+//fail
+//- (void)convertPhotosInotViewToolTaskFailed;
 
 @end
 
@@ -39,7 +45,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
  先做预期准备   ready
     1)mov
     2)线程
-    3)
+    3)and so on
  appendbuffer   time++
     1)Image
     2)pixelBuffer

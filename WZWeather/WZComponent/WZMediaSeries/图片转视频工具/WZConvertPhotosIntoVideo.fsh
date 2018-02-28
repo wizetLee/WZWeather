@@ -43,22 +43,21 @@ void main()
         lowp vec4 blendColor = vec4(vec3(1.0), 1.0);//白色 alpha为1
         textureColor = vec4(mix(textureColor.rgb, blendColor.rgb, progress), 1.0);
     } else if (type == 4) {       //模糊--------------------------------------------------------------------------------------------------------------------------------------------
-
     } else if (type == 5) {     //抹 L -> R
         //挤压
-        if ((1.0 - textureCoordinate2.x) > progress) {
+        if ((textureCoordinate2.x) < progress) {
             textureColor = texture2D(inputImageTexture2, textureCoordinate2);
         }
     } else if (type == 6) {     //抹 R -> L
-        if (textureCoordinate2.x > progress) {
+        if (1.0 - textureCoordinate2.x < progress) {
             textureColor = texture2D(inputImageTexture2, textureCoordinate2);
         }
     } else if (type == 7) {     //抹 T -> B
-        if ((1.0 - textureCoordinate2.y) > progress) {
+        if (textureCoordinate2.y < progress) {
             textureColor = texture2D(inputImageTexture2, textureCoordinate2);
         }
     } else if (type == 8) {     //抹 B -> T
-        if (textureCoordinate2.y > progress) {
+        if ((1.0 - textureCoordinate2.y) < progress) {
             textureColor = texture2D(inputImageTexture2, textureCoordinate2);
         }
     } else if (type == 9) {     //挤压 L -> R
@@ -71,7 +70,7 @@ void main()
         if (textureCoordinate.x <=  1.0) {
             textureColor = texture2D(inputImageTexture, textureCoordinate);
         } else {
-            textureColor = texture2D(inputImageTexture, textureCoordinate2);
+            textureColor = texture2D(inputImageTexture2, textureCoordinate2);
         }
     } else if (type == 11) {    //挤压 T -> B
         if (textureCoordinate.y >= 0.0) {

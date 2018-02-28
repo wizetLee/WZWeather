@@ -159,8 +159,8 @@
     _status = WZPureConvertPhotosIntoVideoToolStatus_Completed;
     [_videoInput markAsFinished];
     [_writer finishWritingWithCompletionHandler:^{
-        if ([_delegate respondsToSelector:@selector(pureConvertPhotosInotViewToolFinishWriting)]) {
-            [_delegate pureConvertPhotosInotViewToolFinishWriting];
+        if ([_delegate respondsToSelector:@selector(pureconvertPhotosInotViewToolTaskFinished)]) {
+            [_delegate pureconvertPhotosInotViewToolTaskFinished];
         }
     }];
     

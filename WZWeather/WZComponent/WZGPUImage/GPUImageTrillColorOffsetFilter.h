@@ -11,7 +11,7 @@
 /**
  自定义的GPUImage扩展。扩大效果。仿抖音
  */
-@interface GPUImageEnlargedFilter : GPUImageFilter
+@interface GPUImageTrillColorOffsetFilter : GPUImageFilter
 
 /**
  扩大权重设置

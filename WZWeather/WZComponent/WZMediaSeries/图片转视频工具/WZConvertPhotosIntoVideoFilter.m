@@ -7,6 +7,7 @@
 //
 
 #import "WZConvertPhotosIntoVideoFilter.h"
+#import <GLKit/GLKit.h>
 #define kMax_Undulated_Count 10
 #define kMax_UndulatedCouple_Count ((kMax_Undulated_Count * 2 + 1) * 2)
 
@@ -137,6 +138,15 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         [firstInputFramebuffer unlock];
         [secondInputFramebuffer unlock];
         return;
+    }
+
+#warning 解决需求：翻转效果、修改顶点的位置
+    if (_type == 13 && _progress >= 0.5) {
+        //水平翻转
+        inputRotation = kGPUImageFlipHorizonal;
+    } else {
+        //正常水平
+        inputRotation = kGPUImageNoRotation;
     }
     
     [GPUImageContext setActiveShaderProgram:filterProgram];
@@ -464,6 +474,29 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
             odevity++;
         }
         [self setFloatArray:undulatedCouple length:undulatedCoupleCount forUniform:[filterProgram uniformIndex:@"undulatedCouple"] program:filterProgram];
+    } else if (_type == 13) {
+        CGFloat radians = progress;//0~1.0
+        //旋转部分
+        GLKMatrix4 modelViewMatrix = GLKMatrix4Identity;
+        modelViewMatrix = GLKMatrix4RotateY(modelViewMatrix, radians * M_PI);
+        
+        //透视部分
+        float aspect = 1.0;//contentSize_.width / contentSize_.height;
+        GLKMatrix4 perspectiveMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0), aspect, 0.1, 10.0);
+        
+        //立体效果(虽然也不是3D)
+        GLKMatrix4 translateMatrix = GLKMatrix4MakeTranslation(0, 0, -1.0);
+        GLKMatrix4 result = GLKMatrix4Multiply(translateMatrix, modelViewMatrix);
+        result = GLKMatrix4Multiply(perspectiveMatrix, result);
+        GPUMatrix4x4 tmp =
+        {
+            {result.m[0], result.m[1], result.m[2], result.m[3]},
+            {result.m[4], result.m[5], result.m[6], result.m[7]},
+            {result.m[8], result.m[9], result.m[10], result.m[11]},
+            {result.m[12], result.m[13], result.m[14], result.m[15]}
+        };
+        
+        [self setMatrix4f:tmp forUniform:[filterProgram uniformIndex:@"transform"] program:filterProgram];
     }
 }
 

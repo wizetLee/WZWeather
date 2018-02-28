@@ -3,7 +3,7 @@
 //  PuzzleVideoProject
 //
 //  Created by wizet on 23/1/18.
-//  Copyright © 2018年 Melody. All rights reserved.
+//  Copyright © 2018年 wizet. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -93,7 +93,7 @@
 }
 
 #pragma mark - WZPureConvertPhotosIntoVideoToolProtocol
-- (void)pureConvertPhotosInotViewToolFinishWriting {
+- (void)pureconvertPhotosInotViewToolTaskFinished {
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -128,7 +128,7 @@
                filterKey:filterNone,};
     [_dataSource addObject:tmpDic];
     
-    filter = [[GPUImageEnlargedFilter alloc] init];
+    filter = [[GPUImageTrillColorOffsetFilter alloc] init];
     [self key:@"抖音" value:filter];
     
     //饱和度
@@ -909,7 +909,7 @@
         [_slider setValue:0.01];
         [_slider setMinimumValue:0.0];
         [_slider setMaximumValue:0.05];
-    } else if ([filter isKindOfClass:[GPUImageEnlargedFilter class]]) {
+    } else if ([filter isKindOfClass:[GPUImageTrillColorOffsetFilter class]]) {
         _slider.hidden = false;
         [_slider setValue:0.1];
         [_slider setMinimumValue:0.0];
@@ -1027,8 +1027,8 @@
     } else if ([filter isKindOfClass:[GPUImageWhiteBalanceFilter class]]) {
         ((GPUImageWhiteBalanceFilter *)filter).temperature = _slider.value;
         
-    } else if ([filter isKindOfClass:[GPUImageEnlargedFilter class]]) {
-        ((GPUImageEnlargedFilter *)filter).enlargeWeight = _slider.value;
+    } else if ([filter isKindOfClass:[GPUImageTrillColorOffsetFilter class]]) {
+        ((GPUImageTrillColorOffsetFilter *)filter).enlargeWeight = _slider.value;
     }
 
 }

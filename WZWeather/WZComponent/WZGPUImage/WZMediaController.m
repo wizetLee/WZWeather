@@ -50,7 +50,6 @@
     [super loadView];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
-    
 }
 
 - (void)viewDidLoad {
@@ -62,7 +61,6 @@
         y = self.view.safeAreaInsets.bottom;
         NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
     } else {
-        
     }
 }
 
@@ -72,16 +70,12 @@
         sysetmNavigationBarHiddenState = self.navigationController.navigationBarHidden;
         self.navigationController.navigationBarHidden = true;
     }
-    [_mediaPreviewView pickMediaType:_mediaPreviewView.mediaType];
-    [_mediaPreviewView launchCamera];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [_mediaPreviewView pickMediaType:_mediaPreviewView.mediaType];
+    [_mediaPreviewView launchCamera];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -487,7 +481,6 @@
     
     if (_mediaPreviewView.mediaType == WZMediaTypeVideo) {
         //切换UI
-        
     } else {
         
     }

@@ -10,11 +10,10 @@
 
 @interface WrapView : UIView
 
-//切换 模式 按钮 放大 同时也
-//tips
-//每移动完成一切旋转等效果，重新获取一次模型的旧的模型的
-
+//获取合成图
 - (UIImage *)material;
+
+//获取形变后的素材
 - (UIImage *)mixture;
 
 @end

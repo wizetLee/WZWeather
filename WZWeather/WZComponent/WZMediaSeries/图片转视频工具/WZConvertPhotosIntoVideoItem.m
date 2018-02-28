@@ -77,9 +77,18 @@
             [sourceB processImageWithTime:time];
         } break;
             
+        
         case WZConvertPhotosIntoVideoType_Black:
         case WZConvertPhotosIntoVideoType_White: {
             filter.progress = ((_progress * 2) >= 1)?((1 - (_progress)) * 2) : (_progress * 2);
+            if (_progress <= 0.5) {
+                [sourceA processImageWithTime:time];
+            } else {
+                [sourceB processImageWithTime:time];
+            }
+        } break;
+        case WZConvertPhotosIntoVideoType_RollingOver: {
+            filter.progress = _progress;
             if (_progress <= 0.5) {
                 [sourceA processImageWithTime:time];
             } else {
@@ -92,23 +101,20 @@
         } break;
             
             
-        case WZConvertPhotosIntoVideoType_Wipe_LToR: {
-            
-        } break;
-        case WZConvertPhotosIntoVideoType_Wipe_RToL: {
-            
-        } break;
-        case WZConvertPhotosIntoVideoType_Extrusion_TToB: {
-            
-        } break;
+        case WZConvertPhotosIntoVideoType_Wipe_LToR:
+        case WZConvertPhotosIntoVideoType_Wipe_RToL:
+        case WZConvertPhotosIntoVideoType_Wipe_TToB:
+        case WZConvertPhotosIntoVideoType_Wipe_BToT:
+        case WZConvertPhotosIntoVideoType_Extrusion_LToR:
+        case WZConvertPhotosIntoVideoType_Extrusion_RToL:
+        case WZConvertPhotosIntoVideoType_Extrusion_TToB:
         case WZConvertPhotosIntoVideoType_Extrusion_BToT: {
-            
+            filter.progress = _progress;
+            [sourceA processImageWithTime:time];
+            [sourceB processImageWithTime:time];
         } break;
             
-            
-        case WZConvertPhotosIntoVideoType_RollingOver: {
-            
-        } break;
+       
         case WZConvertPhotosIntoVideoType_V_Blinds:
         case WZConvertPhotosIntoVideoType_H_Blinds: {
             filter.progress = _progress;
@@ -126,7 +132,6 @@
             [sourceB processImageWithTime:time];
         } break;
             
-            
         case WZConvertPhotosIntoVideoType_Lockwise: {
             filter.progress = _progress;
             [sourceA processImageWithTime:time];
@@ -141,7 +146,6 @@
         case WZConvertPhotosIntoVideoType_Glow: {
             
         } break;
-            
             
         default: {
             //nontransition或其他的情况只传句柄为0的buffer

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GPUImage/GPUImage.h>
-#import "GPUImageEnlargedFilter.h"
+#import "GPUImageTrillColorOffsetFilter.h"
 
 @class WZMediaEffectShow;
 @interface WZMediaEffectShowCell : UICollectionViewCell

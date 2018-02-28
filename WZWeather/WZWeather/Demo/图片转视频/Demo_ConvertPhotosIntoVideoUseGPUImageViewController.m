@@ -53,7 +53,7 @@
 #pragma mark - WZAnimatePageControlProtocol
 
 //写入完成的回调
-- (void)convertPhotosInotViewToolFinishWriting; {
+- (void)convertPhotosInotViewToolTaskFinished; {
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
         dispatch_async(dispatch_get_main_queue(), ^{

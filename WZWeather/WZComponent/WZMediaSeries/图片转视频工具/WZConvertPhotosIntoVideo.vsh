@@ -17,29 +17,24 @@ uniform mat4 transform;                     //翻转效果（使用了GLK的接�
 void main()
 {
     
-    
-    
-    
     textureCoordinate = inputTextureCoordinate.xy;
     textureCoordinate2 = inputTextureCoordinate2.xy;
     
-    if (type == 111) {
+    if (type == 9) {                //挤压 LToR
         textureCoordinate = vec2(inputTextureCoordinate.x - progress, inputTextureCoordinate.y);
         textureCoordinate2 = vec2(inputTextureCoordinate2.x + 1.0 - progress, inputTextureCoordinate2.y);
-    } else if (type == 222) {
+    } else if (type == 10) {        //挤压 RToL
         textureCoordinate = vec2(inputTextureCoordinate.x + progress, inputTextureCoordinate.y);
         textureCoordinate2 = vec2(inputTextureCoordinate2.x - 1.0 + progress, inputTextureCoordinate2.y);
-    } else if (type == 333) {
+    } else if (type == 11) {        //挤压 TToB
         textureCoordinate = vec2(inputTextureCoordinate.x, inputTextureCoordinate.y - progress);
         textureCoordinate2 = vec2(inputTextureCoordinate2.x, inputTextureCoordinate2.y + 1.0 - progress);
-    } else if (type == 444) {
+    } else if (type == 12) {        //挤压 BToT
         textureCoordinate = vec2(inputTextureCoordinate.x, inputTextureCoordinate.y + progress);
         textureCoordinate2 = vec2(inputTextureCoordinate2.x, inputTextureCoordinate2.y - 1.0 + progress);
-    } else {
-        
     }
     
-    if (type == 1212) {
+    if (type == 13) {
         gl_Position = transform * position;
     } else {
         gl_Position = position;

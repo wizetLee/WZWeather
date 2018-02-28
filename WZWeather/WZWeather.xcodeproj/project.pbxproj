@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */ = {isa = PBXBuildFile; fileRef = 4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */; };
-		4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4008F8131FDC0D2D000D67B5 /* Enlarged.fsh */; };
+		4008F8141FDC0D2D000D67B5 /* TrillColorOffset.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4008F8131FDC0D2D000D67B5 /* TrillColorOffset.fsh */; };
 		40287B2A1F09210800D9383B /* NSObject+WZFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B251F09210800D9383B /* NSObject+WZFile.m */; };
 		40287B2B1F09210800D9383B /* UIView+WZFrameAssistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B291F09210800D9383B /* UIView+WZFrameAssistance.m */; };
 		40287B2E1F09216C00D9383B /* UIButton+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 40287B2D1F09216C00D9383B /* UIButton+WZMinistrant.m */; };
@@ -19,14 +19,11 @@
 		404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404507F52042714E003A5209 /* Demo_WrapViewController.m */; };
 		404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404507F62042714E003A5209 /* Demo_WrapViewController.xib */; };
 		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
-		407EC73F204591E1001C065E /* input.mov in Resources */ = {isa = PBXBuildFile; fileRef = 407EC739204591E0001C065E /* input.mov */; };
 		407EC740204591E1001C065E /* Demo_VideoReversalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73A204591E0001C065E /* Demo_VideoReversalController.m */; };
-		407EC741204591E1001C065E /* AVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73B204591E0001C065E /* AVUtilities.m */; };
 		407EC742204591E1001C065E /* Demo_VideoReversalController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */; };
 		407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74720459529001C065E /* WZVideoReversalTool.m */; };
-		407EC74C20459B45001C065E /* CSVideoReverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74A20459B45001C065E /* CSVideoReverse.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
-		40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */; };
+		40DB89151FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
 		40DC2B061EA2611C000968DB /* WZRoundSelectorLogicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */; };
 		56ABDC85B06CEFA1FCD1CBD5 /* Pods_WZWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418487491B495564256C463C /* Pods_WZWeather.framework */; };
@@ -53,6 +50,7 @@
 		840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */; };
 		84135BAD202145CA005B2905 /* WZTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84135BAB202145CA005B2905 /* WZTestViewController.m */; };
 		84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84135BAC202145CA005B2905 /* WZTestViewController.xib */; };
+		842EC8162046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 842EC8152046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m */; };
 		84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */; };
 		8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446650E1EC45DAE00E19241 /* WZHttpRequest.m */; };
 		844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */; };
@@ -455,7 +453,7 @@
 		11B7C47AD878EEA78795AB79 /* Pods-WZWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		4000982D1FADCD9F00D2A248 /* WZGPUImagePreinstall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImagePreinstall.h; sourceTree = "<group>"; };
 		4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImagePreinstall.m; sourceTree = "<group>"; };
-		4008F8131FDC0D2D000D67B5 /* Enlarged.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Enlarged.fsh; sourceTree = "<group>"; };
+		4008F8131FDC0D2D000D67B5 /* TrillColorOffset.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = TrillColorOffset.fsh; sourceTree = "<group>"; };
 		40287B241F09210800D9383B /* NSObject+WZFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZFile.h"; sourceTree = "<group>"; };
 		40287B251F09210800D9383B /* NSObject+WZFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZFile.m"; sourceTree = "<group>"; };
 		40287B281F09210800D9383B /* UIView+WZFrameAssistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZFrameAssistance.h"; sourceTree = "<group>"; };
@@ -475,20 +473,15 @@
 		404507F62042714E003A5209 /* Demo_WrapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_WrapViewController.xib; sourceTree = "<group>"; };
 		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
 		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
-		407EC739204591E0001C065E /* input.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = input.mov; sourceTree = "<group>"; };
 		407EC73A204591E0001C065E /* Demo_VideoReversalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo_VideoReversalController.m; sourceTree = "<group>"; };
-		407EC73B204591E0001C065E /* AVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVUtilities.m; sourceTree = "<group>"; };
 		407EC73C204591E0001C065E /* Demo_VideoReversalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo_VideoReversalController.h; sourceTree = "<group>"; };
 		407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Demo_VideoReversalController.xib; sourceTree = "<group>"; };
-		407EC73E204591E0001C065E /* AVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVUtilities.h; sourceTree = "<group>"; };
 		407EC74620459529001C065E /* WZVideoReversalTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoReversalTool.h; sourceTree = "<group>"; };
 		407EC74720459529001C065E /* WZVideoReversalTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoReversalTool.m; sourceTree = "<group>"; };
-		407EC74A20459B45001C065E /* CSVideoReverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSVideoReverse.m; sourceTree = "<group>"; };
-		407EC74B20459B45001C065E /* CSVideoReverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVideoReverse.h; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
-		40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageEnlargedFilter.h; sourceTree = "<group>"; };
-		40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPUImageEnlargedFilter.m; sourceTree = "<group>"; };
+		40DB89131FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageTrillColorOffsetFilter.h; sourceTree = "<group>"; };
+		40DB89141FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPUImageTrillColorOffsetFilter.m; sourceTree = "<group>"; };
 		40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundRenderLayer.h; sourceTree = "<group>"; };
 		40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRoundRenderLayer.m; sourceTree = "<group>"; };
 		40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRoundSelectorLogicView.h; sourceTree = "<group>"; };
@@ -532,6 +525,8 @@
 		84135BAA202145CA005B2905 /* WZTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTestViewController.h; sourceTree = "<group>"; };
 		84135BAB202145CA005B2905 /* WZTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTestViewController.m; sourceTree = "<group>"; };
 		84135BAC202145CA005B2905 /* WZTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZTestViewController.xib; sourceTree = "<group>"; };
+		842EC8142046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImageVideoTransitionEffectTool.h; sourceTree = "<group>"; };
+		842EC8152046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImageVideoTransitionEffectTool.m; sourceTree = "<group>"; };
 		84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZDisplayLinkSuperviser.h; sourceTree = "<group>"; };
 		84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZDisplayLinkSuperviser.m; sourceTree = "<group>"; };
 		8446650D1EC45DAE00E19241 /* WZHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHttpRequest.h; sourceTree = "<group>"; };
@@ -1319,26 +1314,11 @@
 		407EC738204591E0001C065E /* 视频倒放 */ = {
 			isa = PBXGroup;
 			children = (
-				407EC74920459B45001C065E /* src */,
-				407EC739204591E0001C065E /* input.mov */,
-				407EC73A204591E0001C065E /* Demo_VideoReversalController.m */,
-				407EC74620459529001C065E /* WZVideoReversalTool.h */,
-				407EC74720459529001C065E /* WZVideoReversalTool.m */,
 				407EC73C204591E0001C065E /* Demo_VideoReversalController.h */,
+				407EC73A204591E0001C065E /* Demo_VideoReversalController.m */,
 				407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */,
-				407EC73E204591E0001C065E /* AVUtilities.h */,
-				407EC73B204591E0001C065E /* AVUtilities.m */,
 			);
 			path = "视频倒放";
-			sourceTree = "<group>";
-		};
-		407EC74920459B45001C065E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				407EC74B20459B45001C065E /* CSVideoReverse.h */,
-				407EC74A20459B45001C065E /* CSVideoReverse.m */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
@@ -1423,13 +1403,32 @@
 			path = WZHardwareCodec;
 			sourceTree = "<group>";
 		};
-		841E4B582004C13800886F80 /* 视频合成 */ = {
+		841E4B582004C13800886F80 /* 多视频合成以及过度效果 */ = {
 			isa = PBXGroup;
 			children = (
+				842EC8132046A4FD008FC567 /* 视频过渡工具(GPUImage) */,
 				846F2701203FC413008E57C1 /* 废弃 */,
-				8464AFE8202298AD00F7621E /* 视频过渡工具 */,
+				8464AFE8202298AD00F7621E /* 视频过渡工具(AVFoundation) */,
 			);
-			path = "视频合成";
+			path = "多视频合成以及过度效果";
+			sourceTree = "<group>";
+		};
+		842EC81120469A29008FC567 /* 合成倒放视频 */ = {
+			isa = PBXGroup;
+			children = (
+				407EC74620459529001C065E /* WZVideoReversalTool.h */,
+				407EC74720459529001C065E /* WZVideoReversalTool.m */,
+			);
+			path = "合成倒放视频";
+			sourceTree = "<group>";
+		};
+		842EC8132046A4FD008FC567 /* 视频过渡工具(GPUImage) */ = {
+			isa = PBXGroup;
+			children = (
+				842EC8142046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.h */,
+				842EC8152046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m */,
+			);
+			path = "视频过渡工具(GPUImage)";
 			sourceTree = "<group>";
 		};
 		8440FE641EC2A454002A893E /* WZNetwork */ = {
@@ -2562,8 +2561,9 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
 			isa = PBXGroup;
 			children = (
+				842EC81120469A29008FC567 /* 合成倒放视频 */,
 				845A4214201EBB98002D7477 /* 图片转视频工具 */,
-				841E4B582004C13800886F80 /* 视频合成 */,
+				841E4B582004C13800886F80 /* 多视频合成以及过度效果 */,
 				840E3E991FE3BF2600A5D559 /* WZHardwareCodec */,
 				84ECD3121FCBA7E400282C9A /* Resources */,
 				846A31291FD16336003CECAE /* WZMediaFetcher */,
@@ -2674,7 +2674,7 @@
 			path = WZAnimatedTransitions;
 			sourceTree = "<group>";
 		};
-		8464AFE8202298AD00F7621E /* 视频过渡工具 */ = {
+		8464AFE8202298AD00F7621E /* 视频过渡工具(AVFoundation) */ = {
 			isa = PBXGroup;
 			children = (
 				8464AFE9202298AD00F7621E /* BIVideoTransitionEffectTool.h */,
@@ -2682,7 +2682,7 @@
 				8464AFEB202298AD00F7621E /* BIVideoTransitionItem.h */,
 				8464AFEC202298AD00F7621E /* BIVideoTransitionItem.m */,
 			);
-			path = "视频过渡工具";
+			path = "视频过渡工具(AVFoundation)";
 			sourceTree = "<group>";
 		};
 		84687CC4202559C10098A596 /* UIImage */ = {
@@ -2944,19 +2944,19 @@
 		846F270F203FF6B7008E57C1 /* 控件 */ = {
 			isa = PBXGroup;
 			children = (
-				846F2710203FF6B7008E57C1 /* 带动画PageControl */,
+				846F2710203FF6B7008E57C1 /* 动画PageControl */,
 			);
 			path = "控件";
 			sourceTree = "<group>";
 		};
-		846F2710203FF6B7008E57C1 /* 带动画PageControl */ = {
+		846F2710203FF6B7008E57C1 /* 动画PageControl */ = {
 			isa = PBXGroup;
 			children = (
 				846F2711203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.h */,
 				846F2712203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.m */,
 				846F2713203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib */,
 			);
-			path = "带动画PageControl";
+			path = "动画PageControl";
 			sourceTree = "<group>";
 		};
 		8483E7BA1FC2658500C559EF /* WZSearchBar */ = {
@@ -2995,9 +2995,9 @@
 			children = (
 				846D16011FBBC03000E78FFF /* GPUImageBeautifyFilter.h */,
 				846D16021FBBC03000E78FFF /* GPUImageBeautifyFilter.m */,
-				40DB89131FDBB6F200A1054D /* GPUImageEnlargedFilter.h */,
-				40DB89141FDBB6F200A1054D /* GPUImageEnlargedFilter.m */,
-				4008F8131FDC0D2D000D67B5 /* Enlarged.fsh */,
+				40DB89131FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.h */,
+				40DB89141FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m */,
+				4008F8131FDC0D2D000D67B5 /* TrillColorOffset.fsh */,
 				845034E21FB59F0700D3A285 /* CustomTinter */,
 				840A439E1FB18A6100F6D449 /* tickta.wav */,
 				840A439C1FB18A3A00F6D449 /* photoShutter2.caf */,
@@ -3290,7 +3290,7 @@
 				846A31041FD0E686003CECAE /* message_oeuvre_btn_normal@3x.png in Resources */,
 				84687CBF202552C00098A596 /* testImage2.jpg in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
-				4008F8141FDC0D2D000D67B5 /* Enlarged.fsh in Resources */,
+				4008F8141FDC0D2D000D67B5 /* TrillColorOffset.fsh in Resources */,
 				84810C0120438BAD00403FD8 /* shader2SampleDefaultF.fsh in Resources */,
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
@@ -3328,7 +3328,6 @@
 				84687CC2202552C00098A596 /* testImage1.jpg in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */,
-				407EC73F204591E1001C065E /* input.mov in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84810C0720438BAD00403FD8 /* shaderDefaultF.fsh in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
@@ -3449,7 +3448,8 @@
 				84514D2D1E9DCE7A00F07EF8 /* UIButton+JKIndicator.m in Sources */,
 				84514D4D1E9DCE7A00F07EF8 /* UIImage+JKVector.m in Sources */,
 				84514D4C1E9DCE7A00F07EF8 /* UIImage+JKSuperCompress.m in Sources */,
-				40DB89151FDBB6F200A1054D /* GPUImageEnlargedFilter.m in Sources */,
+				40DB89151FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m in Sources */,
+				842EC8162046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m in Sources */,
 				84514D301E9DCE7A00F07EF8 /* UIButton+JKTouchAreaInsets.m in Sources */,
 				404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */,
 				84514D251E9DCE7A00F07EF8 /* UIBezierPath+JKSVGString.m in Sources */,
@@ -3543,7 +3543,6 @@
 				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
 				845B8FB42020134400242363 /* WZGPUImageMovieWriter.m in Sources */,
-				407EC741204591E1001C065E /* AVUtilities.m in Sources */,
 				84514CD61E9DCE7A00F07EF8 /* NSDateFormatter+JKMake.m in Sources */,
 				84514CDF1E9DCE7A00F07EF8 /* NSFileManager+JKPaths.m in Sources */,
 				84514D141E9DCE7A00F07EF8 /* MKMapView+JKBetterMaps.m in Sources */,
@@ -3678,7 +3677,6 @@
 				84514CF11E9DCE7A00F07EF8 /* NSObject+JKGCD.m in Sources */,
 				8402EB101ECD34B00030CCE1 /* WZDownloadProgressCell.m in Sources */,
 				84514D2F1E9DCE7A00F07EF8 /* UIButton+JKSubmitting.m in Sources */,
-				407EC74C20459B45001C065E /* CSVideoReverse.m in Sources */,
 				84514CF01E9DCE7A00F07EF8 /* NSObject+JKEasyCopy.m in Sources */,
 				84514D281E9DCE7A00F07EF8 /* UIButton+JKBackgroundColor.m in Sources */,
 				8453F5E71FB071D100E0ABAE /* WZMediaEffectShow.m in Sources */,

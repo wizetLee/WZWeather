@@ -19,6 +19,8 @@
     NSUInteger _frameCount;                //帧数 由limitedTime->frameRate得到
     NSUInteger _addedFrameCount;           //已添加的帧数
     NSUInteger targetFrameCount;           //目标帧数
+    
+
 }
 
 
@@ -29,7 +31,7 @@
 
 @property (nonatomic, strong) NSURL *outputURL;
 
-@property (nonatomic, strong) dispatch_source_t timerSource;
+@property (nonatomic, strong) CADisplayLink *displayLink;
 
 @property (nonatomic, strong) WZGPUImagePicture *pictureA;
 @property (nonatomic, strong) WZGPUImagePicture *pictureB;
@@ -54,7 +56,6 @@
         
         _outputSize = outputSize;
         self.frameRate = frameRate;
-        
     }
     return self;
 }
@@ -120,13 +121,19 @@
             return;
         }
         //录制
-        [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+        runSynchronouslyOnContextQueue([GPUImageContext sharedImageProcessingContext], ^{
+            [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+        });
+        
         _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//帧位时间偏移更新
         _addedFrameCount++;
 //        NSLog(@"目标帧数：%ld，已添加帧数 %ld", targetFrameCount, _addedFrameCount);
-        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewTool:progress:)]) {
-            [_delegate convertPhotosInotViewTool:self progress:(_addedFrameCount * 1.0) / targetFrameCount];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([_delegate respondsToSelector:@selector(convertPhotosInotViewTool:progress:)]) {
+                [_delegate convertPhotosInotViewTool:self progress:(_addedFrameCount * 1.0) / targetFrameCount];
+            }
+        });
+        
       
     } else if (_status == WZConvertPhotosIntoVideoToolStatus_Completed) {
         //完成
@@ -187,22 +194,22 @@
     //由于分割的问题 多出来的 几帧会加载最后的图片上
     for (NSUInteger i = 0; i < pictureCount; i++) {
         //平滑点
-        WZConvertPhotosIntoVideoItem *item = [[WZConvertPhotosIntoVideoItem alloc] init];
-        item.delegate = self;
-        item.leadingImage = pictureSources[i];
+        WZConvertPhotosIntoVideoItem *item  = [[WZConvertPhotosIntoVideoItem alloc] init];
+        item.delegate                       = self;
+        item.leadingImage                   = pictureSources[i];
+        item.frameCount                     = nontransitionFrameCount;
+        sumFrameCount                       -= nontransitionFrameCount;
         [_itemMArr addObject:item];
-        item.frameCount = nontransitionFrameCount;
-        sumFrameCount -= nontransitionFrameCount;
         
         if (i < (pictureCount - 1)) {
             //过渡点
-            item = [[WZConvertPhotosIntoVideoItem alloc] init];
-            item.delegate = self;
-            item.leadingImage = pictureSources[i];
-            item.trailingImage = pictureSources[i + 1];
-            item.transitionType = WZConvertPhotosIntoVideoType_V_Blinds;    //配置为none类型
-            item.frameCount = transitionFrameCount;
-            sumFrameCount -= transitionFrameCount;
+            item                    = [[WZConvertPhotosIntoVideoItem alloc] init];
+            item.delegate           = self;
+            item.leadingImage       = pictureSources[i];
+            item.trailingImage      = pictureSources[i + 1];
+            item.transitionType     = WZConvertPhotosIntoVideoType_RollingOver;    //配置为none类型
+            item.frameCount         = transitionFrameCount;
+            sumFrameCount           -= transitionFrameCount;
             
             [_itemMArr addObject:item];
             [_transitionNodeMarr addObject:item];                        //链接上这个数据以便在外部修改
@@ -215,9 +222,6 @@
         }
     }
 }
-
-
-
 
 - (void)prepareTask {
     //初始化一些工具
@@ -253,8 +257,8 @@
     _status = WZConvertPhotosIntoVideoToolStatus_Completed;
     [self cleanTimer];
     [_movieWriter finishRecordingWithCompletionHandler:^{
-        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolFinishWriting)]) {
-            [_delegate convertPhotosInotViewToolFinishWriting];
+        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolTaskFinished)]) {
+            [_delegate convertPhotosInotViewToolTaskFinished];
         }
         
         [self cleanChain];
@@ -290,12 +294,12 @@
         _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
         
         //可能要改为displayLink
-        _timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-        dispatch_source_set_timer(_timerSource, DISPATCH_TIME_NOW, 1.0 / 30.0 * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
-        dispatch_source_set_event_handler(_timerSource, ^{
-            [self addFrameAction];
-        });
-        dispatch_resume(_timerSource);
+        [_displayLink invalidate];
+        _displayLink = nil;
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(addFrameAction)];
+        [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        _displayLink.paused = false;
+        
         
     } else { NSLog(@"状态出错"); }
 }
@@ -304,6 +308,10 @@
     [self cleanTimer];
     [_movieWriter cancelRecording];
     [self cleanChain];
+    
+    if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolTaskCanceled)]) {
+        [_delegate convertPhotosInotViewToolTaskCanceled];
+    }
 }
 
 - (void)cleanChain {
@@ -321,10 +329,9 @@
 
 
 - (void)cleanTimer {
-    if (_timerSource) {
-        dispatch_source_cancel(_timerSource);
-        _timerSource = nil;
-    }
+    _displayLink.paused = true;
+    [_displayLink invalidate];
+    _displayLink = nil;
 }
 
 #pragma mark - Accessor
@@ -335,7 +342,7 @@
         //如果时间限制 需要重新配置总共录入的帧数
        
         _frameCount = (NSUInteger)(CMTimeGetSeconds(_limitedTime) / CMTimeGetSeconds(_frameRate));
-       //        NSUInteger count = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CMTimeGetSeconds(CMTimeMake(1, 25)));//如果10Sec
+       //        NSUInteger count = (NSUInteger)(CMTimeGetSeconds(CMTimeMakeWithSeconds(10, 6)) / CMTimeGetSeconds(CMTimeMake(1, 25)));//如：10Sec的情况
     }
 }
 
@@ -456,7 +463,7 @@
 - (void)willResignActiveNotification:(NSNotification *)notification {
     NSLog(@"%s", __func__);
     //暂停
-    
+    [self cancelWriting];
 }
 
 //应用外处理

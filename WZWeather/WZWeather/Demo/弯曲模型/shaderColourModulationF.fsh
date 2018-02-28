@@ -31,7 +31,6 @@ vec4 blendColor(vec4 base, vec4 overlay, int com, float opa)
     if (blendType == 26) {
         result = DifferenceBlend(base, overlay, opa);
     }
-    
     return result;
 }
 
