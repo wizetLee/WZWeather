@@ -177,7 +177,7 @@
             link.paused = true;
             //存在的问题：在代理中处理大量数据时，动画卡顿。修改方案为并发但是代理在辅助线程中执行
             if (_delegate) {
-                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     [self didSelectDelegate];
                 });
             }

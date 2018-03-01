@@ -153,9 +153,9 @@
     
     _asset = asset;
     _playerItem = [[AVPlayerItem alloc] initWithAsset:_asset];
+    _playerItem.audioTimePitchAlgorithm = AVAudioTimePitchAlgorithmSpectral;///调节声音
     _player = [AVPlayer playerWithPlayerItem:_playerItem];
     //处理视图
-    
 }
 
 //MARK: - WZSliderProtocol

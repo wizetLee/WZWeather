@@ -40,7 +40,7 @@
     WZMediaConfigObject *canvas = [[WZMediaConfigObject alloc] init];
     canvas.cellType = @"WZMediaConfigCell";
     canvas.type = 1;
-    canvas.selectedType = WZMediaConfigType_canvas_1_multiply_1;
+    canvas.selectedType = WZMediaConfigType_canvas_9_multiply_16;
     canvas.headline = @"画幅";
 
     WZMediaConfigObject *flash = [[WZMediaConfigObject alloc] init];
@@ -54,8 +54,6 @@
     countDown.type = 3;
     countDown.selectedType = WZMediaConfigType_countDown_off;
     countDown.headline = @"倒计时";
-    
-    
     
     
     _dataSource = [NSMutableArray arrayWithArray:@[canvas, flash, countDown]];

@@ -30,12 +30,141 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fez-L1-xHz">
+                    <rect key="frame" x="20" y="104" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="8SF-J0-iB7"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点0">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="ykg-Eb-IMf"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Lf-lQ-I2m">
+                    <rect key="frame" x="20" y="154" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Fao-p8-tn0"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点1">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="5HY-RN-3BU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLv-pB-MW6">
+                    <rect key="frame" x="20" y="204" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="2LL-Ff-ZQH"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点2">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="Ge8-AM-PJr"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GTI-tT-xeF">
+                    <rect key="frame" x="20" y="254" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="SRM-vj-dLi"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点3">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="9Wd-wE-0i8"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kq3-x9-Hvj">
+                    <rect key="frame" x="20" y="304" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="SIq-pw-CwG"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点4">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="hiN-Fq-oRx"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="105" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ut-t6-fuP">
+                    <rect key="frame" x="20" y="354" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="APo-fT-7O0"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点5">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="Z4N-ld-3qL"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="106" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRu-Jy-h8a">
+                    <rect key="frame" x="20" y="404" width="335" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="S0Z-3m-rzn"/>
+                    </constraints>
+                    <state key="normal" title="过渡节点6">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="switchEffect:" destination="-1" eventType="touchUpInside" id="Qiy-Cc-Atg"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="We5-zX-ufy">
+                    <rect key="frame" x="20" y="454" width="335" height="44"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="c1o-9N-4li"/>
+                        <constraint firstAttribute="height" constant="44" id="l8g-pc-Iha"/>
+                    </constraints>
+                    <state key="normal" title="开始合成">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="startCompose:" destination="-1" eventType="touchUpInside" id="PTd-Yw-mgh"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="pLv-pB-MW6" secondAttribute="trailing" constant="20" id="0sf-eV-HTh"/>
+                <constraint firstItem="mRu-Jy-h8a" firstAttribute="top" secondItem="4ut-t6-fuP" secondAttribute="bottom" constant="20" id="1UH-l7-ora"/>
+                <constraint firstItem="We5-zX-ufy" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="5vG-xy-uGk"/>
+                <constraint firstItem="1Lf-lQ-I2m" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="6ZM-Nc-qp9"/>
+                <constraint firstItem="Kq3-x9-Hvj" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="7kf-32-R5c"/>
+                <constraint firstItem="Kq3-x9-Hvj" firstAttribute="top" secondItem="GTI-tT-xeF" secondAttribute="bottom" constant="20" id="CO9-fg-dQc"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Fez-L1-xHz" secondAttribute="trailing" constant="20" id="JMe-he-iJq"/>
+                <constraint firstItem="mRu-Jy-h8a" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="M6e-Us-aD9"/>
+                <constraint firstItem="We5-zX-ufy" firstAttribute="top" secondItem="mRu-Jy-h8a" secondAttribute="bottom" constant="20" id="OHi-5e-81B"/>
+                <constraint firstItem="pLv-pB-MW6" firstAttribute="top" secondItem="1Lf-lQ-I2m" secondAttribute="bottom" constant="20" id="Pgg-aA-tRr"/>
+                <constraint firstItem="1Lf-lQ-I2m" firstAttribute="top" secondItem="Fez-L1-xHz" secondAttribute="bottom" constant="20" id="Q4i-wC-PRH"/>
+                <constraint firstItem="pLv-pB-MW6" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="Vhf-qe-xbx"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="GTI-tT-xeF" secondAttribute="trailing" constant="20" id="W1l-Eo-mkT"/>
+                <constraint firstItem="Fez-L1-xHz" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="84" id="a6n-Y6-lRw"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="4ut-t6-fuP" secondAttribute="trailing" constant="20" id="aAe-lJ-zbo"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Kq3-x9-Hvj" secondAttribute="trailing" constant="20" id="dSk-lp-5qZ"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="mRu-Jy-h8a" secondAttribute="trailing" constant="20" id="dSx-4T-fCm"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="V75-GL-uek" secondAttribute="bottom" constant="20" id="ftb-pB-SZM"/>
+                <constraint firstItem="Fez-L1-xHz" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="gDg-RM-Gq9"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="V75-GL-uek" secondAttribute="trailing" constant="20" id="gh2-oV-mgO"/>
+                <constraint firstItem="GTI-tT-xeF" firstAttribute="top" secondItem="pLv-pB-MW6" secondAttribute="bottom" constant="20" id="i7J-Wv-Dzh"/>
+                <constraint firstItem="4ut-t6-fuP" firstAttribute="top" secondItem="Kq3-x9-Hvj" secondAttribute="bottom" constant="20" id="liV-n5-yGg"/>
                 <constraint firstItem="V75-GL-uek" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="lj8-gr-Dje"/>
+                <constraint firstItem="GTI-tT-xeF" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="m8z-lr-3Qp"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="We5-zX-ufy" secondAttribute="trailing" constant="20" id="ncI-vp-Twe"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="1Lf-lQ-I2m" secondAttribute="trailing" constant="20" id="uD1-Ia-iYl"/>
+                <constraint firstItem="4ut-t6-fuP" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="vgy-L8-hDw"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
         </view>
