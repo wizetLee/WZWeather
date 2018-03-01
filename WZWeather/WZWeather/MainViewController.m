@@ -19,6 +19,7 @@
 @property (nonatomic, strong) WZLoopView *loop;
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSArray <WZVCModel *>* sources;
+@property (nonatomic, assign) int a;
 
 @end
 
@@ -49,7 +50,11 @@
     //view
     [self.view addSubview:self.loop];
     [self.view addSubview:self.table];
+  
+  
 }
+
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

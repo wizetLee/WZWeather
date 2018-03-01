@@ -30,7 +30,7 @@
 }
 
 - (IBAction)playOrigion:(UIButton *)sender {
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"05_blackhole" ofType:@"mp4"]];
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"curnane" ofType:@"mp4"]];
     AVAsset *asset = [AVAsset assetWithURL:url];
     WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
     alert.asset = asset;
@@ -42,7 +42,7 @@
 }
 
 - (IBAction)videoReversalAction:(UIButton *)sender {
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"05_blackhole" ofType:@"mp4"]];
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"curnane" ofType:@"mp4"]];
     AVAsset *asset = [AVAsset assetWithURL:url];
     
     _tool.delegate = nil;
