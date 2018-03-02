@@ -39,7 +39,6 @@
     [page selectedInIndex:2 withAnimation:false];
     page.delegate = (id<WZAnimatePageControlProtocol>)self;
     
-  
 }
 
 

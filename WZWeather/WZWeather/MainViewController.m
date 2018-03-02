@@ -52,6 +52,13 @@
     [self.view addSubview:self.table];
   
   
+    CMTime frameRate = CMTimeMake(1, 25.0);//
+    CMTime currentTime = CMTimeMake(0, frameRate.timescale);
+    int frameCount = 250;
+    for (int i = 0; i < frameCount; i++) {
+        currentTime = CMTimeAdd(currentTime, frameRate);
+    }
+   
 }
 
 

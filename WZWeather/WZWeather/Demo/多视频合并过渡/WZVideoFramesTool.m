@@ -1,33 +1,44 @@
 //
-//  WZVideoReversalTool.m
+//  WZVideoFramesTool.m
 //  WZWeather
 //
-//  Created by 李炜钊 on 2018/2/27.
+//  Created by 李炜钊 on 2018/3/1.
 //  Copyright © 2018年 WZ. All rights reserved.
 //
 
-#import "WZVideoReversalTool.h"
+#import "WZVideoFramesTool.h"
 
-@interface WZVideoReversalTool() {
-    
+typedef NS_ENUM(NSUInteger, WZFramesType) {
+    WZFramesType_Origion              = 0,
+    WZFramesType_1,
+    WZFramesType_2,
+};
+
+@interface WZVideoFramesTool()
+{
     AVAssetReader *assetReader;
     AVAssetWriter *assetWriter;
     
     AVAssetReaderTrackOutput *assetReaderOutput;
     AVAssetWriterInput *assetWriterInput;
     AVAssetWriterInputPixelBufferAdaptor *assetWriterInputAdaptor;
-    
+    BOOL strideOffsetAtRight;//默认为向右偏移
+    CMTime assetDuration;
 }
+
 
 @property (nonatomic, strong) NSMutableDictionary *outputSetting;
 @property (nonatomic, assign) WZVideoReversalToolStatus status;
 
+@property (nonatomic, assign) CGFloat outputFrameRate;      //要求输出的帧率
+@property (nonatomic, assign) CGFloat curAssetFrameRate;    //要求输出的帧率
 @end
 
-@implementation WZVideoReversalTool
+@implementation WZVideoFramesTool
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeNotification];
 }
 
 - (instancetype)init
@@ -40,8 +51,14 @@
 }
 
 - (void)defaultConfig {
+    _outputFrameRate = 25.0;
     _status = WZVideoReversalToolStatus_Idle;
     [self addNotification];
+}
+
+- (void)removeNotification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)addNotification {
@@ -57,8 +74,9 @@
         [self executeReverseTaskFail];
         return;
     }
+    assetDuration = asset.duration;
     
-    dispatch_queue_t reverseSerialQueue = dispatch_queue_create("reverseSerialQueue.wz", NULL);
+    dispatch_queue_t reverseSerialQueue = dispatch_queue_create("videoFramesSerialQueue.wz", NULL);
     dispatch_async(reverseSerialQueue, ^{
         AVAssetTrack *videoTrack = videoTracks.firstObject;
         float fps = videoTrack.nominalFrameRate;//获取帧率
@@ -68,7 +86,6 @@
         NSError *error = nil;
         assetReader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
         assetReaderOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:videoTrack outputSettings:self.outputSetting];
-        
         assetReaderOutput.supportsRandomAccess = true;
         if ([assetReader canAddOutput:assetReaderOutput]) {
             [assetReader addOutput:assetReaderOutput];
@@ -82,26 +99,24 @@
         
         CGFloat outputWidth = videoTrack.naturalSize.width;
         CGFloat outputHeight = videoTrack.naturalSize.height;
+        //
+        _curAssetFrameRate = videoTrack.nominalFrameRate;//当前视频的帧帧率
         
-        //存每一帧的presentationTime
+        //需要保存的帧数的时间
         NSMutableArray *revSampleTimes = [[NSMutableArray alloc] init];
         
         CMSampleBufferRef sample;
         int localCount = 0; //记录总帧数
-        //遍历帧、获取时间戳数组（得到每一帧的时间）
-        while((sample = [assetReaderOutput copyNextSampleBuffer])) {
-            [revSampleTimes addObject:[NSValue valueWithCMTime:CMSampleBufferGetPresentationTimeStamp(sample)]];
-            CFRelease(sample);
-            sample = NULL;
-            localCount++;
-            
-            if ([self reverseTaskDidCancel]) { return; }
-        }
         
-        if (localCount < 1) {
-            NSLog(@"视频貌似有点问题");
-            [self executeReverseTaskFail];
-            return;
+#pragma mark  step 1
+//装配输出视频的每帧时间
+        CMTime frameRate = CMTimeMake(1, _outputFrameRate);
+        CMTime currentTime = CMTimeMake(0, frameRate.timescale);
+        NSUInteger targetSecond = 10;
+        NSUInteger sumOfFrame = targetSecond * ((NSUInteger)_outputFrameRate);
+        for (NSUInteger i = 0; i < sumOfFrame; i++) {
+            currentTime = CMTimeAdd(currentTime, frameRate);
+            [revSampleTimes addObject:[NSValue valueWithCMTime:currentTime]];
         }
         
         NSMutableArray *passDicts = [[NSMutableArray alloc] init];
@@ -127,7 +142,7 @@
             frameEventTime = [frameEventValue CMTimeValue];
             
             passEndTime = timeEventTime;
-
+            
             if (i % numSamplesInPass == 0) {
                 if (i > 0) { //收集每个pass的信息（pass的开始、结束时间，开始帧、结束帧的角标）
                     passStartValue = [NSValue valueWithCMTime:passStartTime];
@@ -138,12 +153,12 @@
                                            };
                     [passDicts addObject:dict];
                 }
-                initNewPass = true;
+                initNewPass = true; //需要创建新的pass
             }
             
             if (initNewPass) { //更新下一个pass的信息
                 passStartTime = timeEventTime;
-        
+                
                 initNewPass = false;
             }
             
@@ -198,8 +213,44 @@
         int fpsInt = (int)(fps + 0.5);
         int frameCount = 0;
         //倒序插入
-        for (NSInteger z = (passDicts.count - 1); z >= 0; z--) {
+        
+#pragma mark  step 2
+        //读帧、丢帧、增帧
+        NSUInteger curFrameIndex = 0;
+        curFrameIndex++;
+        
+        strideOffsetAtRight = false;
+        
+        strideOffsetAtRight = !strideOffsetAtRight;
+        
+        if (1) {
+            //判断是否要丢帧
+        }
+        
+        if (curFrameIndex < 1) {
+            NSLog(@"视频轨道帧数为0");
+            [self executeReverseTaskFail];
+            return;
+        }
 
+        //读取
+        [assetReaderOutput resetForReadingTimeRanges:@[[NSValue valueWithCMTimeRange:CMTimeRangeMake(CMTimeMake(0.0, assetDuration.timescale), assetDuration)]]];
+        for (NSUInteger index = 0; index > passDicts.count; index++) {
+            NSDictionary *dict = [passDicts objectAtIndex:index];
+            //剥离数据
+            passStartTime = [dict[@"passStartTime"] CMTimeValue];
+            passEndTime = [dict[@"passEndTime"] CMTimeValue];
+            
+            CMTime passDuration = CMTimeSubtract(passEndTime, passStartTime);
+            CMTimeRange localRange = CMTimeRangeMake(passStartTime,passDuration);
+
+        
+            
+            
+            
+        }
+        
+        for (NSInteger z = (passDicts.count - 1); z >= 0; z--) {
             NSDictionary *dict = [passDicts objectAtIndex:z];//pass信息
             
             //剥离数据
@@ -208,18 +259,14 @@
             
             CMTime passDuration = CMTimeSubtract(passEndTime, passStartTime);//pass的时长
             CMTimeRange localRange = CMTimeRangeMake(passStartTime,passDuration);//对应于pass中的视频数据的范围
-            
-            //        while((sample = [assetReaderOutput copyNextSampleBuffer])) {
-            //            CFRelease(sample);
-            //        }
-            
+          
             //将会读取数据内的时间范围
             [assetReaderOutput resetForReadingTimeRanges:@[[NSValue valueWithCMTimeRange:localRange]]];
-            
+
             //将sample存起来
             NSMutableArray *samples = [[NSMutableArray alloc] init];
             while((sample = [assetReaderOutput copyNextSampleBuffer])) {
-               
+                
                 [samples addObject:(__bridge id)sample];
                 CFRelease(sample);
                 if ([self reverseTaskDidCancel]) { return; }
@@ -253,9 +300,9 @@
                 }
                 frameCount++;
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([_delegate respondsToSelector:@selector(videoReversakTool:reverseProgress:)]) {
-                        [_delegate videoReversakTool:self reverseProgress:((frameCount) * 1.0) / (revSampleTimes.count - 1) ];
-                    }
+                
+//                        [_delegate videoReversakTool:self reverseProgress:((frameCount) * 1.0) / (revSampleTimes.count - 1) ];
+                
                 });
             }
             samples = nil;
@@ -269,11 +316,9 @@
         //数据写入完毕
         [assetWriterInput markAsFinished];
         [assetWriter finishWritingWithCompletionHandler:^(){
-             _status = WZVideoReversalToolStatus_Completed;
+            _status = WZVideoReversalToolStatus_Completed;
             dispatch_async(dispatch_get_main_queue(), ^{
-                if ([_delegate respondsToSelector:@selector(videoReversakToolReverseSuccessed)]) {
-                    [_delegate videoReversakToolReverseSuccessed];
-                }
+             
             });
         }];
     });
@@ -285,18 +330,14 @@
     [assetWriterInput markAsFinished];
     [assetWriter cancelWriting];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([_delegate respondsToSelector:@selector(videoReversakToolReverseFail)]) {
-            [_delegate videoReversakToolReverseFail];
-        }
+     
     });
 }
 
 - (BOOL)reverseTaskDidCancel {
     if (_status == WZVideoReversalToolStatus_Canceled) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([_delegate respondsToSelector:@selector(videoReversakToolReverseDidCancel)]) {
-                [_delegate videoReversakToolReverseDidCancel];
-            }
+      
             NSLog(@"%s", __func__);
         });
         return true;
@@ -311,12 +352,16 @@
 
 #pragma mark - Notification
 - (void)willResignActiveNotification:(NSNotification *)notification {
-    //暂停
     [self cancelReverseTask];
 }
 
 - (void)didBecomeActiveNotification:(NSNotification *)notification {
-//    NSLog(@"%s", __func__);
-    //考虑要不要重新执行任务
+    
 }
+
+
+- (void)fail {
+    
+}
+
 @end

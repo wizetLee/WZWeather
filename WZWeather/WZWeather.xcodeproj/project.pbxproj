@@ -394,6 +394,7 @@
 		8497C42A1EB3465200EB9F60 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8497C4291EB3465200EB9F60 /* NotificationCenter.framework */; };
 		8497C42E1EB3465200EB9F60 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497C42D1EB3465200EB9F60 /* TodayViewController.m */; };
 		8497C4351EB3465200EB9F60 /* WZTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		849E0F2520494D4100D9502D /* BITransitionTypeSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849E0F2420494D4100D9502D /* BITransitionTypeSelectedView.m */; };
 		84BC81911FCFDF6000FB76BC /* WZMediaRateTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */; };
 		84BED55A203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED558203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.m */; };
 		84BED55B203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BED559203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib */; };
@@ -1191,6 +1192,9 @@
 		8497C42C1EB3465200EB9F60 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		8497C42D1EB3465200EB9F60 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		8497C4321EB3465200EB9F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAppActiveNoticeProtocol.h; sourceTree = "<group>"; };
+		849E0F2320494D4100D9502D /* BITransitionTypeSelectedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BITransitionTypeSelectedView.h; sourceTree = "<group>"; };
+		849E0F2420494D4100D9502D /* BITransitionTypeSelectedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BITransitionTypeSelectedView.m; sourceTree = "<group>"; };
 		84BC818F1FCFDF6000FB76BC /* WZMediaRateTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaRateTypeView.h; sourceTree = "<group>"; };
 		84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaRateTypeView.m; sourceTree = "<group>"; };
 		84BED557203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_ConvertPhotosIntoVideoController.h; sourceTree = "<group>"; };
@@ -1351,7 +1355,7 @@
 			path = "视频速率";
 			sourceTree = "<group>";
 		};
-		4078BC872048432600FDE851 /* 多视频合并过度 */ = {
+		4078BC872048432600FDE851 /* 多视频合并过渡 */ = {
 			isa = PBXGroup;
 			children = (
 				842EC8142046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.h */,
@@ -1362,7 +1366,7 @@
 				4078BC892048435900FDE851 /* Demo_VideoTransitionController.m */,
 				4078BC8A2048435900FDE851 /* Demo_VideoTransitionController.xib */,
 			);
-			path = "多视频合并过度";
+			path = "多视频合并过渡";
 			sourceTree = "<group>";
 		};
 		407EC738204591E0001C065E /* 视频倒放 */ = {
@@ -3124,7 +3128,8 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4078BC872048432600FDE851 /* 多视频合并过度 */,
+				849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */,
+				4078BC872048432600FDE851 /* 多视频合并过渡 */,
 				406140612046FE190071F636 /* 视频速率 */,
 				407EC738204591E0001C065E /* 视频倒放 */,
 				404507F320427135003A5209 /* 弯曲模型 */,
@@ -3143,6 +3148,8 @@
 				84810C08204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h */,
 				84810C09204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m */,
 				84810C0A204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib */,
+				849E0F2320494D4100D9502D /* BITransitionTypeSelectedView.h */,
+				849E0F2420494D4100D9502D /* BITransitionTypeSelectedView.m */,
 			);
 			path = "图片转视频";
 			sourceTree = "<group>";
@@ -3798,6 +3805,7 @@
 				84514CF31E9DCE7A00F07EF8 /* NSObject+JKReflection.m in Sources */,
 				84514CDA1E9DCE7A00F07EF8 /* NSDictionary+JKSafeAccess.m in Sources */,
 				84514D441E9DCE7A00F07EF8 /* UIImage+JKFileName.m in Sources */,
+				849E0F2520494D4100D9502D /* BITransitionTypeSelectedView.m in Sources */,
 				84514D641E9DCE7A00F07EF8 /* UIScrollView+JKPages.m in Sources */,
 				84514D8A1E9DCE7A00F07EF8 /* UIWebView+JKLoadInfo.m in Sources */,
 				402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */,

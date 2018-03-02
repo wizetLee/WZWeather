@@ -16,6 +16,7 @@
 
 @implementation WZVideoRateAdjustmentTool
 
+///检查并约束指定的变速范围
 void WZVideoRateAdjustmentToolCheckRange(WZCompositionRateAdjustmentRange *range) {
     if ((*range).origin < 0.0) {
         (*range).origin = 0.0;
@@ -37,14 +38,13 @@ void WZVideoRateAdjustmentToolCheckRange(WZCompositionRateAdjustmentRange *range
     }
 }
 
-
+///根据参数修改某轨道的速率
 + (void)rateAdjustmentWithTrack:(AVMutableCompositionTrack *)track rate:(double)rate range:(WZCompositionRateAdjustmentRange)range sourceDuration:(CMTime)sourceDuration {
-    if (rate <= 0) { rate = 1.0; NSLog(@"速率配置错误"); }
+    if (rate <= 0) { rate = 1.0; NSLog(@"速率配置错误, 修改为内置配置"); }
     WZVideoRateAdjustmentToolCheckRange(&range);
     
     CMTime rateAdjustmentOrigin = CMTimeMake(sourceDuration.value * range.origin, sourceDuration.timescale);
     CMTime rateAdjustmentDestination = CMTimeMake(sourceDuration.value * range.destination, sourceDuration.timescale);
-    
     CMTimeRange targetTimeRange = CMTimeRangeMake(rateAdjustmentOrigin, rateAdjustmentDestination);
     
     CMTime targetDuration = CMTimeMake(CMTimeSubtract(rateAdjustmentDestination, rateAdjustmentOrigin).value / rate, sourceDuration.timescale);
@@ -53,10 +53,10 @@ void WZVideoRateAdjustmentToolCheckRange(WZCompositionRateAdjustmentRange *range
 }
 
 
-
 + (AVAsset *)rateAdjustmentWithAsset:(AVAsset *)asset rate:(double)rate range:(WZCompositionRateAdjustmentRange)range {
     //过滤操作
-    if (rate <= 0) { rate = 1.0; NSLog(@"速率配置错误"); }
+    if (rate <= 0) { rate = 1.0; NSLog(@"速率配置错误, 修改为内置配置"); }
+    
     WZVideoRateAdjustmentToolCheckRange(&range);
     
     if (range.origin == range.destination || rate == 1.0) {
@@ -64,9 +64,9 @@ void WZVideoRateAdjustmentToolCheckRange(WZCompositionRateAdjustmentRange *range
     }
     
     AVMutableComposition *composition = [AVMutableComposition composition];
-    //视轨
-    NSArray *traskTypes = @[AVMediaTypeVideo, AVMediaTypeAudio];
-    for (NSString *type in traskTypes) {
+    NSArray <NSString *>*traskTypes = @[AVMediaTypeVideo, AVMediaTypeAudio];
+    
+    [traskTypes enumerateObjectsUsingBlock:^(NSString *  _Nonnull type, NSUInteger idx, BOOL * _Nonnull stop) {
         [[asset tracksWithMediaType:type] enumerateObjectsUsingBlock:^(AVAssetTrack * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSError *error = nil;
             AVMutableCompositionTrack *track = [composition addMutableTrackWithMediaType:type preferredTrackID:kCMPersistentTrackID_Invalid];
@@ -77,7 +77,8 @@ void WZVideoRateAdjustmentToolCheckRange(WZCompositionRateAdjustmentRange *range
                 [composition removeTrack:track];
             }
         }];
-    }
+    }];
+   
    
     return composition;
 }
