@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "WZLoopView.h"
 #import "WZScrollOptions.h"
 #import "UIButton+WZMinistrant.h"
 #import "WZSystemDetails.h"
@@ -16,14 +15,15 @@
 
 @interface MainViewController ()
 
-@property (nonatomic, strong) WZLoopView *loop;
+
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSArray <WZVCModel *>* sources;
-@property (nonatomic, assign) int a;
+
 
 @end
 
 @implementation MainViewController
+
 
 #pragma mark - VC Lifecycle
 
@@ -32,6 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"导航栏";
+    
 //    appBuild();
 //    appVersion();
 //    appBundleID();
@@ -48,20 +49,9 @@
     //数据
     _sources = [WZVCModel source];
     //view
-    [self.view addSubview:self.loop];
     [self.view addSubview:self.table];
   
-  
-    CMTime frameRate = CMTimeMake(1, 25.0);//
-    CMTime currentTime = CMTimeMake(0, frameRate.timescale);
-    int frameCount = 250;
-    for (int i = 0; i < frameCount; i++) {
-        currentTime = CMTimeAdd(currentTime, frameRate);
-    }
-   
 }
-
-
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -88,8 +78,7 @@
 //    self.table.frame = CGRectMake(0.0, top, screenW, height);
 //}
 
-#pragma mark -
-
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _sources.count;
 }
@@ -140,7 +129,7 @@
      }
 }
 
-
+#pragma mark - Private
 - (void)pushToMediaVC {
     [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
         if (videoAuthorization
@@ -166,9 +155,7 @@
 //     NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
 //}
 
-
 #pragma mark - WZVideoPickerControllerProtocol
-
 ///右击
 - (void)videoPickerControllerDidClickedRightItem; {
     
@@ -194,10 +181,10 @@
             make.left.mas_equalTo((self.view));
             make.right.mas_equalTo(self.view);
             if (@available(iOS 11.0, *)) {
-                make.top.mas_equalTo(self.loop.mas_bottom);
+                make.top.mas_equalTo(self.view.mas_safeAreaLayoutGuideTop);
                 make.bottom.mas_equalTo(self.view.mas_safeAreaLayoutGuideBottom);
             } else {
-                make.top.mas_equalTo(self.loop.mas_bottom);
+                make.top.mas_equalTo(self.mas_topLayoutGuide);
                 make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
             }
         }];
@@ -228,21 +215,6 @@
     return _table;
 }
 
-//假图
-- (WZLoopView *)loop {
-    if (!_loop) {
-        _loop = [[WZLoopView alloc] initWithFrame:CGRectMake(0.0, MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT, MACRO_FLOAT_SCREEN_WIDTH, 100)
-                                           images:@[@"testImage0.jpg"
-                                                    , @"testImage1.jpg"
-                                                    , @"testImage2.jpg"
-                                                    , @"testImage3.jpg"
-                                                    , @"testImage4.jpg"
-                                                    , @"testImage5.jpg"
-                                                    , @"testImage6.jpg"
-                                                    , @"testImage7.jpg", ]
-                                             loop:true delay:2];
-    }
-    return _loop;
-}
+
 
 @end

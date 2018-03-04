@@ -20,7 +20,6 @@
 
 - (void)defaultConfig {
     self.frame = [UIScreen mainScreen].bounds;
-    
     NSMutableArray *tmpArr = [NSMutableArray array];
 
     for (int i = 0; i < _nodeCount; i++) {

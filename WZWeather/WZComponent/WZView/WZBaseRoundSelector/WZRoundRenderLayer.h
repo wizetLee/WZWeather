@@ -31,6 +31,7 @@
 @property (nonatomic, weak) id<WZRoundRenderLayerDelegate> renderLayerDelegate;
 
 - (instancetype)initWithCircleRadius:(CGFloat)circleRadius layerLineWidth:(CGFloat)layerLineWidth;
+//需要增加改颜色的接口
 
 
 @end

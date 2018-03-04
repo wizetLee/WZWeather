@@ -19,7 +19,7 @@
     
     WZVCModel *VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZTestViewController.class;
-    VCModel.headline = @"WZTestViewController 临时测试专用";
+    VCModel.headline = @"临时测试";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
@@ -27,57 +27,70 @@
     VCModel.headline = @"跳转到：拍摄、录像";
     [_sources addObject:VCModel];
     
-    
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZAVPlayerViewController.class;
-    VCModel.headline = @"播放和animationTool测试";
+    VCModel.headline = @"视频：播放和animationTool测试";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZPhotoCatalogueController.class;
-    VCModel.headline = @"图片选取";
+    VCModel.headline = @"图片：图片选取";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZVideoPickerController.class;
-    VCModel.headline = @"视频选取、合并、删除";
+    VCModel.headline = @"视频：视频选取、合并、删除";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_ConvertPhotosIntoVideoController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"图片转视频demo";
+    VCModel.headline = @"视频：图片转视频demo";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"图片转视频(GPUImage)demo";
+    VCModel.headline = @"视频：图片转视频(GPUImage)demo";
     [_sources addObject:VCModel];
-    
-//    VCModel = WZVCModel.alloc.init;
-//    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
-//    VCModel.type = WZVCModelTransitionType_Push_FromNib;
-//    VCModel.headline = @"AnimatePageControlDemo";
-//    [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_WrapViewController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"弯曲模型";
+    VCModel.headline = @"图片：弯曲模型";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_VideoReversalController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"视频倒放";
+    VCModel.headline = @"视频：视频倒放";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_VideoRateAdjustmentController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"视频速率";
+    VCModel.headline = @"视频：视频速率";
     [_sources addObject:VCModel];
+    
+    //    VCModel = WZVCModel.alloc.init;
+    //    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
+    //    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    //    VCModel.headline = @"控件：AnimatePageControlDemo";
+    //    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_RateViewController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    VCModel.headline = @"控件：评分选取";
+    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_RoundSelectorController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    VCModel.headline = @"控件：圆圈选数据";
+    [_sources addObject:VCModel];
+    
+    
     return _sources;
 }
 

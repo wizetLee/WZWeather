@@ -58,8 +58,8 @@
 - (CAShapeLayer *)surfaceLayer {
     if (!_surfaceLayer) {
         _surfaceLayer = [CAShapeLayer layer];
-//        _surfaceLayer.strokeColor = UIColorFromRGB(0xffc529).CGColor;
         _surfaceLayer.fillColor = [UIColor clearColor].CGColor;
+        _surfaceLayer.strokeColor = MACRO_COLOR_HEX(0xffc529).CGColor;
         _surfaceLayer.lineWidth = _layerLineWidth;
         _surfaceLayer.lineCap = @"round";
     }
@@ -70,8 +70,8 @@
 - (CAShapeLayer *)bottomLayer {
     if (!_bottomLayer) {
         _bottomLayer = [CAShapeLayer layer];
-//        _bottomLayer.strokeColor = UIColorFromRGB(0xfff8ea).CGColor;
         _bottomLayer.fillColor = [UIColor clearColor].CGColor;
+        _bottomLayer.strokeColor = MACRO_COLOR_HEX(0xfff8ea).CGColor;
         _bottomLayer.lineWidth = _layerLineWidth;
         _bottomLayer.lineCap = @"round";
     }

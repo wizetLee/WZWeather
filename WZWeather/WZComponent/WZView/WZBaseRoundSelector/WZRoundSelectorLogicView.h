@@ -16,8 +16,15 @@ typedef NS_ENUM(NSInteger, WZRSStatus) {
     WZRSStatusOnFourthArea   = 4
 };
 
+/*
+  4 |   1
+ ___|____
+    |
+  3 |   2
+ **/
+
 /**
- *  renderlayer 总是居中 
+ *  renderlayer 总是居中     抽象类，使用其子类
  */
 @interface WZRoundSelectorLogicView : UIView
 
@@ -30,6 +37,9 @@ typedef NS_ENUM(NSInteger, WZRSStatus) {
 
 @property (nonatomic, assign) WZRSStatus status;
 
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (instancetype) initWithFrame:(CGRect)frame
                       curValue:(double)curValue
                       maxValue:(double)maxValue;

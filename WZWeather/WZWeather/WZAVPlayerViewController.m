@@ -83,7 +83,6 @@
     _player = [[AVPlayer alloc] initWithPlayerItem:_targetItem];
     
     
-    
     __weak typeof(self) weakSelf = self;
     _timeObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.5, 600) queue:nil usingBlock:^(CMTime time) {
      //可以在此处理 配置一个循环播放的设置
@@ -145,6 +144,7 @@
         _exportButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, screenH - bottom - 44.0, 2 * 44.0, 44.0)];
         [self.view addSubview:_exportButton];
         _exportButton.backgroundColor = [UIColor yellowColor];
+        [_exportButton setTitle:@"合成并保存" forState:UIControlStateNormal];
         [_exportButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_exportButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -347,7 +347,6 @@
         
         exportSession.timeRange = range;///配置剪裁的位置
     }
-    
     
     {//导出
         __weak typeof(self) weakSelf = self;

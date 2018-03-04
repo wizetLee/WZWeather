@@ -29,6 +29,14 @@
 		407EC740204591E1001C065E /* Demo_VideoReversalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73A204591E0001C065E /* Demo_VideoReversalController.m */; };
 		407EC742204591E1001C065E /* Demo_VideoReversalController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */; };
 		407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74720459529001C065E /* WZVideoReversalTool.m */; };
+		4082B220204BB99A0046B609 /* Demo_RateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4082B21E204BB99A0046B609 /* Demo_RateViewController.m */; };
+		4082B221204BB99A0046B609 /* Demo_RateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4082B21F204BB99A0046B609 /* Demo_RateViewController.xib */; };
+		4082B225204BBE180046B609 /* WZStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4082B224204BBE170046B609 /* WZStarRatingView.m */; };
+		4082B22C204BC3CD0046B609 /* Demo_RoundSelectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4082B22A204BC3CD0046B609 /* Demo_RoundSelectorController.m */; };
+		4082B22D204BC3CD0046B609 /* Demo_RoundSelectorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4082B22B204BC3CD0046B609 /* Demo_RoundSelectorController.xib */; };
+		4082B232204BC3DF0046B609 /* newcontent_icon_coins@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4082B22E204BC3DC0046B609 /* newcontent_icon_coins@3x.png */; };
+		4082B233204BC3DF0046B609 /* SUPCoinsSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4082B22F204BC3DD0046B609 /* SUPCoinsSelector.m */; };
+		4082B234204BC3E00046B609 /* newcontent_icon_coins@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4082B231204BC3DF0046B609 /* newcontent_icon_coins@2x.png */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DB89151FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
@@ -328,7 +336,6 @@
 		84687CC1202552C00098A596 /* testImage0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CB9202552C00098A596 /* testImage0.jpg */; };
 		84687CC2202552C00098A596 /* testImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CBA202552C00098A596 /* testImage1.jpg */; };
 		84687CC3202552C00098A596 /* testImage5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84687CBB202552C00098A596 /* testImage5.jpg */; };
-		846904E01EFD284F007AD117 /* WZLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 846904DF1EFD284F007AD117 /* WZLoopView.m */; };
 		846920A81E63BB550048BBDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920A71E63BB550048BBDC /* main.m */; };
 		846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 846920AA1E63BB550048BBDC /* AppDelegate.m */; };
 		846920B31E63BB550048BBDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846920B21E63BB550048BBDC /* Assets.xcassets */; };
@@ -498,6 +505,18 @@
 		407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Demo_VideoReversalController.xib; sourceTree = "<group>"; };
 		407EC74620459529001C065E /* WZVideoReversalTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoReversalTool.h; sourceTree = "<group>"; };
 		407EC74720459529001C065E /* WZVideoReversalTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoReversalTool.m; sourceTree = "<group>"; };
+		4082B21D204BB99A0046B609 /* Demo_RateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_RateViewController.h; sourceTree = "<group>"; };
+		4082B21E204BB99A0046B609 /* Demo_RateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_RateViewController.m; sourceTree = "<group>"; };
+		4082B21F204BB99A0046B609 /* Demo_RateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_RateViewController.xib; sourceTree = "<group>"; };
+		4082B223204BBE170046B609 /* WZStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZStarRatingView.h; sourceTree = "<group>"; };
+		4082B224204BBE170046B609 /* WZStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZStarRatingView.m; sourceTree = "<group>"; };
+		4082B229204BC3CD0046B609 /* Demo_RoundSelectorController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_RoundSelectorController.h; sourceTree = "<group>"; };
+		4082B22A204BC3CD0046B609 /* Demo_RoundSelectorController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_RoundSelectorController.m; sourceTree = "<group>"; };
+		4082B22B204BC3CD0046B609 /* Demo_RoundSelectorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_RoundSelectorController.xib; sourceTree = "<group>"; };
+		4082B22E204BC3DC0046B609 /* newcontent_icon_coins@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newcontent_icon_coins@3x.png"; sourceTree = "<group>"; };
+		4082B22F204BC3DD0046B609 /* SUPCoinsSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPCoinsSelector.m; sourceTree = "<group>"; };
+		4082B230204BC3DE0046B609 /* SUPCoinsSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUPCoinsSelector.h; sourceTree = "<group>"; };
+		4082B231204BC3DF0046B609 /* newcontent_icon_coins@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newcontent_icon_coins@2x.png"; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DB89131FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageTrillColorOffsetFilter.h; sourceTree = "<group>"; };
@@ -1078,8 +1097,6 @@
 		84687CB9202552C00098A596 /* testImage0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage0.jpg; sourceTree = "<group>"; };
 		84687CBA202552C00098A596 /* testImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage1.jpg; sourceTree = "<group>"; };
 		84687CBB202552C00098A596 /* testImage5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage5.jpg; sourceTree = "<group>"; };
-		846904DE1EFD284F007AD117 /* WZLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLoopView.h; sourceTree = "<group>"; };
-		846904DF1EFD284F007AD117 /* WZLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZLoopView.m; sourceTree = "<group>"; };
 		846920A31E63BB550048BBDC /* WZWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WZWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846920A71E63BB550048BBDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		846920A91E63BB550048BBDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1177,8 +1194,6 @@
 		8483E7BF1FC2658C00C559EF /* WZTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTextView.m; sourceTree = "<group>"; };
 		8483E7C01FC2659A00C559EF /* WZTriangleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTriangleView.m; sourceTree = "<group>"; };
 		8483E7C11FC2659A00C559EF /* WZTriangleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTriangleView.h; sourceTree = "<group>"; };
-		8483E7C31FC265DF00C559EF /* WZStarRatingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZStarRatingView.h; sourceTree = "<group>"; };
-		8483E7C41FC265DF00C559EF /* WZStarRatingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZStarRatingView.m; sourceTree = "<group>"; };
 		8486332F1F95CCD20086C96E /* WZMediaController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaController.h; sourceTree = "<group>"; };
 		848633301F95CCD20086C96E /* WZMediaController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaController.m; sourceTree = "<group>"; };
 		848633451F95EBA60086C96E /* WZAppManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAppManager.h; sourceTree = "<group>"; };
@@ -1379,6 +1394,30 @@
 			path = "视频倒放";
 			sourceTree = "<group>";
 		};
+		4082B21B204BB8ED0046B609 /* 等级评分 */ = {
+			isa = PBXGroup;
+			children = (
+				4082B21D204BB99A0046B609 /* Demo_RateViewController.h */,
+				4082B21E204BB99A0046B609 /* Demo_RateViewController.m */,
+				4082B21F204BB99A0046B609 /* Demo_RateViewController.xib */,
+			);
+			path = "等级评分";
+			sourceTree = "<group>";
+		};
+		4082B21C204BB9000046B609 /* 圆圈数据 */ = {
+			isa = PBXGroup;
+			children = (
+				4082B231204BC3DF0046B609 /* newcontent_icon_coins@2x.png */,
+				4082B22E204BC3DC0046B609 /* newcontent_icon_coins@3x.png */,
+				4082B230204BC3DE0046B609 /* SUPCoinsSelector.h */,
+				4082B22F204BC3DD0046B609 /* SUPCoinsSelector.m */,
+				4082B229204BC3CD0046B609 /* Demo_RoundSelectorController.h */,
+				4082B22A204BC3CD0046B609 /* Demo_RoundSelectorController.m */,
+				4082B22B204BC3CD0046B609 /* Demo_RoundSelectorController.xib */,
+			);
+			path = "圆圈数据";
+			sourceTree = "<group>";
+		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1392,7 +1431,6 @@
 				840547531FB9A9380033EF9B /* WZToast */,
 				840A43951FB141B100F6D449 /* WZAlert */,
 				402AB18F1F0732D600136DB4 /* WZScrollOptions */,
-				846904DD1EFD284F007AD117 /* WZLoopView */,
 				40DC2B001EA2611C000968DB /* WZBaseRoundSelector */,
 			);
 			path = WZView;
@@ -2773,15 +2811,6 @@
 			path = UIImageView;
 			sourceTree = "<group>";
 		};
-		846904DD1EFD284F007AD117 /* WZLoopView */ = {
-			isa = PBXGroup;
-			children = (
-				846904DE1EFD284F007AD117 /* WZLoopView.h */,
-				846904DF1EFD284F007AD117 /* WZLoopView.m */,
-			);
-			path = WZLoopView;
-			sourceTree = "<group>";
-		};
 		8469209A1E63BB550048BBDC = {
 			isa = PBXGroup;
 			children = (
@@ -2820,11 +2849,11 @@
 				846920DF1E63D6920048BBDC /* MainViewController.m */,
 				84BED55F203E788D00A45A11 /* WZVCModel.h */,
 				84BED560203E788D00A45A11 /* WZVCModel.m */,
-				84ECD32D1FCC1D3B00282C9A /* WZAVPlayerViewController.h */,
-				84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */,
 				84135BAA202145CA005B2905 /* WZTestViewController.h */,
 				84135BAB202145CA005B2905 /* WZTestViewController.m */,
 				84135BAC202145CA005B2905 /* WZTestViewController.xib */,
+				84ECD32D1FCC1D3B00282C9A /* WZAVPlayerViewController.h */,
+				84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */,
 				84BED555203E746400A45A11 /* Demo */,
 				846920B21E63BB550048BBDC /* Assets.xcassets */,
 				846920B41E63BB550048BBDC /* LaunchScreen.storyboard */,
@@ -3018,6 +3047,8 @@
 		846F270F203FF6B7008E57C1 /* 控件 */ = {
 			isa = PBXGroup;
 			children = (
+				4082B21C204BB9000046B609 /* 圆圈数据 */,
+				4082B21B204BB8ED0046B609 /* 等级评分 */,
 				846F2710203FF6B7008E57C1 /* 动画PageControl */,
 			);
 			path = "控件";
@@ -3054,12 +3085,12 @@
 		8483E7C21FC265DF00C559EF /* WZStarRatingView */ = {
 			isa = PBXGroup;
 			children = (
+				4082B223204BBE170046B609 /* WZStarRatingView.h */,
+				4082B224204BBE170046B609 /* WZStarRatingView.m */,
 				848280CB200CA48F003AD79F /* bigDarkStar@2X.png */,
 				848280CE200CA490003AD79F /* bigDarkStar@3X.png */,
 				848280CC200CA48F003AD79F /* bigStar@2x.png */,
 				848280CD200CA48F003AD79F /* bigStar@3X.png */,
-				8483E7C31FC265DF00C559EF /* WZStarRatingView.h */,
-				8483E7C41FC265DF00C559EF /* WZStarRatingView.m */,
 			);
 			path = WZStarRatingView;
 			sourceTree = "<group>";
@@ -3364,12 +3395,14 @@
 				406140662046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib in Resources */,
 				846A30FF1FD0E686003CECAE /* asset_selectedOrigion_selected@2x.png in Resources */,
 				84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */,
+				4082B221204BB99A0046B609 /* Demo_RateViewController.xib in Resources */,
 				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
 				84ECD32B1FCBA7E400282C9A /* sample_clip1.m4v in Resources */,
 				8405474D1FB97A280033EF9B /* mask.png in Resources */,
 				84687CBD202552C00098A596 /* testImage7.jpg in Resources */,
 				846A31041FD0E686003CECAE /* message_oeuvre_btn_normal@3x.png in Resources */,
 				84687CBF202552C00098A596 /* testImage2.jpg in Resources */,
+				4082B22D204BC3CD0046B609 /* Demo_RoundSelectorController.xib in Resources */,
 				840A439D1FB18A3A00F6D449 /* photoShutter2.caf in Resources */,
 				4008F8141FDC0D2D000D67B5 /* TrillColorOffset.fsh in Resources */,
 				84810C0120438BAD00403FD8 /* shader2SampleDefaultF.fsh in Resources */,
@@ -3389,6 +3422,7 @@
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
 				848280D0200CA490003AD79F /* bigStar@2x.png in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
+				4082B232204BC3DF0046B609 /* newcontent_icon_coins@3x.png in Resources */,
 				84810C0620438BAD00403FD8 /* shaderColourModulationV.vsh in Resources */,
 				4078BC8C2048435900FDE851 /* Demo_VideoTransitionController.xib in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
@@ -3411,6 +3445,7 @@
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				4061405C2046F2630071F636 /* glow.jpg in Resources */,
 				84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */,
+				4082B234204BC3E00046B609 /* newcontent_icon_coins@2x.png in Resources */,
 				840A439F1FB18A6200F6D449 /* tickta.wav in Resources */,
 				84810C0720438BAD00403FD8 /* shaderDefaultF.fsh in Resources */,
 				84ECD3221FCBA7E400282C9A /* 01 Star Gazing.m4a in Resources */,
@@ -3647,6 +3682,7 @@
 				84514D761E9DCE7A00F07EF8 /* UIView+JKCustomBorder.m in Sources */,
 				840A43A21FB18AFC00F6D449 /* WZCameraAssist.m in Sources */,
 				84514CFC1E9DCE7A00F07EF8 /* NSString+JKHash.m in Sources */,
+				4082B220204BB99A0046B609 /* Demo_RateViewController.m in Sources */,
 				407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */,
 				84514CBC1E9DCE7A00F07EF8 /* NSFetchRequest+JKExtensions.m in Sources */,
 				84405E2D1EBC2C080019C63C /* WZDisplayLinkSuperviser.m in Sources */,
@@ -3672,11 +3708,13 @@
 				40287B2E1F09216C00D9383B /* UIButton+WZMinistrant.m in Sources */,
 				84514CD11E9DCE7A00F07EF8 /* NSDate+JKFormatter.m in Sources */,
 				84BC81911FCFDF6000FB76BC /* WZMediaRateTypeView.m in Sources */,
+				4082B225204BBE180046B609 /* WZStarRatingView.m in Sources */,
 				846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */,
 				84514D481E9DCE7A00F07EF8 /* UIImage+JKOrientation.m in Sources */,
 				84514CBE1E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m in Sources */,
 				845A421A201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m in Sources */,
 				844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */,
+				4082B233204BC3DF0046B609 /* SUPCoinsSelector.m in Sources */,
 				84514D0C1E9DCE7A00F07EF8 /* NSURL+JKParam.m in Sources */,
 				84514CCF1E9DCE7A00F07EF8 /* NSDate+JKCupertinoYankee.m in Sources */,
 				84514CD41E9DCE7A00F07EF8 /* NSDate+JKUtilities.m in Sources */,
@@ -3808,6 +3846,7 @@
 				849E0F2520494D4100D9502D /* BITransitionTypeSelectedView.m in Sources */,
 				84514D641E9DCE7A00F07EF8 /* UIScrollView+JKPages.m in Sources */,
 				84514D8A1E9DCE7A00F07EF8 /* UIWebView+JKLoadInfo.m in Sources */,
+				4082B22C204BC3CD0046B609 /* Demo_RoundSelectorController.m in Sources */,
 				402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */,
 				84514D781E9DCE7A00F07EF8 /* UIView+JKFind.m in Sources */,
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
@@ -3839,7 +3878,6 @@
 				84514D3C1E9DCE7A00F07EF8 /* UIFont+JKDynamicFontControl.m in Sources */,
 				84514D7F1E9DCE7A00F07EF8 /* UIView+JKVisuals.m in Sources */,
 				4078BC8B2048435900FDE851 /* Demo_VideoTransitionController.m in Sources */,
-				846904E01EFD284F007AD117 /* WZLoopView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

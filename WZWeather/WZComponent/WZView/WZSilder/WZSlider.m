@@ -18,10 +18,7 @@
 
 @implementation WZSlider
 
-//MARK: 滑动视图宽度
-- (CGFloat)thumbWidth {
-    return 15.0;
-}
+#pragma mark - initialization
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -32,6 +29,8 @@
     return self;
 }
 
+#pragma mark - Private
+
 - (void)createViews {
     [self addSubview:self.thumbView];
     _thumbView.frame = CGRectMake(0.0, 0.0, _thumbView.frame.size.width, _thumbView.frame.size.height);
@@ -41,6 +40,11 @@
     
     _pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
     [self addGestureRecognizer:_pan];
+}
+
+//MARK: 滑动视图宽度
+- (CGFloat)thumbWidth {
+    return 15.0;
 }
 
 - (void)pan:(UIPanGestureRecognizer *)pan {

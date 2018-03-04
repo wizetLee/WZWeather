@@ -11,16 +11,21 @@
 @interface WZTestViewController ()
 
 
+
 @end
 
 @implementation WZTestViewController
 
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
 
-   
-    
-    
+- (void)viewDidAppear:(BOOL)animated {
+
 }
 
 
@@ -28,8 +33,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
-}
 
+}
 
 
 

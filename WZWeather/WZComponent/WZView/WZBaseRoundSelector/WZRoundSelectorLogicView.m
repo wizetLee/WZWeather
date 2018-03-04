@@ -15,9 +15,7 @@
 @end
 
 
-
 @implementation WZRoundSelectorLogicView
-
 
 - (instancetype) initWithFrame:(CGRect)frame
                       curValue:(double)curValue
@@ -113,14 +111,14 @@
     [self metric:renderAngle / (M_PI * 2.0)];
 }
 
-- (void)metric:(double)metric {
-  
-}
+//子类
+- (void)metric:(double)metric {}
 
 - (void)renderAngle:(double)renderAngle {
     _renderLayer.renderAngle = renderAngle;
 }
 
+//匹配设备用到的接口
 + (CGFloat)ratio {
     CGFloat screen6W = 375.0;
     CGFloat acpectAspectRatio = 1.0;

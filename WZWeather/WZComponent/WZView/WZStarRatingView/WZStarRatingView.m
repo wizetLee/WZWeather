@@ -25,8 +25,8 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) NSMutableArray<NSValue *> *frameMArr;
 
-@property (nonatomic, strong) NSMutableArray *starArr;
-@property (nonatomic, strong) NSMutableArray *darkStarArr;
+@property (nonatomic, strong) NSMutableArray <UIImageView *>*starArr;
+@property (nonatomic, strong) NSMutableArray <UIImageView *>*darkStarArr;
 
 @end
 
@@ -75,26 +75,16 @@
 
 - (void)vitalizeStarImage:(UIImage *)image {
     if ([image isKindOfClass:[UIImage class]]) {
-        if (self.starArr.count > 0) {
-            for (id obj in self.starArr) {
-                if ([obj isKindOfClass:[UIImageView class]]) {
-                    UIImageView *tmpImageView = (UIImageView *)obj;
-                    tmpImageView.image = image;
-                }
-            }
+        for (UIImageView *obj in self.starArr) {
+            obj.image = image;
         }
     }
 }
 
 - (void)vitalizeDarkStarImage:(UIImage *)image {
     if ([image isKindOfClass:[UIImage class]]) {
-        if (self.darkStarArr.count > 0) {
-            for (id obj in self.darkStarArr) {
-                if ([obj isKindOfClass:[UIImageView class]]) {
-                    UIImageView *tmpImageView = (UIImageView *)obj;
-                    tmpImageView.image = image;
-                }
-            }
+        for (UIImageView *obj in self.darkStarArr) {
+            obj.image = image;
         }
     }
 }
@@ -125,6 +115,8 @@
         UIImageView *camouflageViewSubview = [[UIImageView alloc] initWithFrame:starFrame];
         UIImageView *selfSubview = [[UIImageView alloc] initWithFrame:starFrame];
         
+        //内置的图片
+        NSAssert([UIImage imageNamed:@"bigStar"] && [UIImage imageNamed:@"bigDarkStar"], @"素材丢失");
         camouflageViewSubview.image = [UIImage imageNamed:@"bigStar"];
         selfSubview.image = [UIImage imageNamed:@"bigDarkStar"];
         

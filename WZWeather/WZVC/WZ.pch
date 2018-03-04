@@ -57,7 +57,7 @@
 
 #pragma mark - 常量
 
-#define MACRO_FLOAT_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width  //屏宽
+#define MACRO_FLOAT_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width   //屏宽
 #define MACRO_FLOAT_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height  //屏高
 #define MACRO_FLOAT_STSTUSBAR_HEIGHT (([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].length)?0:((([[[UIDevice currentDevice] systemVersion] floatValue] < 7)?0:[[UIApplication sharedApplication] statusBarFrame].size.height)))      //状态栏高度（区分iPhone iPad）
 #define MACRO_FLOAT_NAVIGATIONBAR_HEIGHT  44.0
@@ -77,7 +77,6 @@
      竖直 {88, 0, 34, 0}
      横  {32, 44, 21, 44}
  ****/
-
 
 #define MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK ((@available(iOS 11.0, *))?self.view.safeAreaInsets.top : -1)
 #define MACRO_VC_FLOAT_SAFEAREA_BOTTOM_BRICK ((@available(iOS 11.0, *))?self.view.safeAreaInsets.bottom : -1)
@@ -123,10 +122,10 @@
 #define MACRO_PATH_BUNDLE_RESOURCE(resource, type) [[NSBundle mainBundle] pathForResource:(resource) ofType:(type)];
 
 
-#pragma mark - 通知
-//applicaion处post
-#define MACRO_NOTIFICATION_ENTER_BACKGROUND @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
-#define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
+//#pragma mark - 通知
+////applicaion处post
+//#define MACRO_NOTIFICATION_ENTER_BACKGROUND @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
+//#define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
 
 
 

@@ -26,9 +26,13 @@ typedef NS_ENUM(NSUInteger, WZStarRatingViewType) {
 @property (nonatomic, assign) WZStarRatingViewType type;
 
 
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame starCount:(NSUInteger)starCount starSize:(CGSize)starSize spacing:(CGFloat)spacing totalValue:(NSUInteger)totalValue type:(WZStarRatingViewType)type;
 
+- (void)setFrame:(CGRect)frame NS_UNAVAILABLE;
+
 - (void)vitalizeStarImage:(UIImage *)image;                                         //更改星星图案
-- (void)vitalizeDarkStarImage:(UIImage *)image;
+- (void)vitalizeDarkStarImage:(UIImage *)image;                                     //更改星星图案
 
 @end

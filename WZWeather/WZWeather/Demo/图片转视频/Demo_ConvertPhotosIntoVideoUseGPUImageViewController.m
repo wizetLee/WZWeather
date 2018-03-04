@@ -84,6 +84,13 @@
     NSArray <NSDictionary *>*source = [self.class alertSource];
     NSUInteger count = source.count;
     for (NSUInteger i = 0; i < count; i++) {
+        if (i == WZConvertPhotosIntoVideoType_Blur
+            || i == WZConvertPhotosIntoVideoType_RToL_Blinds_Gradually
+            || i == WZConvertPhotosIntoVideoType_TToB_Blinds_Gradually
+            || i == WZConvertPhotosIntoVideoType_BToT_Blinds_Gradually
+            || i == WZConvertPhotosIntoVideoType_Star
+            || i == WZConvertPhotosIntoVideoType_Glow
+            ) {continue;}
         NSDictionary *dic = source[i];
         NSString *value = dic[[NSString stringWithFormat:@"%lu", (unsigned long)i]];
         UIAlertAction *action = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"效果 :  %@", value] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
