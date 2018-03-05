@@ -1,17 +1,17 @@
 //
-//  BIVideoTransitionEffectTool.m
+//  WZVideoTransitionEffectTool.m
 //  PuzzleVideoProject
 //
 //  Created by wizet on 23/1/18.
 //  Copyright © 2018年 wizet. All rights reserved.
 //
 
-#import "BIVideoTransitionEffectTool.h"
+#import "WZVideoTransitionEffectTool.h"
 #import <Photos/Photos.h>
-#import "BIVideoTransitionItem.h"
+#import "WZVideoTransitionItem.h"
 
 
-@interface BIVideoTransitionEffectTool()
+@interface WZVideoTransitionEffectTool()
 {
     CMTime _stubbornTransitionTime;//固定的视频过渡时间
     /*为了照顾前后的视频段(视频第一段和最后一段除外)，分别处理“视频时间”与“2*_stubbornTransitionTime的大小”的情况
@@ -27,12 +27,12 @@
     AVAssetExportSession *_exportSession;
 }
 
-@property (nonatomic, strong) NSMutableArray <BIVideoTransitionItem *>*videoSourcesList;    //视频源
+@property (nonatomic, strong) NSMutableArray <WZVideoTransitionItem *>*videoSourcesList;    //视频源
 //@property (nonatomic, assign) CGSize outputSize;   //输出的视频的尺寸
 
 @end
 
-@implementation BIVideoTransitionEffectTool
+@implementation WZVideoTransitionEffectTool
 
 - (instancetype)init
 {
@@ -45,7 +45,7 @@
 
 #pragma mark - Private
 - (void)defaultConfig {
-    _status = BIVideoTransitionEffectToolStatus_Idle;
+    _status = WZVideoTransitionEffectToolStatus_Idle;
     _stubbornTransitionTime = CMTimeMakeWithSeconds(1, 600);
     [self addNotification];
     _outputSize = CGSizeMake(720, 1024);
@@ -82,7 +82,7 @@
         exportSession.videoComposition = [_videoComposition copy];//应该和scale有所冲突
         exportSession.outputFileType = AVFileTypeMPEG4;
         
-        _status = BIVideoTransitionEffectToolStatus_Converting;
+        _status = WZVideoTransitionEffectToolStatus_Converting;
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (handler) {
@@ -91,14 +91,14 @@
                 NSError *error = nil;
                 if (exportSession.status == AVAssetExportSessionStatusFailed
                     || exportSession.status == AVAssetExportSessionStatusCancelled) {
-                    _status = BIVideoTransitionEffectToolStatus_Failed;
+                    _status = WZVideoTransitionEffectToolStatus_Failed;
                     error = exportSession.error;
                     NSLog(@"导出任务失败：%@", exportSession.error.description);
                     if ([_delegate respondsToSelector:@selector(videoTransitionEffectToolTaskFailed)]) {
                         [_delegate videoTransitionEffectToolTaskFailed];
                     }
                 } else if (exportSession.status == AVAssetExportSessionStatusCompleted) {
-                    _status = BIVideoTransitionEffectToolStatus_Completed;
+                    _status = WZVideoTransitionEffectToolStatus_Completed;
                     if ([_delegate respondsToSelector:@selector(videoTransitionEffectTool:completeWithOutputURL:)]) {
                         [_delegate videoTransitionEffectTool:self completeWithOutputURL:_outputURL];
                     }
@@ -120,6 +120,7 @@
         if (status == AVAssetExportSessionStatusExporting
             || status == AVAssetExportSessionStatusWaiting) {
             NSLog(@"系统方法视频导出进度：exportSession.progress = %f", exportSession.progress);
+         
             ///进度回调
             if ([_delegate respondsToSelector:@selector(videoTransitionEffectTool:progress:)]) {
                 [_delegate videoTransitionEffectTool:self progress:exportSession.progress];
@@ -146,7 +147,7 @@
     
     //视频list中size的统一规则要自定义配置
     
-    NSMutableArray <BIVideoTransitionItem *>* videoSourcesList = _videoSourcesList;
+    NSMutableArray <WZVideoTransitionItem *>* videoSourcesList = _videoSourcesList;
     
     if (videoSourcesList.count < 2) {
         NSLog(@"小于2个资源，不应当有过渡入口：合成失败");
@@ -182,7 +183,7 @@
     //--------------->视频音频插入准确的轨道、过渡时间的配置
     for (NSInteger i = 0; i < clipsCount; i++ ) {
         NSInteger alternatingIndex              = i % 2;                     //轨道切换角标
-        BIVideoTransitionItem *transitionItem   = [videoSourcesList objectAtIndex:i];
+        WZVideoTransitionItem *transitionItem   = [videoSourcesList objectAtIndex:i];
         AVAsset *asset                          = transitionItem.asset;
         
         CMTimeRange timeRangeInAsset = kCMTimeRangeZero;//资源的有效范围
@@ -214,8 +215,8 @@
             CMTime curTransitionTime = _stubbornTransitionTime;//预设过渡时间
             
             if (i + 1 < clipsCount) {
-                BIVideoTransitionItem *curItem  = [videoSourcesList objectAtIndex:i];
-                BIVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
+                WZVideoTransitionItem *curItem  = [videoSourcesList objectAtIndex:i];
+                WZVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
                 curItem.endTransitionDuration   = nextItem.startTransitionDuration = curTransitionTime;
                 
                 if (curItem.transitionEffectType == BIVideoTransitionEffectType_None) {
@@ -233,14 +234,14 @@
             {//根据过渡时间修改直通时间范围
                 if (i > 0) {//1 ~ n
                     //根据transitionDuration判断是否要延迟开场的时间
-                    BIVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
+                    WZVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
                     CMTime offsetTime                   = curItem.startTransitionDuration;
                     passThroughTimeRanges[i].start      = CMTimeAdd(passThroughTimeRanges[i].start, offsetTime);
                     passThroughTimeRanges[i].duration   = CMTimeSubtract(passThroughTimeRanges[i].duration, offsetTime);
                 }
                 
                 if (i+1 < clipsCount) {// 0 ~ n-1
-                    BIVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
+                    WZVideoTransitionItem *curItem      = [videoSourcesList objectAtIndex:i];
                     CMTime offsetTime                   = curItem.endTransitionDuration;
                     passThroughTimeRanges[i].duration   = CMTimeSubtract(passThroughTimeRanges[i].duration, offsetTime);
                 }
@@ -261,7 +262,7 @@
     NSMutableArray *instructions = [NSMutableArray array];
     NSMutableArray *trackMixArray = [NSMutableArray array];
     for (NSInteger i = 0; i < clipsCount; i++) {
-        BIVideoTransitionItem *curItem = [videoSourcesList objectAtIndex:i];
+        WZVideoTransitionItem *curItem = [videoSourcesList objectAtIndex:i];
         AVAsset *asset = curItem.asset;
         NSInteger alternatingIndex = i % 2;     //轨道切换角标
         
@@ -284,7 +285,7 @@
         
         {//过渡部分
             if (i + 1 < clipsCount) {
-                //                 BIVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
+                //                 WZVideoTransitionItem *nextItem = [videoSourcesList objectAtIndex:i + 1];
                 AVMutableVideoCompositionInstruction *transitionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
                 transitionInstruction.timeRange = transitionTimeRanges[i];//配置过渡范围
                 
@@ -329,7 +330,7 @@
     }
     
     //释放准备信号
-    _status = BIVideoTransitionEffectToolStatus_Ready;
+    _status = WZVideoTransitionEffectToolStatus_Ready;
 }
 
 ///视频过渡效果
@@ -450,7 +451,7 @@
 
 #pragma mark - Public
 - (void)startTask {
-    if (_status != BIVideoTransitionEffectToolStatus_Ready) {
+    if (_status != WZVideoTransitionEffectToolStatus_Ready) {
         NSLog(@"状态错误：非ready状态");
         return;
     }
@@ -467,7 +468,7 @@
 }
 
 - (void)cancelTask {
-    if (_status == BIVideoTransitionEffectToolStatus_Converting) {
+    if (_status == WZVideoTransitionEffectToolStatus_Converting) {
         [_exportSession cancelExport];
         if ([_delegate respondsToSelector:@selector(videoTransitionEffectToolTaskCanceled)]) {
             [_delegate videoTransitionEffectToolTaskCanceled];
@@ -478,9 +479,9 @@
 }
 
 - (void)prepareTaskWithAssetSources:(NSArray <AVAsset *> *)sources {
-    NSMutableArray <BIVideoTransitionItem *>*tmpMArr = NSMutableArray.array;
+    NSMutableArray <WZVideoTransitionItem *>*tmpMArr = NSMutableArray.array;
     for (AVAsset *tmpAsset in sources) {
-        BIVideoTransitionItem *item = BIVideoTransitionItem.alloc.init;
+        WZVideoTransitionItem *item = WZVideoTransitionItem.alloc.init;
         item.asset = tmpAsset;
         item.transitionEffectType = BIVideoTransitionEffectType_Dissolve;//无过渡效果
         [tmpMArr addObject:item];
@@ -488,13 +489,13 @@
     [self prepareTaskWithItemSources:tmpMArr];
 }
 
-- (void)prepareTaskWithItemSources:(NSArray <BIVideoTransitionItem *> *)sources {
+- (void)prepareTaskWithItemSources:(NSArray <WZVideoTransitionItem *> *)sources {
     [_videoSourcesList removeAllObjects];
     _videoSourcesList = nil;
     _videoSourcesList = [NSMutableArray arrayWithArray:sources];
    
     for (int i = 0; i <_videoSourcesList.count; i++) {
-        BIVideoTransitionItem *tmpItem = _videoSourcesList[i];
+        WZVideoTransitionItem *tmpItem = _videoSourcesList[i];
         if (i == 0) {
              tmpItem.transitionEffectType = BIVideoTransitionEffectType_Move_LToR;
         } else if (i == 1) {

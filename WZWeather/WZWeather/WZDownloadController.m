@@ -26,42 +26,10 @@
     return self;
 }
 
-- (void)loadView {
-    [super loadView];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createDataSource];
     [self addSubViews];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc {
-    
 }
 
 #pragma mark - Create dataSource
@@ -72,7 +40,7 @@
                                                , [NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4"],
                                                [NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4"],
                                                [NSURL URLWithString:@"http://mvideo.spriteapp.cn/video/2017/0510/5912b7078356c_wpc.mp4"],
-                                               [NSURL URLWithString:@"http://www.eso.org/public/archives/images/publicationtiff40k/eso1242a.tif"]
+                                               [NSURL URLWithString:@"http://www.eso.org/public/archives/images/publicationtiff40k/eso1242a.tif"]/*炒鸡大...3.9G*/
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/07/26/57974925b34a6_mini.jpg"]
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2016/12/26/586059118dd30_mini.jpg"]
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2017/04/26/5900b375744b2_mini.jpg"]]];
@@ -80,7 +48,7 @@
     _downloader = [WZDownloadRequest downloader];
     [_downloader downloadWithURLArray:tmpUrlArray completedWithError:^(NSMutableArray<WZDownloadTarget *> *targets, NSError * _Nullable error) {
         if (error) {
-            NSLog(@"error: %@", error.debugDescription);
+            NSLog(@"下载错误 or 取消： error: %@", error.debugDescription);
             //保存为resumeData
             if ([error.userInfo[NSURLSessionDownloadTaskResumeData] isKindOfClass:[NSData class]]) {
                 NSData *resumeData = error.userInfo[NSURLSessionDownloadTaskResumeData];
@@ -90,12 +58,14 @@
                 }
             }
         } else {
+            NSLog(@"下载成功");
             //修改数据源  更新数据源
             NSString *urlPath = nil;
             for (WZDownloadTarget *target in targets) {
                 if (!urlPath) {
                     urlPath = target.url.path;
                 }
+                //组件内部做的事情 从单例中移除
                 [weakSelf.downloader.downloadTargets removeObject:target];
             }
             weakSelf.table.datas = weakSelf.downloader.downloadTargets;
@@ -114,18 +84,15 @@
             // 2.5.设置点击通知的启动图片
             localNote.alertLaunchImage = @"123Abc";
             // 2.6.设置alertTitle
-            localNote.alertTitle =  @"你有一条新通知";
+            localNote.alertTitle =  @"您有一条新通知";
             // 2.7.设置有通知时的音效
             localNote.soundName = @"buyao.wav";
             // 2.8.设置应用程序图标右上角的数字
             localNote.applicationIconBadgeNumber = 999;
-            
             // 2.9.设置额外信息
             localNote.userInfo = @{@"type" : @1};
-            
             // 3.调用通知
             [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
-            
             
         }
     } finishedDownload:^(NSMutableArray<WZDownloadTarget *> *targets, NSURL * _Nullable location) {
@@ -173,6 +140,7 @@
             }
         }
         
+        //暂停所有相同的任务
         for (WZDownloadTarget *target in _downloader.downloadTargets) {
             if (data != target && [target.url.path isEqualToString:data.url.path]) {
                 target.pause = data.pause;

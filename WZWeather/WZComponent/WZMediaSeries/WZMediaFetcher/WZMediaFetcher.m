@@ -726,4 +726,54 @@
     return properties;
 }
 
+
+#pragma mark - 判断资源为GIF
+////方法1 iOS 9.0
++ (BOOL)adjustGIFWithAsset:(PHAsset *)asset {
+    if ([asset isKindOfClass:[PHAsset class]]) {
+        //每个asset 都有一个或者多个PHAssetResource(如：被编辑保存过的aseet会有若干个resource, 且被修改后的GIF类型的asset得uniformTypeIdentifier 会发生改变变成了public.jpeg 类型，所以修改多地GIF的就不再是GIF了，所以要对比最后一个resource的类型)
+        NSArray<PHAssetResource *>* tmpArr = [PHAssetResource assetResourcesForAsset:asset];
+        if (tmpArr.count) {
+            PHAssetResource *resource = tmpArr.lastObject;
+            if (resource.uniformTypeIdentifier.length) {
+                return UTTypeConformsTo( (__bridge CFStringRef)resource.uniformTypeIdentifier, kUTTypeGIF);
+            }
+        }
+    }
+    return false;
+}
+
+//方法2
++ (BOOL)adjustGIFWithAsset2:(PHAsset *)asset {
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    [options setSynchronous:true];//同步
+    __block NSString *dataUTIStr = nil;
+    if ([asset isKindOfClass:[PHAsset class]]) {
+        [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+            dataUTIStr = dataUTI;
+        }];
+    }
+    if (dataUTIStr.length) {
+        return UTTypeConformsTo( (__bridge CFStringRef)dataUTIStr, kUTTypeGIF);
+    }
+    return false;
+}
+
+//保存GIF
+- (void)saveGifWithData:(NSData *)data {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions alloc] init];
+        options.shouldMoveFile = true;
+        [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@", error.debugDescription);
+        } else {
+            NSLog(@"保存成功");
+        }
+    }];
+}
+
 @end

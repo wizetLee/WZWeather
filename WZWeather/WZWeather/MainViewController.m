@@ -125,6 +125,9 @@
          } else if (model.VCClass == WZTestViewController.class) {
              WZTestViewController *vc = [[WZTestViewController alloc] init];
              [self.navigationController pushViewController:vc animated:true];
+         } else if (model.VCClass == WZDownloadController.class) {
+             WZDownloadController *vc = [[WZDownloadController alloc] init];
+             [self.navigationController pushViewController:vc animated:true];
          }
      }
 }
@@ -190,14 +193,15 @@
         }];
         table.delegate = (id<UITableViewDelegate>)self;
         table.dataSource = (id<UITableViewDataSource>)self;
-        table.backgroundColor = UIColor.yellowColor;
+        table.backgroundColor = UIColor.lightGrayColor;
         table.estimatedRowHeight = UITableViewAutomaticDimension;
         table.estimatedSectionFooterHeight = 0.0;
         table.estimatedSectionHeaderHeight = 0.0;
         
         [table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+        
         __weak typeof(self) weakSelf = self;
-        table.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+        table.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             [weakSelf.table.mj_header endRefreshing];
         }];
         

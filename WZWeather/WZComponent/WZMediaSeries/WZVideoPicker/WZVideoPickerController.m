@@ -12,7 +12,7 @@
 #import "WZMediaFetcher.h"
 #import "WZAPLSimpleEditor.h"
 #import "WZVideoSurfAlert.h"
-#import "BIVideoTransitionEffectTool.h"
+#import "WZVideoTransitionEffectTool.h"
 
 @interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource , PHPhotoLibraryChangeObserver>
 
@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) NSMutableArray <PHAsset *> *mediaAssetData;
 @property (nonatomic, strong) WZAPLSimpleEditor *editor;
-@property (nonatomic, strong) BIVideoTransitionEffectTool *videoTransitionEffectTool;
+@property (nonatomic, strong) WZVideoTransitionEffectTool *videoTransitionEffectTool;
 
 @property (nonatomic, assign) BOOL innerMode;//在选择的模式之中
 
@@ -169,18 +169,18 @@
                 if (_mediaAssetData.count > indexPath.row) {
                     PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
                     [WZMediaFetcher fetchVideoWith:tmpPHAsset synchronous:true handler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-                        BIVideoTransitionItem *item = [[BIVideoTransitionItem alloc] init];
+                        WZVideoTransitionItem *item = [[WZVideoTransitionItem alloc] init];
                         item.asset = asset;
                         [itemMArr addObject:item];
                     }];
                 }
             }
             
-            _videoTransitionEffectTool = [[BIVideoTransitionEffectTool alloc] init];
+            _videoTransitionEffectTool = [[WZVideoTransitionEffectTool alloc] init];
             _videoTransitionEffectTool.outputSize = CGSizeMake(720, 1280);
             [_videoTransitionEffectTool prepareTaskWithItemSources:itemMArr];
             [_videoTransitionEffectTool startTask];
-            _videoTransitionEffectTool.delegate = (id<BIVideoTransitionEffectToolProtocol>)self;
+            _videoTransitionEffectTool.delegate = (id<WZVideoTransitionEffectToolProtocol>)self;
             
 //            __weak typeof(self) weakSelf = self;
 //            _editor = [[WZAPLSimpleEditor alloc] init];

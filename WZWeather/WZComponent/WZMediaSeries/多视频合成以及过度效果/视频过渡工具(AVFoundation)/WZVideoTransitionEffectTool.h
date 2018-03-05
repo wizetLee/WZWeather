@@ -1,5 +1,5 @@
 //
-//  BIVideoTransitionEffectTool.h
+//  WZVideoTransitionEffectTool.h
 //  PuzzleVideoProject
 //
 //  Created by wizet on 23/1/18.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import "BIVideoTransitionItem.h"
+#import "WZVideoTransitionItem.h"
 
 /*
  考虑：只使用AVFoundation层面的动画还是使用GPUImage制作相应的视频过渡效果
@@ -30,21 +30,21 @@
     8、播放速率：
  */
 
-typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {
-    BIVideoTransitionEffectToolStatus_Idle                = 0,      //空闲状态（资源不足/资源为空）
-    BIVideoTransitionEffectToolStatus_Ready,                        //可开始合成
-    BIVideoTransitionEffectToolStatus_Completed,                    //合成完毕
-    BIVideoTransitionEffectToolStatus_Failed,                       //合成失败
-    BIVideoTransitionEffectToolStatus_Converting,                   //正在合成
+typedef NS_ENUM(NSUInteger, WZVideoTransitionEffectToolStatus) {
+    WZVideoTransitionEffectToolStatus_Idle                = 0,      //空闲状态（资源不足/资源为空）
+    WZVideoTransitionEffectToolStatus_Ready,                        //可开始合成
+    WZVideoTransitionEffectToolStatus_Completed,                    //合成完毕
+    WZVideoTransitionEffectToolStatus_Failed,                       //合成失败
+    WZVideoTransitionEffectToolStatus_Converting,                   //正在合成
 };
 
-@class BIVideoTransitionEffectTool;
-@protocol BIVideoTransitionEffectToolProtocol <NSObject>
+@class WZVideoTransitionEffectTool;
+@protocol WZVideoTransitionEffectToolProtocol <NSObject>
 ///视频合成的进度
-- (void)videoTransitionEffectTool:(BIVideoTransitionEffectTool *)tool progress:(float)progress;
+- (void)videoTransitionEffectTool:(WZVideoTransitionEffectTool *)tool progress:(float)progress;
 
 ///完成情况成功
-- (void)videoTransitionEffectTool:(BIVideoTransitionEffectTool *)tool completeWithOutputURL:(NSURL *)outputURL;
+- (void)videoTransitionEffectTool:(WZVideoTransitionEffectTool *)tool completeWithOutputURL:(NSURL *)outputURL;
 
 ///任务失败
 - (void)videoTransitionEffectToolTaskFailed;
@@ -55,12 +55,12 @@ typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {
 
 @end
 
-@interface BIVideoTransitionEffectTool : NSObject
+@interface WZVideoTransitionEffectTool : NSObject
 
-@property (nonatomic,   weak) id <BIVideoTransitionEffectToolProtocol>delegate;
-@property (nonatomic, assign) BIVideoTransitionEffectToolStatus status;
+@property (nonatomic,   weak) id <WZVideoTransitionEffectToolProtocol>delegate;
+@property (nonatomic, assign) WZVideoTransitionEffectToolStatus status;
 @property (nonatomic, strong) NSURL *outputURL;   //保存的位置  注意:内置的是mp4的文件类型
-@property (nonatomic, strong, readonly) NSMutableArray <BIVideoTransitionItem *>*videoSourcesList;//配置过渡效果
+@property (nonatomic, strong, readonly) NSMutableArray <WZVideoTransitionItem *>*videoSourcesList;//配置过渡效果
 @property (nonatomic, assign) CGSize outputSize; //内置为{720,1024}
 
 - (void)startTask;      //开始任务
@@ -69,7 +69,7 @@ typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectToolStatus) {
 ///首次任务前的准备，或者更换了资源，都需要prepareTask（主要是需要吧status设置为ready状态）（以下3个接口功能一样）
 //- (void)prepareTask;
 - (void)prepareTaskWithAssetSources:(NSArray <AVAsset *> *)sources; //更换数据源之后
-- (void)prepareTaskWithItemSources:(NSArray <BIVideoTransitionItem *> *)sources;
+- (void)prepareTaskWithItemSources:(NSArray <WZVideoTransitionItem *> *)sources;
 
 
 @end

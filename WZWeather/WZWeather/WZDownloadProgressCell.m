@@ -49,11 +49,16 @@
     _progressLabel.text = @"0.000000";
     
     CGFloat edge = 10;
-    _actionBtn = [[UIButton alloc] initWithFrame:CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - WZDownloadProgressCellHeight, edge, WZDownloadProgressCellHeight - edge, WZDownloadProgressCellHeight - edge)];
+    _actionBtn = [[UIButton alloc] initWithFrame:CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - edge - WZDownloadProgressCellHeight
+                                                            , WZDownloadProgressCellHeight / 2.0
+                                                            , WZDownloadProgressCellHeight - edge
+                                                            , WZDownloadProgressCellHeight / 2.0 - edge)];
     [self.contentView addSubview:_actionBtn];
-    _actionBtn.backgroundColor = [UIColor greenColor];
     [_actionBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_actionBtn setTitle:@"暂停" forState:UIControlStateNormal];
+    _actionBtn.backgroundColor = [UIColor greenColor];
     self.contentView.backgroundColor = [UIColor yellowColor];
+    
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0.0, WZDownloadProgressCellHeight - 10, MACRO_FLOAT_SCREEN_WIDTH, 10)];
     line.backgroundColor = [UIColor blackColor];
     [self.contentView addSubview:line];
@@ -65,6 +70,13 @@
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic[@"data"] = _data;
         [self.variousViewDelegate variousView:self param:dic];
+    }
+    if (((WZDownloadTarget *)_data).pause) {
+        [_actionBtn setTitle:@"下载" forState:UIControlStateNormal];
+        _actionBtn.backgroundColor = [UIColor redColor];
+    } else {
+        [_actionBtn setTitle:@"暂停" forState:UIControlStateNormal];
+        _actionBtn.backgroundColor = [UIColor greenColor];
     }
 }
 

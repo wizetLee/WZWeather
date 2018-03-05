@@ -16,12 +16,16 @@
 
 @implementation WZTestViewController
 
+
 - (void)dealloc {
     NSLog(@"%s", __func__);
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -36,6 +40,19 @@
 
 }
 
+//冒泡  升序
+void bubble(int a[], int size) {
+    int i, j, tmp;
+    for (i = 0; i < size; i++) {
+        for (j = 1; j < size - i; j++) {
+            if (a[j] < a[i]) {
+                
+            }
+            tmp = a[i];
+            
+        }
+    }
+}
 
 
 @end

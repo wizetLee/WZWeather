@@ -1,5 +1,5 @@
 //
-//  BIVideoTransitionItem.h
+//  WZVideoTransitionItem.h
 //  PuzzleVideoProject
 //
 //  Created by wizet on 23/1/18.
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, BIVideoTransitionEffectType) {
  videoleap APP中这个item的type 决定与后面视频的过渡配置效果
  **/
 ///即将用于过渡的item
-@interface BIVideoTransitionItem : NSObject
+@interface WZVideoTransitionItem : NSObject
 
 @property (nonatomic, strong) AVAsset *asset;                   //source
 @property (nonatomic, assign) BIVideoTransitionEffectType transitionEffectType;//与后下一个视频的过渡效果

@@ -69,7 +69,7 @@ typedef void (^DownloadTaskDownloadProcess)(NSMutableArray <WZDownloadTarget *>*
 double bytesTransitionKB(int64_t bytes);
 double bytesTransitionMB(int64_t bytes);
 
-
-
+//新增任务
+- (void)addTaskWithURL:(NSURL *_Nullable)url;
 
 @end

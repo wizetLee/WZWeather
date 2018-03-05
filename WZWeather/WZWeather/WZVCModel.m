@@ -91,6 +91,12 @@
     [_sources addObject:VCModel];
     
     
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZDownloadController.class;
+    VCModel.headline = @"资源下载";
+    [_sources addObject:VCModel];
+    
     return _sources;
 }
 

@@ -116,7 +116,7 @@
         UIImageView *selfSubview = [[UIImageView alloc] initWithFrame:starFrame];
         
         //内置的图片
-        NSAssert([UIImage imageNamed:@"bigStar"] && [UIImage imageNamed:@"bigDarkStar"], @"素材丢失");
+        NSAssert([UIImage imageNamed:@"bigStar"] || [UIImage imageNamed:@"bigDarkStar"], @"素材丢失");
         camouflageViewSubview.image = [UIImage imageNamed:@"bigStar"];
         selfSubview.image = [UIImage imageNamed:@"bigDarkStar"];
         
@@ -241,7 +241,7 @@
     return _darkStarArr;
 }
 
-//利用值计算位置 这里写得不够好
+//10000的作用是提高精度
 - (void)setPercentageValue:(double)percentageValue {
     if (percentageValue > 1.0) {
         _percentageValue = 1.0;

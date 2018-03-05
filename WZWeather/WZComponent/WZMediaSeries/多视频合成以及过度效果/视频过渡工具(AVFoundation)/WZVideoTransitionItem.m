@@ -1,14 +1,14 @@
 //
-//  BIVideoTransitionItem.m
+//  WZVideoTransitionItem.m
 //  PuzzleVideoProject
 //
 //  Created by wizet on 23/1/18.
 //  Copyright © 2018年 wizet. All rights reserved.
 //
 
-#import "BIVideoTransitionItem.h"
+#import "WZVideoTransitionItem.h"
 
-@implementation BIVideoTransitionItem
+@implementation WZVideoTransitionItem
 
 - (instancetype)init
 {
