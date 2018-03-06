@@ -10,6 +10,7 @@
 
 @interface WZTestViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *textFiled;
 
 
 @end
@@ -18,20 +19,17 @@
 
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
-    
+   
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
-    
+   
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-
+ 
 }
-
 
 
 - (void)viewWillDisappear:(BOOL)animated {

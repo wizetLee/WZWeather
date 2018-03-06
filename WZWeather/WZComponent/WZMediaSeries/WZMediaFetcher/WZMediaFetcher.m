@@ -776,4 +776,16 @@
     }];
 }
 
+
+//保存某一个视频资源
++ (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:URL];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            if (handler) {handler(success);}
+        }];
+    }
+}
+
 @end

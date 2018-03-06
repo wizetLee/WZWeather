@@ -207,4 +207,6 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 #pragma mark - 删除某一些资源
 + (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler;
 
++ (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler;
+
 @end

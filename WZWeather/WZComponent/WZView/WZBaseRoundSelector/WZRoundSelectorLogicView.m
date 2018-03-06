@@ -17,6 +17,7 @@
 
 @implementation WZRoundSelectorLogicView
 
+#pragma mark - Initialization
 - (instancetype) initWithFrame:(CGRect)frame
                       curValue:(double)curValue
                       maxValue:(double)maxValue {
@@ -44,6 +45,7 @@
     return self;
 }
 
+#pragma mark - Private
 - (void)addSubviews {
     self.backgroundColor = [UIColor clearColor];
     [self.layer addSublayer:self.renderLayer];
@@ -111,7 +113,8 @@
     [self metric:renderAngle / (M_PI * 2.0)];
 }
 
-//子类
+#pragma mark - Public
+//子类overwrite
 - (void)metric:(double)metric {}
 
 - (void)renderAngle:(double)renderAngle {

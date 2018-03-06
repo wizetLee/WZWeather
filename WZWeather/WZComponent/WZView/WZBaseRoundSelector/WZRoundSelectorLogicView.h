@@ -24,7 +24,8 @@ typedef NS_ENUM(NSInteger, WZRSStatus) {
  **/
 
 /**
- *  renderlayer 总是居中     抽象类，使用其子类
+ *  抽象类，使用其子类
+ *  renderlayer 总是居中
  */
 @interface WZRoundSelectorLogicView : UIView
 

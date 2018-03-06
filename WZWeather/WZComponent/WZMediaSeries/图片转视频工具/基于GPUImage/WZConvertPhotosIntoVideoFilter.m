@@ -427,6 +427,10 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
     [self setFloat:progress forUniformName:@"progress"];
     
     if (_type == 14 || _type == 15) { //百叶窗
+        /*
+         当时想得太复杂了，其实可以直接使叶子缩小（或则扩大，选择其中之一）就可以了，另外一部分其实根本就不用算
+         **/
+        
         float coordinateOffset = 1.0 / undulatedCount;
         int odevity = 0;//偶数为扩散 奇数为缩小
         for (int i = 0; i < undulatedCoupleCount; (i = i+2)) {
