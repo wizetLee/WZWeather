@@ -1415,6 +1415,7 @@
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
 			isa = PBXGroup;
 			children = (
+				84ECD3301FCC2C9A00282C9A /* Clipping */,
 				845ED84720048E460031894C /* WZAnimatePageControl */,
 				846227611FD6ACCE00D37FAE /* WZSilder */,
 				8483E7C21FC265DF00C559EF /* WZStarRatingView(星型评分) */,
@@ -1551,20 +1552,12 @@
 			path = "基于GPUImage";
 			sourceTree = "<group>";
 		};
-		8440FE641EC2A454002A893E /* WZNetwork */ = {
+		8440FE641EC2A454002A893E /* WZNetwork(网络部分) */ = {
 			isa = PBXGroup;
 			children = (
-				844665091EC45D8D00E19241 /* WZNetworkEntity */,
 				8446650A1EC45D8D00E19241 /* WZNetworkRequest */,
 			);
-			path = WZNetwork;
-			sourceTree = "<group>";
-		};
-		844665091EC45D8D00E19241 /* WZNetworkEntity */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WZNetworkEntity;
+			path = "WZNetwork(网络部分)";
 			sourceTree = "<group>";
 		};
 		8446650A1EC45D8D00E19241 /* WZNetworkRequest */ = {
@@ -1581,12 +1574,12 @@
 				8446650C1EC45D8D00E19241 /* WZHttpRequestDeriveAFNetworking */,
 				8446650D1EC45DAE00E19241 /* WZHttpRequest.h */,
 				8446650E1EC45DAE00E19241 /* WZHttpRequest.m */,
-				844665151EC4655800E19241 /* WZHttpRequest+WZWeather.h */,
-				844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */,
 				846F1DF21EC95D730013F078 /* WZDownloadRequest.h */,
 				846F1DF31EC95D730013F078 /* WZDownloadRequest.m */,
 				848979851ECC3A97008B07D2 /* WZDownloadTarget.h */,
 				848979861ECC3A97008B07D2 /* WZDownloadTarget.m */,
+				844665161EC4655800E19241 /* WZHttpRequest+WZWeather.m */,
+				844665151EC4655800E19241 /* WZHttpRequest+WZWeather.h */,
 			);
 			path = WZHttpRequest;
 			sourceTree = "<group>";
@@ -2837,8 +2830,8 @@
 				BDE51CC601D75414A3C2652E /* Frameworks */,
 				3AC0C433C5CD63FA0EE1B67F /* Pods */,
 				846920A41E63BB550048BBDC /* Products */,
-				846920D91E63BBB30048BBDC /* WZComponent */,
-				8440FE641EC2A454002A893E /* WZNetwork */,
+				846920D91E63BBB30048BBDC /* WZComponent(组件) */,
+				8440FE641EC2A454002A893E /* WZNetwork(网络部分) */,
 				846920DA1E63D1E00048BBDC /* WZVC */,
 				8497C42B1EB3465200EB9F60 /* WZTodayExtension */,
 				846920A51E63BB550048BBDC /* WZWeather */,
@@ -2861,7 +2854,6 @@
 		846920A51E63BB550048BBDC /* WZWeather */ = {
 			isa = PBXGroup;
 			children = (
-				84ECD3301FCC2C9A00282C9A /* Clipping */,
 				846920A91E63BB550048BBDC /* AppDelegate.h */,
 				846920AA1E63BB550048BBDC /* AppDelegate.m */,
 				846920DE1E63D6920048BBDC /* MainViewController.h */,
@@ -2903,7 +2895,7 @@
 			path = WZWeatherUITests;
 			sourceTree = "<group>";
 		};
-		846920D91E63BBB30048BBDC /* WZComponent */ = {
+		846920D91E63BBB30048BBDC /* WZComponent(组件) */ = {
 			isa = PBXGroup;
 			children = (
 				845664631FC82E8C0004BAC1 /* WZMediaSeries(多媒体资源) */,
@@ -2918,7 +2910,7 @@
 				84514D911E9DCF0A00F07EF8 /* WZCategories */,
 				84514AC71E9DCE7A00F07EF8 /* JKCategories */,
 			);
-			path = WZComponent;
+			path = "WZComponent(组件)";
 			sourceTree = "<group>";
 		};
 		846920DA1E63D1E00048BBDC /* WZVC */ = {

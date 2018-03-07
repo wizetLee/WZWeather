@@ -26,23 +26,25 @@
 #import "WZDownloadRequest.h"
 
 //类目
-#import "WZSystemDetails.h"
+
 #import "JKCategories.h"
 #import "WZCategories.h"
-#import "WZDisplayLinkSuperviser.h" //计时器
+
 
 //第三方
 #import "AFNetworking/AFNetworking.h"
 #import "MJRefresh.h"           ///iOS 11 上应该是有BUG的
 #import <GPUImage/GPUImage.h>
 #import <Masonry/Masonry.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 //第三方的派生
 #import "WZAFNetworkReachabilityManager.h"
 
-
 //控件
 #import "WZVariousSectionsTable.h"
+#import "WZDisplayLinkSuperviser.h" //计时器
+#import "WZSystemDetails.h"
 
 
 #pragma mark - 常量
@@ -58,7 +60,6 @@
 
 #define MACRO_VC_CHECK_NAVIGATION (self.navigationController && (self.navigationController.navigationBarHidden == false))
 #define MACRO_FLOAT_SAFEAREA_BOTTOM   (([[UIApplication sharedApplication] statusBarFrame].size.height > 21)?34:0)
-
 
 /***
     关于适配iPhoneX
@@ -76,8 +77,7 @@
 
 //默认不隐藏导航栏和状态栏
 #define MACRO_VC_FLOAT_SAFEAREA_TOP ((!(MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK < 0)) ? MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK : [UIApplication sharedApplication].statusBarFrame.size.height + (MACRO_VC_CHECK_NAVIGATION?self.navigationController.navigationBar.frame.size.height:0.0))
-//    //加上是否隐藏导航栏的条件
-//#define MACRO_VC_FLOAT_SAFEAREA_TOP_HIDE_NAV(boolean) ((!(MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK < 0)) ? MACRO_VC_FLOAT_SAFEAREA_TOP_BRICK : [UIApplication sharedApplication].statusBarFrame.size.height + ((MACRO_VC_CHECK_NAVIGATION && !boolean)?self.navigationController.navigationBar.frame.size.height:0.0))
+
 ////安全域底部
 #define MACRO_VC_FLOAT_SAFEAREA_BOTTOM ((!(MACRO_VC_FLOAT_SAFEAREA_BOTTOM_BRICK < 0))?MACRO_VC_FLOAT_SAFEAREA_BOTTOM_BRICK:0.0)
 
@@ -87,13 +87,6 @@
 #define MACRO_SYSTEM_IS_IPHONE_X [[WZSystemDetails platformString] isEqualToString:@"iPhone_X"]
 #define MACRO_SYSTEM_iOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define MACRO_SYSTEM_CURRENTLANGUAGE ([[NSLocale preferredLanguages] objectAtIndex:0])
-
-////替换NSLog内容
-//#ifdef DEBUG
-//#define NSLog(FORMAT, ...) fprintf(__stderrp,"Log %s %s:%d\t%s\t%s\n",__TIME__,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
-//#else
-//#define NSLog(...)
-//#endif
 
 //颜色
 #pragma mark - 颜色
@@ -117,7 +110,12 @@
 //#define MACRO_NOTIFICATION_ENTER_BACKGROUND @"wz_enter_backgound_notification"//进入后台通知(锁屏，回到主界面)
 //#define MACRO_NOTIFICATION_BACK_TO_APPLICATION @"wz_back_to_application_notification"//回到应用的通知
 
-
+////替换NSLog内容
+//#ifdef DEBUG
+//#define NSLog(FORMAT, ...) fprintf(__stderrp,"Log %s %s:%d\t%s\t%s\n",__TIME__,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+//#else
+//#define NSLog(...)
+//#endif
 
 #endif
 #endif /* WZ_pch */

@@ -43,13 +43,9 @@ double bytesTransitionMB(int64_t bytes) {
     return self;
 }
 
+///正常需求是使用单例的
 + (instancetype)downloader {
-    static dispatch_once_t onceToken;
-    static WZDownloadRequest *singleDownloader = nil;
-    dispatch_once(&onceToken, ^{
-           singleDownloader = [[WZDownloadRequest alloc] init];
-    });
-    return singleDownloader;
+    return [[WZDownloadRequest alloc] init];
 }
 
 - (void)downloadWithURLArray:(NSArray <NSURL *>*)urlArray

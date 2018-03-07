@@ -98,7 +98,6 @@
 //MARK:完成录制的回调
 - (void)previewView:(WZMediaPreviewView *)view didCompleteTheRecordingWithFileURL:(NSURL *)fileURL {
 
-    
     //偶尔会出现时间为0  但是确实又可以播放的 可能是文件还没有彻底配置完成
     AVAsset *asset = [AVAsset assetWithURL:fileURL];
     NSLog(@"拍摄完成，本次拍摄拍摄时间为：%lf", CMTimeGetSeconds(asset.duration));
@@ -108,7 +107,6 @@
 //        MPMoviePlayerViewController *VC = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
 //        [self.navigationController pushViewController:VC animated:true];
 //    }
-   
 }
 //MARK:录制时间的回调
 - (void)previewView:(WZMediaPreviewView *)view audioVideoWriterRecordingCurrentTime:(CMTime)time last:(BOOL)last {
@@ -435,7 +433,6 @@
     return composition;
 }
 
-//
 + (CMTime)appendTrack:(AVAssetTrack *)track toCompositionTrack:(AVMutableCompositionTrack *)compositionTrack atTime:(CMTime)time withBounds:(CMTime)bounds {
     CMTimeRange timeRange = track.timeRange;//通道时间轴的所有的时间的范围
     time = CMTimeAdd(time, timeRange.start);//时间相加

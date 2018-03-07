@@ -10,7 +10,7 @@
 
 @implementation WZHttpRequestDeriveAFNetworking
 
-+ (void)aaa {
++ (void)encap {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.session
 //    manager.
@@ -20,13 +20,9 @@
     }
     [manager.requestSerializer setValue:@"" forHTTPHeaderField:@""];//配置请求头信息
 
-    
-    
 //    manager dataTaskWithRequest:<#(nonnull NSURLRequest *)#> completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
 //        
 //    }
-    
-    
     
 }
 

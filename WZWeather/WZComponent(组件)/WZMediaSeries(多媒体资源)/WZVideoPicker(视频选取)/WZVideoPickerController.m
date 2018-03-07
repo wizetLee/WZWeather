@@ -95,17 +95,10 @@
     imageView.image = [UIImage imageNamed:@"wallpaper3.jpeg"];
     _backgroundImageView = imageView;
     
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor clearColor]];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-//    self.navigationController.navigationBar.backIndicatorTransitionMaskImage = [UIImage imageWithColor:[UIColor clearColor]];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];//透明
-//self.navigationController.navigationBar.backIndicatorImage
-    
     [self.view addSubview:self.collection];//系统自己匹配的安全区域显示的内容
     _leftItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(leftButtonAction)];
     _rightItem = [[UIBarButtonItem alloc] initWithTitle:@"模式选取" style:UIBarButtonItemStyleDone target:self action:@selector(rightButtonAction)];
-//    right.title =
+
     if (self.navigationController) {
         self.navigationItem.leftBarButtonItem = _leftItem;
         self.navigationItem.rightBarButtonItem = _rightItem;
@@ -129,8 +122,6 @@
         }
     }
 }
-
-
 
 - (void)rightButtonAction {
     if (!_innerMode) {
@@ -181,7 +172,9 @@
             [_videoTransitionEffectTool prepareTaskWithItemSources:itemMArr];
             [_videoTransitionEffectTool startTask];
             _videoTransitionEffectTool.delegate = (id<WZVideoTransitionEffectToolProtocol>)self;
-            
+            [SVProgressHUD setOffsetFromCenter:UIOffsetMake(UIScreen.mainScreen.bounds.size.width / 2.0, UIScreen.mainScreen.bounds.size.height / 2.0)];
+            self.view.userInteractionEnabled = false;
+            [SVProgressHUD show];
 //            __weak typeof(self) weakSelf = self;
 //            _editor = [[WZAPLSimpleEditor alloc] init];
 //            NSMutableArray <AVAsset *>*tmpMArr = [NSMutableArray array];
@@ -550,6 +543,30 @@
     _mediaAssetData = [NSMutableArray arrayWithArray:[WZMediaFetcher allVideosAssets]];
     //刷新
     [self setType:_type];
+}
+
+#pragma mark - WZVideoTransitionEffectToolProtocol
+///视频合成的进度
+- (void)videoTransitionEffectTool:(WZVideoTransitionEffectTool *)tool progress:(float)progress; {
+    
+}
+
+///完成情况成功
+- (void)videoTransitionEffectTool:(WZVideoTransitionEffectTool *)tool completeWithOutputURL:(NSURL *)outputURL; {
+    self.view.userInteractionEnabled = true;
+    [SVProgressHUD dismiss];
+}
+
+///任务失败
+- (void)videoTransitionEffectToolTaskFailed; {
+    self.view.userInteractionEnabled = true;
+    [SVProgressHUD dismiss];
+}
+
+///任务被取消
+- (void)videoTransitionEffectToolTaskCanceled; {
+    self.view.userInteractionEnabled = true;
+    [SVProgressHUD dismiss];
 }
 
 #pragma mark - Accessor

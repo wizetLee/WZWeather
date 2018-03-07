@@ -59,17 +59,20 @@ typedef void (^DownloadTaskDownloadProcess)(NSMutableArray <WZDownloadTarget *>*
                finishedDownload:(DownloadTaskDidFinishDownload _Nullable)finishedDownload
                 downloadProcess:(DownloadTaskDownloadProcess _Nullable)downloadProcess;
 
-- (void)suspendAllTasks;
-- (void)suspendTaskWithURL:(NSURL *_Nullable)url;
+//取消
 - (void)cancelAllTasks;
 - (void)cancelTaskWithURL:(NSURL *_Nullable)url;
+//挂起
+- (void)suspendAllTasks;
+- (void)suspendTaskWithURL:(NSURL *_Nullable)url;
+//恢复
 - (void)resumeAllTasks;
 - (void)resumeTaskWithURL:(NSURL *_Nullable)url;
 
 double bytesTransitionKB(int64_t bytes);
 double bytesTransitionMB(int64_t bytes);
 
-//新增任务
-- (void)addTaskWithURL:(NSURL *_Nullable)url;
+////新增任务
+//- (void)addTaskWithURL:(NSURL *_Nullable)url;
 
 @end

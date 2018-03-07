@@ -26,9 +26,6 @@ typedef NS_ENUM(NSUInteger, WZMediaConfigType) {
     WZMediaConfigType_countDown_3           = 32,
     WZMediaConfigType_countDown_off         = 33,
     
-    
-    
-    
 };
 
 @interface WZMediaConfigObject : WZVariousBaseObject

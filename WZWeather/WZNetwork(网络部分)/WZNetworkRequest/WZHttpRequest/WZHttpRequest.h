@@ -14,8 +14,6 @@ typedef void (^HttpRequestJSONSerializationResult)(id _Nullable result, BOOL isD
 typedef void(^HttpRequestSessionRequest)(NSURLSession * _Nullable session, NSMutableURLRequest * _Nullable request);
 
 
-
-
 @interface WZHttpRequest : NSObject
 
 // GET  POST  DELETE  PUT  and so on.

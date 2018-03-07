@@ -37,9 +37,9 @@
 @property (nonatomic, assign) CMTime endTime;//播放末端
 
 
-@property (nonatomic, strong) id timeObserver;//监听播放速度的监听者 记得要移除
-@property (nonatomic, assign) BOOL dragging;//判断是否正在拖动中 主要用于监听播放进度内的回调处理
-@property (nonatomic, assign) BOOL recyclable;//是否可循环播放 主要用于监听播放进度内的回调处理 在其他的seekTime操作前要将其设置为false 否则会与监听播放进度内的回调处理有所冲突 在play之前重新设置为false
+@property (nonatomic, strong) id timeObserver;  //监听播放速度的监听者 记得要移除
+@property (nonatomic, assign) BOOL dragging;    //判断是否正在拖动中 主要用于监听播放进度内的回调处理
+@property (nonatomic, assign) BOOL recyclable;  //是否可循环播放 主要用于监听播放进度内的回调处理 在其他的seekTime操作前要将其设置为false 否则会与监听播放进度内的回调处理有所冲突 在play之前重新设置为false
 
 @end
 
@@ -205,21 +205,20 @@
     
     __weak typeof(self) weakSelf = self;
     [_editor exportToSandboxDocumentWithFileName:@"myy.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
-            if (statue == AVAssetExportSessionStatusCompleted) {
-                NSLog(@"导出成功");
-                [WZAPLSimpleEditor saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
-                    if (success) {
-                        NSLog(@"保存成功");
-                    } else {
-                        NSLog(@"保存失败");
-                    }
-                }];
-            
-            } else {
-                NSLog(@"导出失败");
-            }
+        if (statue == AVAssetExportSessionStatusCompleted) {
+            NSLog(@"导出成功");
+            [WZAPLSimpleEditor saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
+                if (success) {
+                    NSLog(@"保存成功");
+                } else {
+                    NSLog(@"保存失败");
+                }
+            }];
+        
+        } else {
+            NSLog(@"导出失败");
+        }
     }];
-    
     
     //剪裁
 //    [self videoClippingWithAsset:_asset leadingTime:_startTime trailingTime:_endTime];
@@ -338,7 +337,7 @@
         if (CMTimeCompare(trailingTime, _asset.duration) > 0) {
             NSAssert(false, @"截取视频的末端时间必须小于视频的总时长");
         }
-        if (CMTimeCompare(leadingTime, trailingTime) <= 0) {
+        if (CMTimeCompare(leadingTime, trailingTime) >= 0) {
             NSAssert(false, @"截取视频段的必须有有一个适合的时间段");
         }
         
@@ -394,9 +393,10 @@
         }
     });
 }
+
 //MARK: 剪裁进度回调
 - (void)clippingProgress:(CGFloat)progress {
-    
+
 }
 //MARK: 剪裁失败
 - (void)exportFail {
@@ -409,7 +409,7 @@
 
 //MARK: 根据某一个数据匹配对应的视频的播放速率
 //MARK: 新增一个属性用于调整速率
-- (void)sss:(AVMutableComposition *)composition {
+- (void)adjust:(AVMutableComposition *)composition {
     if (![composition isKindOfClass:[AVMutableComposition class]]) { return;}
     
     ///修改视频的播放速率

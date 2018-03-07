@@ -32,18 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"导航栏";
-    
-//    appBuild();
-//    appVersion();
-//    appBundleID();
-    
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-//    imageView.contentMode = UIViewContentModeScaleAspectFit;
-//    [self.view addSubview:imageView];
+
 //    [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//           imageView.image = image;
-//        });
 //    }];//异步加载必应墙纸（移到model中）
     
     //数据

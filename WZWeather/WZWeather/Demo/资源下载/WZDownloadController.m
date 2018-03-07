@@ -32,6 +32,11 @@
     [self addSubViews];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [_downloader cancelAllTasks];
+}
+
 #pragma mark - Create dataSource
 
 - (void)createDataSource {
@@ -46,6 +51,8 @@
                                                , [NSURL URLWithString:@"http://wimg.spriteapp.cn/profile/large/2017/04/26/5900b375744b2_mini.jpg"]]];
     __weak typeof(self) weakSelf = self;
     _downloader = [WZDownloadRequest downloader];
+    
+    //写得真烂
     [_downloader downloadWithURLArray:tmpUrlArray completedWithError:^(NSMutableArray<WZDownloadTarget *> *targets, NSError * _Nullable error) {
         if (error) {
             NSLog(@"下载错误 or 取消： error: %@", error.debugDescription);
@@ -86,9 +93,9 @@
             // 2.6.设置alertTitle
             localNote.alertTitle =  @"您有一条新通知";
             // 2.7.设置有通知时的音效
-            localNote.soundName = @"buyao.wav";
+//            localNote.soundName = @"sound.wav";
             // 2.8.设置应用程序图标右上角的数字
-            localNote.applicationIconBadgeNumber = 999;
+//            localNote.applicationIconBadgeNumber = 999;
             // 2.9.设置额外信息
             localNote.userInfo = @{@"type" : @1};
             // 3.调用通知
