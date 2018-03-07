@@ -10,7 +10,7 @@
 
 @implementation WZRemoteImageNavigationView
 
-+ (instancetype)customAssetBrowseNavigationWithDelegate:(id<WZProtocolAssetBrowseNaviagtion>)delegate {
++ (instancetype)customAssetBrowseNavigationWithDelegate:(id<WZAssetBrowseNaviagtionProtocol>)delegate {
     WZRemoteImageNavigationView *navigation = [super customAssetBrowseNavigationWithDelegate:delegate];
     navigation.selectedButton.hidden = true;
     return navigation;

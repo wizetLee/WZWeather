@@ -10,7 +10,7 @@
 
 @implementation WZAssetBrowseNavigationView
 
-+ (instancetype)customAssetBrowseNavigationWithDelegate:(id<WZProtocolAssetBrowseNaviagtion>)delegate {
++ (instancetype)customAssetBrowseNavigationWithDelegate:(id<WZAssetBrowseNaviagtionProtocol>)delegate {
     CGFloat top = 0.0;
     CGFloat bottom = 0.0;
     CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
@@ -56,12 +56,12 @@
 
 - (void)clickedBtn:(UIButton *)sender {
     if (sender == self.backButton) {
-        if ([_delegate respondsToSelector:@selector(backAction)]) {
-            [_delegate backAction];
+        if ([_delegate respondsToSelector:@selector(assetBrowseNaviagtionBackAction)]) {
+            [_delegate assetBrowseNaviagtionBackAction];
         }
     } else if (sender == self.selectedButton) {
-        if ([_delegate respondsToSelector:@selector(selectedAction)]) {
-            [_delegate selectedAction];
+        if ([_delegate respondsToSelector:@selector(assetBrowseNaviagtionSelectedAction)]) {
+            [_delegate assetBrowseNaviagtionSelectedAction];
         }
     }
 }

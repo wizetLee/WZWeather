@@ -207,6 +207,15 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 #pragma mark - 删除某一些资源
 + (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler;
 
-+ (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler;
+#pragma mark - 保存资源
++ (void)saveVideoWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler;
++ (void)saveImageWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler;
+    + (void)saveImage:(UIImage *)image completionHandler:(void (^)(BOOL success, NSError *error))handler;
+        + (void)saveImage:(NSData *)imageData
+    metadata:(NSDictionary *)metadata
+    identify:(NSString *)identify
+    target:(id)target
+    seleter:(SEL)aSelector;
+
 
 @end

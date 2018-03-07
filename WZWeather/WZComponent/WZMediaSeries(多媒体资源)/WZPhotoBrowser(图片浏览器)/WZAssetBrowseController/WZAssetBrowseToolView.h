@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol WZProtocolAssetBrowseTool <NSObject>
+@protocol WZAssetBrowseToolProtocol <NSObject>
 
-- (void)selectedOrigionAction;//选择原尺寸图片的代理事件
-- (void)completeAction;//发送代理事件
+- (void)assetBrowseToolSelectedOrigionAction;//选择原尺寸图片的代理事件
+- (void)assetBrowseToolCompleteAction;//发送代理事件
 
 @end
 
 @interface WZAssetBrowseToolView : UIView
 
-@property (nonatomic,   weak) id<WZProtocolAssetBrowseTool> delegate;
+@property (nonatomic,   weak) id<WZAssetBrowseToolProtocol> delegate;
 @property (nonatomic, strong) void (^fetchClearInfo)(NSString *info);
 @property (nonatomic, strong) void (^restrictNumber)(NSUInteger restrictNumber);
 @property (nonatomic, strong) UIButton *selectedButtonClear;
@@ -25,6 +25,6 @@
 @property (nonatomic, strong) UIButton *completeButton;
 @property (nonatomic, strong) UILabel *countLabel;
 
-+ (instancetype)customAssetBrowseToolWithDelegate:(id<WZProtocolAssetBrowseTool>)delegate;
++ (instancetype)customAssetBrowseToolWithDelegate:(id<WZAssetBrowseToolProtocol>)delegate;
 
 @end

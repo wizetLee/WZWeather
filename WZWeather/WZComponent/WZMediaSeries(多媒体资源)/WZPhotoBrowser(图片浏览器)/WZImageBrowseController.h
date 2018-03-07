@@ -11,17 +11,17 @@
 #import "UIImageView+WebCache.h"
 
 
-@protocol WZProtocolImageBrowse <NSObject>
+@protocol WZImageBrowseProtocol <NSObject>
 
-- (void)backAction;//返回代理事件
-- (void)send;//发送代理事件
+- (void)imageBrowseBackAction;//返回代理事件
+- (void)imageBrowseSend;//发送代理事件
 
 @end
 
 //图片浏览容器控制器
 @interface WZImageBrowseController : UIPageViewController
 
-@property (nonatomic, strong) id<WZProtocolImageBrowse> imagesBrowseDelegate;//代理
+@property (nonatomic, strong) id<WZImageBrowseProtocol> imagesBrowseDelegate;//代理
 @property (nonatomic, strong) NSArray <WZMediaAsset *> *mediaAssetArray;//选中的mdeiaAsset集合
 @property (nonatomic, strong) NSArray<WZImageContainerController *> *imageContainersReuseableArray;//图片容器（复用）
 @property (nonatomic, strong) WZImageContainerController *currentContainerVC;//当前的图片容器

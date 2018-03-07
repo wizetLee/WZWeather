@@ -275,6 +275,359 @@
     return imageRequestID;
 }
 
+
+
+#pragma mark - Fetch Video
++ (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info))handler {
+    PHVideoRequestOptions *videoRequsetOptions = [[PHVideoRequestOptions alloc] init];
+    videoRequsetOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
+    videoRequsetOptions.networkAccessAllowed = false;
+    PHImageRequestID imageRequestID = 0;
+    
+    if (!synchronous) {
+        //异步
+        imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+            if (handler) {
+                handler(asset, audioMix, info);
+            }
+        }];
+    } else {
+        //同步 使用信号量
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        //请求asset
+        imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+            if (handler) {
+                handler(asset, audioMix, info);
+            }
+            dispatch_semaphore_signal(semaphore);
+        }];
+        //等待信号
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    }
+    
+    //请求item
+//    [[PHImageManager defaultManager] requestPlayerItemForVideo:asset options:videoRequsetOptions resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
+//
+//    }];
+    
+    //导出 ExportSession
+//    [[PHImageManager defaultManager] requestExportSessionForVideo:asset options:videoRequsetOptions exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+//
+//    }];
+    
+    
+    return imageRequestID;
+}
+
+//MARK:获取拥有所有视频的集合
++ (NSArray <PHAsset *> *)allVideosAssets; {
+    
+    PHFetchOptions *option = [[self class] configVideoOptions];
+    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
+    NSMutableArray *videos = [NSMutableArray array];
+    
+    for (NSUInteger i = 0; i < smartAlbums.count; i++) {
+        PHAssetCollection *smartAlbum = [smartAlbums objectAtIndex:i];
+        PHFetchResult<PHAsset *> *assetsFetchResults = [PHAsset fetchAssetsInAssetCollection:smartAlbum options:option];
+        for (PHAsset *tmpPHAsset in assetsFetchResults) {
+            [videos addObject:tmpPHAsset];
+        }
+    }
+    
+    return videos;
+}
+
+
+#pragma mark - 删除某一些资源
++ (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:localIdentifierArr options:nil];
+        if (assets) { [PHAssetChangeRequest deleteAssets:assets]; }
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (handler) { handler(success, error); }
+    }];
+}
+
+#pragma mark - 保存某一些资源
++ (void)saveVideoWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:URL];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            if (handler) { handler(success, error); }
+        }];
+    } else {
+       if (handler) { handler(false, [NSError errorWithDomain:@"资源出错" code:-1 userInfo:nil]); }
+    }
+}
+
++ (void)saveImageWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:URL];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            if (handler) { handler(success, error); }
+        }];
+    } else {
+        if (handler) { handler(false, [NSError errorWithDomain:@"资源出错" code:-1 userInfo:nil]); }
+    }
+}
+
++ (void)saveImage:(UIImage *)image completionHandler:(void (^)(BOOL success, NSError *error))handler {
+    if ([image isKindOfClass:[UIImage class]]) {
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            if (handler) { handler(success, error); }
+        }];
+    } else {
+        if (handler) { handler(false, [NSError errorWithDomain:@"图片出错" code:-1 userInfo:nil]); }
+    }
+}
+
++ (void)saveImage:(NSData *)imageData
+         metadata:(NSDictionary *)metadata
+         identify:(NSString *)identify
+           target:(id)target
+       collection:(PHAssetCollection *)collection
+          seleter:(SEL)aSelector {
+    
+    NSLog(@"imagedata ---- %f",(float)imageData.length / (102 * 1024));
+    NSData *newImageData = [self setExifInfoWithIndentify:identify imageData:imageData exifDic:metadata];
+    
+    NSLog(@"newImageData ---- %f",(float)newImageData.length / (1024 * 1024));
+    UIImage *image = [UIImage imageWithData:newImageData];// [UIImage imageWithCIImage:ciImage scale:1 orientation:UIImageOrientationUp];
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
+    NSLog(@"datattt ---- %f",(float)data.length / (1024 * 1024));
+    NSString *savePath = [NSTemporaryDirectory() stringByAppendingString:@"tempSaveImage.jpg"];
+    [newImageData writeToFile:savePath atomically:YES];
+    
+    __block PHAssetChangeRequest *changeRequest = nil;
+    __block PHObjectPlaceholder *placeholder = nil;
+    
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        
+        changeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];//[PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:[NSURL fileURLWithPath:savePath]];
+        placeholder = changeRequest.placeholderForCreatedAsset;
+        
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        
+        // PHObjectPlaceholder *placeholder = changeRequest.placeholderForCreatedAsset;
+        NSString *localIdentifier = placeholder.localIdentifier;
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            
+            PHFetchResult *aResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil];
+            PHAsset *asset = [aResult firstObject];
+            PHAssetCollectionChangeRequest *collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection];
+            [collectionRequest addAssets:@[asset]];
+            
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            
+            NSLog(@"save finish !!!!!!!!!!!!!!!!!!!");
+            if(target != nil && [target respondsToSelector:aSelector]){
+                [target performSelectorOnMainThread:aSelector withObject:nil waitUntilDone:NO];
+            }
+        }];
+    }];
+}
+
+//保存GIF
+- (void)saveGifWithData:(NSData *)data {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions alloc] init];
+        options.shouldMoveFile = true;
+        [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"%@", error.debugDescription);
+        } else {
+            NSLog(@"保存成功");
+        }
+    }];
+}
+
+//资源的exif数据
++ (NSMutableData *)setExifInfoWithIndentify:(NSString *)identifier imageData:(NSData *)imageData exifDic:(NSDictionary *)exif {
+    
+    PHFetchResult *aResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil];
+    PHAsset *asset = [aResult firstObject];
+    
+    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
+    imageRequestOptions.networkAccessAllowed = NO;
+    
+    [imageRequestOptions setSynchronous:YES];
+    
+    __block CGImageSourceRef imgSource = nil;
+    [[PHCachingImageManager defaultManager] requestImageDataForAsset:asset options:imageRequestOptions resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        imgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageData, NULL);
+        
+    }];
+    
+    NSMutableDictionary *metadataAsMutable = [self metadataDic:identifier exifDic:exif];
+    
+    CGImageSourceRef editImgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageData, NULL);
+    
+    CFStringRef UTI = CGImageSourceGetType(imgSource);
+    NSMutableData *newImageData = [NSMutableData data];
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
+    
+    if(!destination) { NSLog(@"创建失败"); };
+    
+    CGImageDestinationAddImageFromSource(destination, editImgSource, 0, (__bridge CFDictionaryRef) metadataAsMutable);
+    
+    BOOL success = NO;
+    success = CGImageDestinationFinalize(destination);
+    
+    if(!success) { NSLog(@"保存失败"); };
+    
+    return newImageData;
+}
+
++ (NSMutableDictionary *)metadataDic:(NSString *)identifier exifDic:(NSDictionary *)exif {
+    
+    PHFetchResult *aResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil];
+    PHAsset *asset = [aResult firstObject];
+    
+    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
+    imageRequestOptions.networkAccessAllowed = NO;
+    
+    [imageRequestOptions setSynchronous:YES];
+    
+    __block CGImageSourceRef imgSource = nil;
+    [[PHCachingImageManager defaultManager] requestImageDataForAsset:asset options:imageRequestOptions resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        imgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageData, NULL);
+        
+    }];
+    
+    NSDictionary *metadata = nil;
+    if(imgSource == nil){
+        metadata = exif;
+        
+    }else{
+        
+        metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imgSource, 0, NULL);
+    }
+    
+    
+    NSMutableDictionary *metadataAsMutable = [metadata mutableCopy];
+    
+    NSMutableDictionary *EXIFDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyExifDictionary] mutableCopy];
+    if (EXIFDictionary==nil) {
+        EXIFDictionary = [[NSMutableDictionary alloc] init];
+    }
+    [EXIFDictionary setObject:@"wizet" //存储用户的注释
+                       forKey:(NSString *)kCGImagePropertyExifUserComment];
+    [metadataAsMutable setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary];
+    
+    NSMutableDictionary *TIFFDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyTIFFDictionary] mutableCopy];
+    if (TIFFDictionary==nil) {
+        TIFFDictionary = [[NSMutableDictionary alloc] init];
+    }
+    [TIFFDictionary setObject:@"wizet"
+                       forKey:(NSString *)kCGImagePropertyTIFFMake];
+    [TIFFDictionary setObject:@(1) forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [metadataAsMutable setObject:TIFFDictionary forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    [metadataAsMutable setObject:@(1) forKey:(NSString *)kCGImagePropertyIPTCImageOrientation];
+    [metadataAsMutable setObject:@(1) forKey:(NSString *)kCGImagePropertyOrientation];
+    return metadataAsMutable;
+}
+
+#pragma mark 获取图片exif
++ (NSDictionary *)imageExifWithLocalIdentifier:(NSString *)localIdentifier {
+    
+    
+    if (localIdentifier == nil) {
+        return nil;
+    }
+    PHFetchResult *result = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil];
+    
+    if(result == nil){
+        return @{};
+    }
+    else if(result.count == 0){
+        
+        return@{};
+    }
+    
+    __block BOOL isExecuted = NO;
+    PHAsset *asset = result.firstObject;
+    PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+    NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+    
+    [asset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
+        
+        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
+        
+        NSDictionary *nsdic = fullImage.properties;
+        
+        if([nsdic isKindOfClass:[NSDictionary class]]){
+            
+            [properties addEntriesFromDictionary:nsdic];
+        }
+        
+        /*
+         NSDictionary *originExif = nsdic[@"{Exif}"];
+         
+         NSDictionary *originMakerApple = nsdic[@"{MakerApple}"];
+         
+         NSDictionary *originGPS = nsdic[@"{GPS}"];
+         
+         properties[@"{GPS}"] = [NSDictionary dictionaryWithDictionary:originGPS];
+         
+         properties[@"{MakerApple}"] = [NSDictionary   dictionaryWithDictionary:originMakerApple];
+         
+         properties[@"{Exif}"] = [NSDictionary dictionaryWithDictionary:originExif];
+         */
+        isExecuted = YES;
+        
+    }];
+    
+    while (isExecuted == NO) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+    
+    return properties;
+}
+
+
+#pragma mark - 判断资源为GIF
+////方法1 iOS 9.0
++ (BOOL)adjustGIFWithAsset:(PHAsset *)asset {
+    if ([asset isKindOfClass:[PHAsset class]]) {
+        //每个asset 都有一个或者多个PHAssetResource(如：被编辑保存过的aseet会有若干个resource, 且被修改后的GIF类型的asset得uniformTypeIdentifier 会发生改变变成了public.jpeg 类型，所以修改多地GIF的就不再是GIF了，所以要对比最后一个resource的类型)
+        NSArray<PHAssetResource *>* tmpArr = [PHAssetResource assetResourcesForAsset:asset];
+        if (tmpArr.count) {
+            PHAssetResource *resource = tmpArr.lastObject;
+            if (resource.uniformTypeIdentifier.length) {
+                return UTTypeConformsTo( (__bridge CFStringRef)resource.uniformTypeIdentifier, kUTTypeGIF);
+            }
+        }
+    }
+    return false;
+}
+
+//方法2
++ (BOOL)adjustGIFWithAsset2:(PHAsset *)asset {
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    [options setSynchronous:true];//同步
+    __block NSString *dataUTIStr = nil;
+    if ([asset isKindOfClass:[PHAsset class]]) {
+        [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+            dataUTIStr = dataUTI;
+        }];
+    }
+    if (dataUTIStr.length) {
+        return UTTypeConformsTo( (__bridge CFStringRef)dataUTIStr, kUTTypeGIF);
+    }
+    return false;
+}
+
+
+
+
 #pragma mark - 配置
 //过滤出image类型的资源
 + (PHFetchOptions *)configImageOptions {
@@ -418,374 +771,5 @@
 //
 //    return newImage ;
 //}
-
-#pragma mark - Fetch Video
-+ (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info))handler {
-    PHVideoRequestOptions *videoRequsetOptions = [[PHVideoRequestOptions alloc] init];
-    videoRequsetOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
-    videoRequsetOptions.networkAccessAllowed = false;
-    PHImageRequestID imageRequestID = 0;
-    
-    if (!synchronous) {
-        //异步
-        imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-            if (handler) {
-                handler(asset, audioMix, info);
-            }
-        }];
-    } else {
-        //同步 使用信号量
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        //请求asset
-        imageRequestID = [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:videoRequsetOptions resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-            if (handler) {
-                handler(asset, audioMix, info);
-            }
-            dispatch_semaphore_signal(semaphore);
-        }];
-        //等待信号
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    }
-    
-    //请求item
-//    [[PHImageManager defaultManager] requestPlayerItemForVideo:asset options:videoRequsetOptions resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
-//
-//    }];
-    
-    //导出 ExportSession
-//    [[PHImageManager defaultManager] requestExportSessionForVideo:asset options:videoRequsetOptions exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
-//
-//    }];
-    
-    
-    return imageRequestID;
-}
-
-//MARK:获取拥有所有视频的集合
-+ (NSArray <PHAsset *> *)allVideosAssets; {
-    
-    PHFetchOptions *option = [[self class] configVideoOptions];
-    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
-    NSMutableArray *videos = [NSMutableArray array];
-    
-    for (NSUInteger i = 0; i < smartAlbums.count; i++) {
-        PHAssetCollection *smartAlbum = [smartAlbums objectAtIndex:i];
-        PHFetchResult<PHAsset *> *assetsFetchResults = [PHAsset fetchAssetsInAssetCollection:smartAlbum options:option];
-        for (PHAsset *tmpPHAsset in assetsFetchResults) {
-            [videos addObject:tmpPHAsset];
-        }
-    }
-    
-    return videos;
-}
-
-
-#pragma mark - 删除某一些资源
-+ (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler {
-    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:localIdentifierArr options:nil];
-        if (assets) { [PHAssetChangeRequest deleteAssets:assets]; }
-    } completionHandler:^(BOOL success, NSError *error) {
-        if (handler) { handler(success, error); }
-    }];
-}
-
-#pragma mark - 保存某一些资源
-+ (void)saveVideoWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:URL];
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            if (handler) { handler(success, error); }
-        }];
-    } else {
-       if (handler) { handler(false, [NSError errorWithDomain:@"资源出错" code:-1 userInfo:nil]); }
-    }
-}
-
-+ (void)saveImageWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:URL];
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            if (handler) { handler(success, error); }
-        }];
-    } else {
-        if (handler) { handler(false, [NSError errorWithDomain:@"资源出错" code:-1 userInfo:nil]); }
-    }
-}
-
-+ (void)saveImage:(UIImage *)image completionHandler:(void (^)(BOOL success, NSError *error))handler {
-    if ([image isKindOfClass:[UIImage class]]) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            if (handler) { handler(success, error); }
-        }];
-    } else {
-        if (handler) { handler(false, [NSError errorWithDomain:@"图片出错" code:-1 userInfo:nil]); }
-    }
-}
-
-+ (void)saveImage:(NSData *)imageData
-         metadata:(NSDictionary *)metadata
-         identify:(NSString *)identify
-           target:(id)target
-          seleter:(SEL)aSelector {
-    
-    NSLog(@"imagedata ---- %f",(float)imageData.length / (1024*1024));
-    NSData *newImageData = [self setExifInfoWithIndentify:identify imageData:imageData exifDic:metadata];
-    
-    NSLog(@"newImageData ---- %f",(float)newImageData.length / (1024*1024));
-    UIImage *image = [UIImage imageWithData:newImageData];// [UIImage imageWithCIImage:ciImage scale:1 orientation:UIImageOrientationUp];
-    NSData *data = UIImageJPEGRepresentation(image, 1.0);
-    NSLog(@"datattt ---- %f",(float)data.length / (1024*1024));
-    NSString *savePath = [NSTemporaryDirectory() stringByAppendingString:@"tempSaveImage.jpg"];
-    [newImageData writeToFile:savePath atomically:YES];
-    
-    __block PHAssetChangeRequest *changeRequest = nil;
-    __block PHObjectPlaceholder *placeholder = nil;
-    
-    PHAssetCollection *collection = nil;//[self collection];
-    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-        
-        changeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];//[PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:[NSURL fileURLWithPath:savePath]];
-        placeholder = changeRequest.placeholderForCreatedAsset;
-        
-        
-    } completionHandler:^(BOOL success, NSError * _Nullable error) {
-        
-        // PHObjectPlaceholder *placeholder = changeRequest.placeholderForCreatedAsset;
-        NSString *localIdentifier = placeholder.localIdentifier;
-        
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            
-            PHFetchResult *aResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil];
-            PHAsset *asset = [aResult firstObject];
-            PHAssetCollectionChangeRequest *collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection];
-            [collectionRequest addAssets:@[asset]];
-            
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            
-            NSLog(@"save finish !!!!!!!!!!!!!!!!!!!");
-            if(target != nil && [target respondsToSelector:aSelector]){
-                [target performSelectorOnMainThread:aSelector withObject:nil waitUntilDone:NO];
-            }
-            
-        }];
-        
-    }];
-    
-}
-
-+ (NSMutableData *)setExifInfoWithIndentify:(NSString *)identifier imageData:(NSData *)imageData exifDic:(NSDictionary *)exif {
-    
-    PHFetchResult *aResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil];
-    PHAsset *asset = [aResult firstObject];
-    
-    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
-    imageRequestOptions.networkAccessAllowed = NO;
-    
-    [imageRequestOptions setSynchronous:YES];
-    
-    __block CGImageSourceRef imgSource = nil;
-    [[PHCachingImageManager defaultManager] requestImageDataForAsset:asset options:imageRequestOptions resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        imgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageData, NULL);
-        
-    }];
-    
-    NSMutableDictionary *metadataAsMutable = [self metadataDic:identifier exifDic:exif];
-    
-    //NSLog(@"Info: %@",metadataAsMutable);
-    
-    CGImageSourceRef editImgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageData, NULL);
-    
-    CFStringRef UTI = CGImageSourceGetType(imgSource);
-    
-    NSMutableData *newImageData = [NSMutableData data];
-    
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
-    
-    if(!destination)
-        NSLog(@"***创建 失败***");
-    
-    CGImageDestinationAddImageFromSource(destination, editImgSource, 0, (__bridge CFDictionaryRef) metadataAsMutable);
-    
-    BOOL success = NO;
-    success = CGImageDestinationFinalize(destination);
-    
-    if(!success)
-        NSLog(@"***保存 失败***");
-    return newImageData;
-}
-
-
-+ (NSMutableDictionary *)metadataDic:(NSString *)identifier exifDic:(NSDictionary *)exif {
-    
-    PHFetchResult *aResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil];
-    PHAsset *asset = [aResult firstObject];
-    
-    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
-    imageRequestOptions.networkAccessAllowed = NO;
-    
-    [imageRequestOptions setSynchronous:YES];
-    
-    __block CGImageSourceRef imgSource = nil;
-    [[PHCachingImageManager defaultManager] requestImageDataForAsset:asset options:imageRequestOptions resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        imgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageData, NULL);
-        
-    }];
-    
-    NSDictionary *metadata = nil;
-    if(imgSource == nil){
-        metadata = exif;
-        
-    }else{
-        
-        metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imgSource, 0, NULL);
-    }
-    
-    
-    NSMutableDictionary *metadataAsMutable = [metadata mutableCopy];
-    
-    NSMutableDictionary *EXIFDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyExifDictionary] mutableCopy];
-    if (EXIFDictionary==nil) {
-        EXIFDictionary = [[NSMutableDictionary alloc] init];
-    }
-    [EXIFDictionary setObject:@"InterPhoto"
-                       forKey:(NSString *)kCGImagePropertyExifUserComment];
-    [metadataAsMutable setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary];
-    
-    NSMutableDictionary *TIFFDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyTIFFDictionary] mutableCopy];
-    if (TIFFDictionary==nil) {
-        TIFFDictionary = [[NSMutableDictionary alloc] init];
-    }
-    [TIFFDictionary setObject:@"InterPhoto"
-                       forKey:(NSString *)kCGImagePropertyTIFFMake];
-    [TIFFDictionary setObject:@(1) forKey:(NSString *)kCGImagePropertyTIFFOrientation];
-    [metadataAsMutable setObject:TIFFDictionary forKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    [metadataAsMutable setObject:@(1) forKey:(NSString *)kCGImagePropertyIPTCImageOrientation];
-    [metadataAsMutable setObject:@(1) forKey:(NSString *)kCGImagePropertyOrientation];
-    return metadataAsMutable;
-}
-
-#pragma mark 获取图片exif
-+ (NSDictionary *)imageExifWithLocalIdentifier:(NSString *)localIdentifier {
-    
-    
-    if (localIdentifier == nil) {
-        return nil;
-    }
-    PHFetchResult *result = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil];
-    
-    if(result == nil){
-        return @{};
-    }
-    else if(result.count == 0){
-        
-        return@{};
-    }
-    
-    __block BOOL isExecuted = NO;
-    PHAsset *asset = result.firstObject;
-    PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
-    NSMutableDictionary *properties = [NSMutableDictionary dictionary];
-    
-    [asset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
-        
-        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
-        
-        NSDictionary *nsdic = fullImage.properties;
-        
-        if([nsdic isKindOfClass:[NSDictionary class]]){
-            
-            [properties addEntriesFromDictionary:nsdic];
-        }
-        
-        /*
-         NSDictionary *originExif = nsdic[@"{Exif}"];
-         
-         NSDictionary *originMakerApple = nsdic[@"{MakerApple}"];
-         
-         NSDictionary *originGPS = nsdic[@"{GPS}"];
-         
-         properties[@"{GPS}"] = [NSDictionary dictionaryWithDictionary:originGPS];
-         
-         properties[@"{MakerApple}"] = [NSDictionary   dictionaryWithDictionary:originMakerApple];
-         
-         properties[@"{Exif}"] = [NSDictionary dictionaryWithDictionary:originExif];
-         */
-        isExecuted = YES;
-        
-    }];
-    
-    while (isExecuted == NO) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    }
-    
-    return properties;
-}
-
-
-#pragma mark - 判断资源为GIF
-////方法1 iOS 9.0
-+ (BOOL)adjustGIFWithAsset:(PHAsset *)asset {
-    if ([asset isKindOfClass:[PHAsset class]]) {
-        //每个asset 都有一个或者多个PHAssetResource(如：被编辑保存过的aseet会有若干个resource, 且被修改后的GIF类型的asset得uniformTypeIdentifier 会发生改变变成了public.jpeg 类型，所以修改多地GIF的就不再是GIF了，所以要对比最后一个resource的类型)
-        NSArray<PHAssetResource *>* tmpArr = [PHAssetResource assetResourcesForAsset:asset];
-        if (tmpArr.count) {
-            PHAssetResource *resource = tmpArr.lastObject;
-            if (resource.uniformTypeIdentifier.length) {
-                return UTTypeConformsTo( (__bridge CFStringRef)resource.uniformTypeIdentifier, kUTTypeGIF);
-            }
-        }
-    }
-    return false;
-}
-
-//方法2
-+ (BOOL)adjustGIFWithAsset2:(PHAsset *)asset {
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
-    options.resizeMode = PHImageRequestOptionsResizeModeFast;
-    [options setSynchronous:true];//同步
-    __block NSString *dataUTIStr = nil;
-    if ([asset isKindOfClass:[PHAsset class]]) {
-        [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-            dataUTIStr = dataUTI;
-        }];
-    }
-    if (dataUTIStr.length) {
-        return UTTypeConformsTo( (__bridge CFStringRef)dataUTIStr, kUTTypeGIF);
-    }
-    return false;
-}
-
-//保存GIF
-- (void)saveGifWithData:(NSData *)data {
-    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions alloc] init];
-        options.shouldMoveFile = true;
-        [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
-    } completionHandler:^(BOOL success, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"%@", error.debugDescription);
-        } else {
-            NSLog(@"保存成功");
-        }
-    }];
-}
-
-
-//保存某一个视频资源
-+ (void)saveVideoToLocalWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success))handler {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:URL.path]) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:URL];
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            if (handler) {handler(success);}
-        }];
-    }
-}
 
 @end

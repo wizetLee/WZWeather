@@ -10,7 +10,7 @@
 
 @implementation WZAssetBrowseToolView
 
-+ (instancetype)customAssetBrowseToolWithDelegate:(id<WZProtocolAssetBrowseTool>)delegate {
++ (instancetype)customAssetBrowseToolWithDelegate:(id<WZAssetBrowseToolProtocol>)delegate {
     
     CGFloat top = 0.0;
     CGFloat bottom = 0.0;
@@ -78,12 +78,12 @@
 
 - (void)clickedBtn:(UIButton *)sender {
     if (sender == self.selectedButtonClear) {
-        if ([_delegate respondsToSelector:@selector(selectedOrigionAction)]) {
-            [_delegate selectedOrigionAction];
+        if ([_delegate respondsToSelector:@selector(assetBrowseToolSelectedOrigionAction)]) {
+            [_delegate assetBrowseToolSelectedOrigionAction];
         }
     } else if (sender == self.completeButton) {
-        if ([_delegate respondsToSelector:@selector(completeAction)]) {
-            [_delegate completeAction];
+        if ([_delegate respondsToSelector:@selector(assetBrowseToolCompleteAction)]) {
+            [_delegate assetBrowseToolCompleteAction];
         }
     }
 }

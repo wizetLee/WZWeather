@@ -170,7 +170,7 @@
     //浏览大图
     if (self.mediaAssetArray.count) {
         WZAssetBrowseController *VC = [[WZAssetBrowseController alloc] init];
-        VC.imagesBrowseDelegate = (id<WZProtocolImageBrowse>)self;
+        VC.imagesBrowseDelegate = (id<WZImageBrowseProtocol>)self;
         VC.mediaAssetArray = self.mediaAssetArray;
         VC.restrictNumber = self.restrictNumber;
         [VC showInIndex:indexPath.row animated:true];
@@ -178,7 +178,7 @@
     }
 }
 
-#pragma mark - WZProtocolImageBrowse
+#pragma mark - WZImageBrowseProtocol
 - (void)backAction {
     [self.collection reloadData];
 }

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WZMediaFetcher.h"
 
-@protocol WZProtocolImageScrollView <NSObject>
+@protocol WZImageScrollViewProtocol <NSObject>
 
 - (void)singleTap:(UIGestureRecognizer *)gesture;
 - (void)doubleTap:(UIGestureRecognizer *)gesture;
@@ -19,7 +19,7 @@
 
 @interface WZImageScrollView : UIScrollView <UIScrollViewDelegate>
 
-@property (nonatomic, weak) id<WZProtocolImageScrollView> imageScrollDelegate;
+@property (nonatomic, weak) id<WZImageScrollViewProtocol> imageScrollDelegate;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPress;

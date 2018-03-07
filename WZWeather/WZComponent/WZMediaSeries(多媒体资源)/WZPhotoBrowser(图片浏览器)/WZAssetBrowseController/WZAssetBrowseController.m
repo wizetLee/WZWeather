@@ -36,15 +36,15 @@
     self.view.backgroundColor = [UIColor blackColor];
 }
 
-#pragma mark - WZProtocolAssetBrowseNaviagtion
-- (void)backAction {
-    if ([self.imagesBrowseDelegate respondsToSelector:@selector(backAction)]) {
-        [self.imagesBrowseDelegate backAction];
+#pragma mark - WZAssetBrowseNaviagtionProtocol
+- (void)assetBrowseNaviagtionBackAction {
+    if ([self.imagesBrowseDelegate respondsToSelector:@selector(imageBrowseBackAction)]) {
+        [self.imagesBrowseDelegate imageBrowseBackAction];
     }
     [self dismissViewControllerAnimated:true completion:^{}];
 }
 
-- (void)selectedAction {
+- (void)assetBrowseNaviagtionSelectedAction {
     if ([self overloadJudgement] && !self.currentMediaAsset.selected) {
         return;
     }
@@ -54,17 +54,17 @@
     [self caculateSelected];
 }
 
-#pragma mark - WZProtocolAssetBrowseTool
-- (void)selectedOrigionAction {
+#pragma mark - WZAssetBrowseToolProtocol
+- (void)assetBrowseToolSelectedOrigionAction {
     self.currentMediaAsset.origion = !self.currentMediaAsset.origion;
     self.toolView.selectedButtonClear.selected = self.currentMediaAsset.origion;
     [self fetchOrigion];
 }
 
-- (void)completeAction {
+- (void)assetBrowseToolCompleteAction {
     [self dismissViewControllerAnimated:false completion:^{
-        if ([self.imagesBrowseDelegate respondsToSelector:@selector(send)]) {
-            [self.imagesBrowseDelegate send];
+        if ([self.imagesBrowseDelegate respondsToSelector:@selector(imageBrowseSend)]) {
+            [self.imagesBrowseDelegate imageBrowseSend];
         }
     }];
 }
@@ -194,14 +194,14 @@
 #pragma mark - Accessor
 - (WZAssetBrowseNavigationView *)navigationView {
     if (!_navigationView) {
-        _navigationView = [WZAssetBrowseNavigationView customAssetBrowseNavigationWithDelegate:(id<WZProtocolAssetBrowseNaviagtion>)self];
+        _navigationView = [WZAssetBrowseNavigationView customAssetBrowseNavigationWithDelegate:(id<WZAssetBrowseNaviagtionProtocol>)self];
     }
     return _navigationView;
 }
 
 - (WZAssetBrowseToolView *)toolView {
     if (!_toolView) {
-        _toolView = [WZAssetBrowseToolView customAssetBrowseToolWithDelegate:(id<WZProtocolAssetBrowseTool>)self];
+        _toolView = [WZAssetBrowseToolView customAssetBrowseToolWithDelegate:(id<WZAssetBrowseToolProtocol>)self];
     }
     return _toolView;
 }

@@ -8,20 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol WZProtocolAssetBrowseNaviagtion <NSObject>
+@protocol WZAssetBrowseNaviagtionProtocol <NSObject>
 
-- (void)backAction;//返回代理事件
-- (void)selectedAction;//选中代理事件
+- (void)assetBrowseNaviagtionBackAction;//返回代理事件
+- (void)assetBrowseNaviagtionSelectedAction;//选中代理事件
 
 @end
 
 @interface WZAssetBrowseNavigationView : UIView
 
-@property (nonatomic, weak) id<WZProtocolAssetBrowseNaviagtion> delegate;
+@property (nonatomic, weak) id<WZAssetBrowseNaviagtionProtocol> delegate;
 @property (nonatomic, strong) UIButton *backButton;
 @property (nonatomic, strong) UIButton *selectedButton;
 @property (nonatomic, strong) UILabel *titleLabel;
 
-+ (instancetype)customAssetBrowseNavigationWithDelegate:(id<WZProtocolAssetBrowseNaviagtion>)delegate;
++ (instancetype)customAssetBrowseNavigationWithDelegate:(id<WZAssetBrowseNaviagtionProtocol>)delegate;
 
 @end

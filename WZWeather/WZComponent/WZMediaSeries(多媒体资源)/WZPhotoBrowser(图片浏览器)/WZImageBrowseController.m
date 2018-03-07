@@ -12,7 +12,7 @@
 @interface WZImageBrowseController ()<UIPageViewControllerDataSource,
                                       UIPageViewControllerDelegate,
                                       UIViewControllerTransitioningDelegate,
-                                      WZProtocolImageScrollView
+                                      WZImageScrollViewProtocol
                                      >
 
 @end
@@ -70,7 +70,7 @@
 - (void)createViews {
 }
 
-#pragma mark - WZProtocolImageBrowseNavigationView
+#pragma mark - WZImageBrowseProtocolNavigationView
 - (void)leftButtunAction {
     [self dismissViewControllerAnimated:true completion:^{}];
 }
@@ -126,7 +126,7 @@
     }
 }
 
-#pragma mark - WZProtocolImageScrollView
+#pragma mark - WZImageScrollViewProtocol
 - (void)singleTap:(UIGestureRecognizer *)gesture {
     //单击
 }
@@ -141,7 +141,7 @@
     
 }
 
-#pragma mark - WZProtocolImageContainer
+#pragma mark - WZImageContainerProtocol
 
 #pragma mark - UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed {
@@ -177,7 +177,7 @@
         for (NSUInteger i = 0; i < reuseCount; i++) {
             WZImageContainerController *VC = [[WZImageContainerController alloc] init];
             VC.index = i;
-            VC.delegate = (id<WZProtocolImageContainer>)self;
+            VC.delegate = (id<WZImageContainerProtocol>)self;
             VC.mainVC = self;
             [tmpMArr addObject:VC];
         }

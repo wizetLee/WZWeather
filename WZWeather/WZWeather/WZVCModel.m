@@ -72,11 +72,11 @@
     VCModel.headline = @"视频：视频速率";
     [_sources addObject:VCModel];
     
-    //    VCModel = WZVCModel.alloc.init;
-    //    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
-    //    VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    //    VCModel.headline = @"控件：AnimatePageControlDemo";
-    //    [_sources addObject:VCModel];
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_AnimatePageControlViewController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    VCModel.headline = @"控件：PageControl";
+    [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_RateViewController.class;

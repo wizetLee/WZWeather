@@ -1417,7 +1417,7 @@
 			children = (
 				845ED84720048E460031894C /* WZAnimatePageControl */,
 				846227611FD6ACCE00D37FAE /* WZSilder */,
-				8483E7C21FC265DF00C559EF /* WZStarRatingView */,
+				8483E7C21FC265DF00C559EF /* WZStarRatingView(星型评分) */,
 				8483E7C11FC2659A00C559EF /* WZTriangleView.h */,
 				8483E7C01FC2659A00C559EF /* WZTriangleView.m */,
 				8483E7BD1FC2658C00C559EF /* WZTextView */,
@@ -1425,12 +1425,12 @@
 				840547531FB9A9380033EF9B /* WZToast */,
 				840A43951FB141B100F6D449 /* WZAlert */,
 				402AB18F1F0732D600136DB4 /* WZScrollOptions */,
-				40DC2B001EA2611C000968DB /* WZBaseRoundSelector */,
+				40DC2B001EA2611C000968DB /* WZBaseRoundSelector(圆环取数据) */,
 			);
 			path = WZView;
 			sourceTree = "<group>";
 		};
-		40DC2B001EA2611C000968DB /* WZBaseRoundSelector */ = {
+		40DC2B001EA2611C000968DB /* WZBaseRoundSelector(圆环取数据) */ = {
 			isa = PBXGroup;
 			children = (
 				40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */,
@@ -1438,10 +1438,10 @@
 				40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */,
 				40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */,
 			);
-			path = WZBaseRoundSelector;
+			path = "WZBaseRoundSelector(圆环取数据)";
 			sourceTree = "<group>";
 		};
-		8402EB141ECD64A40030CCE1 /* WZVariousTable */ = {
+		8402EB141ECD64A40030CCE1 /* WZVariousTable(自定义tableView) */ = {
 			isa = PBXGroup;
 			children = (
 				8402EB211ECD64A40030CCE1 /* WZVariousTable.h */,
@@ -1455,7 +1455,7 @@
 				8402EB1F1ECD64A40030CCE1 /* WZVariousSectionsTable.h */,
 				8402EB201ECD64A40030CCE1 /* WZVariousSectionsTable.m */,
 			);
-			path = WZVariousTable;
+			path = "WZVariousTable(自定义tableView)";
 			sourceTree = "<group>";
 		};
 		840547531FB9A9380033EF9B /* WZToast */ = {
@@ -1611,7 +1611,7 @@
 			path = WZPageViewController;
 			sourceTree = "<group>";
 		};
-		844A483E1E9F657B0002829A /* WZVariousCollectionView */ = {
+		844A483E1E9F657B0002829A /* WZVariousCollectionView(自定义collectionView) */ = {
 			isa = PBXGroup;
 			children = (
 				84CAD8061EA0BD5D00BDF9AA /* WZVariousCollectionController.h */,
@@ -1629,10 +1629,10 @@
 				844A48411E9F657B0002829A /* WZVariousCollectionBaseMethodObject.h */,
 				844A48421E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m */,
 			);
-			path = WZVariousCollectionView;
+			path = "WZVariousCollectionView(自定义collectionView)";
 			sourceTree = "<group>";
 		};
-		844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */ = {
+		844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser(自定义计时器) */ = {
 			isa = PBXGroup;
 			children = (
 				844F3BDC1EB9E698005E6ACF /* WZTimeSuperviser.h */,
@@ -1642,7 +1642,7 @@
 				84405E2B1EBC2C080019C63C /* WZDisplayLinkSuperviser.h */,
 				84405E2C1EBC2C080019C63C /* WZDisplayLinkSuperviser.m */,
 			);
-			path = WZTimeSuperviser;
+			path = "WZTimeSuperviser(自定义计时器)";
 			sourceTree = "<group>";
 		};
 		845034E21FB59F0700D3A285 /* CustomTinter */ = {
@@ -2674,7 +2674,7 @@
 			path = UIViewController;
 			sourceTree = "<group>";
 		};
-		845664631FC82E8C0004BAC1 /* WZMediaSeries */ = {
+		845664631FC82E8C0004BAC1 /* WZMediaSeries(多媒体资源) */ = {
 			isa = PBXGroup;
 			children = (
 				4061405D2046F80A0071F636 /* 视频调速工具 */,
@@ -2683,12 +2683,12 @@
 				841E4B582004C13800886F80 /* 多视频合成以及过度效果 */,
 				840E3E991FE3BF2600A5D559 /* WZHardwareCodec */,
 				84ECD3121FCBA7E400282C9A /* Resources */,
-				846A31291FD16336003CECAE /* WZMediaFetcher */,
-				846A310F1FD16336003CECAE /* WZPhotoBrowser */,
-				846A31221FD16336003CECAE /* WZPhotoPicker */,
-				846A31081FD15057003CECAE /* WZVideoPicker */,
+				846A31291FD16336003CECAE /* WZMediaFetcher(资源获取保存等操作) */,
+				846A310F1FD16336003CECAE /* WZPhotoBrowser(图片浏览器) */,
+				846A31221FD16336003CECAE /* WZPhotoPicker(图片选取、相册) */,
+				846A31081FD15057003CECAE /* WZVideoPicker(视频选取) */,
 			);
-			path = WZMediaSeries;
+			path = "WZMediaSeries(多媒体资源)";
 			sourceTree = "<group>";
 		};
 		84593D1B1ECAE602000508C7 /* Foundation */ = {
@@ -2906,15 +2906,15 @@
 		846920D91E63BBB30048BBDC /* WZComponent */ = {
 			isa = PBXGroup;
 			children = (
-				845664631FC82E8C0004BAC1 /* WZMediaSeries */,
-				8486332B1F95CA030086C96E /* WZGPUImage */,
+				845664631FC82E8C0004BAC1 /* WZMediaSeries(多媒体资源) */,
+				8486332B1F95CA030086C96E /* WZGPUImage(GPUImage的扩展) */,
 				84648A771EF7B67000B9DF41 /* WZAnimatedTransitions */,
 				844997BF1EF3DA9E003B3952 /* WZPageViewController */,
-				8402EB141ECD64A40030CCE1 /* WZVariousTable */,
-				844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser */,
+				8402EB141ECD64A40030CCE1 /* WZVariousTable(自定义tableView) */,
+				844F3BDB1EB9E62F005E6ACF /* WZTimeSuperviser(自定义计时器) */,
 				845BD8F01EB0509A004AC354 /* WZNetworkMonitor */,
 				40DC2AFF1EA2611C000968DB /* WZView */,
-				844A483E1E9F657B0002829A /* WZVariousCollectionView */,
+				844A483E1E9F657B0002829A /* WZVariousCollectionView(自定义collectionView) */,
 				84514D911E9DCF0A00F07EF8 /* WZCategories */,
 				84514AC71E9DCE7A00F07EF8 /* JKCategories */,
 			);
@@ -2954,7 +2954,7 @@
 			path = Picture;
 			sourceTree = "<group>";
 		};
-		846A31081FD15057003CECAE /* WZVideoPicker */ = {
+		846A31081FD15057003CECAE /* WZVideoPicker(视频选取) */ = {
 			isa = PBXGroup;
 			children = (
 				846227521FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png */,
@@ -2972,10 +2972,10 @@
 				846227651FD6ACE900D37FAE /* WZVideoSurfSlider.h */,
 				846227661FD6ACE900D37FAE /* WZVideoSurfSlider.m */,
 			);
-			path = WZVideoPicker;
+			path = "WZVideoPicker(视频选取)";
 			sourceTree = "<group>";
 		};
-		846A310F1FD16336003CECAE /* WZPhotoBrowser */ = {
+		846A310F1FD16336003CECAE /* WZPhotoBrowser(图片浏览器) */ = {
 			isa = PBXGroup;
 			children = (
 				846A31101FD16336003CECAE /* WZAssetBrowseController */,
@@ -2987,7 +2987,7 @@
 				846A311C1FD16336003CECAE /* WZImageScrollView.m */,
 				846A311D1FD16336003CECAE /* WZRemoteImagesBrowseController */,
 			);
-			path = WZPhotoBrowser;
+			path = "WZPhotoBrowser(图片浏览器)";
 			sourceTree = "<group>";
 		};
 		846A31101FD16336003CECAE /* WZAssetBrowseController */ = {
@@ -3014,7 +3014,7 @@
 			path = WZRemoteImagesBrowseController;
 			sourceTree = "<group>";
 		};
-		846A31221FD16336003CECAE /* WZPhotoPicker */ = {
+		846A31221FD16336003CECAE /* WZPhotoPicker(图片选取、相册) */ = {
 			isa = PBXGroup;
 			children = (
 				846A31231FD16336003CECAE /* WZMediaAssetBaseCell.h */,
@@ -3024,10 +3024,10 @@
 				846A31271FD16336003CECAE /* WZPhotoPickerController.h */,
 				846A31281FD16336003CECAE /* WZPhotoPickerController.m */,
 			);
-			path = WZPhotoPicker;
+			path = "WZPhotoPicker(图片选取、相册)";
 			sourceTree = "<group>";
 		};
-		846A31291FD16336003CECAE /* WZMediaFetcher */ = {
+		846A31291FD16336003CECAE /* WZMediaFetcher(资源获取保存等操作) */ = {
 			isa = PBXGroup;
 			children = (
 				846A312A1FD16336003CECAE /* NSObject+WZCommon.h */,
@@ -3035,7 +3035,7 @@
 				846A312C1FD16336003CECAE /* WZMediaFetcher.h */,
 				846A312D1FD16336003CECAE /* WZMediaFetcher.m */,
 			);
-			path = WZMediaFetcher;
+			path = "WZMediaFetcher(资源获取保存等操作)";
 			sourceTree = "<group>";
 		};
 		846F2701203FC413008E57C1 /* 废弃 */ = {
@@ -3085,7 +3085,7 @@
 			path = WZTextView;
 			sourceTree = "<group>";
 		};
-		8483E7C21FC265DF00C559EF /* WZStarRatingView */ = {
+		8483E7C21FC265DF00C559EF /* WZStarRatingView(星型评分) */ = {
 			isa = PBXGroup;
 			children = (
 				848916FE204D24EB00A74073 /* bigDarkStar@2x.png */,
@@ -3095,10 +3095,10 @@
 				4082B223204BBE170046B609 /* WZStarRatingView.h */,
 				4082B224204BBE170046B609 /* WZStarRatingView.m */,
 			);
-			path = WZStarRatingView;
+			path = "WZStarRatingView(星型评分)";
 			sourceTree = "<group>";
 		};
-		8486332B1F95CA030086C96E /* WZGPUImage */ = {
+		8486332B1F95CA030086C96E /* WZGPUImage(GPUImage的扩展) */ = {
 			isa = PBXGroup;
 			children = (
 				846D16011FBBC03000E78FFF /* GPUImageBeautifyFilter.h */,
@@ -3113,17 +3113,15 @@
 				840A43A11FB18AFC00F6D449 /* WZCameraAssist.m */,
 				8486332F1F95CCD20086C96E /* WZMediaController.h */,
 				848633301F95CCD20086C96E /* WZMediaController.m */,
-				402898121FAD6FB700F36DA3 /* WZMediaPreviewView.h */,
-				402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */,
 				8453F5E21FB05A6700E0ABAE /* GPUImageVideoCamera+assist.h */,
 				8453F5E31FB05A6700E0ABAE /* GPUImageVideoCamera+assist.m */,
 				4000982D1FADCD9F00D2A248 /* WZGPUImagePreinstall.h */,
 				4000982E1FADCD9F00D2A248 /* WZGPUImagePreinstall.m */,
-				4028980F1FAD6FA000F36DA3 /* WZMediaOperationView.h */,
-				402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */,
+				8453F5DF1FB03FAE00E0ABAE /* WZMediaConfigObject.h */,
+				8453F5E01FB03FAE00E0ABAE /* WZMediaConfigObject.m */,
 				84BC818E1FCFDEBE00FB76BC /* UI */,
 			);
-			path = WZGPUImage;
+			path = "WZGPUImage(GPUImage的扩展)";
 			sourceTree = "<group>";
 		};
 		84891709204D43ED00A74073 /* livePhoto */ = {
@@ -3146,6 +3144,10 @@
 		84BC818E1FCFDEBE00FB76BC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				402898121FAD6FB700F36DA3 /* WZMediaPreviewView.h */,
+				402898131FAD6FB700F36DA3 /* WZMediaPreviewView.m */,
+				4028980F1FAD6FA000F36DA3 /* WZMediaOperationView.h */,
+				402898101FAD6FA000F36DA3 /* WZMediaOperationView.m */,
 				840A43A31FB1981400F6D449 /* WZMediaGestureView.h */,
 				840A43A41FB1981400F6D449 /* WZMediaGestureView.m */,
 				845349D01FC3BB9100D228DE /* WZMediaTmpRecordList.h */,
@@ -3158,8 +3160,6 @@
 				8453F5DA1FB0372100E0ABAE /* WZMediaConfigView.m */,
 				8453F5DC1FB03AC700E0ABAE /* WZMediaConfigCell.h */,
 				8453F5DD1FB03AC700E0ABAE /* WZMediaConfigCell.m */,
-				8453F5DF1FB03FAE00E0ABAE /* WZMediaConfigObject.h */,
-				8453F5E01FB03FAE00E0ABAE /* WZMediaConfigObject.m */,
 				84BC818F1FCFDF6000FB76BC /* WZMediaRateTypeView.h */,
 				84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */,
 			);
@@ -3169,11 +3169,11 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */,
 				845FE036204FF25F00DEC32D /* 临时测试 */,
 				845FE035204FF24100DEC32D /* 剪切示例 */,
 				845FE034204FF23900DEC32D /* 资源下载 */,
 				84891709204D43ED00A74073 /* livePhoto */,
-				849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */,
 				4078BC872048432600FDE851 /* 多视频合并过渡 */,
 				406140612046FE190071F636 /* 视频速率 */,
 				407EC738204591E0001C065E /* 视频倒放 */,

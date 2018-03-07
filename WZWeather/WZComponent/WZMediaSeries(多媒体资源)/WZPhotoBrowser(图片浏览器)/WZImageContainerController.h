@@ -31,7 +31,7 @@
 @end
 
 @class WZImageContainerController;
-@protocol WZProtocolImageContainer <NSObject>
+@protocol WZImageContainerProtocol <NSObject>
 
 @end
 
@@ -40,8 +40,8 @@
  */
 @interface WZImageContainerController : UIViewController
 
-@property (nonatomic, weak) UIViewController <WZProtocolImageScrollView>*mainVC;//手势代理对象
-@property (nonatomic, weak) id<WZProtocolImageContainer> delegate;//
+@property (nonatomic, weak) UIViewController <WZImageScrollViewProtocol>*mainVC;//手势代理对象
+@property (nonatomic, weak) id<WZImageContainerProtocol> delegate;//
 @property (nonatomic, assign) NSInteger index;//当前图片角标
 
 //进度显示(for remote)

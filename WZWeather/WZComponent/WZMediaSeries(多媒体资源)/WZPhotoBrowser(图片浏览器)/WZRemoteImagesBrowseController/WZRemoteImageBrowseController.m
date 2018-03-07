@@ -68,7 +68,7 @@
     
     if (imagesMArray.count) {
         WZRemoteImageBrowseController *VC = [[WZRemoteImageBrowseController alloc] init];
-        VC.imagesBrowseDelegate = (id<WZProtocolImageBrowse>)locatedVC;
+        VC.imagesBrowseDelegate = (id<WZImageBrowseProtocol>)locatedVC;
         VC.mediaAssetArray = imagesMArray;
         
         VC.restrictNumber = 9;//控制选中图片的数目
@@ -209,7 +209,7 @@
 
 - (WZRemoteImageNavigationView *)navigationView {
     if (!_navigationView) {
-        _navigationView = [WZRemoteImageNavigationView customAssetBrowseNavigationWithDelegate:(id<WZProtocolAssetBrowseNaviagtion>)self];
+        _navigationView = [WZRemoteImageNavigationView customAssetBrowseNavigationWithDelegate:(id<WZAssetBrowseNaviagtionProtocol>)self];
     }
     return _navigationView;
 }
