@@ -19,17 +19,7 @@
 ////区间
 //#pragma clang diagnostic pop
 
-
-#import "WZUserInfo.h"
 #import "WZToast.h"
-
-//CoreTelephony
-#import <CoreTelephony/CTCallCenter.h>
-#import <CoreTelephony/CTCall.h>
-#import <CoreTelephony/CTCarrier.h>
-#import <CoreTelephony/CTSubscriberInfo.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTSubscriber.h>
 
 //网络请求
 #import "WZHttpRequest+WZWeather.h"
