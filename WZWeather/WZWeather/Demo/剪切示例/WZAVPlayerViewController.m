@@ -346,7 +346,8 @@
         
         exportSession.timeRange = range;///配置剪裁的位置
     }
-    
+    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(UIScreen.mainScreen.bounds.size.width / 2.0 , UIScreen.mainScreen.bounds.size.height / 2.0)];
+    [SVProgressHUD show];
     {//导出
         __weak typeof(self) weakSelf = self;
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
@@ -364,7 +365,7 @@
             });
         }];
     }
-    
+   
     //导出速率监听
     [self monitorExportProgressWithExportSession:exportSession];
 }
@@ -396,7 +397,9 @@
 
 //MARK: 剪裁进度回调
 - (void)clippingProgress:(CGFloat)progress {
-
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD showProgress:progress];
+    });
 }
 //MARK: 剪裁失败
 - (void)exportFail {

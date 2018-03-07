@@ -122,13 +122,18 @@
             NSLog(@"系统方法视频导出进度：exportSession.progress = %f", exportSession.progress);
          
             ///进度回调
-            if ([_delegate respondsToSelector:@selector(videoTransitionEffectTool:progress:)]) {
-                [_delegate videoTransitionEffectTool:self progress:exportSession.progress];
-            }
+           
+            [self showExportProgress:exportSession.progress];
             [self monitorExportProgressWithExportSession:exportSession];
             
         } else {}
     });
+}
+
+- (void)showExportProgress:(float)progress {
+    if ([_delegate respondsToSelector:@selector(videoTransitionEffectTool:progress:)]) {
+        [_delegate videoTransitionEffectTool:self progress:progress];
+    }
 }
 
 ///开始任务前的准备，每次开始任务前，都需要prepareTask（主要是需要吧status设置为ready状态）
