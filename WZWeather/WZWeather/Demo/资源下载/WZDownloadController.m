@@ -55,7 +55,7 @@
     //写得真烂
     [_downloader downloadWithURLArray:tmpUrlArray completedWithError:^(NSMutableArray<WZDownloadTarget *> *targets, NSError * _Nullable error) {
         if (error) {
-            NSLog(@"下载错误 or 取消： error: %@", error.debugDescription);
+//            NSLog(@"下载错误 or 取消： error: %@", error.debugDescription);
             //保存为resumeData
             if ([error.userInfo[NSURLSessionDownloadTaskResumeData] isKindOfClass:[NSData class]]) {
                 NSData *resumeData = error.userInfo[NSURLSessionDownloadTaskResumeData];

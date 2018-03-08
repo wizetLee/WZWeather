@@ -7,35 +7,28 @@
 //
 
 #import "WZAVPlayerViewController.h"
-#import "BIVideoEditingClippingView.h"
+#import "WZVideoEditingClippingView.h"
 #import "WZAPLSimpleEditor.h"
-
+#import "WZMediaFetcher.h"
 
 /*
  动画 + 视频导出
  */
 
-@interface WZAVPlayerViewController ()<WZAPLSimpleEditorProtocol, BIVideoEditingClippingViewProtocol, WZRatioCutOutViewProtocol>
+@interface WZAVPlayerViewController ()<WZVideoEditingClippingViewProtocol, WZRatioCutOutViewProtocol>
 
 @property (nonatomic, strong) AVAsset *asset;
 //  AVQueuePlayer //播放多段视频
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerItem *targetItem;
 @property (nonatomic, strong) AVPlayerLayer *previewLayer;
-@property (nonatomic, strong) UIView *gestureView;
-@property (nonatomic, strong) NSMutableArray *cellMArr;
-@property (nonatomic, strong) NSMutableArray *timePointMArr;
-@property (nonatomic, strong) NSMutableArray *curBucket;
 @property (nonatomic, strong) UIButton *exportButton;
-@property (nonatomic, strong) BIVideoEditingClippingView *clipingView;
+@property (nonatomic, strong) WZVideoEditingClippingView *clipingView;
 
-@property (nonatomic, strong) WZAPLSimpleEditor *editor;
-@property (nonatomic, strong) CALayer *containLayer;
 
 ///播放时间的判定
 @property (nonatomic, assign) CMTime startTime;//播放始端
 @property (nonatomic, assign) CMTime endTime;//播放末端
-
 
 @property (nonatomic, strong) id timeObserver;  //监听播放速度的监听者 记得要移除
 @property (nonatomic, assign) BOOL dragging;    //判断是否正在拖动中 主要用于监听播放进度内的回调处理
@@ -47,16 +40,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     _editor = [[WZAPLSimpleEditor alloc] init];
-    _editor.delegate = self;
-    _cellMArr = [NSMutableArray array];
-    
-    AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sample_clip1" ofType:@"m4v"]]];
+
+    AVURLAsset *asset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"curnane" ofType:@"mp4"]]];
     _asset = asset1;
-    [_editor updateEditorWithVideoAssets:@[asset1]];//得到targetSize
-    
-    ///获得一个与合成的视频一样大的幕布
-    _containLayer = [self parentLayerWithTargetAssetSize:_editor.targetSize];
     
     _startTime = kCMTimeZero;//默认0开始
     _targetItem = [[AVPlayerItem alloc] initWithAsset:asset1];
@@ -67,51 +53,22 @@
     [self dataConfig];
     [self createViews];
     
+    //禁用侧拉返回
     [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([self class])];
 }
 
-//MARK: 动画载体layer的size匹配
-- (CALayer *)parentLayerWithTargetAssetSize:(CGSize)size {
-    CALayer *parentLayer = [[CALayer alloc] init];
-    parentLayer.frame = CGRectMake(0, 0, size.width, size.height);
-    parentLayer.backgroundColor = [UIColor clearColor].CGColor;
-    return parentLayer;
+- (void)dealloc {
+    [_player removeTimeObserver:_timeObserver];
+    [_player pause];
+    _player = nil;
 }
 
+#pragma mark - Private
 //MARK: 配置asset等
 - (void)dataConfig {
     _player = [[AVPlayer alloc] initWithPlayerItem:_targetItem];
-    
-    
-    __weak typeof(self) weakSelf = self;
-    _timeObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.5, 600) queue:nil usingBlock:^(CMTime time) {
-     //可以在此处理 配置一个循环播放的设置
-        ///循环播放 不应该再这里实现循环播放， 应当使用通知实现循环播放
-      
-        if (!weakSelf.dragging && weakSelf.recyclable) {
-            if (CMTimeCompare(weakSelf.endTime, kCMTimeZero) != 0) {
-                int reuslt = CMTimeCompare(time, weakSelf.endTime);
-                if (reuslt == 0
-                    || reuslt > 0) {
-                    
-                    [weakSelf.player pause];
-                    ///没找到特别好的方法 暂时使用一个延时播放  利用CPU速度比较快的特点
-                    [[weakSelf class] cancelPreviousPerformRequestsWithTarget:weakSelf selector:@selector(delayPlay) object:nil];
-                    [weakSelf performSelector:@selector(delayPlay) withObject:0 afterDelay:0.1];
-                 
-                }
-                //在停止之前也会
-            }
-        }
-    }];
     _previewLayer = [AVPlayerLayer playerLayerWithPlayer:_player] ;
    
-}
-
-- (void)delayPlay {
-    NSLog(@"——————————————————————————————倒带");
-    [_player seekToTime:_startTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
-    [_player play];
 }
 
 - (void)createViews {
@@ -130,154 +87,34 @@
         _previewLayer.frame = CGRectMake(0.0, top, size.width, size.height);
         [self.view.layer addSublayer:_previewLayer];
     }
-    
-    {
-        _gestureView =  [[UIView alloc] initWithFrame:_previewLayer.frame];
-        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-        [self.view addSubview:_gestureView];
-        _gestureView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.25];
-        [_gestureView addGestureRecognizer:pan];
-        _gestureView.clipsToBounds = true;
-    }
-
     {
         _exportButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, screenH - bottom - 44.0, 2 * 44.0, 44.0)];
         [self.view addSubview:_exportButton];
         _exportButton.backgroundColor = [UIColor yellowColor];
-        [_exportButton setTitle:@"合成并保存" forState:UIControlStateNormal];
+        [_exportButton setTitle:@"开始剪裁" forState:UIControlStateNormal];
         [_exportButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_exportButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     {
-        _clipingView = [[BIVideoEditingClippingView alloc] initWithFrame:CGRectMake(0.0, _exportButton.minY - 70, screenW, 70.0)];
+        _clipingView = [[WZVideoEditingClippingView alloc] initWithFrame:CGRectMake(0.0, _exportButton.minY - 70, screenW, 70.0)];
         _clipingView.delegate = self;
         _clipingView.asset = self.player.currentItem.asset;
         [self.view addSubview:_clipingView];
     }
 }
 
-- (void)dealloc {
-    [_player removeTimeObserver:_timeObserver];
-    [_player pause];
-    _player = nil;
-}
-
-
 - (void)clickedBtn:(UIButton *)sender {
-    
-    ///尺寸需要修改
-    for (NSMutableArray *tmpMArr in _cellMArr) {
-        for (NSDictionary *dic in tmpMArr) {
-            CGFloat time =  [dic[@"time"] floatValue];
-            CGPoint point = [dic[@"point"] CGPointValue] ;
-            CALayer *layer = [CALayer layer];
-            layer.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor;
-            layer.opacity = 0;
-            layer.frame = CGRectMake(0, 0, 40, 40);
-            layer.position = point;
-            
-            CAKeyframeAnimation *baseAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-            baseAnimation.values = @[@0.5f, @0.1, @0.1, @0.0f];
-            baseAnimation.keyTimes = @[@0.0f, @0.25f, @0.75f, @1.0f];
-            
-            baseAnimation.removedOnCompletion = false;
-            baseAnimation.beginTime = time;//
-            baseAnimation.duration = 3;
-            [layer addAnimation:baseAnimation forKey:nil];
-            [_containLayer addSublayer:layer];
-        }
-    }
-    
-    {////加一个动画
-        CALayer *animationLayer = [CALayer layer];
-        animationLayer.frame = CGRectMake(0, 0, _editor.targetSize.width, _editor.targetSize.height);
-        CALayer *videoLayer = [CALayer layer];
-        videoLayer.frame = CGRectMake(0, 0, _editor.targetSize.width, _editor.targetSize.height);
-        
-        [animationLayer addSublayer:videoLayer];
-        
-        [animationLayer addSublayer:_containLayer];
-        animationLayer.geometryFlipped = true;//确保能被正确渲染（如果没设置 图像会颠倒（也就是坐标紊乱））
-        AVVideoCompositionCoreAnimationTool *animationTool = [AVVideoCompositionCoreAnimationTool videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:videoLayer                  inLayer:animationLayer];
-        _editor.videoComposition.animationTool = animationTool;//赋值 CAAnaimtion
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    [_editor exportToSandboxDocumentWithFileName:@"myy.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
-        if (statue == AVAssetExportSessionStatusCompleted) {
-            NSLog(@"导出成功");
-            [WZAPLSimpleEditor saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
-                if (success) {
-                    NSLog(@"保存成功");
-                } else {
-                    NSLog(@"保存失败");
-                }
-            }];
-        
-        } else {
-            NSLog(@"导出失败");
-        }
-    }];
-    
+//    [self saveVideoWithAnimationTool];
+    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(UIScreen.mainScreen.bounds.size.width / 2.0 , UIScreen.mainScreen.bounds.size.height / 2.0)];
+    [SVProgressHUD show];
+    self.view.userInteractionEnabled = false;
     //剪裁
-//    [self videoClippingWithAsset:_asset leadingTime:_startTime trailingTime:_endTime];
+    [self videoClippingWithAsset:_asset leadingTime:_startTime trailingTime:_endTime];
 }
 
-- (void)wzAPLSimpleEditor:(WZAPLSimpleEditor *)editor currentProgress:(CGFloat)progress {
-    [self.exportButton setTitle:[NSString stringWithFormat:@"%lf", progress] forState:UIControlStateNormal];
-}
 
-- (void)pan:(UIPanGestureRecognizer *)pan {
-    CGPoint curPoint = [pan locationInView:pan.view];
-    //粒子动画考试啦
-    if (pan.state == UIGestureRecognizerStateBegan) {
-        //开始跑
-
-        _timePointMArr = [NSMutableArray array];
-        [_cellMArr addObject:_timePointMArr];
-        [_player play];
-        _recyclable = true;
-    } else if (pan.state == UIGestureRecognizerStateChanged) {
-        CGFloat videoTime = CMTimeGetSeconds(_player.currentTime);//得到视频播放时间
-        if (CMTimeGetSeconds(_player.currentItem.duration) - videoTime <= 0) {
-            return;
-        }
-        CGFloat scale = _editor.targetSize.width/ _previewLayer.frame.size.width;
-        CGPoint mapPoint = CGPointMake(curPoint.x * scale, curPoint.y * scale);
-        
-        NSDictionary *dic = @{@"time":[NSNumber numberWithFloat:videoTime], @"point": [NSValue valueWithCGPoint:mapPoint]};
-        [_timePointMArr addObject:dic];
-        
-        //开始加上layer
-        CALayer *layer = [CALayer layer];
-        layer.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor;
-        layer.opacity = 0;
-        layer.frame = CGRectMake(0, 0, 40, 40);
-        layer.position = curPoint;
-        CAKeyframeAnimation *baseAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-        baseAnimation.values = @[@0.5f, @0.1, @0.1, @0.0f];
-        baseAnimation.keyTimes = @[@0.0f, @0.25f, @0.75f, @1.0f];
-        
-        baseAnimation.removedOnCompletion = false;
-        baseAnimation.beginTime = 0;//
-        baseAnimation.duration = 3;
-        [layer addAnimation:baseAnimation forKey:nil];
-        [pan.view.layer addSublayer: layer];
-        [_curBucket addObject:layer];
-        
-//        [parentLayer  addSublayer:layer];
-        
-    } else if (pan.state == UIGestureRecognizerStateCancelled
-               || pan.state == UIGestureRecognizerStateEnded
-               || pan.state == UIGestureRecognizerStateFailed) {
-        //停跑
-        [_player pause];
-        
-    }
-}
-
-//MARK:- 滑动剪裁控件产生的代理
+//MARK:- WZRatioCutOutViewProtocol
 - (void)ratioCutOutView:(WZRatioCutOutView *)view leadingRatio:(CGFloat)leadingRatio trailingRatio:(CGFloat)trailingRatio leadingDrive:(BOOL)leadingDrive; {
 //    NSLog(@"leadingRatio : %f", leadingRatio);
 //    NSLog(@"trailingRatio : %f", trailingRatio);
@@ -290,6 +127,7 @@
         tmpTime = _endTime;
     }
     
+    //切换Player的播放位置
     if (_player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
         [_player seekToTime:tmpTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
     }
@@ -307,10 +145,7 @@
     NSLog(@"--------------------------拖拽完毕");
 }
 
-/**
- 关于AVPlayer
-     调整速率rate
- ***/
+
 //MARK:- 视频剪裁
 - (void)videoClippingWithAsset:(AVAsset *)asset leadingTime:(CMTime)leadingTime trailingTime:(CMTime)trailingTime {
     NSAssert(CMTimeGetSeconds(asset.duration), @"资源为空");
@@ -321,7 +156,7 @@
         if ([[NSFileManager defaultManager] fileExistsAtPath:tmpPath]) {
             NSError *error = nil;
             [[NSFileManager defaultManager] removeItemAtPath:tmpPath error:&error];
-            if (error) { NSLog(@"删除文件夹失败"); ; return;};
+            if (error) { NSLog(@"删除文件夹失败"); return;};
         }
         
         exportSession.outputURL = URL;//配置输出路径
@@ -329,7 +164,6 @@
     }
     
     {//配截取的时间
-    
         //a < b -1     0        a > b  1
         if (CMTimeCompare(leadingTime, _asset.duration) >= 0) {
             NSAssert(false, @"截取视频的开始时间必须小于视频的总时长");
@@ -345,9 +179,12 @@
         CMTimeRange range = CMTimeRangeMake(leadingTime, durationTime);///剪裁的位置
         
         exportSession.timeRange = range;///配置剪裁的位置
+        if (CMTimeCompare(range.duration, _asset.duration) == 0) {
+            //考虑直接返回原视频，但实际开发的时候，会有其他的一些操作，而非单纯地处理剪裁
+            NSLog(@"时间与原视频一样");
+        }
     }
-    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(UIScreen.mainScreen.bounds.size.width / 2.0 , UIScreen.mainScreen.bounds.size.height / 2.0)];
-    [SVProgressHUD show];
+    
     {//导出
         __weak typeof(self) weakSelf = self;
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
@@ -360,7 +197,7 @@
                 } else if (exportSession.status == AVAssetExportSessionStatusCompleted) {
 //                    exportSession.outputURL
                     //导出成功的动作
-                    [weakSelf exportcompleted];
+                    [weakSelf exportcompletedWithURL:exportSession.outputURL];
                 }
             });
         }];
@@ -403,25 +240,59 @@
 }
 //MARK: 剪裁失败
 - (void)exportFail {
-    
+    self.view.userInteractionEnabled = true;
+    [SVProgressHUD dismiss];
 }
 //MARK: 剪裁完成
-- (void)exportcompleted {
+- (void)exportcompletedWithURL:(NSURL *)URL {
+
+    self.view.userInteractionEnabled = true;
+    [SVProgressHUD dismiss];
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"操作选取" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存本地" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [WZMediaFetcher saveVideoWithURL:URL completionHandler:^(BOOL success, NSError *error) {
+            if (success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                   [WZToast toastWithContent:@"保存成功"];
+                });
+            }
+        }];
+    }];
+    [alertC addAction:action];
+    
+    action = [UIAlertAction actionWithTitle:@"预览导出效果" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      
+        WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
+        alert.asset = [AVAsset assetWithURL:URL];
+        [alert alertShow];
+    }];
+    [alertC addAction:action];
+    
+    [self presentViewController:alertC animated:true completion:^{
+        
+    }];
     
 }
 
-//MARK: 根据某一个数据匹配对应的视频的播放速率
-//MARK: 新增一个属性用于调整速率
-- (void)adjust:(AVMutableComposition *)composition {
-    if (![composition isKindOfClass:[AVMutableComposition class]]) { return;}
-    
-    ///修改视频的播放速率
-    NSArray<AVMutableCompositionTrack *> *tracks = composition.tracks;
-    for (AVMutableCompositionTrack *track in tracks) {
-        double videoScaleFactor = 0.5;
-        CMTime videoDuration = composition.duration;
-        [track scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoDuration)
-                   toDuration:CMTimeMake(videoDuration.value*videoScaleFactor, videoDuration.timescale)];
+
+
+
+
+//加一个animationTool 可以加水印，或者其他的coreAnimation的动画特效
+- (void)addAnimationToComposition:(AVMutableVideoComposition *)composition withOutptuSize:(CGSize)outputSize containLayer:(CALayer *)containLayer {
+    {////加一个动画
+        CALayer *animationLayer = [CALayer layer];
+        animationLayer.frame = CGRectMake(0, 0, outputSize.width, outputSize.height);
+        CALayer *videoLayer = [CALayer layer];
+        videoLayer.frame = CGRectMake(0, 0, outputSize.width, outputSize.height);
+        
+        [animationLayer addSublayer:videoLayer];
+        
+        [animationLayer addSublayer:containLayer]; //承载了动画部分
+        animationLayer.geometryFlipped = true;//确保能被正确渲染（如果没设置 图像会颠倒（也就是坐标紊乱））
+        AVVideoCompositionCoreAnimationTool *animationTool = [AVVideoCompositionCoreAnimationTool videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:videoLayer                  inLayer:animationLayer];
+        
+        composition.animationTool = animationTool;//赋值 CAAnaimtion
     }
 }
 

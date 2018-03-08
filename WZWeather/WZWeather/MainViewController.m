@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"导航栏";
-
+//网络加载
 //    [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
 //    }];//异步加载必应墙纸（移到model中）
     
@@ -40,7 +40,7 @@
     _sources = [WZVCModel source];
     //view
     [self.view addSubview:self.table];
-  
+ 
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -97,27 +97,30 @@
      if (_sources.count > indexPath.row) {
 
          WZVCModel *model = _sources[indexPath.row];
+         
          if (model.type == WZVCModelTransitionType_Push_FromNib) {
              UIViewController *VC = [[model.VCClass alloc] initWithNibName:NSStringFromClass(model.VCClass) bundle:nil];
              [self.navigationController pushViewController:VC animated:true];
          }
          
+         
          if (model.VCClass == WZMediaController.class) {
              [self pushToMediaVC];
-         } else if (model.VCClass == WZAVPlayerViewController.class) {
-             WZAVPlayerViewController *vc = [WZAVPlayerViewController new];
-             self.navigationController.navigationBarHidden = false;
-             [self.navigationController pushViewController:vc animated:true];
+             
+         } else if (model.VCClass == WZAVPlayerViewController.class || model.VCClass ==
+                    WZDownloadController.class ) {
+            id vc = [model.VCClass new];
+            self.navigationController.navigationBarHidden = false;
+            [self.navigationController pushViewController:vc animated:true];
+             
          } else if (model.VCClass == WZPhotoCatalogueController.class) {
-              [WZPhotoCatalogueController showPickerWithPresentedController:(UIViewController <WZMediaAssetProtocol> *)self];
+             
+            [WZPhotoCatalogueController showPickerWithPresentedController:(UIViewController <WZMediaAssetProtocol> *)self];
+             
          } else if (model.VCClass == WZVideoPickerController.class) {
-             [WZVideoPickerController showPickerWithPresentedController:(UIViewController <WZVideoPickerControllerProtocol> *)self];
-         } else if (model.VCClass == WZTestViewController.class) {
-             WZTestViewController *vc = [[WZTestViewController alloc] init];
-             [self.navigationController pushViewController:vc animated:true];
-         } else if (model.VCClass == WZDownloadController.class) {
-             WZDownloadController *vc = [[WZDownloadController alloc] init];
-             [self.navigationController pushViewController:vc animated:true];
+             
+            [WZVideoPickerController showPickerWithPresentedController:(UIViewController <WZVideoPickerControllerProtocol> *)self];
+             
          }
      }
 }

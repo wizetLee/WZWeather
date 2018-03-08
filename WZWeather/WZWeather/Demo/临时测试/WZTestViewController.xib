@@ -12,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WZTestViewController">
             <connections>
-                <outlet property="textFiled" destination="cHC-5j-EBH" id="5j5-CZ-QJN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,45 +19,7 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjI-NP-xQ5">
-                    <rect key="frame" x="40" y="617" width="32" height="30"/>
-                    <state key="normal" title="print"/>
-                    <connections>
-                        <action selector="print:" destination="-1" eventType="touchUpInside" id="Xji-kC-fUm"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64x-Nc-FOl">
-                    <rect key="frame" x="29" y="546" width="51" height="30"/>
-                    <color key="backgroundColor" red="0.58105844259999995" green="0.12855249639999999" blue="0.57453137639999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="remove"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="10"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="remove:" destination="-1" eventType="touchUpInside" id="DDi-fd-BhH"/>
-                    </connections>
-                </button>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cHC-5j-EBH">
-                    <rect key="frame" x="29" y="480" width="326" height="30"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="zjI-NP-xQ5" firstAttribute="top" secondItem="64x-Nc-FOl" secondAttribute="bottom" constant="41" id="ReI-vt-DzV"/>
-                <constraint firstItem="zjI-NP-xQ5" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="40" id="TIl-U5-2QN"/>
-                <constraint firstItem="cHC-5j-EBH" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="29" id="TMT-w8-2mD"/>
-                <constraint firstItem="64x-Nc-FOl" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="29" id="eJu-cy-2Ka"/>
-                <constraint firstItem="64x-Nc-FOl" firstAttribute="top" secondItem="cHC-5j-EBH" secondAttribute="bottom" constant="36" id="mVq-CH-faQ"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="cHC-5j-EBH" secondAttribute="trailing" constant="20" id="vp3-n6-nTl"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="zjI-NP-xQ5" secondAttribute="bottom" constant="20" id="yg2-qR-Rfi"/>
-            </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="26.5" y="52.5"/>
         </view>

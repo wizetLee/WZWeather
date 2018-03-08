@@ -144,6 +144,7 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
         target.totalBytesWritten = totalBytesWritten;
         target.bytesWritten = bytesWritten;
         target.totalBytesExpectedToWrite = totalBytesExpectedToWrite;
+//        target中有任务总量，已经写入的进度，和当前的packet中的数据的大小
     }
     
     if (_downloadProcess) {

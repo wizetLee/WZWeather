@@ -6,15 +6,15 @@
 //  Copyright © 2017年 PocoCamera. All rights reserved.
 //
 
-#import "BIVideoEditingClippingView.h"
+#import "WZVideoEditingClippingView.h"
 #define BIRATIOCUTOUTCOLLECTIONCELLID @"BIRatioCutOutCollectionCellID"
 #define BIRatioCutOutViewEdgeWidth   (22.0)
 #define BIRatioCutOutViewCellHeight   (60.0)
 ////   9/16  宽度为
 #define BIRatioCutOutViewCellWidth   (33.75) ///去掉边缘 剩下的位置 /15 factor 因子为2
 
-//MARK:- BIVideoEditingClippingView
-@interface BIVideoEditingClippingView()<UIScrollViewDelegate>
+//MARK:- WZVideoEditingClippingView
+@interface WZVideoEditingClippingView()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) WZRatioCutOutView *cutOutView;
 @property (nonatomic,   weak) UIButton *btnPointer;
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation BIVideoEditingClippingView
+@implementation WZVideoEditingClippingView
 
 - (instancetype)init
 {
@@ -95,7 +95,6 @@
     //范围驱动图层
     _cutOutView = [[WZRatioCutOutView alloc] initWithFrame:CGRectMake(0.0, _collection.minY, _collection.width, _collection.height)];
     [self addSubview:_cutOutView];
-    
     
     NSArray <NSString *>*tmpArr = @[@"任意", @"10", @"15", @"30"];
     CGFloat btnW = [UIScreen mainScreen].bounds.size.width / tmpArr.count;

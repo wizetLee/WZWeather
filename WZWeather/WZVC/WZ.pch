@@ -45,7 +45,7 @@
 #import "WZVariousSectionsTable.h"
 #import "WZDisplayLinkSuperviser.h" //计时器
 #import "WZSystemDetails.h"
-
+#import "WZVideoSurfAlert.h"
 
 #pragma mark - 常量
 

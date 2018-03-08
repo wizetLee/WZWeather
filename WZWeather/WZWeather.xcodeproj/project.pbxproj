@@ -316,6 +316,16 @@
 		845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8FE1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m */; };
 		845ED843200440E90031894C /* WZAnimatePageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ED842200440E90031894C /* WZAnimatePageControl.m */; };
 		845ED8462004468F0031894C /* WZAnimatePageControlThrobItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */; };
+		8460F3E220510FC600AEC3D2 /* INPPosterBaseAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E020510FC500AEC3D2 /* INPPosterBaseAlert.m */; };
+		8460F3E5205110B900AEC3D2 /* BSactivityDetailAttendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendView.m */; };
+		8460F3E82051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E72051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m */; };
+		8460F40720511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F40620511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m */; };
+		8460F40D20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F40C20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m */; };
+		8460F41020511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F40F20511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.m */; };
+		8460F4162051279C00AEC3D2 /* BSactivityDetailAttendViewContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F4152051279C00AEC3D2 /* BSactivityDetailAttendViewContentCell.m */; };
+		8460F4192051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F4182051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.m */; };
+		8460F41C2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F41B2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.m */; };
+		8460F41E205137AD00AEC3D2 /* AC31C2D8B8815AB6BFC4E270807453EB.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8460F41D205137AD00AEC3D2 /* AC31C2D8B8815AB6BFC4E270807453EB.jpg */; };
 		8462274A1FD62A0200D37FAE /* wallpaper5.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227451FD62A0100D37FAE /* wallpaper5.jpeg */; };
 		8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227461FD62A0100D37FAE /* wallpaper3.jpeg */; };
 		8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 846227471FD62A0200D37FAE /* wallpaper1.jpeg */; };
@@ -421,7 +431,7 @@
 		84ECD32B1FCBA7E400282C9A /* sample_clip1.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3201FCBA7E400282C9A /* sample_clip1.m4v */; };
 		84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 84ECD3211FCBA7E400282C9A /* sample_clip2.mov */; };
 		84ECD32F1FCC1D3B00282C9A /* WZAVPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */; };
-		84ECD3351FCC2C9A00282C9A /* BIVideoEditingClippingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD3321FCC2C9A00282C9A /* BIVideoEditingClippingView.m */; };
+		84ECD3351FCC2C9A00282C9A /* WZVideoEditingClippingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD3321FCC2C9A00282C9A /* WZVideoEditingClippingView.m */; };
 		84ECD3361FCC2C9A00282C9A /* WZRatioCutOutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECD3341FCC2C9A00282C9A /* WZRatioCutOutView.m */; };
 /* End PBXBuildFile section */
 
@@ -1069,6 +1079,26 @@
 		845ED842200440E90031894C /* WZAnimatePageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAnimatePageControl.m; sourceTree = "<group>"; };
 		845ED8442004468F0031894C /* WZAnimatePageControlThrobItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAnimatePageControlThrobItem.h; sourceTree = "<group>"; };
 		845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAnimatePageControlThrobItem.m; sourceTree = "<group>"; };
+		8460F3E020510FC500AEC3D2 /* INPPosterBaseAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INPPosterBaseAlert.m; sourceTree = "<group>"; };
+		8460F3E120510FC500AEC3D2 /* INPPosterBaseAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPPosterBaseAlert.h; sourceTree = "<group>"; };
+		8460F3E3205110B900AEC3D2 /* BSactivityDetailAttendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendView.h; sourceTree = "<group>"; };
+		8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendView.m; sourceTree = "<group>"; };
+		8460F3E62051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewTableModel.h; sourceTree = "<group>"; };
+		8460F3E72051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewTableModel.m; sourceTree = "<group>"; };
+		8460F3F22051150100AEC3D2 /* BSactivityDetailAttendViewCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewCellProtocol.h; sourceTree = "<group>"; };
+		8460F40520511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewBlankCell.h; sourceTree = "<group>"; };
+		8460F40620511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewBlankCell.m; sourceTree = "<group>"; };
+		8460F40B20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewTitleCell.h; sourceTree = "<group>"; };
+		8460F40C20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewTitleCell.m; sourceTree = "<group>"; };
+		8460F40E20511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewBaseCell.h; sourceTree = "<group>"; };
+		8460F40F20511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewBaseCell.m; sourceTree = "<group>"; };
+		8460F4142051279B00AEC3D2 /* BSactivityDetailAttendViewContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewContentCell.h; sourceTree = "<group>"; };
+		8460F4152051279C00AEC3D2 /* BSactivityDetailAttendViewContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewContentCell.m; sourceTree = "<group>"; };
+		8460F4172051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewBlankCell30.h; sourceTree = "<group>"; };
+		8460F4182051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewBlankCell30.m; sourceTree = "<group>"; };
+		8460F41A2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewBlankCell50.h; sourceTree = "<group>"; };
+		8460F41B2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewBlankCell50.m; sourceTree = "<group>"; };
+		8460F41D205137AD00AEC3D2 /* AC31C2D8B8815AB6BFC4E270807453EB.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AC31C2D8B8815AB6BFC4E270807453EB.jpg; sourceTree = "<group>"; };
 		846227451FD62A0100D37FAE /* wallpaper5.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper5.jpeg; sourceTree = "<group>"; };
 		846227461FD62A0100D37FAE /* wallpaper3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper3.jpeg; sourceTree = "<group>"; };
 		846227471FD62A0200D37FAE /* wallpaper1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wallpaper1.jpeg; sourceTree = "<group>"; };
@@ -1233,8 +1263,8 @@
 		84ECD3211FCBA7E400282C9A /* sample_clip2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = sample_clip2.mov; sourceTree = "<group>"; };
 		84ECD32D1FCC1D3B00282C9A /* WZAVPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAVPlayerViewController.h; sourceTree = "<group>"; };
 		84ECD32E1FCC1D3B00282C9A /* WZAVPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAVPlayerViewController.m; sourceTree = "<group>"; };
-		84ECD3311FCC2C9A00282C9A /* BIVideoEditingClippingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIVideoEditingClippingView.h; sourceTree = "<group>"; };
-		84ECD3321FCC2C9A00282C9A /* BIVideoEditingClippingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIVideoEditingClippingView.m; sourceTree = "<group>"; };
+		84ECD3311FCC2C9A00282C9A /* WZVideoEditingClippingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZVideoEditingClippingView.h; sourceTree = "<group>"; };
+		84ECD3321FCC2C9A00282C9A /* WZVideoEditingClippingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZVideoEditingClippingView.m; sourceTree = "<group>"; };
 		84ECD3331FCC2C9A00282C9A /* WZRatioCutOutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZRatioCutOutView.h; sourceTree = "<group>"; };
 		84ECD3341FCC2C9A00282C9A /* WZRatioCutOutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZRatioCutOutView.m; sourceTree = "<group>"; };
 		B89722B026D64E98689EF1AF /* Pods-WZWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-WZWeather/Pods-WZWeather.release.xcconfig"; sourceTree = "<group>"; };
@@ -1398,7 +1428,7 @@
 			path = "等级评分";
 			sourceTree = "<group>";
 		};
-		4082B21C204BB9000046B609 /* 圆圈数据 */ = {
+		4082B21C204BB9000046B609 /* 圆环取数据 */ = {
 			isa = PBXGroup;
 			children = (
 				4082B231204BC3DF0046B609 /* newcontent_icon_coins@2x.png */,
@@ -1409,7 +1439,7 @@
 				4082B22A204BC3CD0046B609 /* Demo_RoundSelectorController.m */,
 				4082B22B204BC3CD0046B609 /* Demo_RoundSelectorController.xib */,
 			);
-			path = "圆圈数据";
+			path = "圆环取数据";
 			sourceTree = "<group>";
 		};
 		40DC2AFF1EA2611C000968DB /* WZView */ = {
@@ -1426,12 +1456,12 @@
 				840547531FB9A9380033EF9B /* WZToast */,
 				840A43951FB141B100F6D449 /* WZAlert */,
 				402AB18F1F0732D600136DB4 /* WZScrollOptions */,
-				40DC2B001EA2611C000968DB /* WZBaseRoundSelector(圆环取数据) */,
+				40DC2B001EA2611C000968DB /* WZBaseRoundSelector(圆环取数据抽象类) */,
 			);
 			path = WZView;
 			sourceTree = "<group>";
 		};
-		40DC2B001EA2611C000968DB /* WZBaseRoundSelector(圆环取数据) */ = {
+		40DC2B001EA2611C000968DB /* WZBaseRoundSelector(圆环取数据抽象类) */ = {
 			isa = PBXGroup;
 			children = (
 				40DC2B011EA2611C000968DB /* WZRoundRenderLayer.h */,
@@ -1439,7 +1469,7 @@
 				40DC2B031EA2611C000968DB /* WZRoundSelectorLogicView.h */,
 				40DC2B041EA2611C000968DB /* WZRoundSelectorLogicView.m */,
 			);
-			path = "WZBaseRoundSelector(圆环取数据)";
+			path = "WZBaseRoundSelector(圆环取数据抽象类)";
 			sourceTree = "<group>";
 		};
 		8402EB141ECD64A40030CCE1 /* WZVariousTable(自定义tableView) */ = {
@@ -2772,9 +2802,29 @@
 		845FE036204FF25F00DEC32D /* 临时测试 */ = {
 			isa = PBXGroup;
 			children = (
+				8460F41D205137AD00AEC3D2 /* AC31C2D8B8815AB6BFC4E270807453EB.jpg */,
 				84135BAA202145CA005B2905 /* WZTestViewController.h */,
 				84135BAB202145CA005B2905 /* WZTestViewController.m */,
 				84135BAC202145CA005B2905 /* WZTestViewController.xib */,
+				8460F3E120510FC500AEC3D2 /* INPPosterBaseAlert.h */,
+				8460F3E020510FC500AEC3D2 /* INPPosterBaseAlert.m */,
+				8460F3E3205110B900AEC3D2 /* BSactivityDetailAttendView.h */,
+				8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendView.m */,
+				8460F3F22051150100AEC3D2 /* BSactivityDetailAttendViewCellProtocol.h */,
+				8460F3E62051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.h */,
+				8460F3E72051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m */,
+				8460F40E20511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.h */,
+				8460F40F20511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.m */,
+				8460F4142051279B00AEC3D2 /* BSactivityDetailAttendViewContentCell.h */,
+				8460F4152051279C00AEC3D2 /* BSactivityDetailAttendViewContentCell.m */,
+				8460F4172051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.h */,
+				8460F4182051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.m */,
+				8460F41A2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.h */,
+				8460F41B2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.m */,
+				8460F40520511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.h */,
+				8460F40620511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m */,
+				8460F40B20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.h */,
+				8460F40C20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m */,
 			);
 			path = "临时测试";
 			sourceTree = "<group>";
@@ -3042,7 +3092,7 @@
 		846F270F203FF6B7008E57C1 /* 控件 */ = {
 			isa = PBXGroup;
 			children = (
-				4082B21C204BB9000046B609 /* 圆圈数据 */,
+				4082B21C204BB9000046B609 /* 圆环取数据 */,
 				4082B21B204BB8ED0046B609 /* 等级评分 */,
 				846F2710203FF6B7008E57C1 /* 动画PageControl */,
 			);
@@ -3245,8 +3295,8 @@
 		84ECD3301FCC2C9A00282C9A /* Clipping */ = {
 			isa = PBXGroup;
 			children = (
-				84ECD3311FCC2C9A00282C9A /* BIVideoEditingClippingView.h */,
-				84ECD3321FCC2C9A00282C9A /* BIVideoEditingClippingView.m */,
+				84ECD3311FCC2C9A00282C9A /* WZVideoEditingClippingView.h */,
+				84ECD3321FCC2C9A00282C9A /* WZVideoEditingClippingView.m */,
 				84ECD3331FCC2C9A00282C9A /* WZRatioCutOutView.h */,
 				84ECD3341FCC2C9A00282C9A /* WZRatioCutOutView.m */,
 			);
@@ -3447,6 +3497,7 @@
 				846227531FD67DE800D37FAE /* WZVideoSurfAlert_drag@3x.png in Resources */,
 				846A30FE1FD0E686003CECAE /* asset_selectedOrigion_normal@3x.png in Resources */,
 				84687CC2202552C00098A596 /* testImage1.jpg in Resources */,
+				8460F41E205137AD00AEC3D2 /* AC31C2D8B8815AB6BFC4E270807453EB.jpg in Resources */,
 				84ECD32A1FCBA7E400282C9A /* 05_blackhole.mp4 in Resources */,
 				4061405C2046F2630071F636 /* glow.jpg in Resources */,
 				84810C0420438BAD00403FD8 /* shaderColourModulationF.fsh in Resources */,
@@ -3549,6 +3600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8460F3E220510FC600AEC3D2 /* INPPosterBaseAlert.m in Sources */,
 				40287B2A1F09210800D9383B /* NSObject+WZFile.m in Sources */,
 				84514CDC1E9DCE7A00F07EF8 /* NSDictionary+JKXML.m in Sources */,
 				844665171EC4655800E19241 /* WZHttpRequest+WZWeather.m in Sources */,
@@ -3617,26 +3669,30 @@
 				84514CE91E9DCE7A00F07EF8 /* NSNumber+JKRound.m in Sources */,
 				844A484B1E9F657B0002829A /* WZVariousCollectionBaseObject.m in Sources */,
 				846A31351FD16337003CECAE /* WZRemoteImageNavigationView.m in Sources */,
+				8460F41020511FAF00AEC3D2 /* BSactivityDetailAttendViewBaseCell.m in Sources */,
 				84514CD91E9DCE7A00F07EF8 /* NSDictionary+JKMerge.m in Sources */,
 				84514CCE1E9DCE7A00F07EF8 /* NSData+JKzlib.m in Sources */,
 				84514D431E9DCE7A00F07EF8 /* UIImage+JKColor.m in Sources */,
 				84514D1C1E9DCE7A00F07EF8 /* UIAlertView+JKBlock.m in Sources */,
 				848633471F95EBA60086C96E /* WZAppManager.m in Sources */,
+				8460F3E5205110B900AEC3D2 /* BSactivityDetailAttendView.m in Sources */,
 				84514D311E9DCE7A00F07EF8 /* UIColor+JKGradient.m in Sources */,
 				84514D8F1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m in Sources */,
 				84514D541E9DCE7A00F07EF8 /* UILabel+JKAdjustableLabel.m in Sources */,
 				84514D731E9DCE7A00F07EF8 /* UIView+JKAnimation.m in Sources */,
 				84514D891E9DCE7A00F07EF8 /* UIWebView+JKLoad.m in Sources */,
 				84514D221E9DCE7A00F07EF8 /* UIBarButtonItem+JKBadge.m in Sources */,
-				84ECD3351FCC2C9A00282C9A /* BIVideoEditingClippingView.m in Sources */,
+				84ECD3351FCC2C9A00282C9A /* WZVideoEditingClippingView.m in Sources */,
 				84514CDD1E9DCE7A00F07EF8 /* NSException+JKTrace.m in Sources */,
 				84514D471E9DCE7A00F07EF8 /* UIImage+JKMerge.m in Sources */,
 				84514D181E9DCE7A00F07EF8 /* CALayer+JKBorderColor.m in Sources */,
 				84514D2A1E9DCE7A00F07EF8 /* UIButton+JKBlock.m in Sources */,
 				84514D0F1E9DCE7A00F07EF8 /* NSMutableURLRequest+JKUpload.m in Sources */,
 				84BED55E203E750E00A45A11 /* WZPureConvertPhotosIntoVideoTool.m in Sources */,
+				8460F40D20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m in Sources */,
 				84810C0B204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m in Sources */,
 				84514CF41E9DCE7A00F07EF8 /* NSObject+JKRuntime.m in Sources */,
+				8460F4192051294B00AEC3D2 /* BSactivityDetailAttendViewBlankCell30.m in Sources */,
 				84514CF81E9DCE7A00F07EF8 /* NSString+JKContains.m in Sources */,
 				84514CC51E9DCE7A00F07EF8 /* NSArray+JKSafeAccess.m in Sources */,
 				84514D821E9DCE7A00F07EF8 /* UIViewController+JKBlockSegue.m in Sources */,
@@ -3666,6 +3722,7 @@
 				84514D671E9DCE7A00F07EF8 /* UITableView+JKiOS7Style.m in Sources */,
 				402898111FAD6FA000F36DA3 /* WZMediaOperationView.m in Sources */,
 				84514D631E9DCE7A00F07EF8 /* UIScrollView+JKAddition.m in Sources */,
+				8460F4162051279C00AEC3D2 /* BSactivityDetailAttendViewContentCell.m in Sources */,
 				84474A421EC56C5700C3710D /* WZHttpRequestDeriveAFNetworking.m in Sources */,
 				846920DD1E63D2140048BBDC /* WZBaseViewController.m in Sources */,
 				845B8FB42020134400242363 /* WZGPUImageMovieWriter.m in Sources */,
@@ -3748,6 +3805,7 @@
 				84514D8E1E9DCE7A00F07EF8 /* UIWebView+JKWebStorage.m in Sources */,
 				84514CE01E9DCE7A00F07EF8 /* NSHTTPCookieStorage+JKFreezeDry.m in Sources */,
 				84514D4F1E9DCE7A00F07EF8 /* UIImageView+JKBetterFace.m in Sources */,
+				8460F40720511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m in Sources */,
 				84514D5B1E9DCE7A00F07EF8 /* UINavigationController+JKTransitions.m in Sources */,
 				840A439B1FB141B100F6D449 /* WZGleaminglyAlert.m in Sources */,
 				846A312F1FD16337003CECAE /* WZAssetBrowseNavigationView.m in Sources */,
@@ -3781,6 +3839,7 @@
 				84514D321E9DCE7A00F07EF8 /* UIColor+JKHEX.m in Sources */,
 				4000982F1FADCD9F00D2A248 /* WZGPUImagePreinstall.m in Sources */,
 				84514D1E1E9DCE7A00F07EF8 /* UIApplication+JKKeyboardFrame.m in Sources */,
+				8460F3E82051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m in Sources */,
 				84ECD32F1FCC1D3B00282C9A /* WZAVPlayerViewController.m in Sources */,
 				84514D6C1E9DCE7A00F07EF8 /* UITextField+JKInputLimit.m in Sources */,
 				84514D021E9DCE7A00F07EF8 /* NSString+JKRemoveEmoji.m in Sources */,
@@ -3852,6 +3911,7 @@
 				849E0F2520494D4100D9502D /* BITransitionTypeSelectedView.m in Sources */,
 				84514D641E9DCE7A00F07EF8 /* UIScrollView+JKPages.m in Sources */,
 				84514D8A1E9DCE7A00F07EF8 /* UIWebView+JKLoadInfo.m in Sources */,
+				8460F41C2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.m in Sources */,
 				4082B22C204BC3CD0046B609 /* Demo_RoundSelectorController.m in Sources */,
 				402AB1921F0732EE00136DB4 /* WZScrollOptions.m in Sources */,
 				84514D781E9DCE7A00F07EF8 /* UIView+JKFind.m in Sources */,

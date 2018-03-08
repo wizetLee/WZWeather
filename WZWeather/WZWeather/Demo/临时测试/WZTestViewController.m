@@ -7,10 +7,11 @@
 //
 
 #import "WZTestViewController.h"
+#import "BSactivityDetailAttendView.h"
 
 @interface WZTestViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *textFiled;
+
 
 
 @end
@@ -22,9 +23,15 @@
    
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    BSactivityDetailAttendView *alert = [[BSactivityDetailAttendView alloc] init];
+//    alert.clickedBackgroundToDismiss = true;
+    [alert alertShow];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

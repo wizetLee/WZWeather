@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DemoConvertPhotosIntoVideoController">
             <connections>
                 <outlet property="addedFrameCountLabel" destination="ald-Y2-laf" id="0zy-qX-JoM"/>
+                <outlet property="frameSumLabel" destination="Lga-p5-m8v" id="3gm-bH-gvT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,11 +31,20 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共240帧" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lga-p5-m8v">
+                    <rect key="frame" x="20" y="562" width="335" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ald-Y2-laf" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="JDd-xm-lT6"/>
+                <constraint firstItem="Lga-p5-m8v" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="g9b-uD-EkU"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="ald-Y2-laf" secondAttribute="bottom" constant="20" id="l3p-KA-fIe"/>
+                <constraint firstItem="ald-Y2-laf" firstAttribute="top" secondItem="Lga-p5-m8v" secondAttribute="bottom" constant="20" id="q1h-x6-6J0"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Lga-p5-m8v" secondAttribute="trailing" constant="20" id="uDH-Un-cDo"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="ald-Y2-laf" secondAttribute="trailing" constant="20" id="w9C-CU-Lz7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

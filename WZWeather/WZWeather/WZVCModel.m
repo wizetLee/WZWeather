@@ -14,11 +14,13 @@
 
 @implementation WZVCModel
 
+//数据
 + (NSArray *)source {
     NSMutableArray *_sources = NSMutableArray.array;
     
     WZVCModel *VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZTestViewController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
     VCModel.headline = @"临时测试";
     [_sources addObject:VCModel];
     
@@ -29,7 +31,7 @@
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZAVPlayerViewController.class;
-    VCModel.headline = @"视频：播放和animationTool测试";
+    VCModel.headline = @"视频：视频截取";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
@@ -45,7 +47,7 @@
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_ConvertPhotosIntoVideoController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"视频：图片转视频demo";
+    VCModel.headline = @"视频：图片转视频(原生)demo";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
@@ -91,11 +93,10 @@
     [_sources addObject:VCModel];
     
     
-    
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZDownloadController.class;
-    VCModel.headline = @"资源下载";
-    [_sources addObject:VCModel];
+//    VCModel = WZVCModel.alloc.init;
+//    VCModel.VCClass = WZDownloadController.class;
+//    VCModel.headline = @"资源下载";
+//    [_sources addObject:VCModel];
     
     return _sources;
 }

@@ -9,26 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "WZRatioCutOutView.h"
 
-#define WZVideoAssetEditableRestrict 2.0  //可剪辑的范围为2sec   外部也要支持这个格式
+#define WZVideoAssetEditableRestrict 10.0  //可剪辑的范围为2sec   外部也要支持这个格式
 
 /*
  参照于  like可剪辑范围不小于2sec  如果asset 小于 2sec则会跳过可剪裁页面
         印象的可剪辑范围是1sec
  */
 
-@protocol BIVideoEditingClippingViewProtocol <NSObject>
+@protocol WZVideoEditingClippingViewProtocol <NSObject>
 
 @end
 
-//MARK:- BIVideoEditingClippingView
-@interface BIVideoEditingClippingView : UIView
+//MARK:- WZVideoEditingClippingView
+@interface WZVideoEditingClippingView : UIView
 
 @property (nonatomic,   weak) id<WZRatioCutOutViewProtocol> delegate;
 @property (nonatomic, strong) AVAsset *asset;
 
-/*
-
-*/
 
 @end
 

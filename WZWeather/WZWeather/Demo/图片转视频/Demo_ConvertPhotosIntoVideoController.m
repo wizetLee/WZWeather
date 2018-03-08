@@ -19,6 +19,7 @@
     int loop;
 }
 @property (weak, nonatomic) IBOutlet UILabel *addedFrameCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *frameSumLabel;
 
 @end
 
@@ -50,7 +51,7 @@
 //    {//可取消注释看效果
 //        tool.timeIsLimited = true;
 //        tool.limitedTime = CMTimeMake(5.0 * 600, 600);
-//
+//        _frameSumLabel.text = @"共150帧";
 //    }
     [tool prepareTask];
     [tool startWriting];
