@@ -317,7 +317,7 @@
 		845ED843200440E90031894C /* WZAnimatePageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ED842200440E90031894C /* WZAnimatePageControl.m */; };
 		845ED8462004468F0031894C /* WZAnimatePageControlThrobItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */; };
 		8460F3E220510FC600AEC3D2 /* INPPosterBaseAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E020510FC500AEC3D2 /* INPPosterBaseAlert.m */; };
-		8460F3E5205110B900AEC3D2 /* BSactivityDetailAttendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendView.m */; };
+		8460F3E5205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.m */; };
 		8460F3E82051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F3E72051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m */; };
 		8460F40720511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F40620511F1400AEC3D2 /* BSactivityDetailAttendViewBlankCell.m */; };
 		8460F40D20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8460F40C20511F4000AEC3D2 /* BSactivityDetailAttendViewTitleCell.m */; };
@@ -1081,8 +1081,8 @@
 		845ED8452004468F0031894C /* WZAnimatePageControlThrobItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAnimatePageControlThrobItem.m; sourceTree = "<group>"; };
 		8460F3E020510FC500AEC3D2 /* INPPosterBaseAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INPPosterBaseAlert.m; sourceTree = "<group>"; };
 		8460F3E120510FC500AEC3D2 /* INPPosterBaseAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPPosterBaseAlert.h; sourceTree = "<group>"; };
-		8460F3E3205110B900AEC3D2 /* BSactivityDetailAttendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendView.h; sourceTree = "<group>"; };
-		8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendView.m; sourceTree = "<group>"; };
+		8460F3E3205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewAlert.h; sourceTree = "<group>"; };
+		8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewAlert.m; sourceTree = "<group>"; };
 		8460F3E62051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewTableModel.h; sourceTree = "<group>"; };
 		8460F3E72051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSactivityDetailAttendViewTableModel.m; sourceTree = "<group>"; };
 		8460F3F22051150100AEC3D2 /* BSactivityDetailAttendViewCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSactivityDetailAttendViewCellProtocol.h; sourceTree = "<group>"; };
@@ -2808,8 +2808,8 @@
 				84135BAC202145CA005B2905 /* WZTestViewController.xib */,
 				8460F3E120510FC500AEC3D2 /* INPPosterBaseAlert.h */,
 				8460F3E020510FC500AEC3D2 /* INPPosterBaseAlert.m */,
-				8460F3E3205110B900AEC3D2 /* BSactivityDetailAttendView.h */,
-				8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendView.m */,
+				8460F3E3205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.h */,
+				8460F3E4205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.m */,
 				8460F3F22051150100AEC3D2 /* BSactivityDetailAttendViewCellProtocol.h */,
 				8460F3E62051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.h */,
 				8460F3E72051124300AEC3D2 /* BSactivityDetailAttendViewTableModel.m */,
@@ -3675,7 +3675,7 @@
 				84514D431E9DCE7A00F07EF8 /* UIImage+JKColor.m in Sources */,
 				84514D1C1E9DCE7A00F07EF8 /* UIAlertView+JKBlock.m in Sources */,
 				848633471F95EBA60086C96E /* WZAppManager.m in Sources */,
-				8460F3E5205110B900AEC3D2 /* BSactivityDetailAttendView.m in Sources */,
+				8460F3E5205110B900AEC3D2 /* BSactivityDetailAttendViewAlert.m in Sources */,
 				84514D311E9DCE7A00F07EF8 /* UIColor+JKGradient.m in Sources */,
 				84514D8F1E9DCE7A00F07EF8 /* UIWindow+JKHierarchy.m in Sources */,
 				84514D541E9DCE7A00F07EF8 /* UILabel+JKAdjustableLabel.m in Sources */,

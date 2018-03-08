@@ -14,6 +14,6 @@
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
-- (void)updateWithModel:(id)model;
+
 
 @end

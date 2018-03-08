@@ -19,7 +19,24 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0i-h7-ITO">
+                    <rect key="frame" x="172" y="328.5" width="31" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="31" id="Cp2-ja-NpS"/>
+                        <constraint firstAttribute="height" constant="30" id="PjM-jz-2wb"/>
+                    </constraints>
+                    <state key="normal" title="测试"/>
+                    <connections>
+                        <action selector="testAction:" destination="-1" eventType="touchUpInside" id="cEN-ZD-YHj"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="t0i-h7-ITO" firstAttribute="centerY" secondItem="Q5M-cg-NOt" secondAttribute="centerY" id="h8F-gR-QM0"/>
+                <constraint firstItem="t0i-h7-ITO" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="j5E-Gq-RDw"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="26.5" y="52.5"/>
         </view>

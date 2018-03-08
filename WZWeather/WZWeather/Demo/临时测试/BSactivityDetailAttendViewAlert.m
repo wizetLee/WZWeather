@@ -6,11 +6,11 @@
 //  Copyright © 2018年 WZ. All rights reserved.
 //
 
-#import "BSactivityDetailAttendView.h"
+#import "BSactivityDetailAttendViewAlert.h"
 #import "BSactivityDetailAttendViewTableModel.h"
 
 
-@interface BSactivityDetailAttendView()<UIScrollViewDelegate , UITableViewDelegate, UITableViewDataSource>
+@interface BSactivityDetailAttendViewAlert()<UIScrollViewDelegate , UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSArray <BSactivityDetailAttendViewTableModel *>*dataSource;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation BSactivityDetailAttendView
+@implementation BSactivityDetailAttendViewAlert
 
 
 - (void)alertContent {
@@ -47,7 +47,8 @@
     [self addSubview:_table];
     
     _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(screenSize.width - 20.0 - 20.0, 20.0, 20.0, 20.0)];
-    _closeButton.backgroundColor = [UIColor greenColor];
+    _closeButton.backgroundColor = [UIColor orangeColor];
+    [_closeButton setTitle:@"关" forState:UIControlStateNormal];
     [self addSubview:_closeButton];
     [_closeButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -68,15 +69,16 @@
     if (y < 0) {
         y = 0;
     }
-    if (y > CGRectGetHeight(_table.frame)) {
-        y = CGRectGetHeight(_table.frame);
-    }
+//    if (y > CGRectGetHeight(_table.frame)) {
+//        y = CGRectGetHeight(_table.frame);
+//    }
     
     y = ((y) / (_table.contentSize.height - CGRectGetHeight(_table.frame))) * (CGRectGetHeight(_table.frame) - _trendView.bounds.size.height) + _trendView.bounds.size.height / 2.0 + CGRectGetMinY(_table.frame);
   
-    if (y > CGRectGetHeight(_table.frame) - _trendView.bounds.size.height / 2.0  + CGRectGetMinY(_table.frame)) {
+    if (y > (CGRectGetHeight(_table.frame) - _trendView.bounds.size.height / 2.0  + CGRectGetMinY(_table.frame))) {
         y = CGRectGetHeight(_table.frame) - _trendView.bounds.size.height / 2.0  + CGRectGetMinY(_table.frame);
     }
+    
     _trendView.center = CGPointMake(_trendView.center.x, y);
 }
 
@@ -100,6 +102,7 @@
     return 0;
 }
 
+#pragma mark - Private
 - (void)clickedBtn:(UIButton *)sender {
     [self alertDismissWithAnimated:true];
 }
@@ -130,6 +133,7 @@
     }
 }
 
+#pragma mark - Overwrite
 - (CGFloat)bgViewAlpha {
     return 1;
 }

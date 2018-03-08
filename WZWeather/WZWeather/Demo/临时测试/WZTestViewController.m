@@ -7,7 +7,7 @@
 //
 
 #import "WZTestViewController.h"
-#import "BSactivityDetailAttendView.h"
+#import "BSactivityDetailAttendViewAlert.h"
 
 @interface WZTestViewController ()
 
@@ -24,24 +24,41 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    BSactivityDetailAttendView *alert = [[BSactivityDetailAttendView alloc] init];
-//    alert.clickedBackgroundToDismiss = true;
-    [alert alertShow];
+ 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSMutableArray *arr = [NSMutableArray array];
+    dispatch_semaphore_t sem = dispatch_semaphore_create(1);
+    NSLock *lock = [NSLock new];
+    for (int i = 0; i < 10000; i++) {
+//        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            if ([lock tryLock]) {
+                [arr addObject:@(i)];
+                //            dispatch_semaphore_signal(sem);
+                [lock unlock];
+            }
+        });
+    }
+    NSLog(@"%@", arr);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
  
 }
+- (IBAction)testAction:(id)sender {
+    BSactivityDetailAttendViewAlert *alert = [[BSactivityDetailAttendViewAlert alloc] init];
+//    alert.clickedBackgroundToDismiss = true;
+    [alert alertShow];
+    
+    
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-
 
 }
 

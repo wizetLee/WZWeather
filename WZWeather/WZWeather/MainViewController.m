@@ -40,6 +40,8 @@
     _sources = [WZVCModel source];
     //view
     [self.view addSubview:self.table];
+    
+    
  
 }
 

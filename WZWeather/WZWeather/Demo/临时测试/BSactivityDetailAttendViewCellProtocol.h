@@ -11,5 +11,6 @@
 @protocol BSactivityDetailAttendViewCellProtocol <NSObject>
 
 - (float)calculateCellHeightWithModel:(id)model;
+- (void)updateWithModel:(id)model;
 
 @end

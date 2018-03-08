@@ -8,6 +8,6 @@
 
 #import "INPPosterBaseAlert.h"
 
-@interface BSactivityDetailAttendView : INPPosterBaseAlert
+@interface BSactivityDetailAttendViewAlert : INPPosterBaseAlert
 
 @end

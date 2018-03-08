@@ -14,17 +14,14 @@
 #import <GPUImage/GPUImage.h>
 #import <GPUImage/GPUImageMovieComposition.h>
 
-
 /*
  PS:
      处理好渲染线程和主线程之间的关系，在渲染线程处理数据必要时需要加锁
  */
-
 @interface WZMediaController ()<WZMediaPreviewViewProtocol, WZMediaOperationViewProtocol, WZMediaGestureViewProtocol>
 {
     BOOL sysetmNavigationBarHiddenState;
 }
-
 
 @property (nonatomic, strong) WZMediaPreviewView *mediaPreviewView;
 @property (nonatomic, strong) WZMediaOperationView *mediaOperationView;
@@ -465,6 +462,7 @@
 #pragma mark -
 #pragma mark - Private Method
 - (void)createViews {
+    self.view.backgroundColor = [UIColor blackColor];
     //适配iOS 11
     _mediaPreviewView = [[WZMediaPreviewView alloc] initWithFrame:self.view.bounds];
     _mediaPreviewView.delegate = self;
