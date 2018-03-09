@@ -6,8 +6,8 @@
 //  Copyright © 2017年 WZ. All rights reserved.
 //
 
-#import "WZBaseViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface WZDownloadController : WZBaseViewController
+@interface WZDownloadController : UIViewController
 
 @end

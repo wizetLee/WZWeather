@@ -92,9 +92,11 @@
     VCModel.headline = @"控件：圆圈选数据";
     [_sources addObject:VCModel];
     
-    
+
+    //有BUG
 //    VCModel = WZVCModel.alloc.init;
 //    VCModel.VCClass = WZDownloadController.class;
+//    VCModel.type = WZVCModelTransitionType_Push_FromNib;
 //    VCModel.headline = @"资源下载";
 //    [_sources addObject:VCModel];
     

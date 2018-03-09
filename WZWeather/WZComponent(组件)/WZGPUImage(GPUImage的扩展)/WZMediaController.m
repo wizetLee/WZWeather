@@ -13,11 +13,13 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <GPUImage/GPUImage.h>
 #import <GPUImage/GPUImageMovieComposition.h>
+#import <Photos/Photos.h>
 
 /*
  PS:
      处理好渲染线程和主线程之间的关系，在渲染线程处理数据必要时需要加锁
  */
+
 @interface WZMediaController ()<WZMediaPreviewViewProtocol, WZMediaOperationViewProtocol, WZMediaGestureViewProtocol>
 {
     BOOL sysetmNavigationBarHiddenState;
@@ -73,6 +75,7 @@
     [super viewDidAppear:animated];
     [_mediaPreviewView pickMediaType:_mediaPreviewView.mediaType];
     [_mediaPreviewView launchCamera];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -98,21 +101,37 @@
     //偶尔会出现时间为0  但是确实又可以播放的 可能是文件还没有彻底配置完成
     AVAsset *asset = [AVAsset assetWithURL:fileURL];
     NSLog(@"拍摄完成，本次拍摄拍摄时间为：%lf", CMTimeGetSeconds(asset.duration));
-
-//    if (CMTimeGetSeconds(asset.duration) == 0) {
-//        self.navigationController.navigationBarHidden = false;
-//        MPMoviePlayerViewController *VC = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
-//        [self.navigationController pushViewController:VC animated:true];
-//    }
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"操作选取" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存本地" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path]) {
+            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:fileURL];
+            } completionHandler:^(BOOL success, NSError * _Nullable error) {
+              
+            }];
+        } else {
+          
+        }
+    }];
+    [alertC addAction:action];
+    
+    action = [UIAlertAction actionWithTitle:@"预览导出效果" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
+        alert.asset = asset;
+        [alert alertShow];
+    }];
+    [alertC addAction:action];
+    [self presentViewController:alertC animated:true completion:^{}];
 }
+
 //MARK:录制时间的回调
 - (void)previewView:(WZMediaPreviewView *)view audioVideoWriterRecordingCurrentTime:(CMTime)time last:(BOOL)last {
     _currentRecordTime = time;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_mediaOperationView recordProgress:CMTimeGetSeconds(time) / 15.0];
-        if (last) {
-            [_mediaOperationView addRecordSign];
-        }
+        [_mediaOperationView recordProgress:CMTimeGetSeconds(time)];
+       
     });
 }
 #pragma mark -
@@ -160,6 +179,7 @@
     [self.navigationController popViewControllerAnimated:true];
     //清空数据
 }
+
 //MARK:拍照事件
 - (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender {
     self.view.userInteractionEnabled = false;
@@ -209,11 +229,7 @@
         case WZMediaConfigType_canvas_1_multiply_1: {
             //                切换到选中效果
             CGFloat targetH = screenW / 1.0 * 1.0;//显示在屏幕的控件高度
-//            if ((((int)screenW) % 2) == 1) {
-//                targetH = targetH + 1.0;
-//            }
             CGFloat rateH = targetH / (targetH / (9 / 16.0));
-//            rateH = (int)(rateH * 1000) / 1000.0;
             [_mediaPreviewView setCropValue:rateH];
         } break;
         case WZMediaConfigType_canvas_3_multiply_4: {
@@ -252,7 +268,6 @@
 }
 //MARK:选中滤镜事件
 - (void)operationView:(WZMediaOperationView*)view didSelectedFilter:(GPUImageFilter *)filter {
-    
     [_mediaPreviewView insertRenderFilter:filter];
 }
 
@@ -262,11 +277,10 @@
 }
 //MARK:结束录像事件
 - (void)operationView:(WZMediaOperationView*)view endRecordGesture:(UILongPressGestureRecognizer *)gesture {
-    
     [_mediaPreviewView endRecord];
     
     //结束录制的时候要再记录一次self.mediaPreviewView.timeScaleMArr
-    [self addNode];
+//    [self addNode];
     NSLog(@"%@", self.mediaPreviewView.timeScaleMArr);
 }
 
@@ -290,17 +304,17 @@
     //设置输出目标为GPUImageMovieWriter并开始处理
     //把处理完毕的数据写入手机j   
     //1、合成单一一个视频  加入渐变效果？  以下代码有较高的准确率
-    NSMutableArray *assetMArr = [NSMutableArray array];
-    for (NSString *tmpStr in self.mediaPreviewView.moviesNameMarr) {
-        AVAsset *asset = [AVAsset assetWithURL:[self.mediaPreviewView movieURLWithMovieName:tmpStr]];
-        NSLog(@"~~~~~%lf", CMTimeGetSeconds(asset.duration));
-        if (asset) {
-            [assetMArr addObject:asset];
-        }
-    }
-    AVMutableComposition *mutableComposition = [[self class] compositionWithSegments:assetMArr];
-    NSLog(@"~~~~~%lf", CMTimeGetSeconds(mutableComposition.duration));
-    //2、插入视频的编码
+//    NSMutableArray *assetMArr = [NSMutableArray array];
+//    for (NSString *tmpStr in self.mediaPreviewView.moviesNameMarr) {
+//        AVAsset *asset = [AVAsset assetWithURL:[self.mediaPreviewView movieURLWithMovieName:tmpStr]];
+//        NSLog(@"~~~~~%lf", CMTimeGetSeconds(asset.duration));
+//        if (asset) {
+//            [assetMArr addObject:asset];
+//        }
+//    }
+//    AVMutableComposition *mutableComposition = [[self class] compositionWithSegments:assetMArr];
+//    NSLog(@"~~~~~%lf", CMTimeGetSeconds(mutableComposition.duration));
+
     
 }
 
@@ -369,93 +383,6 @@
         tmpDic[@"type"] = [NSNumber numberWithUnsignedInteger:self.mediaPreviewView.lastTimeScaleType];//速率类型
         [self.mediaPreviewView.timeScaleMArr addObject:tmpDic];
     }
-}
-#pragma mark -
-#pragma mark - SCRecorder 视频合成方案样例代码 稍有更改
-+ (AVMutableComposition *)compositionWithSegments:(NSArray <AVAsset *>*)segments {
-    //可变音视频组合
-    AVMutableComposition *composition = [AVMutableComposition composition];
-    
-    //可变音频轨道
-    AVMutableCompositionTrack *audioTrack = nil;
-    //可变视频轨道
-    AVMutableCompositionTrack *videoTrack = nil;
-    
-  
-    CMTime currentTime = composition.duration;
-    for (AVAsset *tmpAsset in segments) {
-        AVAsset *asset = tmpAsset;
-        
-        NSArray *audioAssetTracks = [asset tracksWithMediaType:AVMediaTypeAudio];//取出音频轨道
-        NSArray *videoAssetTracks = [asset tracksWithMediaType:AVMediaTypeVideo];//取出视频轨道
-        
-        CMTime maxBounds = kCMTimeInvalid;//最大界限
-        
-        CMTime videoTime = currentTime;
-        
-        for (AVAssetTrack *videoAssetTrack in videoAssetTracks) {
-            if (videoTrack == nil) {
-                NSArray *videoTracks = [composition tracksWithMediaType:AVMediaTypeVideo];
-                
-                if (videoTracks.count) {
-                    videoTrack = [videoTracks firstObject];
-                } else {
-                    videoTrack = [composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-                    videoTrack.preferredTransform = videoAssetTrack.preferredTransform;
-                }
-            }
-            
-            videoTime = [[self class] appendTrack:videoAssetTrack toCompositionTrack:videoTrack atTime:videoTime withBounds:maxBounds];
-            maxBounds = videoTime;
-        }
-        
-        CMTime audioTime = currentTime;
-        for (AVAssetTrack *audioAssetTrack in audioAssetTracks) {
-            if (audioTrack == nil) {
-                NSArray *audioTracks = [composition tracksWithMediaType:AVMediaTypeAudio];
-                if (audioTracks.count) {
-                    audioTrack = [audioTracks firstObject];
-                } else {
-                    audioTrack = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
-                }
-            }
-            
-            
-            audioTime = [[self class] appendTrack:audioAssetTrack toCompositionTrack:audioTrack atTime:audioTime withBounds:maxBounds];
-        }
-        
-        currentTime = composition.duration;//组合的时间、作用于下一个循环的偏移量
-    }
-    
-    return composition;
-}
-
-+ (CMTime)appendTrack:(AVAssetTrack *)track toCompositionTrack:(AVMutableCompositionTrack *)compositionTrack atTime:(CMTime)time withBounds:(CMTime)bounds {
-    CMTimeRange timeRange = track.timeRange;//通道时间轴的所有的时间的范围
-    time = CMTimeAdd(time, timeRange.start);//时间相加
-    
-    if (CMTIME_IS_VALID(bounds)) {
-        CMTime currentBounds = CMTimeAdd(time, timeRange.duration);
-        
-        if (CMTIME_COMPARE_INLINE(currentBounds, >, bounds)) {
-            timeRange = CMTimeRangeMake(timeRange.start, CMTimeSubtract(timeRange.duration, CMTimeSubtract(currentBounds, bounds)));
-        }
-    }
-    
-    if (CMTIME_COMPARE_INLINE(timeRange.duration, >, kCMTimeZero)) {
-        NSError *error = nil;
-        [compositionTrack insertTimeRange:timeRange ofTrack:track atTime:time error:&error];
-        
-        if (error != nil) {
-            NSLog(@"Failed to insert append %@ track: %@", compositionTrack.mediaType, error);
-        } else {
-            //        NSLog(@"Inserted %@ at %fs (%fs -> %fs)", track.mediaType, CMTimeGetSeconds(time), CMTimeGetSeconds(timeRange.start), CMTimeGetSeconds(timeRange.duration));
-        }
-        
-        return CMTimeAdd(time, timeRange.duration);
-    }
-    
-    return time;
 }
 
 

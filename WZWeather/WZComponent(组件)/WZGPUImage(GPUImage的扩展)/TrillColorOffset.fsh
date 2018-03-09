@@ -19,7 +19,7 @@ void main()
     highp float weight = clamp(enlargeWeight, 0.0, 0.4);//权重的取值范围 取值范围为[0, 0.4]
     textureCoordinatePort = vec2(weight + textureCoordinate.x * (1.0 - weight * 2.0/*左右余隙*/)
                                  ,weight + textureCoordinate.y * (1.0 - weight * 2.0/*上下余隙*/)) ;//正常位置 依靠enlargeWeight计算扩大权重
-    shadowWeight = weight * 0.05;       //扩大的时候开始产生偏移。0.05（可以适度调节）
+    shadowWeight = weight * 0.1;       //扩大的时候开始产生偏移。0.05（可以适度调节）
     redTextureCoordinatePort = vec2(textureCoordinatePort.x + shadowWeight
                                 , textureCoordinatePort.y + shadowWeight);
     

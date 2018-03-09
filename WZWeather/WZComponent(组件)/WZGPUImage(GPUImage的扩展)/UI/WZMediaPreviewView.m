@@ -7,6 +7,7 @@
 //
 
 #import "WZMediaPreviewView.h"
+#import "WZGPUImagePreinstall.h"
 #import <Vision/Vision.h>
 
 #define MovieFolderName @"WZ_movieFolder"
@@ -52,14 +53,17 @@
 }
 
 - (void)dealloc {
+    _cameraVideo.audioEncodingTarget = nil;
     [_cropFilter removeAllTargets];
     [_insertFilter removeAllTargets];
     [_scaleFilter removeAllTargets];
     [_cameraVideo removeAllTargets];
+    [_trailingOutput removeAllTargets];
     [_cameraStillImage removeAllTargets];
     NSLog(@"%s",__func__);
 }
 
+#pragma mark - Private
 - (void)config {
     _faceMap = [NSMutableDictionary dictionary];
     _moviesNameMarr = [NSMutableArray array];
@@ -91,9 +95,8 @@
     });
 }
 
-//MARK: 拍摄回调
 - (void)pickStillImageWithHandler:(void (^)(UIImage *image))handler {
-    ///无效函数
+
     
 //    _cropFilter.outputFrameSize = CGSizeMake(CGFloat width, CGFloat height)
     //自己的图片的大小
@@ -103,14 +106,12 @@
 //    完成后切换回去原来的size
     
     ///先取消缩小比例的滤镜
- 
     __weak typeof(self) weakSelf = self;
     
     GPUImageOutput <GPUImageInput> *tmpFilter = weakSelf.insertFilter;
     if (!tmpFilter) {
         tmpFilter = _cropFilter;
     }
-  
 
     [_cameraStillImage capturePhotoAsImageProcessedUpToFilter:tmpFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         if (handler) {
@@ -124,6 +125,7 @@
 //MARK:临时插入一个滤镜到镜头链中
 - (void)insertRenderFilter:(GPUImageFilter *)filter {
     [_cropFilter removeTarget:_scaleFilter];
+    [_trailingOutput removeAllTargets];
     __weak typeof(self) weakSelf = self;
     runSynchronouslyOnVideoProcessingQueue(^{
         
@@ -136,6 +138,7 @@
         weakSelf.insertFilter = filter;
         [weakSelf.cropFilter addTarget:weakSelf.insertFilter];
         [weakSelf.insertFilter addTarget:weakSelf.scaleFilter];
+        weakSelf.trailingOutput = filter;
     });
 
 }
@@ -155,121 +158,121 @@
     [self calculateTimeWith:sampleBuffer];
     
     /// Vision 视觉库的代码
-    if (@available(iOS 11.0, *)) {
-        /*
-         大致流程
-             1、创建不同的request
-             2、生成handler 用以执行request 产生回调
-             3、处理回调结果
-         */
-        
-        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        
-        //创建请求句柄
-        VNImageRequestHandler *detectRequestHandler = [[VNImageRequestHandler alloc]initWithCVPixelBuffer:pixelBuffer options:@{}];
-        
-        // 探测脸部矩形请求
-        VNDetectFaceRectanglesRequest *detectRequest = [[VNDetectFaceRectanglesRequest alloc]initWithCompletionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) {
-            //回调
-            NSArray *observations = request.results;
-            //监测数据
-            for (VNFaceObservation *observation  in observations) {
-                //位置 尺寸 转换
-                CGSize imageSize = CVImageBufferGetDisplaySize(pixelBuffer);
-                CGRect faceRect = [[self class] convertRect:observation.boundingBox imageSize:imageSize];
-                
-                static UIView *tmpView;
-                if (tmpView) {
-                    tmpView.frame = faceRect;
-                } else {
-                    tmpView = [[UIView alloc] init];
-                    tmpView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
-                    [self addSubview:tmpView];
-                    tmpView.frame = faceRect;
-                }
-                
-                //精确数据的计算
-                VNFaceLandmarks2D *faceLandmark2D = observation.landmarks;
-                
-                NSMutableArray <VNFaceLandmarkRegion2D *>*pointArray = [NSMutableArray array];
-                [pointArray addObject:faceLandmark2D.allPoints];
-                [pointArray addObject:faceLandmark2D.faceContour];
-                
-                [pointArray addObject:faceLandmark2D.leftEye];
-                [pointArray addObject:faceLandmark2D.rightEye];
-                
-                [pointArray addObject:faceLandmark2D.leftEyebrow];
-                [pointArray addObject:faceLandmark2D.rightEyebrow];
-                
-                [pointArray addObject:faceLandmark2D.nose];
-                [pointArray addObject:faceLandmark2D.noseCrest];
-                
-                [pointArray addObject:faceLandmark2D.medianLine];
-                [pointArray addObject:faceLandmark2D.outerLips];
-                [pointArray addObject:faceLandmark2D.innerLips];
-                
-                [pointArray addObject:faceLandmark2D.leftPupil];
-                [pointArray addObject:faceLandmark2D.rightPupil];
-                
-                
-                // 遍历所有特征x
-                for (VNFaceLandmarkRegion2D *landmarks2D in pointArray) {
-                    CGPoint points[landmarks2D.pointCount];
-                    // 转换特征的所有点
-                    for (int i = 0; i < landmarks2D.pointCount; i++) {
-                     const CGPoint *point = [landmarks2D pointsInImageOfSize:imageSize];
-//                        vector_float2 point = [landmarks2D pointAtIndex:i];
-                        
-                        CGFloat rectWidth  = imageSize.width * observation.boundingBox.size.width;
-                        CGFloat rectHeight = imageSize.height * observation.boundingBox.size.height;
-                        CGPoint p = CGPointMake( point[i].x * rectWidth + observation.boundingBox.origin.x * imageSize.width
-                                                , observation.boundingBox.origin.y * imageSize.height + point[i].y * rectHeight);
-                        points[i] = p;
-                    }
-                    UIBezierPath *path = [UIBezierPath bezierPath];
-                    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-                    
-                    
-//                    UIGraphicsBeginImageContextWithOptions(imageSize, false, 1);
-//                    CGContextRef context = UIGraphicsGetCurrentContext();
-//                    [[UIColor greenColor] set];
-//                    CGContextSetLineWidth(context, 2);
+//    if (@available(iOS 11.0, *)) {
+//        /*
+//         大致流程
+//             1、创建不同的request
+//             2、生成handler 用以执行request 产生回调
+//             3、处理回调结果
+//         */
 //
-//                    // 设置翻转
-//                    CGContextTranslateCTM(context, 0, imageSize.height);
-//                    CGContextScaleCTM(context, 1.0, -1.0);
+//        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 //
-//                    // 设置线类型
-//                    CGContextSetLineJoin(context, kCGLineJoinRound);
-//                    CGContextSetLineCap(context, kCGLineCapRound);
+//        //创建请求句柄
+//        VNImageRequestHandler *detectRequestHandler = [[VNImageRequestHandler alloc]initWithCVPixelBuffer:pixelBuffer options:@{}];
 //
-//                    // 设置抗锯齿
-//                    CGContextSetShouldAntialias(context, true);
-//                    CGContextSetAllowsAntialiasing(context, true);
+//        // 探测脸部矩形请求
+//        VNDetectFaceRectanglesRequest *detectRequest = [[VNDetectFaceRectanglesRequest alloc]initWithCompletionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) {
+//            //回调
+//            NSArray *observations = request.results;
+//            //监测数据
+//            for (VNFaceObservation *observation  in observations) {
+//                //位置 尺寸 转换
+//                CGSize imageSize = CVImageBufferGetDisplaySize(pixelBuffer);
+//                CGRect faceRect = [[self class] convertRect:observation.boundingBox imageSize:imageSize];
 //
-//                    // 绘制
-//                    CGRect rect = CGRectMake(0, 0, imageSize.width, imageSize.height);
-////                    CGContextDrawImage(context, rect, sourceImage.CGImage);
-//                    CGContextAddLines(context, points, landmarks2D.pointCount);////画线部分  使用layer画线
-//                    CGContextDrawPath(context, kCGPathStroke);
+//                static UIView *tmpView;
+//                if (tmpView) {
+//                    tmpView.frame = faceRect;
+//                } else {
+//                    tmpView = [[UIView alloc] init];
+//                    tmpView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
+//                    [self addSubview:tmpView];
+//                    tmpView.frame = faceRect;
+//                }
 //
-//                    // 结束绘制
-////                    sourceImage = UIGraphicsGetImageFromCurrentImageContext();
-//                    UIGraphicsEndImageContext();
-                }
-            }
-        }];
-        
-        // 发送识别请求
-        NSError *error = nil;
-        [detectRequestHandler performRequests:@[detectRequest] error:&error];
-        if (error) {
-            NSLog(@"%@", error.debugDescription);
-        }
-        
-    } else {
-        // Fallback on earlier versions
-    }
+//                //精确数据的计算
+//                VNFaceLandmarks2D *faceLandmark2D = observation.landmarks;
+//
+//                NSMutableArray <VNFaceLandmarkRegion2D *>*pointArray = [NSMutableArray array];
+//                [pointArray addObject:faceLandmark2D.allPoints];
+//                [pointArray addObject:faceLandmark2D.faceContour];
+//
+//                [pointArray addObject:faceLandmark2D.leftEye];
+//                [pointArray addObject:faceLandmark2D.rightEye];
+//
+//                [pointArray addObject:faceLandmark2D.leftEyebrow];
+//                [pointArray addObject:faceLandmark2D.rightEyebrow];
+//
+//                [pointArray addObject:faceLandmark2D.nose];
+//                [pointArray addObject:faceLandmark2D.noseCrest];
+//
+//                [pointArray addObject:faceLandmark2D.medianLine];
+//                [pointArray addObject:faceLandmark2D.outerLips];
+//                [pointArray addObject:faceLandmark2D.innerLips];
+//
+//                [pointArray addObject:faceLandmark2D.leftPupil];
+//                [pointArray addObject:faceLandmark2D.rightPupil];
+//
+//
+//                // 遍历所有特征x
+//                for (VNFaceLandmarkRegion2D *landmarks2D in pointArray) {
+//                    CGPoint points[landmarks2D.pointCount];
+//                    // 转换特征的所有点
+//                    for (int i = 0; i < landmarks2D.pointCount; i++) {
+//                     const CGPoint *point = [landmarks2D pointsInImageOfSize:imageSize];
+////                        vector_float2 point = [landmarks2D pointAtIndex:i];
+//
+//                        CGFloat rectWidth  = imageSize.width * observation.boundingBox.size.width;
+//                        CGFloat rectHeight = imageSize.height * observation.boundingBox.size.height;
+//                        CGPoint p = CGPointMake( point[i].x * rectWidth + observation.boundingBox.origin.x * imageSize.width
+//                                                , observation.boundingBox.origin.y * imageSize.height + point[i].y * rectHeight);
+//                        points[i] = p;
+//                    }
+//                    UIBezierPath *path = [UIBezierPath bezierPath];
+//                    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+//
+//
+////                    UIGraphicsBeginImageContextWithOptions(imageSize, false, 1);
+////                    CGContextRef context = UIGraphicsGetCurrentContext();
+////                    [[UIColor greenColor] set];
+////                    CGContextSetLineWidth(context, 2);
+////
+////                    // 设置翻转
+////                    CGContextTranslateCTM(context, 0, imageSize.height);
+////                    CGContextScaleCTM(context, 1.0, -1.0);
+////
+////                    // 设置线类型
+////                    CGContextSetLineJoin(context, kCGLineJoinRound);
+////                    CGContextSetLineCap(context, kCGLineCapRound);
+////
+////                    // 设置抗锯齿
+////                    CGContextSetShouldAntialias(context, true);
+////                    CGContextSetAllowsAntialiasing(context, true);
+////
+////                    // 绘制
+////                    CGRect rect = CGRectMake(0, 0, imageSize.width, imageSize.height);
+//////                    CGContextDrawImage(context, rect, sourceImage.CGImage);
+////                    CGContextAddLines(context, points, landmarks2D.pointCount);////画线部分  使用layer画线
+////                    CGContextDrawPath(context, kCGPathStroke);
+////
+////                    // 结束绘制
+//////                    sourceImage = UIGraphicsGetImageFromCurrentImageContext();
+////                    UIGraphicsEndImageContext();
+//                }
+//            }
+//        }];
+//
+//        // 发送识别请求
+//        NSError *error = nil;
+//        [detectRequestHandler performRequests:@[detectRequest] error:&error];
+//        if (error) {
+//            NSLog(@"%@", error.debugDescription);
+//        }
+//
+//    } else {
+//        // Fallback on earlier versions
+//    }
     
     
 }
@@ -281,6 +284,30 @@
     CGFloat x = oldRect.origin.x * imageSize.width;
     CGFloat y = imageSize.height - (oldRect.origin.y * imageSize.height) - h;
     return CGRectMake(x, y, w, h);
+}
+
+#pragma mark -
+- (void)movieRecordingCompleted; {
+    
+    NSURL *url = [self movieURLWithMovieName:_curRecordingName];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        //要不要保存之类的动作
+        NSLog(@"当前录制的文件路径：%@", url.path);
+        [_moviesNameMarr addObject:_curRecordingName];
+        if ([_delegate respondsToSelector:@selector(previewView:didCompleteTheRecordingWithFileURL:)]) {
+            [_delegate previewView:self didCompleteTheRecordingWithFileURL:url];
+        }
+        //            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];//
+    } else {
+        //保存失败
+    }
+    
+    [_trailingOutput removeTarget:_movieWriter];
+    _cameraVideo.audioEncodingTarget = nil;
+}
+- (void)movieRecordingFailedWithError:(NSError*)error; {
+    [_trailingOutput removeTarget:_movieWriter];
+    _cameraVideo.audioEncodingTarget = nil;
 }
 
 #pragma mark - GPUImageVideoCameraAssistProtocol
@@ -298,7 +325,7 @@
 static int stride = 0;
 - (void)cameraDidOutputMetadataObjects:(NSArray *)metadataObjects {
    ///建议3 - 5帧作一个检查
-    stride++;
+    stride++;//步幅
     if (stride == 3) {
         stride = 0;
         return;
@@ -321,11 +348,12 @@ static int stride = 0;
                 CGRect faceRectangle = transFace.bounds;
                 
                   dispatch_async(dispatch_get_main_queue(), ^{
-                      
                     UIView *view = _faceMap[[NSString stringWithFormat:@"%ld", face.faceID]];
                     if (!view) {
                         view = [[UIView alloc] initWithFrame:faceRectangle];
-                        view.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.5];
+                        view.backgroundColor = [UIColor clearColor];
+                        view.layer.borderColor = UIColor.greenColor.CGColor;
+                        view.layer.borderWidth = 2.0;
                         [self addSubview:view];
                         _faceMap[[NSString stringWithFormat:@"%ld", face.faceID]] = view;
                     } else {
@@ -494,15 +522,15 @@ static int stride = 0;
  @param trailingOutput source   PS：source一般使用crop，因为录制出源视频，是对之后的视频处理是有帮助的哦~~~
  */
 - (void)prepareRecordWithMovieName:(NSString *)movieName outputSize:(CGSize)outputSize trailingOutPut:(GPUImageOutput <GPUImageInput >*)trailingOutput {
-    if (!trailingOutput) {
+    if (!trailingOutput && !_trailingOutput) {
         trailingOutput = _cropFilter;
+        _trailingOutput = trailingOutput;
     }
     
     if (CGSizeEqualToSize(outputSize, CGSizeZero)) {
         outputSize = _cropFilter.outputFrameSize;
     }
     
-    _trailingOutput = trailingOutput;
     NSURL *url = [self movieURLWithMovieName:movieName];
     _curRecordingName = movieName;
     
@@ -513,6 +541,7 @@ static int stride = 0;
     
 	_movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:url size:outputSize];
     _movieWriter.encodingLiveVideo = true;
+    _movieWriter.delegate = self;
     ///已经配置完毕的链
     [_trailingOutput addTarget:_movieWriter];
     
@@ -533,11 +562,13 @@ static int stride = 0;
             _recordStartTime = CMTimeMake(duration.value, duration.timescale);
         }
         CMTime progressTime = CMTimeSubtract(duration , _recordStartTime);//有点误差， 需要录制完之后再校对一次吧
-        progressTime = CMTimeAdd(_recordTotalTime, progressTime);//加上之前拍照的总时间数目
-        //回调出去
-       
-        if ([_delegate respondsToSelector:@selector(previewView:audioVideoWriterRecordingCurrentTime:last:)]) {
-            [_delegate previewView:self audioVideoWriterRecordingCurrentTime:progressTime last:false];
+        if (_recording) {
+            progressTime = CMTimeAdd(_recordTotalTime, progressTime);//加上之前拍照的总时间数目
+            //回调出去
+            
+            if ([_delegate respondsToSelector:@selector(previewView:audioVideoWriterRecordingCurrentTime:last:)]) {
+                [_delegate previewView:self audioVideoWriterRecordingCurrentTime:progressTime last:false];
+            }
         }
     } else {
         
@@ -582,7 +613,6 @@ static int stride = 0;
     
     [self prepareRecordWithMovieName:[self newMovieName] outputSize:CGSizeZero trailingOutPut:nil];
     if (_movieWriter) {
-        
        
 //        _movieWriter startRecordingInOrientation:(CGAffineTransform)
         /////录制方向变更
@@ -614,9 +644,24 @@ static int stride = 0;
 - (void)cancelRecord {
     _recording = false;
     if (_movieWriter) {
-        [_trailingOutput removeTarget:_movieWriter];
-        _cameraVideo.audioEncodingTarget = nil;
-        [_movieWriter finishRecording];
+        [_movieWriter finishRecordingWithCompletionHandler:^{
+            NSURL *url = [self movieURLWithMovieName:_curRecordingName];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+                //要不要保存之类的动作
+                NSLog(@"当前录制的文件路径：%@", url.path);
+                [_moviesNameMarr addObject:_curRecordingName];
+                if ([_delegate respondsToSelector:@selector(previewView:didCompleteTheRecordingWithFileURL:)]) {
+                    [_delegate previewView:self didCompleteTheRecordingWithFileURL:url];
+                }
+                //            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];//
+            } else {
+                //保存失败
+            }
+            
+            //清除
+            [_trailingOutput removeTarget:_movieWriter];
+            _cameraVideo.audioEncodingTarget = nil;
+        }];
 //        _movieURL.path;//一般都会有内容的 要不要 外部决定
     }
 }
@@ -626,27 +671,10 @@ static int stride = 0;
     _recording = false;
     if (_movieWriter && _curRecordingName) {
         [self cancelRecord];
-        NSURL *url = [self movieURLWithMovieName:_curRecordingName];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
-            //要不要保存之类的动作
-            NSLog(@"当前录制的文件路径：%@", url.path);
-            [_moviesNameMarr addObject:_curRecordingName];
-            if ([_delegate respondsToSelector:@selector(previewView:didCompleteTheRecordingWithFileURL:)]) {
-                [_delegate previewView:self didCompleteTheRecordingWithFileURL:url];
-            }
-            
-//            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];//
-        } else {
-            //保存失败
-        }
     }
-    
     ///时间重新配置 因为时间 每暂停一次 都会增加误差  但是下面这个设置是有所风险的
 //    [self endRecordTimeConfig];
 }
-
-
-
 
 #pragma mark - Accessor
 - (GPUImageView *)presentView {

@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, WZMediaViewScaleMode) {
 - (void)operationView:(WZMediaOperationView*)view closeBtnAction:(UIButton *)sender;
 - (void)operationView:(WZMediaOperationView*)view shootBtnAction:(UIButton *)sender;
 - (void)operationView:(WZMediaOperationView*)view compositionBtnAction:(UIButton *)sender;
+
 - (void)operationView:(WZMediaOperationView*)view configType:(WZMediaConfigType)type;
 - (void)operationView:(WZMediaOperationView*)view didSelectedFilter:(GPUImageFilter *)filter;
 - (void)operationView:(WZMediaOperationView*)view scaleMode:(NSUInteger)mode;
@@ -45,7 +46,6 @@ typedef NS_ENUM(NSUInteger, WZMediaViewScaleMode) {
 - (void)operationView:(WZMediaOperationView*)view startRecordGesture:(UILongPressGestureRecognizer *)gesture;
 - (void)operationView:(WZMediaOperationView*)view endRecordGesture:(UILongPressGestureRecognizer *)gesture;
 - (void)operationView:(WZMediaOperationView*)view breakRecordGesture:(UILongPressGestureRecognizer *)gesture;
-
 
 
 @end

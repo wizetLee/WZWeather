@@ -35,6 +35,7 @@
         WZDownloadTarget *data = (WZDownloadTarget *)self.data;
         _titleLable.text = data.url.path;
         _progressLabel.text = [NSString stringWithFormat:@"%lf",bytesTransitionMB(data.totalBytesWritten)];
+        [_progressLabel sizeToFit];
     }
 }
 
@@ -71,6 +72,10 @@
         dic[@"data"] = _data;
         [self.variousViewDelegate variousView:self param:dic];
     }
+    [self checkButtonStatus];
+}
+
+- (void)checkButtonStatus {
     if (((WZDownloadTarget *)_data).pause) {
         [_actionBtn setTitle:@"下载" forState:UIControlStateNormal];
         _actionBtn.backgroundColor = [UIColor redColor];
@@ -91,6 +96,7 @@
 - (void)progressCallBack:(NSDictionary *)callBack {
     if ([self.data isKindOfClass:[WZDownloadTarget class]]) {
         WZDownloadTarget *data = (WZDownloadTarget *)self.data;
+        [self checkButtonStatus];
         _progressLabel.text = [NSString stringWithFormat:@"%lf",bytesTransitionMB(data.totalBytesWritten)];
     }
 }

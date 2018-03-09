@@ -109,8 +109,7 @@
          if (model.VCClass == WZMediaController.class) {
              [self pushToMediaVC];
              
-         } else if (model.VCClass == WZAVPlayerViewController.class || model.VCClass ==
-                    WZDownloadController.class ) {
+         } else if (model.VCClass == WZAVPlayerViewController.class) {
             id vc = [model.VCClass new];
             self.navigationController.navigationBarHidden = false;
             [self.navigationController pushViewController:vc animated:true];

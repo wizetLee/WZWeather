@@ -7,6 +7,9 @@
 //
 
 #import "WZDownloadRequest.h"
+#import "NSObject+WZFile.h"
+
+#define WZDOWNLOAD_PATH  [MACRO_PATH_DOCUMENT stringByAppendingPathComponent:@"wizetDownloadFolder"]
 
 @interface WZDownloadRequest()
 
@@ -44,8 +47,18 @@ double bytesTransitionMB(int64_t bytes) {
 }
 
 ///正常需求是使用单例的
+static WZDownloadRequest *singleDownloader = nil;
 + (instancetype)downloader {
-    return [[WZDownloadRequest alloc] init];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        singleDownloader = [[WZDownloadRequest alloc] init];
+        if ([NSObject wz_createFolderAtPath:WZDOWNLOAD_PATH]) {
+            NSLog(@"已存在文件");
+        } else {
+            NSLog(@"创建文件失败");
+        }
+    });
+    return singleDownloader;
 }
 
 - (void)downloadWithURLArray:(NSArray <NSURL *>*)urlArray
@@ -58,6 +71,7 @@ double bytesTransitionMB(int64_t bytes) {
     [self downloadAction:urlArray session:_session];
 }
 
+//插入批量任务
 - (void)insertDownloadTasksWithURLArray:(NSArray <NSURL *>*)urlArray {
     
 }
@@ -74,9 +88,9 @@ double bytesTransitionMB(int64_t bytes) {
 //    NSMutableArray <NSURL *>* tmpUrlArray = [NSMutableArray arrayWithArray:urlArray];
     for (NSURL *url in urlArray) {
 //        //检查文件是否已经被下载
-//        if (0/*文件已经被下载*/) {
-//            continue;
-//        }
+        if ([self checkFileWithULR:url]) {
+            continue;
+        }
     
         //创建任务Target
         WZDownloadTarget *target = [[WZDownloadTarget alloc] init];
@@ -123,6 +137,15 @@ double bytesTransitionMB(int64_t bytes) {
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location {
     //任务完成 置空任务
+
+    NSURL *url = [NSURL fileURLWithPath:[WZDOWNLOAD_PATH stringByAppendingPathComponent:downloadTask.response.suggestedFilename]];//  downloadTask.currentRequest.URL
+    NSError *error = nil;
+    if ([[NSFileManager defaultManager] moveItemAtURL:location toURL:url error:&error]) {
+        NSLog(@"移动文件成功");
+    } else {
+        NSLog(@"移动文件失败");
+    }
+    
     for (WZDownloadTarget *target in [self matchTargetsWithURL:downloadTask.currentRequest.URL]) {
         target.resumeData = nil;
         target.task = nil;
@@ -293,6 +316,12 @@ didCompleteWithError:(nullable NSError *)error {
     }
 }
 
-#pragma mark - getter & setter
+- (BOOL)checkFileWithULR:(NSURL *)URL {
+    NSString *path = [WZDOWNLOAD_PATH stringByAppendingPathComponent:URL.lastPathComponent];
+    
+    return [[NSFileManager defaultManager] fileExistsAtPath:path];
+}
+
+#pragma mark - Accessor
 
 @end

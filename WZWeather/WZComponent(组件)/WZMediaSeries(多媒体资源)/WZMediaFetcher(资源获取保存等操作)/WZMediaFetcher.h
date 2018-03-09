@@ -199,7 +199,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 + (int32_t)fetchImageWithAsset:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(NSData *  imageData, NSString * dataUTI, UIImageOrientation orientation, NSDictionary *  info))handler;
 
 #pragma mark - Fetch Video  视频部分
-+ (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info))handler;
++ (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(AVAsset *  asset, AVAudioMix *  audioMix, NSDictionary *  info))handler;
 
 #pragma mark - Fetch Audio  音频部分
 

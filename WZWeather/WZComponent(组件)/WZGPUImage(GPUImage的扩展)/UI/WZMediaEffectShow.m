@@ -32,6 +32,7 @@
 @property (nonatomic, strong) UILabel *headlineLabel;
 @property (nonatomic, strong) CALayer *surfaceLayer;
 
+
 @end
 
 @implementation WZMediaEffectShowCell
@@ -43,7 +44,6 @@
     }
     return self;
 }
-
 
 - (void)createViews {
     _headlineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 44.0, self.frame.size.width, self.frame.size.height - 44.0)];
@@ -101,13 +101,12 @@
     _pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
     [_bgView addGestureRecognizer:_pan];
     
-
     [self addSubview:self.collection];
     _slider = [[UISlider alloc] init];
     _slider.hidden = true;
-    _slider.frame = CGRectMake(10.0, 44.0, [UIScreen mainScreen].bounds.size.height - 44.0 - 44.0 - 44.0, 88.0);
+    _slider.frame = CGRectMake(10.0, 44.0, [UIScreen mainScreen].bounds.size.height - 44.0 - 44.0 - 44.0, 44.0);
     
-    _slider.backgroundColor = [UIColor greenColor];
+    _slider.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.5];
     _slider.layer.anchorPoint = CGPointMake(0, 0);
     _slider.transform = CGAffineTransformRotate(_slider.transform, M_PI_2);
     [self addSubview:_slider];
@@ -116,6 +115,7 @@
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     [_collection addGestureRecognizer:longPress];
+    _collection.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
 }
 
 - (void)createFilers {
@@ -124,225 +124,228 @@
     GPUImageOutput<GPUImageInput> *filter;
     
     GPUImageFilter *filterNone = [[GPUImageFilter alloc] init];
-    tmpDic = @{headlineKey:@"无",
+    tmpDic = @{headlineKey:@"原始",
                filterKey:filterNone,};
     [_dataSource addObject:tmpDic];
     
     filter = [[GPUImageTrillColorOffsetFilter alloc] init];
     [self key:@"抖音" value:filter];
     
-    //饱和度
-     filter = [[GPUImageSaturationFilter alloc] init];
-     [self key:@"饱和度" value:filter];
-
-    //反色
-    filter = [[GPUImageColorInvertFilter alloc] init];
-    [self key:@"反色" value:filter];
-
-//    //色彩直方图
-//    GPUImageHistogramGenerator *histomgramGenerator = [[GPUImageHistogramGenerator alloc] init];
-//    tmpDic = @{headlineKey:@"色彩直方图",
-//               filterKey:histomgramGenerator,};
-//    [_dataSource addObject:tmpDic];
-
-
-    //色度键 无效（查原因）
-//    GPUImageChromaKeyFilter *chromaKeyFilter = [[GPUImageChromaKeyFilter alloc] init];
-//    [self key:@"色度键" value:chromaKeyFilter];
-
-    //纯色
-//    GPUImageSolidColorGenerator *solidColorGenerator = [[GPUImageSolidColorGenerator alloc] init];
-//    [self key:@"纯色" value:solidColorGenerator];
-
-
-//    //十字
-//    GPUImageCrosshairGenerator *crosshairGenerator = [[GPUImageCrosshairGenerator alloc] init];
-//    [self key:@"十字" value:crosshairGenerator];
     
-    //形状变化
-//    GPUImageTransformFilter *transformFilter = [[GPUImageTransformFilter alloc] init];
-//    [self key:@"形状变化" value:transformFilter];
-  
-        UIImage *inputImage = [UIImage imageNamed:@"mask"];
-        GPUImagePicture *sourcePicture = [[GPUImagePicture alloc] initWithImage:inputImage smoothlyScaleOutput:YES];
-        [sourcePicture processImage];
-  
-    //结构
-
-    GPUImagePixellateFilter *pixellateFilter = [[GPUImagePixellateFilter alloc] init];
-    [self key:@"像素化" value:pixellateFilter];
-
-    //围绕一个圆圈进行的像素化
-//    GPUImagePolarPixellateFilter *polarPiexellateFilter = [[GPUImagePolarPixellateFilter alloc] init];
-//    [self key:@"PolarPixellateFilter" value:polarPiexellateFilter];
-    
-//    //按照一定规模半径的圆圈进行像素化
-//    GPUImagePixellatePositionFilter *pixellatePositionFilter = [[GPUImagePixellatePositionFilter alloc] init];
-//    [self key:@"PixellatePositionFilter" value:pixellatePositionFilter];
-    
-    GPUImagePolkaDotFilter *polkaDotFilter = [[GPUImagePolkaDotFilter alloc] init];
-    [self key:@"圆点网板" value:polkaDotFilter];
-    
-    GPUImageHalftoneFilter *imageHalftoneFilter = [[GPUImageHalftoneFilter alloc] init];
-    [self key:@"黑白网板" value:imageHalftoneFilter];
-    
-    
-    filter = [[GPUImageCrosshatchFilter alloc] init];
-    [self key:@"交叉线" value:filter];
-    
-    
-    
-    filter = [[GPUImageGrayscaleFilter alloc] init];
-    [self key:@"灰度" value:filter];
-    
-    filter = [[GPUImageMonochromeFilter alloc] init];
-    [(GPUImageMonochromeFilter *)filter setColor:(GPUVector4){0.0f, 0.0f, 1.0f, 1.f}];
-    [self key:@"单色" value:filter];
-    
-    filter = [[GPUImageFalseColorFilter alloc] init];
-    [self key:@"色彩替换" value:filter];
-    
-//    filter = [[GPUImageSoftEleganceFilter alloc] init];
-//    [self key:@"SoftEleganceFilter" value:filter];
-    
-//    filter = [[GPUImageMissEtikateFilter alloc] init];
-//    [self key:@"MissEtikateFilter" value:filter];
-    
-//    filter = [[GPUImageAmatorkaFilter alloc] init];
-//    [self key:@"AmatorkaFilter" value:filter];
-   
-    
-    filter = [[GPUImageContrastFilter alloc] init];
-    [self key:@"对比度" value:filter];
-    
-    filter = [[GPUImageBrightnessFilter alloc] init];
-    [self key:@"亮度" value:filter];
-    
-    filter = [[GPUImageLevelsFilter alloc] init];
-    [self key:@"色阶" value:filter];
-    
-    filter = [[GPUImageRGBFilter alloc] init];
-    [self key:@"RGB" value:filter];
-    
-    filter = [[GPUImageHueFilter alloc] init];
-    [self key:@"色调" value:filter];
-    
-    filter = [[GPUImageWhiteBalanceFilter alloc] init];
-    [self key:@"白平衡" value:filter];
-    
-    filter = [[GPUImageExposureFilter alloc] init];
-    [self key:@"曝光" value:filter];
-    
-    filter = [[GPUImageSharpenFilter alloc] init];
-    [self key:@"锐度" value:filter];
-    
-    filter = [[GPUImageUnsharpMaskFilter alloc] init];
-    [self key:@"反遮罩锐度" value:filter];
-    
-    filter = [[GPUImageGammaFilter alloc] init];
-    [self key:@"伽马线" value:filter];
-    
-//    filter = [[GPUImageToneCurveFilter alloc] init];
-//    [(GPUImageToneCurveFilter *)filter setBlueControlPoints:[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)], [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)], [NSValue valueWithCGPoint:CGPointMake(1.0, 0.75)], nil]];
-//    [self key:@"色调曲线" value:filter];
-    
-    filter = [[GPUImageHighlightShadowFilter alloc] init];
-    [self key:@"提亮阴影" value:filter];
-    
-    filter = [[GPUImageHazeFilter alloc] init];
-    [self key:@"Haze / UV" value:filter];
-    
-//    filter = [[GPUImageAverageColor alloc] init];
-//    [self key:@"像素平均色值" value:filter];
-
-//    filter = [[GPUImageLuminosity alloc] init];
-//    [self key:@"亮度平均" value:filter];
-    
-    filter = [[GPUImageHistogramFilter alloc] initWithHistogramType:kGPUImageHistogramRGB];
-    [self key:@"色彩直方图" value:filter];
-    
-//    filter = [[GPUImageHueBlendFilter alloc] init];
+    filter = [[GPUImageBeautifyFilter alloc] init];
+    [self key:@"美颜" value:filter];
+//    //饱和度
+//     filter = [[GPUImageSaturationFilter alloc] init];
+//     [self key:@"饱和度" value:filter];
+//
+//    //反色
+//    filter = [[GPUImageColorInvertFilter alloc] init];
+//    [self key:@"反色" value:filter];
+//
+////    //色彩直方图
+////    GPUImageHistogramGenerator *histomgramGenerator = [[GPUImageHistogramGenerator alloc] init];
+////    tmpDic = @{headlineKey:@"色彩直方图",
+////               filterKey:histomgramGenerator,};
+////    [_dataSource addObject:tmpDic];
+//
+//
+//    //色度键 无效（查原因）
+////    GPUImageChromaKeyFilter *chromaKeyFilter = [[GPUImageChromaKeyFilter alloc] init];
+////    [self key:@"色度键" value:chromaKeyFilter];
+//
+//    //纯色
+////    GPUImageSolidColorGenerator *solidColorGenerator = [[GPUImageSolidColorGenerator alloc] init];
+////    [self key:@"纯色" value:solidColorGenerator];
+//
+//
+////    //十字
+////    GPUImageCrosshairGenerator *crosshairGenerator = [[GPUImageCrosshairGenerator alloc] init];
+////    [self key:@"十字" value:crosshairGenerator];
+//
+//    //形状变化
+////    GPUImageTransformFilter *transformFilter = [[GPUImageTransformFilter alloc] init];
+////    [self key:@"形状变化" value:transformFilter];
+//
+//        UIImage *inputImage = [UIImage imageNamed:@"mask"];
+//        GPUImagePicture *sourcePicture = [[GPUImagePicture alloc] initWithImage:inputImage smoothlyScaleOutput:YES];
+//        [sourcePicture processImage];
+//
+//    //结构
+//
+//    GPUImagePixellateFilter *pixellateFilter = [[GPUImagePixellateFilter alloc] init];
+//    [self key:@"像素化" value:pixellateFilter];
+//
+//    //围绕一个圆圈进行的像素化
+////    GPUImagePolarPixellateFilter *polarPiexellateFilter = [[GPUImagePolarPixellateFilter alloc] init];
+////    [self key:@"PolarPixellateFilter" value:polarPiexellateFilter];
+//
+////    //按照一定规模半径的圆圈进行像素化
+////    GPUImagePixellatePositionFilter *pixellatePositionFilter = [[GPUImagePixellatePositionFilter alloc] init];
+////    [self key:@"PixellatePositionFilter" value:pixellatePositionFilter];
+//
+//    GPUImagePolkaDotFilter *polkaDotFilter = [[GPUImagePolkaDotFilter alloc] init];
+//    [self key:@"圆点网板" value:polkaDotFilter];
+//
+//    GPUImageHalftoneFilter *imageHalftoneFilter = [[GPUImageHalftoneFilter alloc] init];
+//    [self key:@"黑白网板" value:imageHalftoneFilter];
+//
+//
+//    filter = [[GPUImageCrosshatchFilter alloc] init];
+//    [self key:@"交叉线" value:filter];
+//
+//
+//
+//    filter = [[GPUImageGrayscaleFilter alloc] init];
+//    [self key:@"灰度" value:filter];
+//
+//    filter = [[GPUImageMonochromeFilter alloc] init];
+//    [(GPUImageMonochromeFilter *)filter setColor:(GPUVector4){0.0f, 0.0f, 1.0f, 1.f}];
+//    [self key:@"单色" value:filter];
+//
+//    filter = [[GPUImageFalseColorFilter alloc] init];
+//    [self key:@"色彩替换" value:filter];
+//
+////    filter = [[GPUImageSoftEleganceFilter alloc] init];
+////    [self key:@"SoftEleganceFilter" value:filter];
+//
+////    filter = [[GPUImageMissEtikateFilter alloc] init];
+////    [self key:@"MissEtikateFilter" value:filter];
+//
+////    filter = [[GPUImageAmatorkaFilter alloc] init];
+////    [self key:@"AmatorkaFilter" value:filter];
+//
+//
+//    filter = [[GPUImageContrastFilter alloc] init];
+//    [self key:@"对比度" value:filter];
+//
+//    filter = [[GPUImageBrightnessFilter alloc] init];
+//    [self key:@"亮度" value:filter];
+//
+//    filter = [[GPUImageLevelsFilter alloc] init];
+//    [self key:@"色阶" value:filter];
+//
+//    filter = [[GPUImageRGBFilter alloc] init];
+//    [self key:@"RGB" value:filter];
+//
+//    filter = [[GPUImageHueFilter alloc] init];
+//    [self key:@"色调" value:filter];
+//
+//    filter = [[GPUImageWhiteBalanceFilter alloc] init];
+//    [self key:@"白平衡" value:filter];
+//
+//    filter = [[GPUImageExposureFilter alloc] init];
+//    [self key:@"曝光" value:filter];
+//
+//    filter = [[GPUImageSharpenFilter alloc] init];
+//    [self key:@"锐度" value:filter];
+//
+//    filter = [[GPUImageUnsharpMaskFilter alloc] init];
+//    [self key:@"反遮罩锐度" value:filter];
+//
+//    filter = [[GPUImageGammaFilter alloc] init];
+//    [self key:@"伽马线" value:filter];
+//
+////    filter = [[GPUImageToneCurveFilter alloc] init];
+////    [(GPUImageToneCurveFilter *)filter setBlueControlPoints:[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(0.0, 0.0)], [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)], [NSValue valueWithCGPoint:CGPointMake(1.0, 0.75)], nil]];
+////    [self key:@"色调曲线" value:filter];
+//
+//    filter = [[GPUImageHighlightShadowFilter alloc] init];
+//    [self key:@"提亮阴影" value:filter];
+//
+//    filter = [[GPUImageHazeFilter alloc] init];
+//    [self key:@"Haze / UV" value:filter];
+//
+////    filter = [[GPUImageAverageColor alloc] init];
+////    [self key:@"像素平均色值" value:filter];
+//
+////    filter = [[GPUImageLuminosity alloc] init];
+////    [self key:@"亮度平均" value:filter];
+//
+//    filter = [[GPUImageHistogramFilter alloc] initWithHistogramType:kGPUImageHistogramRGB];
+//    [self key:@"色彩直方图" value:filter];
+//
+////    filter = [[GPUImageHueBlendFilter alloc] init];
+////    [sourcePicture addTarget:filter];
+////    [self key:@"色度" value:filter];
+//
+//    filter = [[GPUImageOpacityFilter alloc] init];
 //    [sourcePicture addTarget:filter];
-//    [self key:@"色度" value:filter];
-    
-    filter = [[GPUImageOpacityFilter alloc] init];
-    [sourcePicture addTarget:filter];
-    [self key:@"不透明度" value:filter];
-    
-    filter = [[GPUImageiOSBlurFilter alloc] init];
-    [self key:@"iOS 7 Blur" value:filter];
-    
-    filter = [[GPUImageSepiaFilter alloc] init];
-    [self key:@"怀旧" value:filter];
-    
-    filter = [[GPUImageHistogramEqualizationFilter alloc] initWithHistogramType:kGPUImageHistogramLuminance];
-    [self key:@"HistogramEqualizationFilter" value:filter];
-    
-    filter = [[GPUImageLuminanceThresholdFilter alloc] init];
-    [self key:@"LuminanceThresholdFilter" value:filter];
-    
-    filter = [[GPUImageAdaptiveThresholdFilter alloc] init];
-    [self key:@"AdaptiveThresholdFilter" value:filter];
-    
-    filter = [[GPUImageAverageLuminanceThresholdFilter alloc] init];
-    [self key:@"AverageLuminanceThresholdFilter" value:filter];
-    
-    filter = [[GPUImageMaskFilter alloc] init];
-    [(GPUImageFilter*)filter setBackgroundColorRed:0.0 green:1.0 blue:0.0 alpha:1.0];
-    [self key:@"MaskFilter" value:filter];
-    
-     filter = [[GPUImageSobelEdgeDetectionFilter alloc] init];
-    [self key:@"Sobel边缘检测" value:filter];
-    
-    filter = [[GPUImageXYDerivativeFilter alloc] init];
-    [self key:@"XY边缘检测" value:filter];
-    
-    filter = [[GPUImageHarrisCornerDetectionFilter alloc] init];
-    [(GPUImageHarrisCornerDetectionFilter *)filter setThreshold:0.20];
-    [self key:@"Harris Corner边缘检测" value:filter];
-    
-    filter = [[GPUImageNobleCornerDetectionFilter alloc] init];
-    [(GPUImageNobleCornerDetectionFilter *)filter setThreshold:0.20];
-    [self key:@"Noble Corner边缘检测" value:filter];
-    
-    filter = [[GPUImageShiTomasiFeatureDetectionFilter alloc] init];
-    [(GPUImageShiTomasiFeatureDetectionFilter *)filter setThreshold:0.20];
-    [self key:@"ShiTomasi Feature边缘检测" value:filter];
+//    [self key:@"不透明度" value:filter];
 //
-//    filter = [[GPUImageHoughTransformLineDetector alloc] init];
-//    [(GPUImageHoughTransformLineDetector *)filter setLineDetectionThreshold:0.60];
-//    [self key:@"HoughTransformLineDetector" value:filter];
+//    filter = [[GPUImageiOSBlurFilter alloc] init];
+//    [self key:@"iOS 7 Blur" value:filter];
 //
-    filter = [[GPUImagePrewittEdgeDetectionFilter alloc] init];
-    [self key:@"Prewitt边缘检测" value:filter];
-    
-    filter = [[GPUImageCannyEdgeDetectionFilter alloc] init];
-    [self key:@"CannyEdge边缘检测" value:filter];
-    
-    filter = [[GPUImageThresholdEdgeDetectionFilter alloc] init];
-    [self key:@"Threshold边缘检测" value:filter];
-    
-    filter = [[GPUImageLocalBinaryPatternFilter alloc] init];
-    [self key:@"LocalBinaryPatternFilter" value:filter];
-    
-    filter = [[GPUImageBuffer alloc] init];
-    [self key:@"Buffer" value:filter];
-    
-    filter = [[GPUImageLowPassFilter alloc] init];
-    [self key:@"重影（低程度）" value:filter];
-    
-    filter = [[GPUImageHighPassFilter alloc] init];
-    [self key:@"重影（高程度）" value:filter];
-    
-//    [videoCamera rotateCamera];//动作（手势？）测试
-//     filter = [[GPUImageMotionDetector alloc] init];
-//    [self key:@"MotionDetector" value:filter];
-    
-    filter = [[GPUImageSketchFilter alloc] init];
-    [self key:@"Sketch边缘检测" value:filter];
-    
-    filter = [[GPUImageThresholdSketchFilter alloc] init];
-    [self key:@"ThresholdSketch边缘检测" value:filter];
+//    filter = [[GPUImageSepiaFilter alloc] init];
+//    [self key:@"怀旧" value:filter];
+//
+//    filter = [[GPUImageHistogramEqualizationFilter alloc] initWithHistogramType:kGPUImageHistogramLuminance];
+//    [self key:@"HistogramEqualizationFilter" value:filter];
+//
+//    filter = [[GPUImageLuminanceThresholdFilter alloc] init];
+//    [self key:@"LuminanceThresholdFilter" value:filter];
+//
+//    filter = [[GPUImageAdaptiveThresholdFilter alloc] init];
+//    [self key:@"AdaptiveThresholdFilter" value:filter];
+//
+//    filter = [[GPUImageAverageLuminanceThresholdFilter alloc] init];
+//    [self key:@"AverageLuminanceThresholdFilter" value:filter];
+//
+//    filter = [[GPUImageMaskFilter alloc] init];
+//    [(GPUImageFilter*)filter setBackgroundColorRed:0.0 green:1.0 blue:0.0 alpha:1.0];
+//    [self key:@"MaskFilter" value:filter];
+//
+//     filter = [[GPUImageSobelEdgeDetectionFilter alloc] init];
+//    [self key:@"Sobel边缘检测" value:filter];
+//
+//    filter = [[GPUImageXYDerivativeFilter alloc] init];
+//    [self key:@"XY边缘检测" value:filter];
+//
+//    filter = [[GPUImageHarrisCornerDetectionFilter alloc] init];
+//    [(GPUImageHarrisCornerDetectionFilter *)filter setThreshold:0.20];
+//    [self key:@"Harris Corner边缘检测" value:filter];
+//
+//    filter = [[GPUImageNobleCornerDetectionFilter alloc] init];
+//    [(GPUImageNobleCornerDetectionFilter *)filter setThreshold:0.20];
+//    [self key:@"Noble Corner边缘检测" value:filter];
+//
+//    filter = [[GPUImageShiTomasiFeatureDetectionFilter alloc] init];
+//    [(GPUImageShiTomasiFeatureDetectionFilter *)filter setThreshold:0.20];
+//    [self key:@"ShiTomasi Feature边缘检测" value:filter];
+////
+////    filter = [[GPUImageHoughTransformLineDetector alloc] init];
+////    [(GPUImageHoughTransformLineDetector *)filter setLineDetectionThreshold:0.60];
+////    [self key:@"HoughTransformLineDetector" value:filter];
+////
+//    filter = [[GPUImagePrewittEdgeDetectionFilter alloc] init];
+//    [self key:@"Prewitt边缘检测" value:filter];
+//
+//    filter = [[GPUImageCannyEdgeDetectionFilter alloc] init];
+//    [self key:@"CannyEdge边缘检测" value:filter];
+//
+//    filter = [[GPUImageThresholdEdgeDetectionFilter alloc] init];
+//    [self key:@"Threshold边缘检测" value:filter];
+//
+//    filter = [[GPUImageLocalBinaryPatternFilter alloc] init];
+//    [self key:@"LocalBinaryPatternFilter" value:filter];
+//
+//    filter = [[GPUImageBuffer alloc] init];
+//    [self key:@"Buffer" value:filter];
+//
+//    filter = [[GPUImageLowPassFilter alloc] init];
+//    [self key:@"重影（低程度）" value:filter];
+//
+//    filter = [[GPUImageHighPassFilter alloc] init];
+//    [self key:@"重影（高程度）" value:filter];
+//
+////    [videoCamera rotateCamera];//动作（手势？）测试
+////     filter = [[GPUImageMotionDetector alloc] init];
+////    [self key:@"MotionDetector" value:filter];
+//
+//    filter = [[GPUImageSketchFilter alloc] init];
+//    [self key:@"Sketch边缘检测" value:filter];
+//
+//    filter = [[GPUImageThresholdSketchFilter alloc] init];
+//    [self key:@"ThresholdSketch边缘检测" value:filter];
     
 //    filter = [[GPUImageToonFilter alloc] init];
 //    [self key:@"Toon" value:filter];
@@ -914,6 +917,13 @@
         [_slider setValue:0.1];
         [_slider setMinimumValue:0.0];
         [_slider setMaximumValue:0.1];
+        ((GPUImageTrillColorOffsetFilter *)filter).enlargeWeight = _slider.value;
+    } else if ([filter isKindOfClass:GPUImageBeautifyFilter.class]) {
+//        _slider.hidden = false;
+//        [_slider setValue:0.1];
+//        [_slider setMinimumValue:0.0];
+//        [_slider setMaximumValue:0.1];
+//        ((GPUImageBeautifyFilter *)filter).initialize = _slider.value;
     }
 }
 

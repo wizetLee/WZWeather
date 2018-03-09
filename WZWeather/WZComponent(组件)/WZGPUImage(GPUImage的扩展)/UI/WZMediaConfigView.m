@@ -32,7 +32,7 @@
 - (void)createViews {
     _table = [[WZVariousTable alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, MACRO_FLOAT_SCREEN_HEIGHT) style:UITableViewStylePlain];
     _table.variousViewDelegate = (id<WZVariousViewDelegate>)self;
-    _table.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.25];;
+    _table.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.25];;
     
     _table.registerCellDic = [NSMutableDictionary dictionaryWithDictionary:@{@"WZMediaConfigCell" : [WZMediaConfigCell class]}];
     [self addSubview:_table];

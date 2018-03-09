@@ -55,7 +55,7 @@
     //写得真烂
     [_downloader downloadWithURLArray:tmpUrlArray completedWithError:^(NSMutableArray<WZDownloadTarget *> *targets, NSError * _Nullable error) {
         if (error) {
-//            NSLog(@"下载错误 or 取消： error: %@", error.debugDescription);
+            //NSLog(@"下载错误 or 取消： error: %@", error.debugDescription);
             //保存为resumeData
             if ([error.userInfo[NSURLSessionDownloadTaskResumeData] isKindOfClass:[NSData class]]) {
                 NSData *resumeData = error.userInfo[NSURLSessionDownloadTaskResumeData];
@@ -93,9 +93,9 @@
             // 2.6.设置alertTitle
             localNote.alertTitle =  @"您有一条新通知";
             // 2.7.设置有通知时的音效
-//            localNote.soundName = @"sound.wav";
+            //            localNote.soundName = @"sound.wav";
             // 2.8.设置应用程序图标右上角的数字
-//            localNote.applicationIconBadgeNumber = 999;
+                        localNote.applicationIconBadgeNumber = 0;
             // 2.9.设置额外信息
             localNote.userInfo = @{@"type" : @1};
             // 3.调用通知
@@ -113,7 +113,8 @@
 #pragma mark - Create subViews
 
 - (void)addSubViews {
-    _table = [[WZVariousTable alloc] initWithFrame:CGRectMake(0.0, 64.0, MACRO_FLOAT_SCREEN_WIDTH, MACRO_FLOAT_SCREEN_HEIGHT - 64.0) style:UITableViewStylePlain];
+    _table = [[WZVariousTable alloc] initWithFrame:UIScreen.mainScreen.bounds style:UITableViewStylePlain];
+  
     [self.view addSubview:_table];
     _table.backgroundColor = [UIColor clearColor];
     _table.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -146,7 +147,6 @@
                 [data.downloadRequest suspendTaskWithURL:data.url];
             }
         }
-        
         //暂停所有相同的任务
         for (WZDownloadTarget *target in _downloader.downloadTargets) {
             if (data != target && [target.url.path isEqualToString:data.url.path]) {
@@ -171,3 +171,4 @@
  */
 
 @end
+

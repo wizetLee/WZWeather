@@ -46,8 +46,9 @@
     CGFloat viewW = WZMediaConfigCellWidth / 2.0;
     CGFloat gap = 5.0;
     _healineLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0 + gap, (viewH - 44.0) / 2.0, viewW, 44.0)];
-    _healineLabel.backgroundColor = [UIColor blueColor];
+    _healineLabel.backgroundColor = [UIColor lightGrayColor];
     _healineLabel.text = @"标题";
+    _healineLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:_healineLabel];
     
 
@@ -59,12 +60,12 @@
     [self.contentView addSubview:_buttonLeft];
     [self.contentView addSubview:_buttonMid];
     [self.contentView addSubview:_buttonRight];
-    _buttonLeft.backgroundColor = [UIColor redColor];
-    _buttonMid.backgroundColor = [UIColor greenColor];
-    _buttonRight.backgroundColor = [UIColor blueColor];
-    [_buttonLeft setTitleColor:[UIColor magentaColor] forState:UIControlStateSelected];
-    [_buttonMid setTitleColor:[UIColor magentaColor] forState:UIControlStateSelected];
-    [_buttonRight setTitleColor:[UIColor magentaColor] forState:UIControlStateSelected];
+    _buttonLeft.backgroundColor = [UIColor lightGrayColor];
+    _buttonMid.backgroundColor = [UIColor lightGrayColor];
+    _buttonRight.backgroundColor = [UIColor lightGrayColor];
+    [_buttonLeft setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [_buttonMid setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [_buttonRight setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_buttonLeft addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_buttonMid addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
 	[_buttonRight addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];

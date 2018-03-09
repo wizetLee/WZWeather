@@ -30,22 +30,23 @@
 //---------------------------------------拍摄
 ///拍摄按钮
 @property (nonatomic, strong) UIButton *shootBtn;
+@property (nonatomic, strong) UIButton *recordBtn;
 //---------------------------------------录制  长按拍摄  单击拍摄
 ///录影按钮（一个长按事件）
 @property (nonatomic, strong) UIView *recordView;//长按拍摄
+@property (nonatomic, strong) UIView *recordImageView;//长按拍摄
+@property (nonatomic, strong) UILabel *recordTimeLabel;
+
 @property (nonatomic, strong) UIButton *recordView_singleClick;//单击拍摄
 ///视频合成按钮入口
-@property (nonatomic, strong) UIButton *compositionBtn;
-
+@property (nonatomic, strong) UIButton *settingBtn;
+@property (nonatomic, strong) UIButton *filterBtn;
 
 @property (nonatomic, strong) WZMediaTmpRecordList *recordListView;//保留录制记录的view
-@property (nonatomic, strong) WZMediaRecordTimeBar *recordTimeBar;
-
-///通过enable 判断是否在配置中
-//@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePan;
-//@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePanR;//右边
+//@property (nonatomic, strong) WZMediaRecordTimeBar *recordTimeBar;
 
 @property (nonatomic, strong) AVAudioPlayer *timeMusicPlayer;//倒计时
+
 @end
 
 @implementation WZMediaOperationView
@@ -62,7 +63,7 @@
 - (void)dealloc {
     NSLog(@"%s",__func__);
 }
-
+#pragma mark - Private
 - (void)createViews {
     self.clipsToBounds = true;
     
@@ -77,9 +78,7 @@
     
     _gestureView = [[WZMediaGestureView alloc] initWithFrame:self.bounds];
     [self addSubview:_gestureView];
-    
     [self addSubview:self.effectView];
-    
     
     _closeBtn = [[UIButton alloc] init];
     _closeBtn.frame = CGRectMake(0.0, topH, 44.0 * 2, 44.0);
@@ -89,16 +88,27 @@
     [self addSubview:_closeBtn];
     [_closeBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     
+    _recordTimeLabel = [[UILabel alloc] init];
+    _recordTimeLabel.frame = CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - 88.0, topH, 88.0, 44.0);
+    _recordTimeLabel.textColor = UIColor.whiteColor;
+    [self addSubview:_recordTimeLabel];
+    _recordTimeLabel.hidden = true;
+    
     CGFloat w = (MACRO_FLOAT_SCREEN_WIDTH- 5*2) / 3.0 ;
     _shootBtn = [[UIButton alloc] init];
-    _shootBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - bottomH - 44.0, w, 44.0);
+    _shootBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - bottomH - 80.0, 80.0, 80.0);
     _shootBtn.center = CGPointMake(MACRO_FLOAT_SCREEN_WIDTH / 2.0, _shootBtn.center.y);
     [_shootBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_shootBtn setTitle:@"拍照" forState:UIControlStateNormal];
-    _shootBtn.backgroundColor = [UIColor yellowColor];
+    [_shootBtn setBackgroundImage:[UIImage imageNamed:@"2_1#ffffff"] forState:UIControlStateNormal];
+    
     [self addSubview:_shootBtn];
     [_shootBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
 
+//    _recordBtn = [[UIButton alloc] init];
+//    _recordBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - bottomH - 80.0, 80.0, 80.0);
+//    _recordBtn.center = CGPointMake(MACRO_FLOAT_SCREEN_WIDTH / 2.0, _shootBtn.center.y);
+//    [_recordBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//    [_recordBtn setBackgroundImage:[UIImage imageNamed:@"8_1#e67976"] forState:UIControlStateNormal];
     
     _recordView = [[UIView alloc] init];
     _recordView.frame = _shootBtn.frame;
@@ -109,30 +119,26 @@
     [longPress addTarget:self action:@selector(longPress:)];
     [_recordView addGestureRecognizer:longPress];
     
-    
     _switchBtn = [[UIButton alloc] init];
     _switchBtn.frame = CGRectMake(0.0, MACRO_FLOAT_SCREEN_HEIGHT - 44, w, 44);
     _switchBtn.backgroundColor = [UIColor magentaColor];
-    [_switchBtn setTitle:@"切换" forState:UIControlStateNormal];
+    [_switchBtn setTitle:@"换录像" forState:UIControlStateNormal];
     [_switchBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_switchBtn];
     
+    _settingBtn = [[UIButton alloc] init];
+    _settingBtn.frame = CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - w, MACRO_FLOAT_SCREEN_HEIGHT - 44, w, 44);
+    _settingBtn.backgroundColor = [UIColor magentaColor];
+    [_settingBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [_settingBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_settingBtn];
     
-    _compositionBtn = [[UIButton alloc] init];
-    _compositionBtn.frame = CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - w, MACRO_FLOAT_SCREEN_HEIGHT - 44, w, 44);
-    _compositionBtn.backgroundColor = [UIColor magentaColor];
-    [_compositionBtn setTitle:@"合成" forState:UIControlStateNormal];
-    [_compositionBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_compositionBtn];
-    
-#warning Why it need two edge gesture.....
-//    _edgePan = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
-//    _edgePan.edges = UIRectEdgeLeft;
-//    _edgePanR = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
-//    _edgePan.edges = UIRectEdgeLeft;
-//    _edgePanR.edges = UIRectEdgeRight;
-//    [self addGestureRecognizer:_edgePan];
-//    [self addGestureRecognizer:_edgePanR];
+    _filterBtn = [[UIButton alloc] init];
+    _filterBtn.frame = CGRectMake(MACRO_FLOAT_SCREEN_WIDTH - w, MACRO_FLOAT_SCREEN_HEIGHT - 44 * 2.0, w, 44);
+    _filterBtn.backgroundColor = [UIColor magentaColor];
+    [_filterBtn setTitle:@"滤镜" forState:UIControlStateNormal];
+    [_filterBtn addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_filterBtn];
     
     {//速率
 //        _videoRateTypeView = [[WZMediaRateTypeView alloc] initWithFrame:CGRectMake(0.0, 0.0, 44.0 * 5, 44.0)];
@@ -143,15 +149,12 @@
 //        _videoRateTypeView.delegate = self;
     }
     
-    _recordTimeBar = [[WZMediaRecordTimeBar alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, 10.0)];
-    [self addSubview:_recordTimeBar];
+//    _recordTimeBar = [[WZMediaRecordTimeBar alloc] initWithFrame:CGRectMake(0.0, 0.0, MACRO_FLOAT_SCREEN_WIDTH, 10.0)];
+//    [self addSubview:_recordTimeBar];
     
     [self addSubview:self.configView];//最顶层
 }
 
-
-
-//MARK:点击事件
 - (void)clickedBtn:(UIButton *)sender {
     if (sender == _closeBtn) {
         if ([_delegate respondsToSelector:@selector(operationView:closeBtnAction:)]) {
@@ -173,20 +176,20 @@
             [_delegate operationView:self swithToMediaType:targetType];
         }
         [self switchModeWithType:targetType];
-    } else if (sender == _compositionBtn) {
-        //合成
-        //这个功能不应该这里
-        ///若干个视频
-        ///
-        if ([_delegate respondsToSelector:@selector(operationView:compositionBtnAction:)]) {
-            [_delegate operationView:self compositionBtnAction:sender];
-        }
+    } else if (sender == _settingBtn) {
+        //跳出设置列表
+        [UIView animateWithDuration:0.25 animations:^{
+            _configView.maxX = MACRO_FLOAT_SCREEN_WIDTH;
+            _gestureView.edgePan.enabled = false;
+            _gestureView.edgePanR.enabled = false;
+        }];
+    } else if (sender == _filterBtn) {
+        [UIView animateWithDuration:0.25 animations:^{
+            [_effectView showPercent:1];
+        }];
     }
 }
 
-
-
-//MARK:边缘手势
 - (void)screenEdgePan:(UIScreenEdgePanGestureRecognizer *)pan {
     if (pan.edges == UIRectEdgeLeft) {
         CGFloat restrictCritical = MACRO_FLOAT_SCREEN_WIDTH / 2.0;
@@ -200,8 +203,6 @@
                     _configView.maxX = MACRO_FLOAT_SCREEN_WIDTH;
                     _gestureView.edgePan.enabled = false;
                     _gestureView.edgePanR.enabled = false;
-//                    _edgePan.enabled = false;
-//                    _edgePanR.enabled = false;
                 } else {
                     _configView.maxX = 0.0;
                 }
@@ -231,7 +232,6 @@
     }
 }
 
-//MARK:长按手势
 - (void)longPress:(UILongPressGestureRecognizer *)longPress {
     if (longPress.view == _recordView) {
         if (longPress.state == UIGestureRecognizerStateBegan) {
@@ -288,7 +288,7 @@
 
 - (AVAudioPlayer *)timeMusicPlayer {
     if (!_timeMusicPlayer) {
-        NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"tickta" ofType:@"wav"];       //创建音乐文件路径,可以选其他格式
+        NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"tickta" ofType:@"wav"];//创建音乐文件路径,可以选其他格式
         NSURL *musicURL = [[NSURL alloc] initFileURLWithPath:musicFilePath];
         _timeMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL error:nil];
     }
@@ -298,25 +298,29 @@
 #pragma mark - Public
 //MARK:录制的进度
 - (void)recordProgress:(CGFloat)progress {
-    [_recordTimeBar setProgress:progress];
+//    [_recordTimeBar setProgress:progress];
+    [_recordTimeLabel setText:[NSString stringWithFormat:@"%f", progress]];
 }
 //MARK:添加一个录制断点
 - (void)addRecordSign {
-    [_recordTimeBar addSign];
+//    [_recordTimeBar addSign];
 }
+
 //MARK:录像 摄影之间的切换
 - (void)switchModeWithType:(WZMediaType)type {
     _type = type;
     if (type == WZMediaTypeVideo) {
         //video
-        _recordView.hidden = false;
+        _recordTimeLabel.hidden = _recordTimeLabel.hidden = _recordView.hidden = false;
+        _recordTimeLabel.text = nil;
         _shootBtn.hidden = true;
+        [_switchBtn setTitle:@"换拍照" forState:UIControlStateNormal];
         
     } else {
         //still image
-        _recordView.hidden = true;
+        _recordTimeLabel.hidden = _recordTimeLabel.hidden = _recordView.hidden = true;
         _shootBtn.hidden = false;
-        
+        [_switchBtn setTitle:@"换录像" forState:UIControlStateNormal];
     }
 }
 #pragma mark - WZMediaRateTypeViewProtocl

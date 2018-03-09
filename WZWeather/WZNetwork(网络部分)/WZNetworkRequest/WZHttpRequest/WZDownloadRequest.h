@@ -23,9 +23,8 @@
 //断点续传（后台支持）
 //后台下载
 
-//多个任务是同一个URL的
-//目前: 显示多个任务 只完成一个任务与另外的任务共享一份缓存
-//或有需求: 只显示单个任务, 
+//多个任务是同一个URL的（只执行单个任务，且需要匹配）
+//
 
 //插入任务
 
@@ -36,6 +35,7 @@
 //插入下载  发出通知
 
 //控制并发数量
+
 
 //单例？
 
@@ -52,8 +52,12 @@ typedef void (^DownloadTaskDownloadProcess)(NSMutableArray <WZDownloadTarget *>*
 @property (nonatomic, strong, readonly) NSMutableArray <WZDownloadTarget *> * _Nullable downloadTargets;
 @property (nonatomic, strong, readonly) NSURLSession * _Nullable session;
 
+
+
 + (instancetype _Nullable)downloader;
 
+
+#warning urlArray 正常的需求里面应该改为带有url和其他参数的model
 - (void)downloadWithURLArray:(NSArray <NSURL * > * _Nullable)urlArray
              completedWithError:(DownloadTaskDidCompleteWithError _Nullable)completedWithError
                finishedDownload:(DownloadTaskDidFinishDownload _Nullable)finishedDownload
