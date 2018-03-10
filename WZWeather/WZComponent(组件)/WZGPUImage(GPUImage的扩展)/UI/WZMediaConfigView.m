@@ -49,14 +49,14 @@
     flash.selectedType = WZMediaConfigType_flash_auto;
     flash.headline = @"闪光灯";
 
-    WZMediaConfigObject *countDown = [[WZMediaConfigObject alloc] init];
-    countDown.cellType = @"WZMediaConfigCell";
-    countDown.type = 3;
-    countDown.selectedType = WZMediaConfigType_countDown_off;
-    countDown.headline = @"倒计时";
+//    WZMediaConfigObject *countDown = [[WZMediaConfigObject alloc] init];
+//    countDown.cellType = @"WZMediaConfigCell";
+//    countDown.type = 3;
+//    countDown.selectedType = WZMediaConfigType_countDown_off;
+//    countDown.headline = @"倒计时";
     
     
-    _dataSource = [NSMutableArray arrayWithArray:@[canvas, flash, countDown]];
+    _dataSource = [NSMutableArray arrayWithArray:@[canvas, flash]];
     _table.datas = _dataSource;
     [_table reloadData];
     

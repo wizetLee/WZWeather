@@ -33,27 +33,28 @@
     //开始监听网络状态
     [WZAFNetworkReachabilityManager beginMonitoring];
     
-    
-  
     //获取通知权限
-    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }
+//    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0) {
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    }
 
     // 界面的跳转(针对应用程序被杀死的状态下的跳转)
     // 杀死状态下的，界面跳转并不会执行下面的方法- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification，
     // 所以我们在写本地通知的时候，要在这个与下面方法中写，但要判断，是通过哪种类型通知来打开的
-    if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
-        // 跳转代码
-        UILabel *redView = [[UILabel alloc] init];
-        redView.frame = CGRectMake(0, 0, 200, 300);
-        redView.numberOfLines = 0;
-        redView.font = [UIFont systemFontOfSize:12.0];
-        redView.backgroundColor = [UIColor redColor];
-        redView.text = [NSString stringWithFormat:@"%@", launchOptions];
-        [self.window.rootViewController.view addSubview:redView];
-    }
+//    if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
+//        // 跳转代码
+//        UILabel *redView = [[UILabel alloc] init];
+//        redView.frame = CGRectMake(0, 0, 200, 300);
+//        redView.numberOfLines = 0;
+//        redView.font = [UIFont systemFontOfSize:12.0];
+//        redView.backgroundColor = [UIColor redColor];
+//        redView.text = [NSString stringWithFormat:@"%@", launchOptions];
+//        [self.window.rootViewController.view addSubview:redView];
+//    }
+    
+    //badge Count
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     return YES;
 }

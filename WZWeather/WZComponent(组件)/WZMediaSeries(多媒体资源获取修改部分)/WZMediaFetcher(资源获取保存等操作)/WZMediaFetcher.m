@@ -15,15 +15,16 @@
     _asset = [asset isKindOfClass:[PHAsset class]]?asset:nil;
 }
 
-- (void)fetchThumbnailImageSynchronous:(BOOL)synchronous handler:(void (^)(UIImage *image))handler {
-    [WZMediaFetcher fetchThumbnailWithAsset:_asset  synchronous:synchronous handler:^(UIImage *thumbnail) {
+- (void)fetchThumbnailImageSynchronously:(BOOL)synchronous handler:(void (^)(UIImage *image))handler {
+    [WZMediaFetcher fetchThumbnailWithAsset:_asset synchronous:synchronous handler:^(UIImage *thumbnail) {
         _imageThumbnail = thumbnail;
         if (handler) {handler(thumbnail);};
     }];
 }
 
-- (void)fetchOrigionImageSynchronous:(BOOL)synchronous handler:(void (^)(UIImage *image))handler {
+- (void)fetchOrigionalImageSynchronously:(BOOL)synchronous handler:(void (^)(UIImage *image))handler {
     [WZMediaFetcher fetchOrigionWith:_asset synchronous:synchronous handler:^(UIImage *origion) {
+//        _imageClear = origion;//因为图太大了，所以一般不持有，一般的操作的先显示小图，再呈现大图
         if (handler) {handler(origion);};
     }];
 }

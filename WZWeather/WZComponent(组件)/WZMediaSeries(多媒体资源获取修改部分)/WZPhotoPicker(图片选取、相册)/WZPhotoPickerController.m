@@ -7,11 +7,10 @@
 //
 
 #import "WZPhotoPickerController.h"
-#import "WZMediaAssetBaseCell.h"
-
 #import "WZImageBrowseController.h"
 #import "WZAssetBrowseController.h"
 #import "WZRemoteImageBrowseController.h"
+#import "WZMediaAssetBaseCell.h"
 
 #pragma mark - WZPhotoPickerController
 @interface WZPhotoPickerController ()
@@ -64,14 +63,13 @@
     //如果实现了代理
     if ([_delegate respondsToSelector:@selector(fetchImages:)]) {
         //获取选中目标  同步取出大小图
-        NSLock *lock = [[NSLock alloc] init];
-        [lock tryLock];
+    
         NSMutableArray *mArray_images = [NSMutableArray array];
         for (WZMediaAsset *mediaAsset in self.mediaAssetArray) {
             //只按照系统的顺序选在
             if (mediaAsset.selected) {
                 if (mediaAsset.origion) {
-                    [mediaAsset fetchOrigionImageSynchronous:true handler:^(UIImage *image) {
+                    [mediaAsset fetchOrigionalImageSynchronously:true handler:^(UIImage *image) {
                         [mArray_images addObject:image];
                     }];
                 } else {
@@ -82,7 +80,6 @@
             }
         }
       
-        [lock unlock];
         [_delegate fetchImages:mArray_images];
         //同步完
         [self dismiss];
@@ -126,21 +123,20 @@
 - (__kindof WZMediaAssetBaseCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     WZMediaAssetBaseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WZMediaAssetBaseCell class]) forIndexPath:indexPath];
     
-    @try {
+    if (_mediaAssetArray.count > indexPath.row) {
         cell.asset = _mediaAssetArray[indexPath.row];
         __weak typeof(cell) weakCell = cell;
         __weak typeof(self) weakSelf = self;
-         cell.selectedBlock = ^(BOOL selected) {
+        cell.selectedBlock = ^(BOOL selected) {
             if ([weakSelf overloadJudgement] && !weakCell.asset.selected) {
                 
             } else {
                 weakCell.asset.selected = !weakCell.asset.selected;
                 weakCell.selectButton.selected = weakCell.asset.selected;
             }
-        };   
-    } @catch (NSException *exception) {
-        
+        };
     }
+   
     return cell;
 }
 

@@ -26,7 +26,7 @@
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZMediaController.class;
-    VCModel.headline = @"跳转到：拍摄、录像";
+    VCModel.headline = @"拍摄、录像";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
@@ -93,7 +93,7 @@
     [_sources addObject:VCModel];
     
 
-    //有BUG
+    //改出BUG了...
 //    VCModel = WZVCModel.alloc.init;
 //    VCModel.VCClass = WZDownloadController.class;
 //    VCModel.type = WZVCModelTransitionType_Push_FromNib;

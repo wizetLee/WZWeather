@@ -268,6 +268,8 @@
     }];
     [alertC addAction:action];
     
+    action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+    [alertC addAction:action];
     [self presentViewController:alertC animated:true completion:^{
         
     }];

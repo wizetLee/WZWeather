@@ -16,7 +16,7 @@ void main()
 {
     //0,0~1,1 映射到 weight,weight ~ 1-(weight), 1-(weight)  范围
     //enlargeWeight * 2.0 < 1
-    highp float weight = clamp(enlargeWeight, 0.0, 0.4);//权重的取值范围 取值范围为[0, 0.4]
+    highp float weight = clamp(enlargeWeight * 0.1, 0.0, 0.4);//权重的取值范围 取值范围为[0, 0.4]
     textureCoordinatePort = vec2(weight + textureCoordinate.x * (1.0 - weight * 2.0/*左右余隙*/)
                                  ,weight + textureCoordinate.y * (1.0 - weight * 2.0/*上下余隙*/)) ;//正常位置 依靠enlargeWeight计算扩大权重
     shadowWeight = weight * 0.1;       //扩大的时候开始产生偏移。0.05（可以适度调节）
@@ -30,11 +30,11 @@ void main()
     
     lowp vec4 textureColorRed = vec4(texture2D(inputImageTexture, redTextureCoordinatePort).r , 0.0, 0.0, textureColor.a);
     
-    lowp vec4 textureColorGreen = vec4(0.0 , texture2D(inputImageTexture,greenTextureCoordinatePort).g, texture2D(inputImageTexture,greenTextureCoordinatePort).b, textureColor.a);
+    lowp vec4 textureColorSkyBlue = vec4(0.0 , texture2D(inputImageTexture,greenTextureCoordinatePort).g, texture2D(inputImageTexture,greenTextureCoordinatePort).b, textureColor.a);
     
     textureColor = vec4(max(max(textureColor.rgb
                                 , textureColorRed.rgb)
-                            , textureColorGreen.rgb)
+                            , textureColorSkyBlue.rgb)
                         , textureColor.a);
     
     gl_FragColor = textureColor;

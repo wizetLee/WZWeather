@@ -16,6 +16,8 @@
 /**
  扩大权重设置
  */
-@property (nonatomic, assign) float enlargeWeight;//0.0~0.1  效果比较好
+@property (nonatomic, assign) float enlargeWeight;  //0.0~1  效果比较好
+
+@property (nonatomic, assign) BOOL autoAlternate;   //enlargeWeight自动变换
 
 @end

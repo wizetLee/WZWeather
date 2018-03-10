@@ -29,20 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSMutableArray *arr = [NSMutableArray array];
-    dispatch_semaphore_t sem = dispatch_semaphore_create(1);
-    NSLock *lock = [NSLock new];
-    for (int i = 0; i < 10000; i++) {
-//        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            if ([lock tryLock]) {
-                [arr addObject:@(i)];
-                //            dispatch_semaphore_signal(sem);
-                [lock unlock];
-            }
-        });
-    }
-    NSLog(@"%@", arr);
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -43,11 +43,21 @@
     
     sources = [NSMutableArray array];
     for (NSUInteger i = 0; i < 8; i++) {
-//        UIImage *tmp = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"testImage%lu", i] ofType:@"jpg"]];
         UIImage *tmp = [UIImage imageNamed:[NSString stringWithFormat:@"testImage%lu.jpg", (unsigned long)i]];
         [sources addObject:tmp];
     }
     [tool prepareTaskWithPictureSources:sources];
+    
+    
+    
+    //自动设置参数
+    NSArray *typeArr = @[@13, @14, @16, @20, @9, @12, @6, @7];
+    for (int i = 0; i < typeArr.count; i++) {
+        int type = [typeArr[i] intValue];
+        _btnPointer = [self.view viewWithTag:i + 100];
+        [self actionWithType:type];
+    }
+    [self startCompose:nil];
 }
 
 #pragma mark - WZAnimatePageControlProtocol

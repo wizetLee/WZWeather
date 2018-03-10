@@ -42,6 +42,7 @@
 }
 
 - (IBAction)videoReversalAction:(UIButton *)sender {
+    [WZToast toastWithContent:@"开始合成倒放视频"];
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"curnane" ofType:@"mp4"]];
     AVAsset *asset = [AVAsset assetWithURL:url];
     

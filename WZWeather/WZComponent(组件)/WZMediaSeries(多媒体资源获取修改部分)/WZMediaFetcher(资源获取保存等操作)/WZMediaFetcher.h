@@ -84,7 +84,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
  *  @param synchronous 是否同步
  *  @param handler     图片回调
  */
-- (void)fetchThumbnailImageSynchronous:(BOOL)synchronous handler:(void (^)(UIImage *image))handler;
+- (void)fetchThumbnailImageSynchronously:(BOOL)synchronous handler:(void (^)(UIImage *image))handler;
 
 /**
  *  获取原尺寸图
@@ -92,7 +92,7 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
  *  @param synchronous 是否同步
  *  @param handler     图片回调
  */
-- (void)fetchOrigionImageSynchronous:(BOOL)synchronous handler:(void (^)(UIImage *image))handler;
+- (void)fetchOrigionalImageSynchronously:(BOOL)synchronous handler:(void (^)(UIImage *image))handler;
 
 @end
 

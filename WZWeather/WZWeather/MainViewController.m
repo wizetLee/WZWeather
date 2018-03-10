@@ -32,22 +32,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"导航栏";
-//网络加载
-//    [WZHttpRequest loadBiYingImageInfo:^(NSString *BiYingCopyright, NSString *BiYingDate, NSString *BiYingDescription, NSString *BiYingTitle, NSString *BiYingSubtitle, NSString *BiYingImg_1366, NSString *BiYingImg_1920, UIImage *image) {
-//    }];//异步加载必应墙纸（移到model中）
-    
+
     //数据
     _sources = [WZVCModel source];
     //view
     [self.view addSubview:self.table];
     
-    
- 
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = false;
+    [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
+        if (!videoAuthorization
+            || !videoAuthorization
+            || !videoAuthorization) {
+            [WZCameraAssist showAlertByVC:self];
+        }
+    }];
+    
 }
 
 //不用masonry 就使用下面的代码
@@ -96,6 +99,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    
      if (_sources.count > indexPath.row) {
 
          WZVCModel *model = _sources[indexPath.row];
@@ -212,7 +217,5 @@
     }
     return _table;
 }
-
-
 
 @end

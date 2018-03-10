@@ -104,7 +104,7 @@
     [self addSubview:self.collection];
     _slider = [[UISlider alloc] init];
     _slider.hidden = true;
-    _slider.frame = CGRectMake(10.0, 44.0, [UIScreen mainScreen].bounds.size.height - 44.0 - 44.0 - 44.0, 44.0);
+    _slider.frame = CGRectMake(10.0, 44.0, [UIScreen mainScreen].bounds.size.height - 44.0 * 4.0, 44.0);
     
     _slider.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.5];
     _slider.layer.anchorPoint = CGPointMake(0, 0);
@@ -913,12 +913,14 @@
         [_slider setMinimumValue:0.0];
         [_slider setMaximumValue:0.05];
     } else if ([filter isKindOfClass:[GPUImageTrillColorOffsetFilter class]]) {
-        _slider.hidden = false;
-        [_slider setValue:0.1];
-        [_slider setMinimumValue:0.0];
-        [_slider setMaximumValue:0.1];
-        ((GPUImageTrillColorOffsetFilter *)filter).enlargeWeight = _slider.value;
+//        _slider.hidden = false;
+//        [_slider setValue:1.0];
+//        [_slider setMinimumValue:0.0];
+//        [_slider setMaximumValue:1.0];
+        ((GPUImageTrillColorOffsetFilter *)filter).enlargeWeight = 0.0;
+        ((GPUImageTrillColorOffsetFilter *)filter).autoAlternate = true;
     } else if ([filter isKindOfClass:GPUImageBeautifyFilter.class]) {
+      
 //        _slider.hidden = false;
 //        [_slider setValue:0.1];
 //        [_slider setMinimumValue:0.0];

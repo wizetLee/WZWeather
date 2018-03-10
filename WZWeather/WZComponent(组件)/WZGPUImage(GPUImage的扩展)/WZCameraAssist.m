@@ -54,6 +54,7 @@
     __block BOOL audio = false;
     __block BOOL library = false;
     
+    //考虑加个同步信号量
     [self videoAuthorization:^(BOOL granted) {
         video = granted;
         [self audioAuthorization:^(BOOL granted1) {

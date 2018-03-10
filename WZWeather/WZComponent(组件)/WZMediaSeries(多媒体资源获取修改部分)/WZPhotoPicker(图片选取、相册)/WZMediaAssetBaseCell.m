@@ -8,7 +8,7 @@
 
 #import "WZMediaAssetBaseCell.h"
 #import "WZMediaFetcher.h"
-
+#import "UIImageView+setImageInDefaultMode.h"
 @implementation WZMediaAssetBaseCell
 
 - (void)prepareForReuse {
@@ -48,11 +48,24 @@
             self.imageView.image = _asset.imageThumbnail;
         } else {
             __weak typeof(self) weakSelf = self;
-            [_asset fetchThumbnailImageSynchronous:false handler:^(UIImage *image) {
-                 weakSelf.imageView.image = image;
-            }];
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setImageInDefaultModeWithImage) object:nil];
+            [self performSelector:@selector(setImageInDefaultModeWithImage) withObject:nil afterDelay:0.0 inModes:@[NSDefaultRunLoopMode]];
+//            [[PHImageManager defaultManager] cancelImageRequest:_imageRequestID];
+//            [_asset fetchThumbnailImageSynchronously:false handler:^(UIImage *image) {
+//                  weakSelf.imageView.image = image;
+//            }];
         }
     }
+}
+
+- (void)setImageInDefaultModeWithImage{
+    __weak typeof(self) weakSelf = self;
+    //获取大图
+    [_asset fetchOrigionalImageSynchronously:false handler:^(UIImage *image) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.imageView.image = image;
+        });
+    }];
 }
 
 #pragma mark - Accessor

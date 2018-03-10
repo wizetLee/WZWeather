@@ -78,28 +78,28 @@
             weakSelf.table.datas = weakSelf.downloader.downloadTargets;
             [weakSelf.table reloadData];
             
-            UILocalNotification *localNote = [[UILocalNotification alloc] init];
-            // 2.设置本地通知的内容
-            // 2.1.设置通知发出的时间
-            localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:3.0];
-            // 2.2.设置通知的内容
-            localNote.alertBody = [NSString stringWithFormat: @"任务%@已完成",urlPath] ;
-            // 2.3.设置滑块的文字（锁屏状态下：滑动来“解锁”）
-            localNote.alertAction = @"解锁";
-            // 2.4.决定alertAction是否生效
-            localNote.hasAction = NO;
-            // 2.5.设置点击通知的启动图片
-            localNote.alertLaunchImage = @"123Abc";
-            // 2.6.设置alertTitle
-            localNote.alertTitle =  @"您有一条新通知";
-            // 2.7.设置有通知时的音效
-            //            localNote.soundName = @"sound.wav";
-            // 2.8.设置应用程序图标右上角的数字
-                        localNote.applicationIconBadgeNumber = 0;
-            // 2.9.设置额外信息
-            localNote.userInfo = @{@"type" : @1};
-            // 3.调用通知
-            [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
+//            UILocalNotification *localNote = [[UILocalNotification alloc] init];
+//            // 2.设置本地通知的内容
+//            // 2.1.设置通知发出的时间
+//            localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:3.0];
+//            // 2.2.设置通知的内容
+//            localNote.alertBody = [NSString stringWithFormat: @"任务%@已完成",urlPath] ;
+//            // 2.3.设置滑块的文字（锁屏状态下：滑动来“解锁”）
+//            localNote.alertAction = @"解锁";
+//            // 2.4.决定alertAction是否生效
+//            localNote.hasAction = NO;
+//            // 2.5.设置点击通知的启动图片
+//            localNote.alertLaunchImage = @"123Abc";
+//            // 2.6.设置alertTitle
+//            localNote.alertTitle =  @"您有一条新通知";
+//            // 2.7.设置有通知时的音效
+//            //            localNote.soundName = @"sound.wav";
+//            // 2.8.设置应用程序图标右上角的数字
+//                        localNote.applicationIconBadgeNumber = 0;
+//            // 2.9.设置额外信息
+//            localNote.userInfo = @{@"type" : @1};
+//            // 3.调用通知
+//            [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
             
         }
     } finishedDownload:^(NSMutableArray<WZDownloadTarget *> *targets, NSURL * _Nullable location) {
