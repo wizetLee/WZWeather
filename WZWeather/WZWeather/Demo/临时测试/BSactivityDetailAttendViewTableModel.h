@@ -13,6 +13,8 @@
 #import "BSactivityDetailAttendViewBlankCell50.h"
 #import "BSactivityDetailAttendViewBlankCell30.h"
 
+#define BSATTENDVIEWTABLE_WIDTH (UIScreen.mainScreen.bounds.size.width - (640 - 450) / 2.0)
+
 @interface BSactivityDetailAttendViewTableModel : NSObject
 
 @property (nonatomic, strong) NSString *title;

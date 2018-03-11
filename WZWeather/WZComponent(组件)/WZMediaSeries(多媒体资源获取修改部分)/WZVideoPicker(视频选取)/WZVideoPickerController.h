@@ -21,10 +21,6 @@ typedef NS_ENUM(NSUInteger, WZVideoPickerType) {
 
 @optional
 
-///左击
-- (void)videoPickerControllerLeftItemClicked;
-///右击
-- (void)videoPickerControllerRightItemClicked;
 
 @end
 

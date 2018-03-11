@@ -68,7 +68,7 @@
         _spacing = spacing;
         _type = type;
         _totalValue = totalValue;
-        [self setupSubviews];
+        [self createViews];
     }
     return self;
 }
@@ -90,7 +90,7 @@
 }
 
 #pragma mark - Private
-- (void)setupSubviews {
+- (void)createViews {
     _camouflageView = [[UIView alloc] initWithFrame:self.bounds];
     _maskLayer = [CALayer layer];
     _maskLayer.backgroundColor = [UIColor whiteColor].CGColor;
@@ -225,7 +225,7 @@
 }
 
 
-#pragma mark setter & getter
+#pragma mark - Accessor
 
 - (NSMutableArray *)starArr {
     if (!_starArr) {

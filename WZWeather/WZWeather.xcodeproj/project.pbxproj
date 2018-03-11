@@ -1398,7 +1398,6 @@
 		406140612046FE190071F636 /* 视频速率 */ = {
 			isa = PBXGroup;
 			children = (
-				84CE653A2047F52700E4CA78 /* curnane.mp4 */,
 				406140622046FE3D0071F636 /* Demo_VideoRateAdjustmentController.h */,
 				406140632046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m */,
 				406140642046FE3D0071F636 /* Demo_VideoRateAdjustmentController.xib */,
@@ -3166,13 +3165,6 @@
 			path = "WZGPUImage(GPUImage的扩展)";
 			sourceTree = "<group>";
 		};
-		84891709204D43ED00A74073 /* livePhoto */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = livePhoto;
-			sourceTree = "<group>";
-		};
 		8497C42B1EB3465200EB9F60 /* WZTodayExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -3213,15 +3205,15 @@
 			isa = PBXGroup;
 			children = (
 				849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */,
+				84CE653A2047F52700E4CA78 /* curnane.mp4 */,
+				846F270F203FF6B7008E57C1 /* 控件 */,
 				845FE036204FF25F00DEC32D /* 临时测试 */,
 				845FE035204FF24100DEC32D /* 剪切示例 */,
 				845FE034204FF23900DEC32D /* 资源下载 */,
-				84891709204D43ED00A74073 /* livePhoto */,
 				4078BC872048432600FDE851 /* 多视频合并过渡 */,
 				406140612046FE190071F636 /* 视频速率 */,
 				407EC738204591E0001C065E /* 视频倒放 */,
 				404507F320427135003A5209 /* 弯曲模型 */,
-				846F270F203FF6B7008E57C1 /* 控件 */,
 				84BED556203E747600A45A11 /* 图片转视频 */,
 			);
 			path = Demo;

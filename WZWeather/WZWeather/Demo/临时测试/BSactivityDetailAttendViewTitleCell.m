@@ -28,7 +28,7 @@
     UILabel *tempLabel = self.titleLabel;
 
     tempLabel.text = model.title;
-    tempLabel.frame =  CGRectMake(0.0, 0.0, 450 / 2.0, [self calculateCellHeightWithModel:nil]);
+    tempLabel.frame =  CGRectMake(0.0, 0.0, BSATTENDVIEWTABLE_WIDTH, [self calculateCellHeightWithModel:nil]);
 }
 
 - (float)calculateCellHeightWithModel:(BSactivityDetailAttendViewTableModel *)model {

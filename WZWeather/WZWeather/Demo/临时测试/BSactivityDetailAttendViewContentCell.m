@@ -28,7 +28,7 @@
     tempLabel.backgroundColor = [UIColor clearColor];
     tempLabel.text = model.title;
   
-    CGSize size = [tempLabel sizeThatFits:CGSizeMake(450 / 2.0, MAXFLOAT)];
+    CGSize size = [tempLabel sizeThatFits:CGSizeMake(BSATTENDVIEWTABLE_WIDTH, MAXFLOAT)];
     //设置frame
     tempLabel.frame = CGRectMake(0.0, 0.0, size.height, size.height);
 
@@ -40,9 +40,9 @@
     [setString  addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [setString length])];
     [tempLabel  setAttributedText:setString];
     
-    CGFloat height = [self getHeightLineWithString:setString.string withWidth:450 / 2.0 withFont:tempLabel.font];
+    CGFloat height = [self getHeightLineWithString:setString.string withWidth:BSATTENDVIEWTABLE_WIDTH withFont:tempLabel.font];
     
-    tempLabel.frame =  CGRectMake(0.0, 0.0, 450 / 2.0, height);
+    tempLabel.frame =  CGRectMake(0.0, 0.0, BSATTENDVIEWTABLE_WIDTH, height);
 }
 
 - (float)calculateCellHeightWithModel:(BSactivityDetailAttendViewTableModel *)model {

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-///APP挂起通知协议
+///APP挂起、恢复通知协议
 @protocol WZAppActiveNoticeProtocol <NSObject>
 
 @public
@@ -25,6 +25,7 @@
 @end
 
 
+//#pragma mark - AppActiveNotification
 //- (void)removeAppActiveNotification {
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -36,7 +37,6 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
 //}
 
-//#pragma mark - AppActiveNotification
 //- (void)willResignActiveNotification:(NSNotification *)notification {
 //
 //}

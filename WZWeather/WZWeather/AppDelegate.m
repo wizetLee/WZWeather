@@ -22,6 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setActive:true error:nil];
+    
     MainViewController *WZVC = [[MainViewController alloc] init];
     //必须被引用
     _navigationController = [[WZNavigationController alloc] initWithRootViewController:WZVC];

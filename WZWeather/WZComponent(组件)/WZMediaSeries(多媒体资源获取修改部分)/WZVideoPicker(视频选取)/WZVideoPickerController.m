@@ -13,6 +13,7 @@
 #import "WZAPLSimpleEditor.h"
 #import "WZVideoSurfAlert.h"
 #import "WZVideoTransitionEffectTool.h"
+#import "WZMediaFetcher.h"
 
 @interface WZVideoPickerController ()<UICollectionViewDelegate, UICollectionViewDataSource , PHPhotoLibraryChangeObserver>
 
@@ -114,12 +115,9 @@
         self.type = WZVideoPickerType_browse;
         self.rightItem.enabled = true;
     } else {
-        //推出选择
-        if ([_delegate respondsToSelector:@selector(videoPickerControllerLeftItemClicked)]) {
-            [_delegate videoPickerControllerLeftItemClicked];
-        } else {
-            [self dismissViewControllerAnimated:true completion:nil];
-        }
+        
+        [self dismissViewControllerAnimated:true completion:nil];
+        
     }
 }
 
@@ -156,10 +154,15 @@
         if (_type == WZVideoPickerType_composition) {
 #warning 过渡效果测试部分
             NSMutableArray *itemMArr = NSMutableArray.array;
+            __block  CGSize outputSize = CGSizeZero;
             for (NSIndexPath *indexPath in _selectiveSequentialList) {
                 if (_mediaAssetData.count > indexPath.row) {
                     PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
+                   
                     [WZMediaFetcher fetchVideoWith:tmpPHAsset synchronous:true handler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+                        if (CGSizeEqualToSize(outputSize, CGSizeZero)) {
+                            outputSize = asset.naturalSize;
+                        }
                         WZVideoTransitionItem *item = [[WZVideoTransitionItem alloc] init];
                         item.asset = asset;
                         [itemMArr addObject:item];
@@ -168,49 +171,13 @@
             }
             
             _videoTransitionEffectTool = [[WZVideoTransitionEffectTool alloc] init];
-            _videoTransitionEffectTool.outputSize = CGSizeMake(720, 1280);
+            _videoTransitionEffectTool.outputSize = outputSize;
             [_videoTransitionEffectTool prepareTaskWithItemSources:itemMArr];
             [_videoTransitionEffectTool startTask];
             _videoTransitionEffectTool.delegate = (id<WZVideoTransitionEffectToolProtocol>)self;
             [SVProgressHUD setOffsetFromCenter:UIOffsetMake(UIScreen.mainScreen.bounds.size.width / 2.0, UIScreen.mainScreen.bounds.size.height / 2.0)];
             self.view.userInteractionEnabled = false;
             [SVProgressHUD show];
-//            __weak typeof(self) weakSelf = self;
-//            _editor = [[WZAPLSimpleEditor alloc] init];
-//            NSMutableArray <AVAsset *>*tmpMArr = [NSMutableArray array];
-//            for (NSIndexPath *indexPath in _selectiveSequentialList) {
-//                if (_mediaAssetData.count > indexPath.row) {
-//                    PHAsset *tmpPHAsset = _mediaAssetData[indexPath.row];
-//                    [WZMediaFetcher fetchVideoWith:tmpPHAsset synchronous:true handler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-//                        [tmpMArr addObject:asset];
-//                        NSLog(@"%@", indexPath);
-//                    }];
-//                }
-//            }
-            
-            
-//            ///带过渡效果的
-//            [_editor updateEditorWithVideoAssets:tmpMArr];
-//            if (tmpMArr.count) {
-//                [_editor exportToSandboxDocumentWithFileName:@"my222y.mp4" completionHandler:^(AVAssetExportSessionStatus statue, NSURL *fileURL) {
-//                    if (statue == AVAssetExportSessionStatusCompleted) {
-//                        NSLog(@"导出成功");
-//                        [WZToast toastWithContent:@"导出成功"];
-//                        [WZAPLSimpleEditor saveVideoToLocalWithURL:fileURL completionHandler:^(BOOL success) {
-//                            if (success) {
-//                                NSLog(@"保存成功");
-//                            } else {
-//                                NSLog(@"保存失败");
-//                            }
-//                        }];
-//
-//                    } else {
-//                        NSLog(@"导出失败");
-//                        [WZToast toastWithContent:@"导出失败 未知错误"];
-//                    }
-//                }];
-//            }
-            
             
         } else if (_type == WZVideoPickerType_delete) {
             NSMutableArray <NSString *>*tmpMArr = [NSMutableArray array];
@@ -232,11 +199,6 @@
             
         }
     }
-    
-    //        if ([_delegate respondsToSelector:@selector(videoPickerControllerRightItemClicked)]) {
-    //            [_delegate videoPickerControllerRightItemClicked];
-    //        }
-
 }
 
 //MARK:输出合成的视频
@@ -555,6 +517,30 @@
 - (void)videoTransitionEffectTool:(WZVideoTransitionEffectTool *)tool completeWithOutputURL:(NSURL *)outputURL; {
     self.view.userInteractionEnabled = true;
     [SVProgressHUD dismiss];
+    
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"操作选取" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存本地" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [WZMediaFetcher saveVideoWithURL:outputURL completionHandler:^(BOOL success, NSError *error) {
+            if (success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [WZToast toastWithContent:@"保存成功"];
+                });
+            }
+        }];
+    }];
+    [alertC addAction:action];
+    
+    action = [UIAlertAction actionWithTitle:@"预览导出效果" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        WZVideoSurfAlert *alert = [[WZVideoSurfAlert alloc] init];
+        alert.asset = [AVAsset assetWithURL:outputURL];
+        [alert alertShow];
+    }];
+    [alertC addAction:action];
+    
+    action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+    [alertC addAction:action];
+    [self presentViewController:alertC animated:true completion:^{}];
 }
 
 ///任务失败

@@ -28,7 +28,8 @@
     _dataSource = [BSactivityDetailAttendViewTableModel dataSource];
     [self calculateCellHeight];
     CGSize screenSize = UIScreen.mainScreen.bounds.size;
-    CGFloat w = 450 / 2.0;
+    
+    CGFloat w = BSATTENDVIEWTABLE_WIDTH;
     CGFloat x = (screenSize.width - w) / 2.0;
     CGFloat y = 118.0 / 2.0;
     CGFloat h = (screenSize.height - y * 2.0) ;

@@ -44,11 +44,11 @@
     VCModel.headline = @"视频：视频选取、合并、删除";
     [_sources addObject:VCModel];
     
-    VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = Demo_ConvertPhotosIntoVideoController.class;
-    VCModel.type = WZVCModelTransitionType_Push_FromNib;
-    VCModel.headline = @"视频：图片转视频(原生)demo";
-    [_sources addObject:VCModel];
+//    VCModel = WZVCModel.alloc.init;
+//    VCModel.VCClass = Demo_ConvertPhotosIntoVideoController.class;
+//    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+//    VCModel.headline = @"视频：图片转视频(原生)demo";
+//    [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_ConvertPhotosIntoVideoUseGPUImageViewController.class;
@@ -93,7 +93,7 @@
     [_sources addObject:VCModel];
     
 
-    //改出BUG了...
+    //改出BUG了...出现在暂停部分，修改为映射模式
 //    VCModel = WZVCModel.alloc.init;
 //    VCModel.VCClass = WZDownloadController.class;
 //    VCModel.type = WZVCModelTransitionType_Push_FromNib;

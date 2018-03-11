@@ -52,7 +52,7 @@
 //- (void)viewWillLayoutSubviews {
 //    [super viewWillLayoutSubviews];
 //
-//    ///
+//    ///或者改成宏
 //    CGFloat top = 0.0;
 //    CGFloat bottom = 0.0;
 //    CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
@@ -69,7 +69,6 @@
 //}
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _sources.count;
@@ -133,15 +132,7 @@
 //}
 
 #pragma mark - WZVideoPickerControllerProtocol
-///右击
-- (void)videoPickerControllerRightItemClicked {
-    
-}
 
-///左击
-- (void)videoPickerControllerLeftItemClicked {
-    
-}
 
 #pragma mark - Accessor
 - (UITableView *)table {
