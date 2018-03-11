@@ -34,11 +34,13 @@
     CGFloat h = (screenSize.height - y * 2.0) ;
     _table = [[UITableView alloc] initWithFrame:CGRectMake(x, y, w, h) style:UITableViewStylePlain];
     _table.delegate = self;
+    //可修改
     [_table registerClass:BSactivityDetailAttendViewBlankCell.class forCellReuseIdentifier:@"BSactivityDetailAttendViewBlankCell"];
     [_table registerClass:BSactivityDetailAttendViewBlankCell.class forCellReuseIdentifier:@"BSactivityDetailAttendViewBlankCell30"];
     [_table registerClass:BSactivityDetailAttendViewBlankCell.class forCellReuseIdentifier:@"BSactivityDetailAttendViewBlankCell50"];
     [_table registerClass:BSactivityDetailAttendViewTitleCell.class forCellReuseIdentifier:@"BSactivityDetailAttendViewTitleCell"];
     [_table registerClass:BSactivityDetailAttendViewContentCell.class forCellReuseIdentifier:@"BSactivityDetailAttendViewContentCell"];
+    
     _table.dataSource = self;
     _table.backgroundColor = [UIColor clearColor];
     _table.showsVerticalScrollIndicator = false;
@@ -52,14 +54,15 @@
     [self addSubview:_closeButton];
     [_closeButton addTarget:self action:@selector(clickedBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(_closeButton.frame) + _closeButton.bounds.size.width / 2.0 , CGRectGetMinY(_table.frame), 2.0, CGRectGetHeight(_table.frame))];
-    line.backgroundColor = [UIColor whiteColor];
-    [self addSubview:line];
-    
-    _trendView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(line.frame) - 2.0, CGRectGetMinY(_table.frame), 2.0 * 3, 22.0)];
-    _trendView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_trendView];
-    
+    if (_table.contentSize.height > _table.bounds.size.height) {
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(_closeButton.frame) + _closeButton.bounds.size.width / 2.0 , CGRectGetMinY(_table.frame), 2.0, CGRectGetHeight(_table.frame))];
+        line.backgroundColor = [UIColor whiteColor];
+        [self addSubview:line];
+        
+        _trendView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(line.frame) - 2.0, CGRectGetMinY(_table.frame), 2.0 * 3, 22.0)];
+        _trendView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:_trendView];
+    }
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate & UIScrollViewDelegate
@@ -69,9 +72,6 @@
     if (y < 0) {
         y = 0;
     }
-//    if (y > CGRectGetHeight(_table.frame)) {
-//        y = CGRectGetHeight(_table.frame);
-//    }
     
     y = ((y) / (_table.contentSize.height - CGRectGetHeight(_table.frame))) * (CGRectGetHeight(_table.frame) - _trendView.bounds.size.height) + _trendView.bounds.size.height / 2.0 + CGRectGetMinY(_table.frame);
   

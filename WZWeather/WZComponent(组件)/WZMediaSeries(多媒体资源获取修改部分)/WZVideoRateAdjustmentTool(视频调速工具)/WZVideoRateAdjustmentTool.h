@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
-//一个配置起点和终点
+//配置起点和终点
 struct WZCompositionRateAdjustmentRange {
     float origin;
     float destination;
@@ -27,7 +26,6 @@ WZCompositionRateAdjustmentRangeMake(CGFloat origin, CGFloat destination)
 
 //处理音轨、视轨 的scaleRange => compositioin
 @interface WZVideoRateAdjustmentTool : NSObject
-
 
 /**
  修改资源视轨，音轨的速率

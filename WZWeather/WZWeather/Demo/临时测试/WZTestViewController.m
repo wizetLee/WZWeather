@@ -37,7 +37,7 @@
 }
 - (IBAction)testAction:(id)sender {
     BSactivityDetailAttendViewAlert *alert = [[BSactivityDetailAttendViewAlert alloc] init];
-//    alert.clickedBackgroundToDismiss = true;
+    alert.clickedBackgroundToDismiss = true;
     [alert alertShow];
     
     

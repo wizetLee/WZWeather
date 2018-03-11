@@ -13,8 +13,6 @@
 #import "WZAVPlayerViewController.h"
 #import "WZPhotoCatalogueController.h"
 #import "WZVideoPickerController.h"
-#import "WZAudioCodecController.h"
-#import "WZVideoCodecController.h"
 #import "WZMediaController.h"
 #import "WZTestViewController.h"
 

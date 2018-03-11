@@ -22,9 +22,9 @@ typedef NS_ENUM(NSUInteger, WZVideoPickerType) {
 @optional
 
 ///左击
-- (void)videoPickerControllerDidClickedLeftItem;
+- (void)videoPickerControllerLeftItemClicked;
 ///右击
-- (void)videoPickerControllerDidClickedRightItem;
+- (void)videoPickerControllerRightItemClicked;
 
 @end
 
@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, WZVideoPickerType) {
 
 
 
-@property (nonatomic, weak) id<WZVideoPickerControllerProtocol> delegate;
+@property (nonatomic,   weak) id<WZVideoPickerControllerProtocol> delegate;
 
 //MARK:统一选中的size  用于视频合并
 @property (nonatomic, assign) CGSize targetSize;

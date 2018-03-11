@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "WZScrollOptions.h"
 #import "UIButton+WZMinistrant.h"
 #import "WZSystemDetails.h"
 #import "WZCameraAssist.h"
@@ -15,18 +14,14 @@
 
 @interface MainViewController ()
 
-
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSArray <WZVCModel *>* sources;
-
 
 @end
 
 @implementation MainViewController
 
-
 #pragma mark - VC Lifecycle
-
 - (void)dealloc { }
 
 - (void)viewDidLoad {
@@ -38,11 +33,7 @@
     //view
     [self.view addSubview:self.table];
     
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.navigationController.navigationBarHidden = false;
+    //权限
     [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
         if (!videoAuthorization
             || !videoAuthorization
@@ -50,7 +41,11 @@
             [WZCameraAssist showAlertByVC:self];
         }
     }];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = false;
 }
 
 //不用masonry 就使用下面的代码
@@ -74,6 +69,8 @@
 //}
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _sources.count;
 }
@@ -99,22 +96,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   
-    
      if (_sources.count > indexPath.row) {
 
          WZVCModel *model = _sources[indexPath.row];
          
          if (model.type == WZVCModelTransitionType_Push_FromNib) {
+             
              UIViewController *VC = [[model.VCClass alloc] initWithNibName:NSStringFromClass(model.VCClass) bundle:nil];
              [self.navigationController pushViewController:VC animated:true];
-         }
-         
-         
-         if (model.VCClass == WZMediaController.class) {
-             [self pushToMediaVC];
              
-         } else if (model.VCClass == WZAVPlayerViewController.class) {
+         } else if (model.VCClass == WZAVPlayerViewController.class
+                    || model.VCClass == WZMediaController.class) {
+             
             id vc = [model.VCClass new];
             self.navigationController.navigationBarHidden = false;
             [self.navigationController pushViewController:vc animated:true];
@@ -132,24 +125,6 @@
 }
 
 #pragma mark - Private
-- (void)pushToMediaVC {
-    [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
-        if (videoAuthorization
-            && audioAuthorization
-            && libraryAuthorization) {
-            ///下载页面
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.navigationController addToSystemSideslipBlacklist:NSStringFromClass([WZDownloadController class])];
-                //    WZDownloadController *vc = [[WZDownloadController alloc] init];
-                WZMediaController *vc = [WZMediaController new];
-                [self.navigationController pushViewController:vc animated:true];
-                
-            });
-        } else {
-            [WZCameraAssist showAlertByVC:self];
-        }
-    }];
-}
 
 ////iOS11以下 是不会调用以下方法的   横竖屏改变 VC present pop 等操作都会执行这个消息
 //- (void)viewSafeAreaInsetsDidChange {
@@ -159,19 +134,13 @@
 
 #pragma mark - WZVideoPickerControllerProtocol
 ///右击
-- (void)videoPickerControllerDidClickedRightItem; {
+- (void)videoPickerControllerRightItemClicked {
     
 }
 
 ///左击
-- (void)videoPickerControllerDidClickedLeftItem; {
+- (void)videoPickerControllerLeftItemClicked {
     
-}
-
-#pragma mark - WZPageViewControllerProtocol
-//控制器角标传出
-- (void)pageViewController:(UIPageViewController *)pageViewController showVC:(WZPageViewAssistController *)VC inIndex:(NSInteger)index {
-    NSLog(@"vc-%@=======index-%ld", VC, index);
 }
 
 #pragma mark - Accessor
@@ -190,6 +159,7 @@
                 make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
             }
         }];
+        
         table.delegate = (id<UITableViewDelegate>)self;
         table.dataSource = (id<UITableViewDataSource>)self;
         table.backgroundColor = UIColor.lightGrayColor;
@@ -203,17 +173,18 @@
         table.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             [weakSelf.table.mj_header endRefreshing];
         }];
-        
-        CGFloat top = 0.0;
-        CGFloat bottom = 0.0;
-        CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
-        CGFloat screenH = UIScreen.mainScreen.bounds.size.height;
-        
-        top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
-        bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;
-        CGFloat height = screenH - bottom - top;
         _table = table;
-        self.table.frame = CGRectMake(0.0, top, screenW, height);
+        
+//        CGFloat top = 0.0;
+//        CGFloat bottom = 0.0;
+//        CGFloat screenW = UIScreen.mainScreen.bounds.size.width;
+//        CGFloat screenH = UIScreen.mainScreen.bounds.size.height;
+//
+//        top = MACRO_FLOAT_STSTUSBAR_AND_NAVIGATIONBAR_HEIGHT;
+//        bottom = MACRO_FLOAT_SAFEAREA_BOTTOM;
+//        CGFloat height = screenH - bottom - top;
+       
+//        self.table.frame = CGRectMake(0.0, top, screenW, height);
     }
     return _table;
 }

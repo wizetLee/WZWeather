@@ -17,7 +17,7 @@
 /**
  回到代理
  */
-@property (nonatomic, weak) id<WZMediaAssetProtocol> delegate;
+@property (nonatomic,   weak) id<WZMediaAssetProtocol> delegate;
 
 /**
  固定类型的数据源

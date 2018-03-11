@@ -115,8 +115,8 @@
         self.rightItem.enabled = true;
     } else {
         //推出选择
-        if ([_delegate respondsToSelector:@selector(videoPickerControllerDidClickedLeftItem)]) {
-            [_delegate videoPickerControllerDidClickedLeftItem];
+        if ([_delegate respondsToSelector:@selector(videoPickerControllerLeftItemClicked)]) {
+            [_delegate videoPickerControllerLeftItemClicked];
         } else {
             [self dismissViewControllerAnimated:true completion:nil];
         }
@@ -233,8 +233,8 @@
         }
     }
     
-    //        if ([_delegate respondsToSelector:@selector(videoPickerControllerDidClickedRightItem)]) {
-    //            [_delegate videoPickerControllerDidClickedRightItem];
+    //        if ([_delegate respondsToSelector:@selector(videoPickerControllerRightItemClicked)]) {
+    //            [_delegate videoPickerControllerRightItemClicked];
     //        }
 
 }

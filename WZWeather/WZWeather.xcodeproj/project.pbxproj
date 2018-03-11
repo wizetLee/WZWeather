@@ -18,7 +18,6 @@
 		404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404507F52042714E003A5209 /* Demo_WrapViewController.m */; };
 		404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404507F62042714E003A5209 /* Demo_WrapViewController.xib */; };
 		40450AE120541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 40450AE020541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m */; };
-		404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 404735A21FE5FAC50089A5F2 /* WZH264Codec.m */; };
 		4061405C2046F2630071F636 /* glow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4061405B2046F2620071F636 /* glow.jpg */; };
 		406140602046FC480071F636 /* WZVideoRateAdjustmentTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */; };
 		406140652046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406140632046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m */; };
@@ -58,10 +57,6 @@
 		840A439F1FB18A6200F6D449 /* tickta.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840A439E1FB18A6100F6D449 /* tickta.wav */; };
 		840A43A21FB18AFC00F6D449 /* WZCameraAssist.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A43A11FB18AFC00F6D449 /* WZCameraAssist.m */; };
 		840A43A51FB1981400F6D449 /* WZMediaGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A43A41FB1981400F6D449 /* WZMediaGestureView.m */; };
-		840E3E9D1FE3BF8F00A5D559 /* WZAudioCodecController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */; };
-		840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */; };
-		840E3EA21FE3BFA300A5D559 /* WZVideoCodecController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */; };
-		840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */; };
 		84135BAD202145CA005B2905 /* WZTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84135BAB202145CA005B2905 /* WZTestViewController.m */; };
 		84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84135BAC202145CA005B2905 /* WZTestViewController.xib */; };
 		842EC8162046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 842EC8152046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m */; };
@@ -499,8 +494,6 @@
 		404507F62042714E003A5209 /* Demo_WrapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_WrapViewController.xib; sourceTree = "<group>"; };
 		40450ADF20541BFB003E90C0 /* UIImageView+setImageInDefaultMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+setImageInDefaultMode.h"; sourceTree = "<group>"; };
 		40450AE020541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+setImageInDefaultMode.m"; sourceTree = "<group>"; };
-		404735A11FE5FAC50089A5F2 /* WZH264Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZH264Codec.h; sourceTree = "<group>"; };
-		404735A21FE5FAC50089A5F2 /* WZH264Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZH264Codec.m; sourceTree = "<group>"; };
 		4061405B2046F2620071F636 /* glow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = glow.jpg; sourceTree = "<group>"; };
 		4061405E2046FC480071F636 /* WZVideoRateAdjustmentTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoRateAdjustmentTool.h; sourceTree = "<group>"; };
 		4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoRateAdjustmentTool.m; sourceTree = "<group>"; };
@@ -565,12 +558,6 @@
 		840A43A11FB18AFC00F6D449 /* WZCameraAssist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZCameraAssist.m; sourceTree = "<group>"; };
 		840A43A31FB1981400F6D449 /* WZMediaGestureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaGestureView.h; sourceTree = "<group>"; };
 		840A43A41FB1981400F6D449 /* WZMediaGestureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaGestureView.m; sourceTree = "<group>"; };
-		840E3E9A1FE3BF8F00A5D559 /* WZAudioCodecController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAudioCodecController.h; sourceTree = "<group>"; };
-		840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZAudioCodecController.m; sourceTree = "<group>"; };
-		840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZAudioCodecController.xib; sourceTree = "<group>"; };
-		840E3E9F1FE3BFA300A5D559 /* WZVideoCodecController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoCodecController.h; sourceTree = "<group>"; };
-		840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoCodecController.m; sourceTree = "<group>"; };
-		840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZVideoCodecController.xib; sourceTree = "<group>"; };
 		84135BAA202145CA005B2905 /* WZTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZTestViewController.h; sourceTree = "<group>"; };
 		84135BAB202145CA005B2905 /* WZTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZTestViewController.m; sourceTree = "<group>"; };
 		84135BAC202145CA005B2905 /* WZTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WZTestViewController.xib; sourceTree = "<group>"; };
@@ -1363,6 +1350,22 @@
 			path = WZScrollOptions;
 			sourceTree = "<group>";
 		};
+		403C673420550C3300191DC3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84687CB9202552C00098A596 /* testImage0.jpg */,
+				84687CBA202552C00098A596 /* testImage1.jpg */,
+				84687CB7202552BF0098A596 /* testImage2.jpg */,
+				84687CB8202552C00098A596 /* testImage3.jpg */,
+				84687CB4202552BF0098A596 /* testImage4.jpg */,
+				84687CBB202552C00098A596 /* testImage5.jpg */,
+				84687CB6202552BF0098A596 /* testImage6.jpg */,
+				84687CB5202552BF0098A596 /* testImage7.jpg */,
+				4061405B2046F2620071F636 /* glow.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		404507F320427135003A5209 /* 弯曲模型 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1383,13 +1386,13 @@
 			path = "弯曲模型";
 			sourceTree = "<group>";
 		};
-		4061405D2046F80A0071F636 /* 视频调速工具 */ = {
+		4061405D2046F80A0071F636 /* WZVideoRateAdjustmentTool(视频调速工具) */ = {
 			isa = PBXGroup;
 			children = (
 				4061405E2046FC480071F636 /* WZVideoRateAdjustmentTool.h */,
 				4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */,
 			);
-			path = "视频调速工具";
+			path = "WZVideoRateAdjustmentTool(视频调速工具)";
 			sourceTree = "<group>";
 		};
 		406140612046FE190071F636 /* 视频速率 */ = {
@@ -1518,38 +1521,23 @@
 			path = WZAlert;
 			sourceTree = "<group>";
 		};
-		840E3E991FE3BF2600A5D559 /* WZHardwareCodec */ = {
-			isa = PBXGroup;
-			children = (
-				404735A11FE5FAC50089A5F2 /* WZH264Codec.h */,
-				404735A21FE5FAC50089A5F2 /* WZH264Codec.m */,
-				840E3E9A1FE3BF8F00A5D559 /* WZAudioCodecController.h */,
-				840E3E9B1FE3BF8F00A5D559 /* WZAudioCodecController.m */,
-				840E3E9C1FE3BF8F00A5D559 /* WZAudioCodecController.xib */,
-				840E3E9F1FE3BFA300A5D559 /* WZVideoCodecController.h */,
-				840E3EA01FE3BFA300A5D559 /* WZVideoCodecController.m */,
-				840E3EA11FE3BFA300A5D559 /* WZVideoCodecController.xib */,
-			);
-			path = WZHardwareCodec;
-			sourceTree = "<group>";
-		};
-		841E4B582004C13800886F80 /* 多视频合成以及过度效果 */ = {
+		841E4B582004C13800886F80 /* WZVideoTransition(多视频合成以及过度效果) */ = {
 			isa = PBXGroup;
 			children = (
 				842EC8132046A4FD008FC567 /* 视频过渡工具(GPUImage) */,
 				846F2701203FC413008E57C1 /* 废弃 */,
 				8464AFE8202298AD00F7621E /* 视频过渡工具(AVFoundation) */,
 			);
-			path = "多视频合成以及过度效果";
+			path = "WZVideoTransition(多视频合成以及过度效果)";
 			sourceTree = "<group>";
 		};
-		842EC81120469A29008FC567 /* 合成倒放视频 */ = {
+		842EC81120469A29008FC567 /* WZVideoReversalTool(合成倒放视频) */ = {
 			isa = PBXGroup;
 			children = (
 				407EC74620459529001C065E /* WZVideoReversalTool.h */,
 				407EC74720459529001C065E /* WZVideoReversalTool.m */,
 			);
-			path = "合成倒放视频";
+			path = "WZVideoReversalTool(合成倒放视频)";
 			sourceTree = "<group>";
 		};
 		842EC8132046A4FD008FC567 /* 视频过渡工具(GPUImage) */ = {
@@ -2709,11 +2697,10 @@
 		845664631FC82E8C0004BAC1 /* WZMediaSeries(多媒体资源获取修改部分) */ = {
 			isa = PBXGroup;
 			children = (
-				4061405D2046F80A0071F636 /* 视频调速工具 */,
-				842EC81120469A29008FC567 /* 合成倒放视频 */,
+				4061405D2046F80A0071F636 /* WZVideoRateAdjustmentTool(视频调速工具) */,
+				842EC81120469A29008FC567 /* WZVideoReversalTool(合成倒放视频) */,
 				845A4214201EBB98002D7477 /* 图片转视频工具 */,
-				841E4B582004C13800886F80 /* 多视频合成以及过度效果 */,
-				840E3E991FE3BF2600A5D559 /* WZHardwareCodec */,
+				841E4B582004C13800886F80 /* WZVideoTransition(多视频合成以及过度效果) */,
 				84ECD3121FCBA7E400282C9A /* Resources */,
 				846A31291FD16336003CECAE /* WZMediaFetcher(资源获取保存等操作) */,
 				846A310F1FD16336003CECAE /* WZPhotoBrowser(图片浏览器) */,
@@ -2743,15 +2730,7 @@
 			children = (
 				842FDA7C20477931001F4C7E /* 基于GPUImage */,
 				842FDA7B20477920001F4C7E /* 基于AVFoundation */,
-				84687CB9202552C00098A596 /* testImage0.jpg */,
-				84687CBA202552C00098A596 /* testImage1.jpg */,
-				84687CB7202552BF0098A596 /* testImage2.jpg */,
-				84687CB8202552C00098A596 /* testImage3.jpg */,
-				84687CB4202552BF0098A596 /* testImage4.jpg */,
-				84687CBB202552C00098A596 /* testImage5.jpg */,
-				84687CB6202552BF0098A596 /* testImage6.jpg */,
-				84687CB5202552BF0098A596 /* testImage7.jpg */,
-				4061405B2046F2620071F636 /* glow.jpg */,
+				403C673420550C3300191DC3 /* Resources */,
 			);
 			path = "图片转视频工具";
 			sourceTree = "<group>";
@@ -3489,7 +3468,6 @@
 				84ECD3271FCBA7E400282C9A /* 02_blackhole.mp4 in Resources */,
 				846A31061FD0E686003CECAE /* message_oeuvre_btn_selected@3x.png in Resources */,
 				84ECD3261FCBA7E400282C9A /* 01_nebula.mp4 in Resources */,
-				840E3EA31FE3BFA300A5D559 /* WZVideoCodecController.xib in Resources */,
 				8462274C1FD62A0200D37FAE /* wallpaper1.jpeg in Resources */,
 				846F270B203FEDB7008E57C1 /* WZConvertPhotosIntoVideo.vsh in Resources */,
 				846F270D203FEDD4008E57C1 /* WZConvertPhotosIntoVideo.fsh in Resources */,
@@ -3534,7 +3512,6 @@
 				84891702204D24EB00A74073 /* bigDarkStar@2x.png in Resources */,
 				84810BF620438B6500403FD8 /* lightCross.png in Resources */,
 				404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */,
-				840E3E9E1FE3BF8F00A5D559 /* WZAudioCodecController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
 				84687CC0202552C00098A596 /* testImage3.jpg in Resources */,
 				84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */,
@@ -3653,10 +3630,8 @@
 				40DB89151FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m in Sources */,
 				842EC8162046A922008FC567 /* WZGPUImageVideoTransitionEffectTool.m in Sources */,
 				84514D301E9DCE7A00F07EF8 /* UIButton+JKTouchAreaInsets.m in Sources */,
-				404735A31FE5FAC60089A5F2 /* WZH264Codec.m in Sources */,
 				84514D251E9DCE7A00F07EF8 /* UIBezierPath+JKSVGString.m in Sources */,
 				846A31361FD16337003CECAE /* WZMediaAssetBaseCell.m in Sources */,
-				840E3EA21FE3BFA300A5D559 /* WZVideoCodecController.m in Sources */,
 				84514CD21E9DCE7A00F07EF8 /* NSDate+JKInternetDateTime.m in Sources */,
 				8446650F1EC45DAE00E19241 /* WZHttpRequest.m in Sources */,
 				846A31371FD16337003CECAE /* WZPhotoCatalogueController.m in Sources */,
@@ -3943,7 +3918,6 @@
 				84514D781E9DCE7A00F07EF8 /* UIView+JKFind.m in Sources */,
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
 				848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */,
-				840E3E9D1FE3BF8F00A5D559 /* WZAudioCodecController.m in Sources */,
 				84BED564203EB51C00A45A11 /* WZGPUImagePicture.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
 				848633311F95CCD20086C96E /* WZMediaController.m in Sources */,
