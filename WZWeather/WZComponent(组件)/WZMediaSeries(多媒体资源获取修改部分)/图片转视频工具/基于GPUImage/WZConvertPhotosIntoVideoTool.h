@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
  end
  
  
- 考虑：
+ 考虑新增：
     关于声音？
     提供录制固定时间的接口？
  

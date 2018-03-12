@@ -78,10 +78,10 @@ typedef NS_ENUM(int, WZConvertPhotosIntoVideoType) {
 @property (nonatomic, assign, readonly) float progress;                     //扫描进度
 
 
-//首次配置
+//首次配置链
 - (void)firstConfigWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer time:(CMTime)time;
 
-//持续更新
+//持续更新frame
 - (void)updateFrameWithSourceA:(WZGPUImagePicture *)sourceA sourceB:(WZGPUImagePicture *)sourceB filter:(WZConvertPhotosIntoVideoFilter *)filter consumer:(NSObject <GPUImageInput>*)consumer time:(CMTime)time;
 
 - (void)resetItemStatus;

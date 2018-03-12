@@ -48,12 +48,15 @@
             self.imageView.image = _asset.imageThumbnail;
         } else {
             __weak typeof(self) weakSelf = self;
-            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setImageInDefaultModeWithImage) object:nil];
-            [self performSelector:@selector(setImageInDefaultModeWithImage) withObject:nil afterDelay:0.0 inModes:@[NSDefaultRunLoopMode]];
+//            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setImageInDefaultModeWithImage) object:nil];
+//            [self performSelector:@selector(setImageInDefaultModeWithImage) withObject:nil afterDelay:0.0 inModes:@[NSDefaultRunLoopMode]];
 //            [[PHImageManager defaultManager] cancelImageRequest:_imageRequestID];
-//            [_asset fetchThumbnailImageSynchronously:false handler:^(UIImage *image) {
-//                  weakSelf.imageView.image = image;
-//            }];
+           
+            [_asset fetchThumbnailImageSynchronously:false handler:^(UIImage *image) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    weakSelf.imageView.image = image;
+                });
+            }];
         }
     }
 }

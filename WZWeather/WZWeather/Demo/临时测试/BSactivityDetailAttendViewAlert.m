@@ -21,12 +21,14 @@
 
 @implementation BSactivityDetailAttendViewAlert
 
-
+#pragma mark - Overwrite
 - (void)alertContent {
     [super alertContent];
     
     _dataSource = [BSactivityDetailAttendViewTableModel dataSource];
     [self calculateCellHeight];
+    
+    
     CGSize screenSize = UIScreen.mainScreen.bounds.size;
     
     CGFloat w = BSATTENDVIEWTABLE_WIDTH;
@@ -49,7 +51,8 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_table];
     
-    _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(screenSize.width - 20.0 - 20.0, 20.0, 20.0, 20.0)];
+    CGFloat btnWH = 20.0;
+    _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(screenSize.width - btnWH * 2.0, btnWH, btnWH, btnWH)];
     _closeButton.backgroundColor = [UIColor orangeColor];
     [_closeButton setTitle:@"关" forState:UIControlStateNormal];
     [self addSubview:_closeButton];
@@ -65,6 +68,15 @@
         [self addSubview:_trendView];
     }
 }
+
+- (CGFloat)bgViewAlpha {
+    return 1;
+}
+
+- (UIColor *)alertBackgroundViewColor {
+    return [UIColor colorWithRed:31 / 255.0 green:36/ 255.0 blue:41 / 255.0 alpha:1.0];
+}
+
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate & UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -110,14 +122,16 @@
 
 //计算高度
 - (void)calculateCellHeight {
-    BSactivityDetailAttendViewBlankCell *blackCell = [[BSactivityDetailAttendViewBlankCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewBlankCell"];
-    
-     BSactivityDetailAttendViewBlankCell30 *blackCell30 = [[BSactivityDetailAttendViewBlankCell30 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewBlankCell30"];
-    
-     BSactivityDetailAttendViewBlankCell50 *blackCell50 = [[BSactivityDetailAttendViewBlankCell50 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewBlankCell50"];
     
     BSactivityDetailAttendViewTitleCell *titleCell = [[BSactivityDetailAttendViewTitleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewTitleCell"];
+    
     BSactivityDetailAttendViewContentCell *ContentCell = [[BSactivityDetailAttendViewContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewContentCell"];
+    
+    BSactivityDetailAttendViewBlankCell *blackCell = [[BSactivityDetailAttendViewBlankCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewBlankCell"];
+    
+    BSactivityDetailAttendViewBlankCell30 *blackCell30 = [[BSactivityDetailAttendViewBlankCell30 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewBlankCell30"];
+    
+    BSactivityDetailAttendViewBlankCell50 *blackCell50 = [[BSactivityDetailAttendViewBlankCell50 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BSactivityDetailAttendViewBlankCell50"];
     
     for (BSactivityDetailAttendViewTableModel *tmp in _dataSource) {
         if ([tmp.cellID isEqualToString:@"BSactivityDetailAttendViewTitleCell"]) {
@@ -134,13 +148,5 @@
     }
 }
 
-#pragma mark - Overwrite
-- (CGFloat)bgViewAlpha {
-    return 1;
-}
-
-- (UIColor *)alertBackgroundViewColor {
-    return [UIColor colorWithRed:31 / 255.0 green:36/ 255.0 blue:41 / 255.0 alpha:1.0];
-}
 
 @end

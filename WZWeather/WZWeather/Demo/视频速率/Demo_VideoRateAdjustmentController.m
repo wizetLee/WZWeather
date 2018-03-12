@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     NSArray *customDataList = @[@{@"headline" : @"0.25"}
                                 , @{@"headline" : @"0.5"}
                                 , @{@"headline" : @"1.0"}

@@ -201,21 +201,24 @@ typedef NS_ENUM(NSUInteger, WZMediaType) {
 #pragma mark - Fetch Video  视频部分
 + (int32_t)fetchVideoWith:(PHAsset *)asset synchronous:(BOOL)synchronous handler:(void (^)(AVAsset *  asset, AVAudioMix *  audioMix, NSDictionary *  info))handler;
 
-#pragma mark - Fetch Audio  音频部分
-
 
 #pragma mark - 删除某一些资源
+
+
+/**
+ 资源删除
+
+ @param localIdentifierArr 需要删除的资源的ID集合
+ @param handler 结果
+ */
 + (void)deleteAssetsWithLIDS:(NSArray <NSString *>*)localIdentifierArr complectionHandler:(void (^)(BOOL success, NSError *error))handler;
 
 #pragma mark - 保存资源
+//资源保存接口
 + (void)saveVideoWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler;
 + (void)saveImageWithURL:(NSURL *)URL completionHandler:(void (^)(BOOL success, NSError *error))handler;
-    + (void)saveImage:(UIImage *)image completionHandler:(void (^)(BOOL success, NSError *error))handler;
-        + (void)saveImage:(NSData *)imageData
-    metadata:(NSDictionary *)metadata
-    identify:(NSString *)identify
-    target:(id)target
-    seleter:(SEL)aSelector;
++ (void)saveImage:(UIImage *)image completionHandler:(void (^)(BOOL success, NSError *error))handler;
++ (void)saveImage:(NSData *)imageData metadata:(NSDictionary *)metadata identify:(NSString *)identify target:(id)target seleter:(SEL)aSelector;
 
 
 @end

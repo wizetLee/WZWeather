@@ -32,8 +32,6 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 @interface WZConvertPhotosIntoVideoFilter()
 {
     
-    
-    
     //百叶窗部分
     float undulatedCouple[kMax_UndulatedCouple_Count];
     float undulatedCoupleOrigion[kMax_UndulatedCouple_Count];//原始·存储值
@@ -478,7 +476,9 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
             odevity++;
         }
         [self setFloatArray:undulatedCouple length:undulatedCoupleCount forUniform:[filterProgram uniformIndex:@"undulatedCouple"] program:filterProgram];
+        
     } else if (_type == 13) {
+        
         CGFloat radians = progress;//0~1.0
         //旋转部分
         GLKMatrix4 modelViewMatrix = GLKMatrix4Identity;
@@ -501,6 +501,7 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
         };
         
         [self setMatrix4f:tmp forUniform:[filterProgram uniformIndex:@"transform"] program:filterProgram];
+        
     }
 }
 

@@ -40,6 +40,6 @@ typedef NS_ENUM(NSInteger, INPAlertDipalyDismissType) {
 - (instancetype)initWithDispalyType:(INPAlertDipalyDismissType)displayType;
 
 // 定制alert 内容
-- (void)alertContent NS_REQUIRES_SUPER;                             //initialize subviews
+- (void)alertContent;                             //initialize subviews
 
 @end

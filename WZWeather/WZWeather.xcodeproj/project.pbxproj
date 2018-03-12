@@ -1562,18 +1562,11 @@
 				845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */,
 				845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */,
 				845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */,
-				845A421B201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.h */,
-				845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */,
-				846F271620401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.h */,
-				846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */,
-				846F2719204019F6008E57C1 /* WZDiffuseTwoInputFilter.h */,
-				846F271A204019F6008E57C1 /* WZDiffuseTwoInputFilter.m */,
-				846F270A203FEDB7008E57C1 /* WZConvertPhotosIntoVideo.vsh */,
-				846F270C203FEDD4008E57C1 /* WZConvertPhotosIntoVideo.fsh */,
 				845B8FB22020134400242363 /* WZGPUImageMovieWriter.h */,
 				845B8FB32020134400242363 /* WZGPUImageMovieWriter.m */,
 				84BED562203EB51C00A45A11 /* WZGPUImagePicture.h */,
 				84BED563203EB51C00A45A11 /* WZGPUImagePicture.m */,
+				8497D0AD20560F6A00A3BAB1 /* filter */,
 			);
 			path = "基于GPUImage";
 			sourceTree = "<group>";
@@ -3173,6 +3166,21 @@
 				8497C4321EB3465200EB9F60 /* Info.plist */,
 			);
 			path = WZTodayExtension;
+			sourceTree = "<group>";
+		};
+		8497D0AD20560F6A00A3BAB1 /* filter */ = {
+			isa = PBXGroup;
+			children = (
+				845A421B201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.h */,
+				845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */,
+				846F271620401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.h */,
+				846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */,
+				846F2719204019F6008E57C1 /* WZDiffuseTwoInputFilter.h */,
+				846F271A204019F6008E57C1 /* WZDiffuseTwoInputFilter.m */,
+				846F270A203FEDB7008E57C1 /* WZConvertPhotosIntoVideo.vsh */,
+				846F270C203FEDD4008E57C1 /* WZConvertPhotosIntoVideo.fsh */,
+			);
+			path = filter;
 			sourceTree = "<group>";
 		};
 		84BC818E1FCFDEBE00FB76BC /* UI */ = {

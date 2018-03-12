@@ -30,11 +30,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+  
+
 }
+
 
 - (void)viewDidAppear:(BOOL)animated {
  
 }
+
 - (IBAction)testAction:(id)sender {
     BSactivityDetailAttendViewAlert *alert = [[BSactivityDetailAttendViewAlert alloc] init];
     alert.clickedBackgroundToDismiss = true;
@@ -47,20 +51,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
-}
-
-//冒泡  升序
-void bubble(int a[], int size) {
-    int i, j, tmp;
-    for (i = 0; i < size; i++) {
-        for (j = 1; j < size - i; j++) {
-            if (a[j] < a[i]) {
-                
-            }
-            tmp = a[i];
-            
-        }
-    }
 }
 
 

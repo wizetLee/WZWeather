@@ -244,10 +244,6 @@ typedef NS_ENUM(NSUInteger, WZFramesType) {
             CMTime passDuration = CMTimeSubtract(passEndTime, passStartTime);
             CMTimeRange localRange = CMTimeRangeMake(passStartTime,passDuration);
 
-        
-            
-            
-            
         }
         
         for (NSInteger z = (passDicts.count - 1); z >= 0; z--) {

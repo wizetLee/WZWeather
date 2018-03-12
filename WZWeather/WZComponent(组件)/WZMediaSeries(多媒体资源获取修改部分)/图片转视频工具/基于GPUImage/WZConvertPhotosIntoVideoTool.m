@@ -34,6 +34,7 @@
 @property (nonatomic, strong) WZConvertPhotosIntoVideoFilter *convertPhotosIntoVideoFilter;
 
 //GPUImageMovieWriter存在内存泄漏，处理方案：https://stackoverflow.com/questions/27857330/memory-leak-occurs-when-use-gpuimagemoviewriter-multiple-times
+#warning  也就是修改了GPUImageMovieWriter
 @property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
 
 @property (nonatomic,   weak) WZConvertPhotosIntoVideoItem *curItem;    //临时的item
