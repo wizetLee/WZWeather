@@ -8,6 +8,8 @@
 
 #import "Demo_WrapViewController.h"
 #import "WrapView.h"
+#import "WZMediaFetcher.h"
+
 @interface Demo_WrapViewController ()
 {
     WrapView *_tmpView;
@@ -32,7 +34,31 @@
 
 - (IBAction)mixture:(id)sender {
     UIImage *image = [_tmpView mixture];
-    [self showImage:image];
+   
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"操作选取" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存本地" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [WZMediaFetcher saveImage:image completionHandler:^(BOOL success, NSError *error) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (success) {
+                    [WZToast toastWithContent:@"保存成功"];//层次冲突
+                } else {
+                    [WZToast toastWithContent:@"保存失败"];
+                }
+            });
+        }];
+    }];
+    [alertC addAction:action];
+    
+    action = [UIAlertAction actionWithTitle:@"弹出预览效果" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self showImage:image];
+    }];
+    [alertC addAction:action];
+    
+    action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+    [alertC addAction:action];
+    [self presentViewController:alertC animated:true completion:^{}];
+    
+    
 }
 - (IBAction)material:(id)sender {
     UIImage *image = [_tmpView material];

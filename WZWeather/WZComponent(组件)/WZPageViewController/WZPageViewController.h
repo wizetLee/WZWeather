@@ -24,7 +24,7 @@
 
 @interface WZPageViewController : UIPageViewController
 
-@property (nonatomic,   weak) id<WZPageViewControllerProtocol> pageViewControllerDelegate;
+@property (nonatomic,   weak) id <WZPageViewControllerProtocol> pageViewControllerDelegate;
 @property (nonatomic, strong) NSArray <WZPageViewAssistController *> *reusableVCArray;
 @property (nonatomic, strong, readonly) WZPageViewAssistController *currentVC;
 

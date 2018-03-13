@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-///APP挂起、恢复通知协议
+///APP挂起、恢复通知协议 （可用于需要处理界面跳出/系统弹窗的类）
 @protocol WZAppActiveNoticeProtocol <NSObject>
 
 @public

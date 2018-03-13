@@ -386,6 +386,8 @@
 		846F2715203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846F2713203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib */; };
 		846F271820401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */; };
 		846F271B204019F6008E57C1 /* WZDiffuseTwoInputFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F271A204019F6008E57C1 /* WZDiffuseTwoInputFilter.m */; };
+		8470E5EA2057BF90004C1746 /* Demo_PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8470E5E82057BF90004C1746 /* Demo_PageController.m */; };
+		8470E5EB2057BF90004C1746 /* Demo_PageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8470E5E92057BF90004C1746 /* Demo_PageController.xib */; };
 		84810BF620438B6500403FD8 /* lightCross.png in Resources */ = {isa = PBXBuildFile; fileRef = 84810BF520438B6500403FD8 /* lightCross.png */; };
 		84810BF820438B8A00403FD8 /* trees-2920264.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84810BF720438B8A00403FD8 /* trees-2920264.jpg */; };
 		84810C0120438BAD00403FD8 /* shader2SampleDefaultF.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 84810BF920438BAC00403FD8 /* shader2SampleDefaultF.fsh */; };
@@ -1192,6 +1194,9 @@
 		846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZBlackWhiteMaskTwoInputFilter.m; sourceTree = "<group>"; };
 		846F2719204019F6008E57C1 /* WZDiffuseTwoInputFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZDiffuseTwoInputFilter.h; sourceTree = "<group>"; };
 		846F271A204019F6008E57C1 /* WZDiffuseTwoInputFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZDiffuseTwoInputFilter.m; sourceTree = "<group>"; };
+		8470E5E72057BF90004C1746 /* Demo_PageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_PageController.h; sourceTree = "<group>"; };
+		8470E5E82057BF90004C1746 /* Demo_PageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_PageController.m; sourceTree = "<group>"; };
+		8470E5E92057BF90004C1746 /* Demo_PageController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_PageController.xib; sourceTree = "<group>"; };
 		84810BF520438B6500403FD8 /* lightCross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightCross.png; sourceTree = "<group>"; };
 		84810BF720438B8A00403FD8 /* trees-2920264.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "trees-2920264.jpg"; sourceTree = "<group>"; };
 		84810BF920438BAC00403FD8 /* shader2SampleDefaultF.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader2SampleDefaultF.fsh; sourceTree = "<group>"; };
@@ -1562,10 +1567,10 @@
 				845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */,
 				845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */,
 				845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */,
-				845B8FB22020134400242363 /* WZGPUImageMovieWriter.h */,
-				845B8FB32020134400242363 /* WZGPUImageMovieWriter.m */,
 				84BED562203EB51C00A45A11 /* WZGPUImagePicture.h */,
 				84BED563203EB51C00A45A11 /* WZGPUImagePicture.m */,
+				845B8FB22020134400242363 /* WZGPUImageMovieWriter.h */,
+				845B8FB32020134400242363 /* WZGPUImageMovieWriter.m */,
 				8497D0AD20560F6A00A3BAB1 /* filter */,
 			);
 			path = "基于GPUImage";
@@ -3084,6 +3089,7 @@
 		846F270F203FF6B7008E57C1 /* 控件 */ = {
 			isa = PBXGroup;
 			children = (
+				8470E5E62057BF63004C1746 /* 切换控件 */,
 				4082B21C204BB9000046B609 /* 圆环取数据 */,
 				4082B21B204BB8ED0046B609 /* 等级评分 */,
 				846F2710203FF6B7008E57C1 /* 动画PageControl */,
@@ -3099,6 +3105,16 @@
 				846F2713203FF6B7008E57C1 /* Demo_AnimatePageControlViewController.xib */,
 			);
 			path = "动画PageControl";
+			sourceTree = "<group>";
+		};
+		8470E5E62057BF63004C1746 /* 切换控件 */ = {
+			isa = PBXGroup;
+			children = (
+				8470E5E72057BF90004C1746 /* Demo_PageController.h */,
+				8470E5E82057BF90004C1746 /* Demo_PageController.m */,
+				8470E5E92057BF90004C1746 /* Demo_PageController.xib */,
+			);
+			path = "切换控件";
 			sourceTree = "<group>";
 		};
 		8483E7BA1FC2658500C559EF /* WZSearchBar */ = {
@@ -3478,6 +3494,7 @@
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
 				4082B232204BC3DF0046B609 /* newcontent_icon_coins@3x.png in Resources */,
 				84891700204D24EB00A74073 /* bigStar@2x.png in Resources */,
+				8470E5EB2057BF90004C1746 /* Demo_PageController.xib in Resources */,
 				84810C0620438BAD00403FD8 /* shaderColourModulationV.vsh in Resources */,
 				4078BC8C2048435900FDE851 /* Demo_VideoTransitionController.xib in Resources */,
 				8462274B1FD62A0200D37FAE /* wallpaper3.jpeg in Resources */,
@@ -3918,6 +3935,7 @@
 				84514D781E9DCE7A00F07EF8 /* UIView+JKFind.m in Sources */,
 				84514D741E9DCE7A00F07EF8 /* UIView+JKBlockGesture.m in Sources */,
 				848979871ECC3A97008B07D2 /* WZDownloadTarget.m in Sources */,
+				8470E5EA2057BF90004C1746 /* Demo_PageController.m in Sources */,
 				84BED564203EB51C00A45A11 /* WZGPUImagePicture.m in Sources */,
 				84514CBF1E9DCE7A00F07EF8 /* NSManagedObjectContext+JKExtensions.m in Sources */,
 				848633311F95CCD20086C96E /* WZMediaController.m in Sources */,
