@@ -49,7 +49,6 @@
     [tool prepareTaskWithPictureSources:sources];
     
     
-    
     //自动设置参数
     NSArray *typeArr = @[@13, @14, @16, @20, @9, @12, @6, @7];
     for (int i = 0; i < typeArr.count; i++) {
@@ -63,7 +62,7 @@
 #pragma mark - WZAnimatePageControlProtocol
 
 //写入完成的回调
-- (void)convertPhotosInotViewToolTaskFinished; {
+- (void)convertPhotosInotViewToolTaskFinished {
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -77,10 +76,11 @@
 }
 
 //转换进度
-- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress; {
+- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress {
     _progressLabel.text = [NSString stringWithFormat:@"当前进度：%lf", progress];
 }
 
+#pragma mark Private
 - (IBAction)switchEffect:(UIButton *)sender {
     _btnPointer = sender;
     [self configAlert];
@@ -109,9 +109,8 @@
         [alert addAction:action];
     }
     
-    UIAlertAction *action1000 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    [alert addAction:action1000];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }];
+    [alert addAction:action];
     
     [self.navigationController presentViewController:alert animated:true completion:^{}];
 }
@@ -120,10 +119,13 @@
     UIButton *sender = _btnPointer;
     NSUInteger index = sender.tag - 100;
      if (tool.transitionNodeMarr.count > index) {
+         
          WZConvertPhotosIntoVideoItem *item = tool.transitionNodeMarr[index];
          item.transitionType = (int)type;//类型
+         
          NSString *title = [self.class alertSource][type][[NSString stringWithFormat:@"%lu", (unsigned long)type]];
          [sender setTitle:[NSString stringWithFormat:@"效果为 : %@", title] forState:UIControlStateNormal];
+         
      } else {
         [sender setTitle:@"_____" forState:UIControlStateNormal];
      }

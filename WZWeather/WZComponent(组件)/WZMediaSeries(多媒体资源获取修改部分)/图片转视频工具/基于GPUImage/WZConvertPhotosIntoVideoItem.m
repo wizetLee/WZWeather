@@ -172,7 +172,8 @@
 
 #pragma mark - Public
 - (void)resetItemStatus {
-    
+    _framePointer = 0;
+    _progress = 0;
 }
 
 @end

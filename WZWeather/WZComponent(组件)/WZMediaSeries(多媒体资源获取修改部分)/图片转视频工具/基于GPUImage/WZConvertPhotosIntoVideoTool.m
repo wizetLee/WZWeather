@@ -14,8 +14,8 @@
 //http://blog.sina.com.cn/s/blog_a45145650102v8t0.html
 @interface WZConvertPhotosIntoVideoTool()<WZConvertPhotosIntoVideoItemProtocol>
 {
-    NSUInteger _frameCount;                //帧数 由limitedTime->frameRate得到
-    NSUInteger _addedFrameCount;           //已添加的帧数
+    NSUInteger _frameCount;                //帧数 由limitedTime->frameRate得到，限制录制时间的帧数
+    NSUInteger _addedFrameCount;           //当前已添加到视频的帧数
     NSUInteger targetFrameCount;           //目标帧数
 }
 
@@ -60,7 +60,7 @@
 
 #pragma mark - Private
 - (void)defaultConfig {
-     _status = WZConvertPhotosIntoVideoToolStatus_Idle;
+    _status = WZConvertPhotosIntoVideoToolStatus_Idle;
     
     self.frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
     _frameCount = 0;
@@ -188,6 +188,8 @@
     
     NSUInteger nontransitionFrameCount = (targetFrameCount - ((pictureCount -1) * transitionFrameCount)) / pictureCount;                                        //非过渡帧数
     NSUInteger sumFrameCount = targetFrameCount;             //临时计算量
+    
+//帧数分配方案
     //由于分割的问题 多出来的 几帧会加载最后的图片上
     for (NSUInteger i = 0; i < pictureCount; i++) {
         //平滑点
@@ -254,13 +256,20 @@
     _status = WZConvertPhotosIntoVideoToolStatus_Completed;
     [self cleanTimer];
     [_movieWriter finishRecordingWithCompletionHandler:^{
+        //恢复item帧读取状态
+        [self.itemMArr enumerateObjectsUsingBlock:^(WZConvertPhotosIntoVideoItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj resetItemStatus];
+        }];
+        
         if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolTaskFinished)]) {
             [_delegate convertPhotosInotViewToolTaskFinished];
         }
         
-        [self cleanChain];
+        
+         //重新预配 预备录制状态
         _status = WZConvertPhotosIntoVideoToolStatus_Ready;
-        //重新预配 录制状态
+        [self cleanChain];
+        [self resetConfig];
     }];
 }
 
@@ -293,8 +302,7 @@
         _currentProgressTime = CMTimeMake(0, _frameRate.timescale);
         
         //可能要改为displayLink
-        [_displayLink invalidate];
-        _displayLink = nil;
+        [self cleanTimer];
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(addFrameAction)];
         [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
         _displayLink.paused = false;
@@ -326,11 +334,15 @@
     _movieWriter = nil;
 }
 
-
 - (void)cleanTimer {
     _displayLink.paused = true;
     [_displayLink invalidate];
     _displayLink = nil;
+}
+
+- (void)resetConfig {
+    _curItem = nil;
+    _addedFrameCount = 0;
 }
 
 #pragma mark - Accessor
