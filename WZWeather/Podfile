@@ -8,4 +8,6 @@ pod 'GPUImage', '~> 0.1.7'
 pod 'Masonry'
 pod 'SDWebImage'
 pod 'SVProgressHUD'
+pod 'YYKit'
+pod 'FMDB'
 end
