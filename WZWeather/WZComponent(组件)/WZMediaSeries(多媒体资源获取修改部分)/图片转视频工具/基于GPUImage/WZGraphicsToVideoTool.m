@@ -1,18 +1,19 @@
 //
-//  WZConvertPhotosIntoVideoTool.m
+//  WZGraphicsToVideoTool.m
 //  WZWeather
 //
 //  Created by admin on 29/1/18.
 //  Copyright © 2018年 WZ. All rights reserved.
 //
 
-#import "WZConvertPhotosIntoVideoTool.h"
+#import "WZGraphicsToVideoTool.h"
 #import <AVFoundation/AVFoundation.h>
 #import "WZGPUImagePicture.h"
+#import "WZGPUImageMovieWriter.h"
 
 //参考
 //http://blog.sina.com.cn/s/blog_a45145650102v8t0.html
-@interface WZConvertPhotosIntoVideoTool()<WZConvertPhotosIntoVideoItemProtocol>
+@interface WZGraphicsToVideoTool()<WZGraphicsToVideoItemProtocol>
 {
     NSUInteger _frameCount;                //帧数 由limitedTime->frameRate得到，限制录制时间的帧数
     NSUInteger _addedFrameCount;           //当前已添加到视频的帧数
@@ -21,9 +22,9 @@
 
 
 @property (nonatomic, assign) CMTime currentProgressTime;   //当前进度
-@property (nonatomic, assign) WZConvertPhotosIntoVideoToolStatus status;  //状态
-@property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*itemMArr;  //数据源
-@property (nonatomic, strong) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;  //节点
+@property (nonatomic, assign) WZGraphicsToVideoToolStatus status;  //状态
+@property (nonatomic, strong) NSMutableArray <WZGraphicsToVideoItem *>*itemMArr;  //数据源
+@property (nonatomic, strong) NSMutableArray <WZGraphicsToVideoItem *>*transitionNodeMarr;  //节点
 
 @property (nonatomic, strong) NSURL *outputURL;
 
@@ -31,17 +32,17 @@
 
 @property (nonatomic, strong) WZGPUImagePicture *pictureA;
 @property (nonatomic, strong) WZGPUImagePicture *pictureB;
-@property (nonatomic, strong) WZConvertPhotosIntoVideoFilter *convertPhotosIntoVideoFilter;
+@property (nonatomic, strong) WZGraphicsToVideoFilter *graphicsToVideoFilter;
 
 //GPUImageMovieWriter存在内存泄漏，处理方案：https://stackoverflow.com/questions/27857330/memory-leak-occurs-when-use-gpuimagemoviewriter-multiple-times
 #warning  也就是修改了GPUImageMovieWriter
-@property (nonatomic, strong) GPUImageMovieWriter *movieWriter;
+@property (nonatomic, strong) WZGPUImageMovieWriter *movieWriter;
 
-@property (nonatomic,   weak) WZConvertPhotosIntoVideoItem *curItem;    //临时的item
+@property (nonatomic,   weak) WZGraphicsToVideoItem *curItem;    //临时的item
 
 @end
 
-@implementation WZConvertPhotosIntoVideoTool
+@implementation WZGraphicsToVideoTool
 
 #pragma mark - Initialization
 - (instancetype)initWithOutputURL:(NSURL *)outputURL
@@ -60,7 +61,7 @@
 
 #pragma mark - Private
 - (void)defaultConfig {
-    _status = WZConvertPhotosIntoVideoToolStatus_Idle;
+    _status = WZGraphicsToVideoToolStatus_Idle;
     
     self.frameRate = CMTimeMake(1, 25);// fbs 25（30也是可以的）
     _frameCount = 0;
@@ -76,11 +77,11 @@
 - (void)dealloc {
     NSLog(@"%s", __func__);
 
-    for (WZConvertPhotosIntoVideoItem *tmpObj in _itemMArr) {
+    for (WZGraphicsToVideoItem *tmpObj in _itemMArr) {
         tmpObj.leadingImage = nil;
         tmpObj.trailingImage = nil;
     }
-    for (WZConvertPhotosIntoVideoItem *tmpObj in _transitionNodeMarr) {
+    for (WZGraphicsToVideoItem *tmpObj in _transitionNodeMarr) {
         tmpObj.leadingImage = nil;
         tmpObj.trailingImage = nil;
     }
@@ -97,8 +98,8 @@
 
 
 - (BOOL)configurable {
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Idle
-        || _status == WZConvertPhotosIntoVideoToolStatus_Ready) {
+    if (_status == WZGraphicsToVideoToolStatus_Idle
+        || _status == WZGraphicsToVideoToolStatus_Ready) {
         return true;
     }
     NSLog(@"状态出错，设置属性失败");
@@ -108,7 +109,7 @@
 //
 - (void)addFrameAction {
     //先是代理判断当前进度 决定继续添加buffer 还是停止录制
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+    if (_status == WZGraphicsToVideoToolStatus_Converting) {
         if (_timeIsLimited
             && _frameCount <= _addedFrameCount) {
             //达到了限制
@@ -120,19 +121,19 @@
         }
         //录制
         runSynchronouslyOnContextQueue([GPUImageContext sharedImageProcessingContext], ^{
-            [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+            [_curItem updateFrameWithSourceA:_pictureA sourceB:_pictureB filter:_graphicsToVideoFilter consumer:_movieWriter time:_currentProgressTime];
         });
         
         _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//帧位时间偏移更新
         _addedFrameCount++;
 //        NSLog(@"目标帧数：%ld，已添加帧数 %ld", targetFrameCount, _addedFrameCount);
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([_delegate respondsToSelector:@selector(convertPhotosInotViewTool:progress:)]) {
-                [_delegate convertPhotosInotViewTool:self progress:(_addedFrameCount * 1.0) / targetFrameCount];
+            if ([_delegate respondsToSelector:@selector(graphicsToVideoTool:progress:)]) {
+                [_delegate graphicsToVideoTool:self progress:(_addedFrameCount * 1.0) / targetFrameCount];
             }
         });
       
-    } else if (_status == WZConvertPhotosIntoVideoToolStatus_Completed) {
+    } else if (_status == WZGraphicsToVideoToolStatus_Completed) {
         //完成
         [self finishWriting];
     }
@@ -142,17 +143,17 @@
     if (_curItem == nil && _itemMArr.count) {
         //首次切换某个item
         _curItem = _itemMArr.firstObject;
-        [_curItem firstConfigWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+        [_curItem firstConfigWithSourceA:_pictureA sourceB:_pictureB filter:_graphicsToVideoFilter consumer:_movieWriter time:_currentProgressTime];
         
     } else {
         if (_curItem == _itemMArr.lastObject) {
             //已经全部配置完成。
             //发出完成视频的消息
-            _status = WZConvertPhotosIntoVideoToolStatus_Completed;
+            _status = WZGraphicsToVideoToolStatus_Completed;
         } else {
             //切换到下一个item
             _curItem = _itemMArr[[_itemMArr indexOfObject:_curItem] + 1];
-             [_curItem firstConfigWithSourceA:_pictureA sourceB:_pictureB filter:_convertPhotosIntoVideoFilter consumer:_movieWriter time:_currentProgressTime];
+             [_curItem firstConfigWithSourceA:_pictureA sourceB:_pictureB filter:_graphicsToVideoFilter consumer:_movieWriter time:_currentProgressTime];
         }
     }
 }
@@ -160,7 +161,7 @@
 #pragma mark - Public
 
 - (void)prepareTaskWithPictureSources:(NSArray <UIImage *>*)pictureSources {
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+    if (_status == WZGraphicsToVideoToolStatus_Converting) {
         NSLog(@"#warning : 正在合成视频 不可更改数据源");
         return;
     }
@@ -169,11 +170,11 @@
     //预设重配
     [_itemMArr removeAllObjects];
     [_transitionNodeMarr removeAllObjects];
-    for (WZConvertPhotosIntoVideoItem *tmpObj in _itemMArr) {
+    for (WZGraphicsToVideoItem *tmpObj in _itemMArr) {
         tmpObj.leadingImage = nil;
         tmpObj.trailingImage = nil;
     }
-    for (WZConvertPhotosIntoVideoItem *tmpObj in _transitionNodeMarr) {
+    for (WZGraphicsToVideoItem *tmpObj in _transitionNodeMarr) {
         tmpObj.leadingImage = nil;
         tmpObj.trailingImage = nil;
     }
@@ -193,7 +194,7 @@
     //由于分割的问题 多出来的 几帧会加载最后的图片上
     for (NSUInteger i = 0; i < pictureCount; i++) {
         //平滑点
-        WZConvertPhotosIntoVideoItem *item  = [[WZConvertPhotosIntoVideoItem alloc] init];
+        WZGraphicsToVideoItem *item  = [[WZGraphicsToVideoItem alloc] init];
         item.delegate                       = self;
         item.leadingImage                   = pictureSources[i];
         item.frameCount                     = nontransitionFrameCount;
@@ -202,11 +203,11 @@
         
         if (i < (pictureCount - 1)) {
             //过渡点
-            item                    = [[WZConvertPhotosIntoVideoItem alloc] init];
+            item                    = [[WZGraphicsToVideoItem alloc] init];
             item.delegate           = self;
             item.leadingImage       = pictureSources[i];
             item.trailingImage      = pictureSources[i + 1];
-            item.transitionType     = WZConvertPhotosIntoVideoType_None;    //配置为none类型
+            item.transitionType     = WZGraphicsToVideoType_None;    //配置为none类型
             item.frameCount         = transitionFrameCount;
             sumFrameCount           -= transitionFrameCount;
             
@@ -221,12 +222,12 @@
         }
     }
     
-     _status = WZConvertPhotosIntoVideoToolStatus_Ready;
+     _status = WZGraphicsToVideoToolStatus_Ready;
 }
 
 - (void)prepareTask {
     //初始化一些工具
-    if (_status != WZConvertPhotosIntoVideoToolStatus_Ready) {
+    if (_status != WZGraphicsToVideoToolStatus_Ready) {
         NSLog(@"%s，状态错误", __func__);
         return;
     }
@@ -235,7 +236,7 @@
     {//文件部分
         if (_outputURL && [_outputURL isFileURL]) {} else {
             //使用自定义的路径
-            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
+            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZGraphicsToVideoTool.mov"];
             _outputURL = [NSURL fileURLWithPath:filePath];
         }
 
@@ -253,46 +254,46 @@
 }
 
 - (void)finishWriting {
-    _status = WZConvertPhotosIntoVideoToolStatus_Completed;
+    _status = WZGraphicsToVideoToolStatus_Completed;
     [self cleanTimer];
     [_movieWriter finishRecordingWithCompletionHandler:^{
         //恢复item帧读取状态
-        [self.itemMArr enumerateObjectsUsingBlock:^(WZConvertPhotosIntoVideoItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.itemMArr enumerateObjectsUsingBlock:^(WZGraphicsToVideoItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [obj resetItemStatus];
         }];
         
-        if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolTaskFinished)]) {
-            [_delegate convertPhotosInotViewToolTaskFinished];
+        if ([_delegate respondsToSelector:@selector(graphicsToVideoToolTaskFinished)]) {
+            [_delegate graphicsToVideoToolTaskFinished];
         }
         
         
          //重新预配 预备录制状态
-        _status = WZConvertPhotosIntoVideoToolStatus_Ready;
+        _status = WZGraphicsToVideoToolStatus_Ready;
         [self cleanChain];
         [self resetConfig];
     }];
 }
 
 - (void)startWriting {
-    if (_status == WZConvertPhotosIntoVideoToolStatus_Ready) {
+    if (_status == WZGraphicsToVideoToolStatus_Ready) {
         //重配时间
         [self cleanTimer];
         [self cleanChain];
         
-        _status = WZConvertPhotosIntoVideoToolStatus_Converting;
+        _status = WZGraphicsToVideoToolStatus_Converting;
         
         //原始 sourceA&sourceB -> filter -> writer
-        _convertPhotosIntoVideoFilter = [[WZConvertPhotosIntoVideoFilter alloc] init];
+        _graphicsToVideoFilter = [[WZGraphicsToVideoFilter alloc] init];
         
         _pictureA = [[WZGPUImagePicture alloc] init];
         _pictureB = [[WZGPUImagePicture alloc] init];
         //默认是mov格式
-        _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
+        _movieWriter = [[WZGPUImageMovieWriter alloc] initWithMovieURL:_outputURL size:_outputSize];
         
         //链装配
-        [_pictureA addTarget:_convertPhotosIntoVideoFilter];
-        [_pictureB addTarget:_convertPhotosIntoVideoFilter];
-        [_convertPhotosIntoVideoFilter addTarget:_movieWriter];
+        [_pictureA addTarget:_graphicsToVideoFilter];
+        [_pictureB addTarget:_graphicsToVideoFilter];
+        [_graphicsToVideoFilter addTarget:_movieWriter];
         
         //首次add 的配置
         [_movieWriter startRecording];
@@ -316,8 +317,8 @@
     [_movieWriter cancelRecording];
     [self cleanChain];
     
-    if ([_delegate respondsToSelector:@selector(convertPhotosInotViewToolTaskCanceled)]) {
-        [_delegate convertPhotosInotViewToolTaskCanceled];
+    if ([_delegate respondsToSelector:@selector(graphicsToVideoToolTaskCanceled)]) {
+        [_delegate graphicsToVideoToolTaskCanceled];
     }
 }
 
@@ -325,12 +326,12 @@
     [_pictureA removeAllTargets];
     [_pictureB removeAllTargets];
    
-    [_convertPhotosIntoVideoFilter removeAllTargets];
+    [_graphicsToVideoFilter removeAllTargets];
     _movieWriter.delegate = nil;
     
     _pictureA = nil;
     _pictureB = nil;
-    _convertPhotosIntoVideoFilter = nil;
+    _graphicsToVideoFilter = nil;
     _movieWriter = nil;
 }
 
@@ -376,7 +377,7 @@
     }
 }
 
-#pragma mark - WZConvertPhotosIntoVideoItemProtocol
+#pragma mark - WZGraphicsToVideoItemProtocol
 - (void)itemDidCompleteConversion {
     [self switchRole];
     //准备下一个item的配置

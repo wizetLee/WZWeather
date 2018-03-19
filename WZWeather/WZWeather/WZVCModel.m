@@ -18,15 +18,21 @@
 + (NSArray *)source {
     NSMutableArray *_sources = NSMutableArray.array;
     
+    
+    
+    
     WZVCModel *VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = WZTestViewController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
     VCModel.headline = @"临时测试";
     [_sources addObject:VCModel];
     
+    
+    
     VCModel = WZVCModel.alloc.init;
-    VCModel.VCClass = WZMediaController.class;
-    VCModel.headline = @"拍摄、录像";
+    VCModel.VCClass = Demo_ShaderTestController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    VCModel.headline = @"shader测试";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;
@@ -73,6 +79,7 @@
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
     VCModel.headline = @"视频：视频速率";
     [_sources addObject:VCModel];
+    
     
     VCModel = WZVCModel.alloc.init;
     VCModel.VCClass = Demo_AnimatePageControlViewController.class;

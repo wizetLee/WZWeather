@@ -18,6 +18,11 @@
 		404507F72042714E003A5209 /* Demo_WrapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404507F52042714E003A5209 /* Demo_WrapViewController.m */; };
 		404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404507F62042714E003A5209 /* Demo_WrapViewController.xib */; };
 		40450AE120541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 40450AE020541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m */; };
+		405A8F5A205FE17000A677D1 /* Demo_ShaderTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 405A8F58205FE16F00A677D1 /* Demo_ShaderTestController.m */; };
+		405A8F5B205FE17000A677D1 /* Demo_ShaderTestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F59205FE16F00A677D1 /* Demo_ShaderTestController.xib */; };
+		405A8F5D205FE18B00A677D1 /* ThermalCamera.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F5C205FE18B00A677D1 /* ThermalCamera.fsh */; };
+		405A8F5F205FE19F00A677D1 /* ThermalCamera.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F5E205FE19F00A677D1 /* ThermalCamera.vsh */; };
+		405A8F62205FE6A000A677D1 /* WZThermalCameraFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 405A8F61205FE6A000A677D1 /* WZThermalCameraFilter.m */; };
 		4061405C2046F2630071F636 /* glow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4061405B2046F2620071F636 /* glow.jpg */; };
 		406140602046FC480071F636 /* WZVideoRateAdjustmentTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */; };
 		406140652046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406140632046FE3D0071F636 /* Demo_VideoRateAdjustmentController.m */; };
@@ -300,9 +305,9 @@
 		8456645B1FC811870004BAC1 /* UIWindow+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8456645A1FC811870004BAC1 /* UIWindow+WZMinistrant.m */; };
 		8456645F1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8456645E1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m */; };
 		845664621FC813180004BAC1 /* NSObject+WZMinistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */; };
-		845A4217201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */; };
-		845A421A201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */; };
-		845A421D201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */; };
+		845A4217201EBBAF002D7477 /* WZGraphicsToVideoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A4216201EBBAF002D7477 /* WZGraphicsToVideoTool.m */; };
+		845A421A201EBD59002D7477 /* WZGraphicsToVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A4219201EBD59002D7477 /* WZGraphicsToVideoItem.m */; };
+		845A421D201EBD79002D7477 /* WZGraphicsToVideoFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A421C201EBD79002D7477 /* WZGraphicsToVideoFilter.m */; };
 		845B8FB42020134400242363 /* WZGPUImageMovieWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B8FB32020134400242363 /* WZGPUImageMovieWriter.m */; };
 		845BD8F31EB077F8004AC354 /* WZAFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845BD8F21EB077F8004AC354 /* WZAFNetworkReachabilityManager.m */; };
 		845BD8F51EB07EAB004AC354 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BD8F41EB07EAB004AC354 /* CoreTelephony.framework */; };
@@ -411,7 +416,6 @@
 		8497C42A1EB3465200EB9F60 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8497C4291EB3465200EB9F60 /* NotificationCenter.framework */; };
 		8497C42E1EB3465200EB9F60 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497C42D1EB3465200EB9F60 /* TodayViewController.m */; };
 		8497C4351EB3465200EB9F60 /* WZTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8497C4281EB3465200EB9F60 /* WZTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		849E0F2520494D4100D9502D /* BITransitionTypeSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849E0F2420494D4100D9502D /* BITransitionTypeSelectedView.m */; };
 		84BC81911FCFDF6000FB76BC /* WZMediaRateTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */; };
 		84BED55A203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED558203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.m */; };
 		84BED55B203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BED559203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib */; };
@@ -496,6 +500,13 @@
 		404507F62042714E003A5209 /* Demo_WrapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_WrapViewController.xib; sourceTree = "<group>"; };
 		40450ADF20541BFB003E90C0 /* UIImageView+setImageInDefaultMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+setImageInDefaultMode.h"; sourceTree = "<group>"; };
 		40450AE020541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+setImageInDefaultMode.m"; sourceTree = "<group>"; };
+		405A8F57205FE16F00A677D1 /* Demo_ShaderTestController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_ShaderTestController.h; sourceTree = "<group>"; };
+		405A8F58205FE16F00A677D1 /* Demo_ShaderTestController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_ShaderTestController.m; sourceTree = "<group>"; };
+		405A8F59205FE16F00A677D1 /* Demo_ShaderTestController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_ShaderTestController.xib; sourceTree = "<group>"; };
+		405A8F5C205FE18B00A677D1 /* ThermalCamera.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ThermalCamera.fsh; sourceTree = "<group>"; };
+		405A8F5E205FE19F00A677D1 /* ThermalCamera.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ThermalCamera.vsh; sourceTree = "<group>"; };
+		405A8F60205FE69F00A677D1 /* WZThermalCameraFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZThermalCameraFilter.h; sourceTree = "<group>"; };
+		405A8F61205FE6A000A677D1 /* WZThermalCameraFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZThermalCameraFilter.m; sourceTree = "<group>"; };
 		4061405B2046F2620071F636 /* glow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = glow.jpg; sourceTree = "<group>"; };
 		4061405E2046FC480071F636 /* WZVideoRateAdjustmentTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoRateAdjustmentTool.h; sourceTree = "<group>"; };
 		4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoRateAdjustmentTool.m; sourceTree = "<group>"; };
@@ -1051,12 +1062,12 @@
 		8456645E1FC811AC0004BAC1 /* UIViewController+WZMinistrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+WZMinistrant.m"; sourceTree = "<group>"; };
 		845664601FC813180004BAC1 /* NSObject+WZMinistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WZMinistrant.h"; sourceTree = "<group>"; };
 		845664611FC813180004BAC1 /* NSObject+WZMinistrant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WZMinistrant.m"; sourceTree = "<group>"; };
-		845A4215201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZConvertPhotosIntoVideoTool.h; sourceTree = "<group>"; };
-		845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZConvertPhotosIntoVideoTool.m; sourceTree = "<group>"; };
-		845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZConvertPhotosIntoVideoItem.h; sourceTree = "<group>"; };
-		845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZConvertPhotosIntoVideoItem.m; sourceTree = "<group>"; };
-		845A421B201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZConvertPhotosIntoVideoFilter.h; sourceTree = "<group>"; };
-		845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZConvertPhotosIntoVideoFilter.m; sourceTree = "<group>"; };
+		845A4215201EBBAF002D7477 /* WZGraphicsToVideoTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGraphicsToVideoTool.h; sourceTree = "<group>"; };
+		845A4216201EBBAF002D7477 /* WZGraphicsToVideoTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGraphicsToVideoTool.m; sourceTree = "<group>"; };
+		845A4218201EBD59002D7477 /* WZGraphicsToVideoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGraphicsToVideoItem.h; sourceTree = "<group>"; };
+		845A4219201EBD59002D7477 /* WZGraphicsToVideoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGraphicsToVideoItem.m; sourceTree = "<group>"; };
+		845A421B201EBD79002D7477 /* WZGraphicsToVideoFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGraphicsToVideoFilter.h; sourceTree = "<group>"; };
+		845A421C201EBD79002D7477 /* WZGraphicsToVideoFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGraphicsToVideoFilter.m; sourceTree = "<group>"; };
 		845B8FB22020134400242363 /* WZGPUImageMovieWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZGPUImageMovieWriter.h; sourceTree = "<group>"; };
 		845B8FB32020134400242363 /* WZGPUImageMovieWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZGPUImageMovieWriter.m; sourceTree = "<group>"; };
 		845BD8F11EB077F8004AC354 /* WZAFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZAFNetworkReachabilityManager.h; sourceTree = "<group>"; };
@@ -1235,8 +1246,6 @@
 		8497C42D1EB3465200EB9F60 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		8497C4321EB3465200EB9F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZAppActiveNoticeProtocol.h; sourceTree = "<group>"; };
-		849E0F2320494D4100D9502D /* BITransitionTypeSelectedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BITransitionTypeSelectedView.h; sourceTree = "<group>"; };
-		849E0F2420494D4100D9502D /* BITransitionTypeSelectedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BITransitionTypeSelectedView.m; sourceTree = "<group>"; };
 		84BC818F1FCFDF6000FB76BC /* WZMediaRateTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMediaRateTypeView.h; sourceTree = "<group>"; };
 		84BC81901FCFDF6000FB76BC /* WZMediaRateTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMediaRateTypeView.m; sourceTree = "<group>"; };
 		84BED557203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_ConvertPhotosIntoVideoController.h; sourceTree = "<group>"; };
@@ -1389,6 +1398,20 @@
 				404507F62042714E003A5209 /* Demo_WrapViewController.xib */,
 			);
 			path = "弯曲模型";
+			sourceTree = "<group>";
+		};
+		405A8F56205FE12C00A677D1 /* Shader测试 */ = {
+			isa = PBXGroup;
+			children = (
+				405A8F60205FE69F00A677D1 /* WZThermalCameraFilter.h */,
+				405A8F61205FE6A000A677D1 /* WZThermalCameraFilter.m */,
+				405A8F5C205FE18B00A677D1 /* ThermalCamera.fsh */,
+				405A8F5E205FE19F00A677D1 /* ThermalCamera.vsh */,
+				405A8F57205FE16F00A677D1 /* Demo_ShaderTestController.h */,
+				405A8F58205FE16F00A677D1 /* Demo_ShaderTestController.m */,
+				405A8F59205FE16F00A677D1 /* Demo_ShaderTestController.xib */,
+			);
+			path = "Shader测试";
 			sourceTree = "<group>";
 		};
 		4061405D2046F80A0071F636 /* WZVideoRateAdjustmentTool(视频调速工具) */ = {
@@ -1563,10 +1586,10 @@
 		842FDA7C20477931001F4C7E /* 基于GPUImage */ = {
 			isa = PBXGroup;
 			children = (
-				845A4215201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.h */,
-				845A4216201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m */,
-				845A4218201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.h */,
-				845A4219201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m */,
+				845A4215201EBBAF002D7477 /* WZGraphicsToVideoTool.h */,
+				845A4216201EBBAF002D7477 /* WZGraphicsToVideoTool.m */,
+				845A4218201EBD59002D7477 /* WZGraphicsToVideoItem.h */,
+				845A4219201EBD59002D7477 /* WZGraphicsToVideoItem.m */,
 				84BED562203EB51C00A45A11 /* WZGPUImagePicture.h */,
 				84BED563203EB51C00A45A11 /* WZGPUImagePicture.m */,
 				845B8FB22020134400242363 /* WZGPUImageMovieWriter.h */,
@@ -3187,8 +3210,8 @@
 		8497D0AD20560F6A00A3BAB1 /* filter */ = {
 			isa = PBXGroup;
 			children = (
-				845A421B201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.h */,
-				845A421C201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m */,
+				845A421B201EBD79002D7477 /* WZGraphicsToVideoFilter.h */,
+				845A421C201EBD79002D7477 /* WZGraphicsToVideoFilter.m */,
 				846F271620401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.h */,
 				846F271720401969008E57C1 /* WZBlackWhiteMaskTwoInputFilter.m */,
 				846F2719204019F6008E57C1 /* WZDiffuseTwoInputFilter.h */,
@@ -3228,6 +3251,7 @@
 		84BED555203E746400A45A11 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				405A8F56205FE12C00A677D1 /* Shader测试 */,
 				849E0F0B20491B4000D9502D /* WZAppActiveNoticeProtocol.h */,
 				84CE653A2047F52700E4CA78 /* curnane.mp4 */,
 				846F270F203FF6B7008E57C1 /* 控件 */,
@@ -3252,8 +3276,6 @@
 				84810C08204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h */,
 				84810C09204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.m */,
 				84810C0A204393DE00403FD8 /* Demo_ConvertPhotosIntoVideoUseGPUImageViewController.xib */,
-				849E0F2320494D4100D9502D /* BITransitionTypeSelectedView.h */,
-				849E0F2420494D4100D9502D /* BITransitionTypeSelectedView.m */,
 			);
 			path = "图片转视频";
 			sourceTree = "<group>";
@@ -3419,7 +3441,7 @@
 				TargetAttributes = {
 					846920A21E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = G583SJY324;
+						DevelopmentTeam = S69MK7XEGZ;
 					};
 					846920BB1E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -3431,7 +3453,7 @@
 					};
 					8497C4271EB3465200EB9F60 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = G583SJY324;
+						DevelopmentTeam = S69MK7XEGZ;
 					};
 				};
 			};
@@ -3490,6 +3512,7 @@
 				846A31051FD0E686003CECAE /* message_oeuvre_btn_selected@2x.png in Resources */,
 				84ECD3241FCBA7E400282C9A /* John F. Kennedy.m4a in Resources */,
 				84687CC3202552C00098A596 /* testImage5.jpg in Resources */,
+				405A8F5B205FE17000A677D1 /* Demo_ShaderTestController.xib in Resources */,
 				846A30FD1FD0E686003CECAE /* asset_selectedOrigion_normal@2x.png in Resources */,
 				84ECD32C1FCBA7E400282C9A /* sample_clip2.mov in Resources */,
 				4082B232204BC3DF0046B609 /* newcontent_icon_coins@3x.png in Resources */,
@@ -3530,12 +3553,14 @@
 				84810BF620438B6500403FD8 /* lightCross.png in Resources */,
 				404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
+				405A8F5F205FE19F00A677D1 /* ThermalCamera.vsh in Resources */,
 				84687CC0202552C00098A596 /* testImage3.jpg in Resources */,
 				84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */,
 				84810C0220438BAD00403FD8 /* shader2SampleDefaultV.vsh in Resources */,
 				84687CBC202552C00098A596 /* testImage4.jpg in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
+				405A8F5D205FE18B00A677D1 /* ThermalCamera.fsh in Resources */,
 				84BED55B203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib in Resources */,
 				84810BF820438B8A00403FD8 /* trees-2920264.jpg in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
@@ -3756,6 +3781,7 @@
 				84514D591E9DCE7A00F07EF8 /* UINavigationController+JKKeyboardFix.m in Sources */,
 				84514D801E9DCE7A00F07EF8 /* UIViewController+JKBackButtonItemTitle.m in Sources */,
 				844A484D1E9F657B0002829A /* WZVariousCollectionView.m in Sources */,
+				405A8F62205FE6A000A677D1 /* WZThermalCameraFilter.m in Sources */,
 				84514D291E9DCE7A00F07EF8 /* UIButton+JKBadge.m in Sources */,
 				846A31301FD16337003CECAE /* WZAssetBrowseToolView.m in Sources */,
 				84514D671E9DCE7A00F07EF8 /* UITableView+JKiOS7Style.m in Sources */,
@@ -3797,7 +3823,7 @@
 				8402EB261ECD64A40030CCE1 /* WZVariousBaseMethodObject.m in Sources */,
 				84514D861E9DCE7A00F07EF8 /* UIWebView+JKBlocks.m in Sources */,
 				846227641FD6ACCE00D37FAE /* WZSlider.m in Sources */,
-				845A421D201EBD79002D7477 /* WZConvertPhotosIntoVideoFilter.m in Sources */,
+				845A421D201EBD79002D7477 /* WZGraphicsToVideoFilter.m in Sources */,
 				84514D841E9DCE7A00F07EF8 /* UIViewController+JKStoreKit.m in Sources */,
 				844A484A1E9F657B0002829A /* WZVariousCollectionBaseMethodObject.m in Sources */,
 				84514CF71E9DCE7A00F07EF8 /* NSString+JKBase64.m in Sources */,
@@ -3815,14 +3841,14 @@
 				846920AB1E63BB550048BBDC /* AppDelegate.m in Sources */,
 				84514D481E9DCE7A00F07EF8 /* UIImage+JKOrientation.m in Sources */,
 				84514CBE1E9DCE7A00F07EF8 /* NSManagedObject+JKExtensions.m in Sources */,
-				845A421A201EBD59002D7477 /* WZConvertPhotosIntoVideoItem.m in Sources */,
+				845A421A201EBD59002D7477 /* WZGraphicsToVideoItem.m in Sources */,
 				844F3BDE1EB9E698005E6ACF /* WZTimeSuperviser.m in Sources */,
 				4082B233204BC3DF0046B609 /* SUPCoinsSelector.m in Sources */,
 				84514D0C1E9DCE7A00F07EF8 /* NSURL+JKParam.m in Sources */,
 				84514CCF1E9DCE7A00F07EF8 /* NSDate+JKCupertinoYankee.m in Sources */,
 				84514CD41E9DCE7A00F07EF8 /* NSDate+JKUtilities.m in Sources */,
 				84514CED1E9DCE7A00F07EF8 /* NSObject+JKAutoCoding.m in Sources */,
-				845A4217201EBBAF002D7477 /* WZConvertPhotosIntoVideoTool.m in Sources */,
+				845A4217201EBBAF002D7477 /* WZGraphicsToVideoTool.m in Sources */,
 				845BD8FF1EB08853004AC354 /* CTCarrier+WZCTCarrierInfo.m in Sources */,
 				846A31381FD16337003CECAE /* WZPhotoPickerController.m in Sources */,
 				84514D0D1E9DCE7A00F07EF8 /* NSURL+JKQueryDictionary.m in Sources */,
@@ -3948,8 +3974,8 @@
 				84514CF31E9DCE7A00F07EF8 /* NSObject+JKReflection.m in Sources */,
 				84514CDA1E9DCE7A00F07EF8 /* NSDictionary+JKSafeAccess.m in Sources */,
 				84514D441E9DCE7A00F07EF8 /* UIImage+JKFileName.m in Sources */,
-				849E0F2520494D4100D9502D /* BITransitionTypeSelectedView.m in Sources */,
 				84514D641E9DCE7A00F07EF8 /* UIScrollView+JKPages.m in Sources */,
+				405A8F5A205FE17000A677D1 /* Demo_ShaderTestController.m in Sources */,
 				84514D8A1E9DCE7A00F07EF8 /* UIWebView+JKLoadInfo.m in Sources */,
 				8460F41C2051295700AEC3D2 /* BSactivityDetailAttendViewBlankCell50.m in Sources */,
 				4082B22C204BC3CD0046B609 /* Demo_RoundSelectorController.m in Sources */,
@@ -4130,7 +4156,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = G583SJY324;
+				DEVELOPMENT_TEAM = S69MK7XEGZ;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = WZWeather/Info.plist;
@@ -4149,7 +4175,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = G583SJY324;
+				DEVELOPMENT_TEAM = S69MK7XEGZ;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -4214,7 +4240,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = G583SJY324;
+				DEVELOPMENT_TEAM = S69MK7XEGZ;
 				INFOPLIST_FILE = WZTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -4228,7 +4254,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = G583SJY324;
+				DEVELOPMENT_TEAM = S69MK7XEGZ;
 				INFOPLIST_FILE = WZTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

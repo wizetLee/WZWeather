@@ -1,5 +1,5 @@
 //
-//  WZConvertPhotosIntoVideoFilter.h
+//  WZGraphicsToVideoFilter.h
 //  WZWeather
 //
 //  Created by admin on 29/1/18.
@@ -10,7 +10,7 @@
 
 
 extern NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString;
-@interface WZConvertPhotosIntoVideoFilter : GPUImageFilter
+@interface WZGraphicsToVideoFilter : GPUImageFilter
 {
     GPUImageFramebuffer *secondInputFramebuffer;
     

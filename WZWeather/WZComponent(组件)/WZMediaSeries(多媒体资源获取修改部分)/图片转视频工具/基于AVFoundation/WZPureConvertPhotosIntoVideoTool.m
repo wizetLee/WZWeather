@@ -108,7 +108,7 @@
     {//文件部分
         if (_outputURL && [_outputURL isFileURL]) {} else {
             //使用自定义的路径
-            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZConvertPhotosIntoVideoTool.mov"];
+            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject stringByAppendingPathComponent:@"WZGraphicsToVideoTool.mov"];
             _outputURL = [NSURL fileURLWithPath:filePath];
         }
         
@@ -159,8 +159,8 @@
     _status = WZPureConvertPhotosIntoVideoToolStatus_Completed;
     [_videoInput markAsFinished];
     [_writer finishWritingWithCompletionHandler:^{
-        if ([_delegate respondsToSelector:@selector(pureconvertPhotosInotViewToolTaskFinished)]) {
-            [_delegate pureconvertPhotosInotViewToolTaskFinished];
+        if ([_delegate respondsToSelector:@selector(puregraphicsToVideoToolTaskFinished)]) {
+            [_delegate puregraphicsToVideoToolTaskFinished];
         }
     }];
     
@@ -269,8 +269,8 @@
                 //时间根据帧率递增，调整当前的进度时间
                 _currentProgressTime = CMTimeAdd(_currentProgressTime, _frameRate);//时间递增
                 
-                if ([_delegate respondsToSelector:@selector(pureConvertPhotosInotViewTool:addedFrameCount:)]) {
-                    [_delegate pureConvertPhotosInotViewTool:self addedFrameCount:_addedFrameCount];
+                if ([_delegate respondsToSelector:@selector(puregraphicsToVideoTool:addedFrameCount:)]) {
+                    [_delegate puregraphicsToVideoTool:self addedFrameCount:_addedFrameCount];
                 }
             }
             CVPixelBufferUnlockBaseAddress(buffer, 0);
@@ -327,7 +327,7 @@
     }
 }
 
-#pragma mark - WZConvertPhotosIntoVideoItemProtocol
+#pragma mark - WZGraphicsToVideoItemProtocol
 - (void)itemDidCompleteConversion {
     [self cleanCache];
 }

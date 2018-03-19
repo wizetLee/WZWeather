@@ -7,12 +7,12 @@
 //
 
 #import "Demo_ConvertPhotosIntoVideoUseGPUImageViewController.h"
-#import "WZConvertPhotosIntoVideoTool.h"
+#import "WZGraphicsToVideoTool.h"
 #import "WZVideoSurfAlert.h"
 
 @interface Demo_ConvertPhotosIntoVideoUseGPUImageViewController ()
 {
-    WZConvertPhotosIntoVideoTool *tool;
+    WZGraphicsToVideoTool *tool;
     NSMutableArray *sources;
 }
 
@@ -29,7 +29,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    if (tool.status == WZConvertPhotosIntoVideoToolStatus_Converting) {
+    if (tool.status == WZGraphicsToVideoToolStatus_Converting) {
         [tool cancelWriting];
     }
     tool = nil;
@@ -38,8 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    tool = [[WZConvertPhotosIntoVideoTool alloc] initWithOutputURL:nil outputSize:CGSizeMake(640, 1136) frameRate:CMTimeMake(1.0, 30.0)];
-    tool.delegate = (id<WZConvertPhotosIntoVideoToolProtocol>)self;
+    tool = [[WZGraphicsToVideoTool alloc] initWithOutputURL:nil outputSize:CGSizeMake(640, 1136) frameRate:CMTimeMake(1.0, 30.0)];
+    tool.delegate = (id<WZGraphicsToVideoToolProtocol>)self;
     
     sources = [NSMutableArray array];
     for (NSUInteger i = 0; i < 8; i++) {
@@ -62,7 +62,7 @@
 #pragma mark - WZAnimatePageControlProtocol
 
 //写入完成的回调
-- (void)convertPhotosInotViewToolTaskFinished {
+- (void)graphicsToVideoToolTaskFinished {
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -76,7 +76,7 @@
 }
 
 //转换进度
-- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress {
+- (void)graphicsToVideoTool:(WZGraphicsToVideoTool *)tool progress:(CGFloat)progress {
     _progressLabel.text = [NSString stringWithFormat:@"当前进度：%lf", progress];
 }
 
@@ -94,12 +94,12 @@
     NSArray <NSDictionary *>*source = [self.class alertSource];
     NSUInteger count = source.count;
     for (NSUInteger i = 0; i < count; i++) {
-        if (i == WZConvertPhotosIntoVideoType_Blur
-            || i == WZConvertPhotosIntoVideoType_RToL_Blinds_Gradually
-            || i == WZConvertPhotosIntoVideoType_TToB_Blinds_Gradually
-            || i == WZConvertPhotosIntoVideoType_BToT_Blinds_Gradually
-            || i == WZConvertPhotosIntoVideoType_Star
-            || i == WZConvertPhotosIntoVideoType_Glow
+        if (i == WZGraphicsToVideoType_Blur
+            || i == WZGraphicsToVideoType_RToL_Blinds_Gradually
+            || i == WZGraphicsToVideoType_TToB_Blinds_Gradually
+            || i == WZGraphicsToVideoType_BToT_Blinds_Gradually
+            || i == WZGraphicsToVideoType_Star
+            || i == WZGraphicsToVideoType_Glow
             ) {continue;}
         NSDictionary *dic = source[i];
         NSString *value = dic[[NSString stringWithFormat:@"%lu", (unsigned long)i]];
@@ -120,7 +120,7 @@
     NSUInteger index = sender.tag - 100;
      if (tool.transitionNodeMarr.count > index) {
          
-         WZConvertPhotosIntoVideoItem *item = tool.transitionNodeMarr[index];
+         WZGraphicsToVideoItem *item = tool.transitionNodeMarr[index];
          item.transitionType = (int)type;//类型
          
          NSString *title = [self.class alertSource][type][[NSString stringWithFormat:@"%lu", (unsigned long)type]];

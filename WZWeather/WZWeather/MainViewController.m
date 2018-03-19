@@ -11,7 +11,7 @@
 #import "WZSystemDetails.h"
 #import "WZCameraAssist.h"
 #import "WZVCModel.h"
-
+#import "WZHttpRequest+WZWeather.h"
 @interface MainViewController ()
 
 @property (nonatomic, strong) UITableView *table;
@@ -21,6 +21,24 @@
 
 @implementation MainViewController
 
+int wzxxxx = 9;//已初始化的全局变量是强符号
+int wzxxxx;
+int wzxxxx;// 并不出错 , 因为未初始化的全局变量是弱符号
+/**
+ 导出符号， 在本模块定义， 能够被其他模块引用的符号。 非static全局函数， 非static全局变量。
+ 导入符号， 在其他模块定义，被本模块引用的符号。  extern 修饰的全局非static变量声明（extern int a）， 其他模块的函数引用
+ （外部符号（导入符号）： 本模块未定义却被本模块引用的符号）
+ 静态符号， 在本模块定义， 只能被本模块引用的符号。 static函数， static全局变量。
+ 局部符号， 在函数内部定义的非static变量。不出现在符号表，由栈管理。链接器不care这类符号
+ 
+ 链接器的规则、P468
+ 1、不允许有多个同名的强符号
+ 2、如果有一个强符号和多个弱符号同名，那么选择强符号
+ 3、如果有多个弱符号同名，则从这些弱符号中选取任意一个
+ */
+
+
+
 #pragma mark - VC Lifecycle
 - (void)dealloc { }
 
@@ -28,6 +46,10 @@
     [super viewDidLoad];
     self.title = @"导航栏";
 
+//    [WZHttpRequest requestBaiSiBuDeJieWithType:WZBaiSiBuDeJieType_video title:@"视频" page:1 SerializationResult:^(id  _Nullable result, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+//        
+//    }];
+    
     //数据
     _sources = [WZVCModel source];
     //view
@@ -41,6 +63,8 @@
             [WZCameraAssist showAlertByVC:self];
         }
     }];
+    
+   
 }
 
 - (void)viewDidAppear:(BOOL)animated {

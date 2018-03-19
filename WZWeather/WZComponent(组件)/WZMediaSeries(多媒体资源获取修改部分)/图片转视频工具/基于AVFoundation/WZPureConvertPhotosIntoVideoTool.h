@@ -22,9 +22,9 @@ typedef NS_ENUM(NSUInteger, WZPureConvertPhotosIntoVideoToolStatus) {
 @protocol WZPureConvertPhotosIntoVideoToolProtocol <NSObject>
 
 //写入完成的回调
-- (void)pureconvertPhotosInotViewToolTaskFinished;
+- (void)puregraphicsToVideoToolTaskFinished;
 
-- (void)pureConvertPhotosInotViewTool:(WZPureConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount;
+- (void)puregraphicsToVideoTool:(WZPureConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount;
 
 @end
 

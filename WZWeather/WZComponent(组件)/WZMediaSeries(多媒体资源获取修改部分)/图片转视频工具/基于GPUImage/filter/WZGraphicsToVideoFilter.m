@@ -1,12 +1,12 @@
 //
-//  WZConvertPhotosIntoVideoFilter.m
+//  WZGraphicsToVideoFilter.m
 //  WZWeather
 //
 //  Created by admin on 29/1/18.
 //  Copyright © 2018年 WZ. All rights reserved.
 //
 
-#import "WZConvertPhotosIntoVideoFilter.h"
+#import "WZGraphicsToVideoFilter.h"
 #import <GLKit/GLKit.h>
 #define kMax_Undulated_Count 10
 #define kMax_UndulatedCouple_Count ((kMax_Undulated_Count * 2 + 1) * 2)
@@ -29,7 +29,7 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
  );
 
 
-@interface WZConvertPhotosIntoVideoFilter()
+@interface WZGraphicsToVideoFilter()
 {
     
     //百叶窗部分
@@ -41,7 +41,7 @@ NSString *const kGPUImageWZConvertPhotosIntoVideoTextureVertexShaderString = SHA
 
 @end
 
-@implementation WZConvertPhotosIntoVideoFilter
+@implementation WZGraphicsToVideoFilter
 
 #pragma mark -
 #pragma mark Initialization and teardown

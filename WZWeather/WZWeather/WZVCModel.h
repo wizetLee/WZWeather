@@ -26,7 +26,7 @@
 #import "Demo_RateViewController.h"
 #import "Demo_RoundSelectorController.h"
 #import "WZDownloadController.h"
-
+#import "Demo_ShaderTestController.h"
 
 typedef NS_ENUM(NSUInteger, WZVCModelTransitionType) {
     WZVCModelTransitionType_Custom,

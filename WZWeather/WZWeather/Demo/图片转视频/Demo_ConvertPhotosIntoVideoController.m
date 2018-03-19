@@ -94,7 +94,7 @@
 }
 
 #pragma mark - WZPureConvertPhotosIntoVideoToolProtocol
-- (void)pureconvertPhotosInotViewToolTaskFinished {
+- (void)puregraphicsToVideoToolTaskFinished {
     NSLog(@"%s", __func__);
     if ([[NSFileManager defaultManager] fileExistsAtPath:tool.outputURL.path]) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -106,7 +106,7 @@
         });
     }
 }
-- (void)pureConvertPhotosInotViewTool:(WZPureConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount {
+- (void)puregraphicsToVideoTool:(WZPureConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount {
     //主线程
     _addedFrameCountLabel.text = [NSString stringWithFormat:@"已添加%ld帧", addedFrameCount];
 }

@@ -1,5 +1,5 @@
 //
-//  WZConvertPhotosIntoVideoTool.h
+//  WZGraphicsToVideoTool.h
 //  WZWeather
 //
 //  Created by admin on 29/1/18.
@@ -8,35 +8,35 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CoreMedia.h>
-#import "WZConvertPhotosIntoVideoItem.h"
-#import "WZConvertPhotosIntoVideoFilter.h"
+#import "WZGraphicsToVideoItem.h"
+#import "WZGraphicsToVideoFilter.h"
 
-typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
-    WZConvertPhotosIntoVideoToolStatus_Idle             = 0,
-    WZConvertPhotosIntoVideoToolStatus_Ready,
-    WZConvertPhotosIntoVideoToolStatus_Completed,
-    WZConvertPhotosIntoVideoToolStatus_Failed,
-    WZConvertPhotosIntoVideoToolStatus_Canceled,
-    WZConvertPhotosIntoVideoToolStatus_Converting,
+typedef NS_ENUM(NSUInteger, WZGraphicsToVideoToolStatus) {
+    WZGraphicsToVideoToolStatus_Idle             = 0,
+    WZGraphicsToVideoToolStatus_Ready,
+    WZGraphicsToVideoToolStatus_Completed,
+    WZGraphicsToVideoToolStatus_Failed,
+    WZGraphicsToVideoToolStatus_Canceled,
+    WZGraphicsToVideoToolStatus_Converting,
 };
 
-@class WZConvertPhotosIntoVideoTool;
-@protocol WZConvertPhotosIntoVideoToolProtocol <NSObject>
+@class WZGraphicsToVideoTool;
+@protocol WZGraphicsToVideoToolProtocol <NSObject>
 
 //转换进度
-- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool progress:(CGFloat)progress;
+- (void)graphicsToVideoTool:(WZGraphicsToVideoTool *)tool progress:(CGFloat)progress;
 
 //已添加的帧数
-- (void)convertPhotosInotViewTool:(WZConvertPhotosIntoVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount;
+- (void)graphicsToVideoTool:(WZGraphicsToVideoTool *)tool addedFrameCount:(NSUInteger)addedFrameCount;
 
 //写入完成的回调
-- (void)convertPhotosInotViewToolTaskFinished;
+- (void)graphicsToVideoToolTaskFinished;
 
 //canceled
-- (void)convertPhotosInotViewToolTaskCanceled;
+- (void)graphicsToVideoToolTaskCanceled;
 
 //fail
-//- (void)convertPhotosInotViewToolTaskFailed;
+//- (void)GraphicsToVideoToolTaskFailed;
 
 @end
 
@@ -59,10 +59,10 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
  
  */
 
-@interface WZConvertPhotosIntoVideoTool : NSObject 
+@interface WZGraphicsToVideoTool : NSObject 
 
-@property (nonatomic,   weak) id <WZConvertPhotosIntoVideoToolProtocol> delegate;
-@property (nonatomic, assign, readonly) WZConvertPhotosIntoVideoToolStatus status;
+@property (nonatomic,   weak) id <WZGraphicsToVideoToolProtocol> delegate;
+@property (nonatomic, assign, readonly) WZGraphicsToVideoToolStatus status;
 
 ///是否应该封闭这些接口
 @property (nonatomic, strong, readonly) NSURL *outputURL;
@@ -80,7 +80,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 @property (nonatomic, assign) CMTime limitedTime;   //限制的录制时间 it is useful when (timeIsLimited==true)
 
 @property (nonatomic, strong, readonly) NSArray <UIImage *>*sources;  //数据源
-@property (nonatomic, strong, readonly) NSMutableArray <WZConvertPhotosIntoVideoItem *>*transitionNodeMarr;
+@property (nonatomic, strong, readonly) NSMutableArray <WZGraphicsToVideoItem *>*transitionNodeMarr;
 
 - (void)prepareTaskWithPictureSources:(NSArray <UIImage *>*)pictureSources;
 
@@ -91,7 +91,7 @@ typedef NS_ENUM(NSUInteger, WZConvertPhotosIntoVideoToolStatus) {
 - (void)cancelWriting;              //取消
 
 
-#pragma mark - 以下为未完成
+#pragma mark - 未完成
 //- (void)needAudioInput:(BOOL)boolean;       //是否用音频  在ready状态之前设置好
 
 

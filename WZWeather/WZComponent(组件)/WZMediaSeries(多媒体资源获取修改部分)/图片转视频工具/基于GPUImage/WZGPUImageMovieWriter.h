@@ -1,23 +1,18 @@
-//
-//  WZGPUImageMovieWriter.h
-//  WZWeather
-//
-//  Created by wizet on 30/1/18.
-//  Copyright © 2018年 WZ. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
-#import <GPUImage/GPUImage.h>
+#import <AVFoundation/AVFoundation.h>
+#import "GPUImageContext.h"
 
-@protocol WZGPUImageMovieWriterProtocol
+extern NSString *const WZkGPUImageColorSwizzlingFragmentShaderString;
 
-//结束
+@protocol WZGPUImageMovieWriterDelegate <NSObject>
 
-//失败
+@optional
+- (void)movieRecordingCompleted;
+- (void)movieRecordingFailedWithError:(NSError*)error;
 
 @end
 
-@interface WZGPUImageMovieWriter : NSObject<GPUImageInput>
+@interface WZGPUImageMovieWriter : NSObject <GPUImageInput>
 {
     BOOL alreadyFinishedRecording;
     
@@ -36,5 +31,38 @@
     GPUImageRotationMode inputRotation;             //方向
 }
 
+@property(readwrite, nonatomic) BOOL hasAudioTrack;                             //音轨
+@property(readwrite, nonatomic) BOOL shouldPassthroughAudio;                    //是否使用直通流（也就是不修改音频的格式等配置）
+@property(readwrite, nonatomic) BOOL shouldInvalidateAudioSampleWhenDone;       //完成时使音频无效
+@property(nonatomic, copy) void(^completionBlock)(void);                        //录制完成的回调
+@property(nonatomic, copy) void(^failureBlock)(NSError*);                       //录制失败的回调
+@property(nonatomic, assign) id<WZGPUImageMovieWriterDelegate> delegate;
+@property(readwrite, nonatomic) BOOL encodingLiveVideo;                         //实时的视频编码
+@property(nonatomic, copy) BOOL(^videoInputReadyCallback)(void);                //
+@property(nonatomic, copy) BOOL(^audioInputReadyCallback)(void);                //
+@property(nonatomic, copy) void(^audioProcessingCallback)(SInt16 **samplesRef, CMItemCount numSamplesInBuffer);                                                        //处理回调
+@property(nonatomic) BOOL enabled;                                              //是否接通链 ，由链上方
+@property(nonatomic, readonly) AVAssetWriter *assetWriter;                      //writer
+@property(nonatomic, readonly) CMTime duration;                                 //读取持续时间
+@property(nonatomic, assign) CGAffineTransform transform;                       //设置方向
+@property(nonatomic, copy) NSArray *metaData;                                   //元数据(AVMetadataItem)
+@property(nonatomic, assign, getter = isPaused) BOOL paused;                    //是否暂停（使线程睡眠）
+@property(nonatomic, retain) GPUImageContext *movieWriterContext;               //上下文
+
+// Initialization and teardown
+- (id)initWithMovieURL:(NSURL *)newMovieURL size:(CGSize)newSize;
+- (id)initWithMovieURL:(NSURL *)newMovieURL size:(CGSize)newSize fileType:(NSString *)newFileType outputSettings:(NSDictionary *)outputSettings;
+
+- (void)setHasAudioTrack:(BOOL)hasAudioTrack audioSettings:(NSDictionary *)audioOutputSettings;
+
+// Movie recording
+- (void)startRecording;
+- (void)startRecordingInOrientation:(CGAffineTransform)orientationTransform;
+- (void)finishRecording;
+- (void)finishRecordingWithCompletionHandler:(void (^)(void))handler;
+- (void)cancelRecording;
+- (void)processAudioBuffer:(CMSampleBufferRef)audioBuffer;
+- (void)enableSynchronizationCallbacks;
 
 @end
+
