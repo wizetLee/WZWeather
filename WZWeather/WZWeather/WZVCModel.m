@@ -33,6 +33,17 @@
     VCModel.VCClass = Demo_ShaderTestController.class;
     VCModel.type = WZVCModelTransitionType_Push_FromNib;
     VCModel.headline = @"shader测试";
+    
+    [_sources addObject:VCModel];
+       VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = WZMediaController.class;
+    VCModel.headline = @"拍摄、录像";
+    [_sources addObject:VCModel];
+    
+    VCModel = WZVCModel.alloc.init;
+    VCModel.VCClass = Demo_ShaderTestController.class;
+    VCModel.type = WZVCModelTransitionType_Push_FromNib;
+    VCModel.headline = @"shader测试";
     [_sources addObject:VCModel];
     
     VCModel = WZVCModel.alloc.init;

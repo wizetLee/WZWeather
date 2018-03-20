@@ -10,6 +10,7 @@
 #import <GPUImage/GPUImage.h>
 #import "GPUImageTrillColorOffsetFilter.h"
 #import "GPUImageBeautifyFilter.h"
+#import "WZThermalCameraFilter.h"
 
 @class WZMediaEffectShow;
 @interface WZMediaEffectShowCell : UICollectionViewCell

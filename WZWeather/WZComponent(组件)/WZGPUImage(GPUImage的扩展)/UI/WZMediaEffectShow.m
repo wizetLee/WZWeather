@@ -134,6 +134,10 @@
     
     filter = [[GPUImageBeautifyFilter alloc] init];
     [self key:@"美颜" value:filter];
+    
+    
+    filter = [[WZThermalCameraFilter alloc] init];
+    [self key:@"热效应" value:filter];
 //    //饱和度
 //     filter = [[GPUImageSaturationFilter alloc] init];
 //     [self key:@"饱和度" value:filter];
@@ -926,6 +930,8 @@
 //        [_slider setMinimumValue:0.0];
 //        [_slider setMaximumValue:0.1];
 //        ((GPUImageBeautifyFilter *)filter).initialize = _slider.value;
+    } else if ([filter isKindOfClass:WZThermalCameraFilter.class]) {
+        
     }
 }
 
