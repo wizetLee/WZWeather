@@ -20,8 +20,8 @@
 		40450AE120541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 40450AE020541BFB003E90C0 /* UIImageView+setImageInDefaultMode.m */; };
 		405A8F5A205FE17000A677D1 /* Demo_ShaderTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 405A8F58205FE16F00A677D1 /* Demo_ShaderTestController.m */; };
 		405A8F5B205FE17000A677D1 /* Demo_ShaderTestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F59205FE16F00A677D1 /* Demo_ShaderTestController.xib */; };
-		405A8F5D205FE18B00A677D1 /* ThermalCamera.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F5C205FE18B00A677D1 /* ThermalCamera.fsh */; };
-		405A8F5F205FE19F00A677D1 /* ThermalCamera.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F5E205FE19F00A677D1 /* ThermalCamera.vsh */; };
+		405A8F5D205FE18B00A677D1 /* WZThermalCamera.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F5C205FE18B00A677D1 /* WZThermalCamera.fsh */; };
+		405A8F5F205FE19F00A677D1 /* WZThermalCamera.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 405A8F5E205FE19F00A677D1 /* WZThermalCamera.vsh */; };
 		405A8F62205FE6A000A677D1 /* WZThermalCameraFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 405A8F61205FE6A000A677D1 /* WZThermalCameraFilter.m */; };
 		4061405C2046F2630071F636 /* glow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4061405B2046F2620071F636 /* glow.jpg */; };
 		406140602046FC480071F636 /* WZVideoRateAdjustmentTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4061405F2046FC480071F636 /* WZVideoRateAdjustmentTool.m */; };
@@ -30,6 +30,10 @@
 		4078BC8B2048435900FDE851 /* Demo_VideoTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4078BC892048435900FDE851 /* Demo_VideoTransitionController.m */; };
 		4078BC8C2048435900FDE851 /* Demo_VideoTransitionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4078BC8A2048435900FDE851 /* Demo_VideoTransitionController.xib */; };
 		4078BC8F2048455400FDE851 /* WZVideoFramesTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4078BC8E2048455400FDE851 /* WZVideoFramesTool.m */; };
+		407AA4692060B588008E2DBC /* WZMultiPassGaussianBlurFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 407AA4682060B588008E2DBC /* WZMultiPassGaussianBlurFilter.m */; };
+		407AA46A2060E4A8008E2DBC /* WZMultiPassGaussianBlur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 407AA4632060A7CE008E2DBC /* WZMultiPassGaussianBlur.fsh */; };
+		407AA46B2060E4A8008E2DBC /* WZMultiPassGaussianBlur.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 407AA4652060A819008E2DBC /* WZMultiPassGaussianBlur.vsh */; };
+		407AA5AB20614DA6008E2DBC /* WZAnisotropicBlur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 407AA5AA20614DA6008E2DBC /* WZAnisotropicBlur.fsh */; };
 		407EC740204591E1001C065E /* Demo_VideoReversalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC73A204591E0001C065E /* Demo_VideoReversalController.m */; };
 		407EC742204591E1001C065E /* Demo_VideoReversalController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */; };
 		407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 407EC74720459529001C065E /* WZVideoReversalTool.m */; };
@@ -503,8 +507,8 @@
 		405A8F57205FE16F00A677D1 /* Demo_ShaderTestController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo_ShaderTestController.h; sourceTree = "<group>"; };
 		405A8F58205FE16F00A677D1 /* Demo_ShaderTestController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_ShaderTestController.m; sourceTree = "<group>"; };
 		405A8F59205FE16F00A677D1 /* Demo_ShaderTestController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_ShaderTestController.xib; sourceTree = "<group>"; };
-		405A8F5C205FE18B00A677D1 /* ThermalCamera.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ThermalCamera.fsh; sourceTree = "<group>"; };
-		405A8F5E205FE19F00A677D1 /* ThermalCamera.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ThermalCamera.vsh; sourceTree = "<group>"; };
+		405A8F5C205FE18B00A677D1 /* WZThermalCamera.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = WZThermalCamera.fsh; sourceTree = "<group>"; };
+		405A8F5E205FE19F00A677D1 /* WZThermalCamera.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = WZThermalCamera.vsh; sourceTree = "<group>"; };
 		405A8F60205FE69F00A677D1 /* WZThermalCameraFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZThermalCameraFilter.h; sourceTree = "<group>"; };
 		405A8F61205FE6A000A677D1 /* WZThermalCameraFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZThermalCameraFilter.m; sourceTree = "<group>"; };
 		4061405B2046F2620071F636 /* glow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = glow.jpg; sourceTree = "<group>"; };
@@ -518,6 +522,11 @@
 		4078BC8A2048435900FDE851 /* Demo_VideoTransitionController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Demo_VideoTransitionController.xib; sourceTree = "<group>"; };
 		4078BC8D2048455400FDE851 /* WZVideoFramesTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZVideoFramesTool.h; sourceTree = "<group>"; };
 		4078BC8E2048455400FDE851 /* WZVideoFramesTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZVideoFramesTool.m; sourceTree = "<group>"; };
+		407AA4632060A7CE008E2DBC /* WZMultiPassGaussianBlur.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = WZMultiPassGaussianBlur.fsh; sourceTree = "<group>"; };
+		407AA4652060A819008E2DBC /* WZMultiPassGaussianBlur.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = WZMultiPassGaussianBlur.vsh; sourceTree = "<group>"; };
+		407AA4672060B588008E2DBC /* WZMultiPassGaussianBlurFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WZMultiPassGaussianBlurFilter.h; sourceTree = "<group>"; };
+		407AA4682060B588008E2DBC /* WZMultiPassGaussianBlurFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZMultiPassGaussianBlurFilter.m; sourceTree = "<group>"; };
+		407AA5AA20614DA6008E2DBC /* WZAnisotropicBlur.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = WZAnisotropicBlur.fsh; sourceTree = "<group>"; };
 		407EC73A204591E0001C065E /* Demo_VideoReversalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo_VideoReversalController.m; sourceTree = "<group>"; };
 		407EC73C204591E0001C065E /* Demo_VideoReversalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo_VideoReversalController.h; sourceTree = "<group>"; };
 		407EC73D204591E0001C065E /* Demo_VideoReversalController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Demo_VideoReversalController.xib; sourceTree = "<group>"; };
@@ -1403,10 +1412,15 @@
 		405A8F56205FE12C00A677D1 /* Shader测试 */ = {
 			isa = PBXGroup;
 			children = (
+				407AA5AA20614DA6008E2DBC /* WZAnisotropicBlur.fsh */,
 				405A8F60205FE69F00A677D1 /* WZThermalCameraFilter.h */,
 				405A8F61205FE6A000A677D1 /* WZThermalCameraFilter.m */,
-				405A8F5C205FE18B00A677D1 /* ThermalCamera.fsh */,
-				405A8F5E205FE19F00A677D1 /* ThermalCamera.vsh */,
+				405A8F5C205FE18B00A677D1 /* WZThermalCamera.fsh */,
+				405A8F5E205FE19F00A677D1 /* WZThermalCamera.vsh */,
+				407AA4672060B588008E2DBC /* WZMultiPassGaussianBlurFilter.h */,
+				407AA4682060B588008E2DBC /* WZMultiPassGaussianBlurFilter.m */,
+				407AA4632060A7CE008E2DBC /* WZMultiPassGaussianBlur.fsh */,
+				407AA4652060A819008E2DBC /* WZMultiPassGaussianBlur.vsh */,
 				405A8F57205FE16F00A677D1 /* Demo_ShaderTestController.h */,
 				405A8F58205FE16F00A677D1 /* Demo_ShaderTestController.m */,
 				405A8F59205FE16F00A677D1 /* Demo_ShaderTestController.xib */,
@@ -3483,6 +3497,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				407AA46A2060E4A8008E2DBC /* WZMultiPassGaussianBlur.fsh in Resources */,
+				407AA46B2060E4A8008E2DBC /* WZMultiPassGaussianBlur.vsh in Resources */,
 				84CE653B2047F57E00E4CA78 /* curnane.mp4 in Resources */,
 				8462274A1FD62A0200D37FAE /* wallpaper5.jpeg in Resources */,
 				84891703204D24EB00A74073 /* bigDarkStar@3x.png in Resources */,
@@ -3494,6 +3510,7 @@
 				84ECD3251FCBA7E400282C9A /* Ronald Reagan.m4a in Resources */,
 				4082B221204BB99A0046B609 /* Demo_RateViewController.xib in Resources */,
 				8405474F1FB97A280033EF9B /* CustomFilter.fsh in Resources */,
+				407AA5AB20614DA6008E2DBC /* WZAnisotropicBlur.fsh in Resources */,
 				84ECD32B1FCBA7E400282C9A /* sample_clip1.m4v in Resources */,
 				8405474D1FB97A280033EF9B /* mask.png in Resources */,
 				84687CBD202552C00098A596 /* testImage7.jpg in Resources */,
@@ -3553,14 +3570,14 @@
 				84810BF620438B6500403FD8 /* lightCross.png in Resources */,
 				404507F82042714E003A5209 /* Demo_WrapViewController.xib in Resources */,
 				8462274E1FD62A0200D37FAE /* wallpaper4.jpeg in Resources */,
-				405A8F5F205FE19F00A677D1 /* ThermalCamera.vsh in Resources */,
+				405A8F5F205FE19F00A677D1 /* WZThermalCamera.vsh in Resources */,
 				84687CC0202552C00098A596 /* testImage3.jpg in Resources */,
 				84135BAE202145CA005B2905 /* WZTestViewController.xib in Resources */,
 				84810C0220438BAD00403FD8 /* shader2SampleDefaultV.vsh in Resources */,
 				84687CBC202552C00098A596 /* testImage4.jpg in Resources */,
 				846A31031FD0E686003CECAE /* message_oeuvre_btn_normal@2x.png in Resources */,
 				846A31011FD0E686003CECAE /* imagesBrowse_back@2x.png in Resources */,
-				405A8F5D205FE18B00A677D1 /* ThermalCamera.fsh in Resources */,
+				405A8F5D205FE18B00A677D1 /* WZThermalCamera.fsh in Resources */,
 				84BED55B203E74BD00A45A11 /* Demo_ConvertPhotosIntoVideoController.xib in Resources */,
 				84810BF820438B8A00403FD8 /* trees-2920264.jpg in Resources */,
 				84ECD3291FCBA7E400282C9A /* 04_quasar.mp4 in Resources */,
@@ -3764,6 +3781,7 @@
 				846A313A1FD16337003CECAE /* WZMediaFetcher.m in Sources */,
 				84514CC61E9DCE7A00F07EF8 /* NSBundle+JKAppIcon.m in Sources */,
 				84514CC81E9DCE7A00F07EF8 /* NSData+JKBase64.m in Sources */,
+				407AA4692060B588008E2DBC /* WZMultiPassGaussianBlurFilter.m in Sources */,
 				84514D201E9DCE7A00F07EF8 /* UIApplication+JKPermissions.m in Sources */,
 				840547561FB9A9380033EF9B /* WZToast.m in Sources */,
 				40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */,

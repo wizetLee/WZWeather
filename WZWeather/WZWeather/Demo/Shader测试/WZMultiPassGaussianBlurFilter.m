@@ -1,19 +1,19 @@
 //
-//  WZThermalCameraFilter.m
+//  WZMultiPassGaussianBlurFilter.m
 //  WZWeather
 //
-//  Created by 李炜钊 on 2018/3/19.
+//  Created by 李炜钊 on 2018/3/20.
 //  Copyright © 2018年 WZ. All rights reserved.
 //
 
-#import "WZThermalCameraFilter.h"
+#import "WZMultiPassGaussianBlurFilter.h"
 
-@implementation WZThermalCameraFilter
+@implementation WZMultiPassGaussianBlurFilter
 
 - (id)init {
-    NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZThermalCamera" ofType:@"fsh"];
+    NSString *fragmentShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZMultiPassGaussianBlur" ofType:@"fsh"];
     NSString *fragmentShaderString = [NSString stringWithContentsOfFile:fragmentShaderPathname encoding:NSUTF8StringEncoding error:nil];
-    NSString *vertexShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZThermalCamera" ofType:@"vsh"];
+    NSString *vertexShaderPathname = [[NSBundle mainBundle] pathForResource:@"WZMultiPassGaussianBlur" ofType:@"vsh"];
     NSString *vertexShaderString = [NSString stringWithContentsOfFile:vertexShaderPathname encoding:NSUTF8StringEncoding error:nil];
     if (self = [super initWithVertexShaderFromString:vertexShaderString fragmentShaderFromString:fragmentShaderString])
     {
