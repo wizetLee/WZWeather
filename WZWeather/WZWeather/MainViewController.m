@@ -37,17 +37,16 @@ int wzxxxx;// 并不出错 , 因为未初始化的全局变量是弱符号
  3、如果有多个弱符号同名，则从这些弱符号中选取任意一个
  */
 
-
-
 #pragma mark - VC Lifecycle
 - (void)dealloc { }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"导航栏";
-
+//    [WZHttpRequest requestBiYingWallpaperSerializationResult:^(id  _Nullable result, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
+//        NSLog(@"%@", result);
+//    }];
 //    [WZHttpRequest requestBaiSiBuDeJieWithType:WZBaiSiBuDeJieType_video title:@"视频" page:1 SerializationResult:^(id  _Nullable result, BOOL isDictionaty, BOOL isArray, BOOL mismatching, NSError * _Nullable error) {
-//        
 //    }];
     
     //数据
@@ -64,7 +63,6 @@ int wzxxxx;// 并不出错 , 因为未初始化的全局变量是弱符号
         }
     }];
     
-   
 }
 
 - (void)viewDidAppear:(BOOL)animated {

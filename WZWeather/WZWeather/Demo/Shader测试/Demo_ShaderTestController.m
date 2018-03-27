@@ -25,8 +25,8 @@
     
     GPUImagePicture *pic = [[GPUImagePicture alloc] initWithImage:image];
     WZThermalCameraFilter *filter = WZThermalCameraFilter.alloc.init;
-//    filter = GPUImageSepiaFilter.alloc.init;
-    WZMultiPassGaussianBlurFilter *blurFilter = WZMultiPassGaussianBlurFilter.alloc.init;
+    filter = WZThermalCameraFilter.alloc.init;
+//    WZMultiPassGaussianBlurFilter *blurFilter = WZMultiPassGaussianBlurFilter.alloc.init;
     [pic addTarget:filter];
     [filter addTarget:present];
     
