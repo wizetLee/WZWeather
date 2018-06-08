@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, WZStarRatingViewType) {
 @property (nonatomic, assign) double currentValue;                                  //当前分值
 @property (nonatomic, assign) double minValue;                                      //设置最小分值
 @property (nonatomic, assign, readonly) double totalValue;                          //总分值
-@property (nonatomic, assign) WZStarRatingViewType type;
+@property (nonatomic, assign, readonly) WZStarRatingViewType type;
 
 
 - (instancetype)init NS_UNAVAILABLE;
