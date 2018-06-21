@@ -1525,6 +1525,19 @@
 			path = "WZBaseRoundSelector(圆环取数据抽象类)";
 			sourceTree = "<group>";
 		};
+		40F943A520D09DAF002725BB /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				40287B261F09210800D9383B /* UIButton */,
+				40287B271F09210800D9383B /* UIView */,
+				84687CC4202559C10098A596 /* UIImage */,
+				84687CC5202559C10098A596 /* UIImageView */,
+				8456645C1FC811990004BAC1 /* UIViewController */,
+				845664581FC811330004BAC1 /* UIWindow */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
 		8402EB141ECD64A40030CCE1 /* WZVariousTable(自定义tableView) */ = {
 			isa = PBXGroup;
 			children = (
@@ -2705,6 +2718,8 @@
 		84514D911E9DCF0A00F07EF8 /* WZCategories */ = {
 			isa = PBXGroup;
 			children = (
+				845664571FC8100E0004BAC1 /* WZCategories.h */,
+				40F943A520D09DAF002725BB /* UIKit */,
 				84593D1B1ECAE602000508C7 /* Foundation */,
 			);
 			path = WZCategories;
@@ -2747,14 +2762,7 @@
 		84593D1B1ECAE602000508C7 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				84687CC4202559C10098A596 /* UIImage */,
-				84687CC5202559C10098A596 /* UIImageView */,
-				8456645C1FC811990004BAC1 /* UIViewController */,
-				845664581FC811330004BAC1 /* UIWindow */,
 				40287B231F09210800D9383B /* NSObject */,
-				40287B261F09210800D9383B /* UIButton */,
-				40287B271F09210800D9383B /* UIView */,
-				845664571FC8100E0004BAC1 /* WZCategories.h */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -2887,14 +2895,16 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = UIImage;
+			name = UIImage;
+			path = ../Foundation/UIImage;
 			sourceTree = "<group>";
 		};
 		84687CC5202559C10098A596 /* UIImageView */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = UIImageView;
+			name = UIImageView;
+			path = ../Foundation/UIImageView;
 			sourceTree = "<group>";
 		};
 		8469209A1E63BB550048BBDC = {
@@ -3455,7 +3465,8 @@
 				TargetAttributes = {
 					846920A21E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = S69MK7XEGZ;
+						DevelopmentTeam = 7MUPB6659U;
+						ProvisioningStyle = Automatic;
 					};
 					846920BB1E63BB550048BBDC = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -3467,7 +3478,7 @@
 					};
 					8497C4271EB3465200EB9F60 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = S69MK7XEGZ;
+						DevelopmentTeam = 7MUPB6659U;
 					};
 				};
 			};
@@ -4174,7 +4185,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = S69MK7XEGZ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7MUPB6659U;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = WZWeather/Info.plist;
@@ -4182,6 +4194,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
@@ -4193,7 +4206,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = S69MK7XEGZ;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7MUPB6659U;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WZVC/WZ.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -4204,6 +4218,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
@@ -4258,9 +4273,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = S69MK7XEGZ;
+				DEVELOPMENT_TEAM = 7MUPB6659U;
 				INFOPLIST_FILE = WZTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather.WZToadyExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4272,9 +4287,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = S69MK7XEGZ;
+				DEVELOPMENT_TEAM = 7MUPB6659U;
 				INFOPLIST_FILE = WZTodayExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wizet.WZWeather.WZToadyExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";

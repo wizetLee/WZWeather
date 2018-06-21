@@ -12,6 +12,8 @@
 #import "WZCameraAssist.h"
 #import "WZVCModel.h"
 #import "WZHttpRequest+WZWeather.h"
+#import <MessageUI/MessageUI.h>
+
 @interface MainViewController ()
 
 @property (nonatomic, strong) UITableView *table;
@@ -53,6 +55,8 @@ int wzxxxx;// 并不出错 , 因为未初始化的全局变量是弱符号
     _sources = [WZVCModel source];
     //view
     [self.view addSubview:self.table];
+    
+//    MFMessageComposeViewController
     
     //权限
     [WZCameraAssist checkAuthorizationWithHandler:^(BOOL videoAuthorization, BOOL audioAuthorization, BOOL libraryAuthorization) {
