@@ -250,6 +250,7 @@
     }
     
     if (self.frameMArr.count > 0) {
+        //round 四舍五入的整数
         NSUInteger index = ((round(_percentageValue * 10000) / 10000) * 10) / (self.frameMArr.firstObject.CGRectValue.size.width / _totalRange * 10);
         CGFloat maskViewWidth = 0.0;
         switch (_type) {
