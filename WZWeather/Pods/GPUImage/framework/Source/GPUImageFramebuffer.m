@@ -174,6 +174,7 @@ void dataProviderUnlockCallback (void *info, const void *data, size_t size);
                 NSAssert(NO, @"Error at CVOpenGLESTextureCacheCreateTextureFromImage %d", err);
             }
             
+            
             CFRelease(attrs);
             CFRelease(empty);
             

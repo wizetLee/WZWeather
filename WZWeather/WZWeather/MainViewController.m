@@ -68,7 +68,6 @@ int wzxxxx;// 并不出错 , 因为未初始化的全局变量是弱符号
     }];
     
 }
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = false;
@@ -151,11 +150,11 @@ int wzxxxx;// 并不出错 , 因为未初始化的全局变量是弱符号
 
 #pragma mark - Private
 
-////iOS11以下 是不会调用以下方法的   横竖屏改变 VC present pop 等操作都会执行这个消息
-//- (void)viewSafeAreaInsetsDidChange {
-//    [super viewSafeAreaInsetsDidChange];
-//     NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
-//}
+//iOS11以下 是不会调用以下方法的   横竖屏改变 VC present pop 等操作都会执行这个消息
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+     NSLog(@"%@", NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
+}
 
 #pragma mark - WZVideoPickerControllerProtocol
 

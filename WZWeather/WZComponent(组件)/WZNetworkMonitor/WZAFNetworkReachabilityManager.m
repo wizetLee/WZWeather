@@ -68,7 +68,7 @@
                 NSLog(@"蜂窝网络");
             #endif
         } else if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-            NSLog(@"wifi");
+            NSLog(@"WiFi");
         } else {
             NSLog(@"未知网络状态");
         }

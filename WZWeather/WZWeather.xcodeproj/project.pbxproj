@@ -45,6 +45,7 @@
 		4082B232204BC3DF0046B609 /* newcontent_icon_coins@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4082B22E204BC3DC0046B609 /* newcontent_icon_coins@3x.png */; };
 		4082B233204BC3DF0046B609 /* SUPCoinsSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4082B22F204BC3DD0046B609 /* SUPCoinsSelector.m */; };
 		4082B234204BC3E00046B609 /* newcontent_icon_coins@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4082B231204BC3DF0046B609 /* newcontent_icon_coins@2x.png */; };
+		40986718213A320900F01365 /* UIResponder+hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 40986717213A320900F01365 /* UIResponder+hook.m */; };
 		40D3E91B1EBD793700FF6236 /* WZGCDTimeSuperviser.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */; };
 		40DB89151FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB89141FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.m */; };
 		40DC2B051EA2611C000968DB /* WZRoundRenderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DC2B021EA2611C000968DB /* WZRoundRenderLayer.m */; };
@@ -544,6 +545,8 @@
 		4082B22F204BC3DD0046B609 /* SUPCoinsSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPCoinsSelector.m; sourceTree = "<group>"; };
 		4082B230204BC3DE0046B609 /* SUPCoinsSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUPCoinsSelector.h; sourceTree = "<group>"; };
 		4082B231204BC3DF0046B609 /* newcontent_icon_coins@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newcontent_icon_coins@2x.png"; sourceTree = "<group>"; };
+		40986716213A320900F01365 /* UIResponder+hook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIResponder+hook.h"; sourceTree = "<group>"; };
+		40986717213A320900F01365 /* UIResponder+hook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+hook.m"; sourceTree = "<group>"; };
 		40D3E9191EBD793700FF6236 /* WZGCDTimeSuperviser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZGCDTimeSuperviser.h; sourceTree = "<group>"; };
 		40D3E91A1EBD793700FF6236 /* WZGCDTimeSuperviser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZGCDTimeSuperviser.m; sourceTree = "<group>"; };
 		40DB89131FDBB6F200A1054D /* GPUImageTrillColorOffsetFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUImageTrillColorOffsetFilter.h; sourceTree = "<group>"; };
@@ -2939,6 +2942,8 @@
 			children = (
 				846920A91E63BB550048BBDC /* AppDelegate.h */,
 				846920AA1E63BB550048BBDC /* AppDelegate.m */,
+				40986716213A320900F01365 /* UIResponder+hook.h */,
+				40986717213A320900F01365 /* UIResponder+hook.m */,
 				846920DE1E63D6920048BBDC /* MainViewController.h */,
 				846920DF1E63D6920048BBDC /* MainViewController.m */,
 				84BED55F203E788D00A45A11 /* WZVCModel.h */,
@@ -3839,6 +3844,7 @@
 				84514D601E9DCE7A00F07EF8 /* UIResponder+JKChain.m in Sources */,
 				84514D761E9DCE7A00F07EF8 /* UIView+JKCustomBorder.m in Sources */,
 				840A43A21FB18AFC00F6D449 /* WZCameraAssist.m in Sources */,
+				40986718213A320900F01365 /* UIResponder+hook.m in Sources */,
 				84514CFC1E9DCE7A00F07EF8 /* NSString+JKHash.m in Sources */,
 				4082B220204BB99A0046B609 /* Demo_RateViewController.m in Sources */,
 				407EC74820459529001C065E /* WZVideoReversalTool.m in Sources */,
